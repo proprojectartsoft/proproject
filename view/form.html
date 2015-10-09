@@ -1,0 +1,28 @@
+<ion-view title="Form" id="form" cache-view="false">
+    <ion-content>
+        <div class="content" >
+            <div  class="list" >                       
+                <a class="item item-button-left test-item" ng-click="back()" href="#/app/category/{{projectId}}/{{formData.category_id}}">
+                    Design: <span class="all-header-details">{{formName}}</span>
+                    <button class="button button-clear  button-positive" >
+                        <i class="icon ion-chevron-left"></i>
+                    </button>
+                </a>
+                <form>
+                    <div ng-repeat="fieldset in formData.field_group_designs" fs data="fieldset">
+                        <a id="a{{fieldset.$$hashKey}}" class="item-stable item all-field-header fs" scroll ng-click="toggleGroup(fieldset, goto)" ng-class="{active: isGroupShown(group)}">                            
+                            <span>{{fieldset.name}}</span>
+                            <span class="icon ion-chevron-down all-chevron"></span>
+                            <span class="all-field-description">{{fieldset.guidance}}</span>                            
+                        </a>
+                        <field data="field" ng-repeat="field in fieldset.field_designs" ng-show="isGroupShown(fieldset)"></field>
+                    </div>
+                    <div class="padding">
+                        <button type="submit" ng-click="submit(formData)" value="Save" class="button button-block button-positive">Submit</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

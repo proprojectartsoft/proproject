@@ -1,0 +1,9 @@
+{
+    "companyAdmin": false,
+    "id": 599999,
+    "username": "radu@radu.com",
+    "role": {
+        "access": 3,
+        "title": "superuser"
+    }
+}

@@ -1,0 +1,36 @@
+<ion-view title="Register" id="register" class="all-view-bg" cache-view="false">
+    <ion-content>
+        <div class="content" >
+            <div  class="list">                       
+                <a class="item item-button-left test-item" href="#/app/registers/{{projectId}}/{{categoryId}}">
+                    Records: <span class="all-header-details">{{formName}}</span>
+                    <button class="button button-clear  button-positive" >
+                        <i class="icon ion-chevron-left"></i>
+                    </button>
+                </a>
+                <ion-refresher on-refresh="refresh()" pulling-text="Pull to refresh..." refreshing-text="Refreshing!" spinner="android"></ion-refresher>
+                <div ng-repeat="register in data.records.values">
+                    <div class="form-item-header">
+                        <b>{{num - $index}})</b> <b ng-repeat="(key, value) in register track by $index" ng-if="key === 'Date completed'">{{dateToString(value)}}</b>
+                    </div>
+                    <div class="item">
+                        <div ng-repeat="label in data.records.names" class="register-value">
+                            <small ng-if="label != 'instance_id' && label != 'Date completed'">{{label}}</small><br ng-if="label != 'instance_id' && label != 'Date completed'">
+                            <b ng-if="label != 'instance_id' && label != 'Date completed' && register[label].substring(0, 5) != 'data:'">{{register[label] ? (register[label] == "true" ? "Yes" : (register[label] == "false" ? "No" : (register[label] == "||NULL||" ? "-" : register[label]))) : "-"}}</b>
+                            <img ng-if="register[label].substring(0, 5) == 'data:'" ng-src="{{register[label]}}">
+                        </div>
+                        <div class="register-value">
+                            <small>User</small><br>
+                            <b>{{register['User']}}</b>
+                        </div>
+                        <div class="register-value">
+                            <a ng-click="change(register['instance_id'])" class="button button-block button-positive">View Form</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

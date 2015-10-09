@@ -1,0 +1,42 @@
+<ion-view title="Registers" class="all-view-bg" cache-view="false" cache-view="false">
+    <ion-content>
+        <div class="content" >
+            <div  class="list">                       
+                <a class="item item-button-left test-item" ng-click="back()" href="#/app/categories/{{projectId}}">
+                    {{categoryName}} - registers 
+                    <button class="button button-clear  button-positive" >
+                        <i class="icon ion-chevron-left all-chevron"></i>
+                    </button>
+                </a>
+                <!--<ion-spinner icon="android" class="all-spinner" ng-hide="isLoaded"></ion-spinner>-->
+                <div class="all-spinner" ng-hide="hasData || !isLoaded">
+                    <span class="ion ion-archive all-ion"></span>
+                    <span class="all-ion-text">no data available</span>
+                </div>
+                <ion-refresher on-refresh="refresh()" pulling-text="Pull to refresh..." refreshing-text="Refreshing!" spinner="android"></ion-refresher>
+                <div class="list all-itemlist">
+                    <label style ="display: none" class="item item-input">
+                        <i class="icon ion-search placeholder-icon"></i>
+                        <input type="text" placeholder="Search">
+                    </label>
+                    <a class="item" ng-repeat="reg in registers" ng-click="change(reg.code)" >
+                        <span class="col col-20 reg"><span class="form-item">{{reg.code}}</span></span>
+                        <span class="col col-70 reg"> {{reg.name}}</span>
+                        <span class="col col-10 reg"><span class="badge badge-calm">{{reg.completed}}</span></span>
+                    </a>
+                </div>
+            </div> 
+        </div>
+    </ion-content>
+    <div class="tabs tabs-positive tabs-icon-only">
+        <a class="tab-item" href="#/app/category/{{projectId}}/{{categoryId}}">
+            <i class="icon ion-ios-compose-outline"></i>
+        </a>
+        <a class="tab-item">
+            <i class="icon ion-ios-box"></i>
+        </a>
+        <a class="tab-item" href="#/app/view/{{projectId}}/{{categoryId}}">
+            <i class="icon ion-ios-eye-outline"></i>
+        </a>
+    </div>
+</ion-view>

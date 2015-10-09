@@ -1,0 +1,12 @@
+<ion-view title="{{navTitle}}" hide-back-button="true" cache-view="false">
+    <ion-content class="has-header">
+        <div class="list">            
+            <a class="item item-thumbnail-left category-item" ng-repeat="category in categories" ng-click="change(category.id, category.name)"  href="#/app/category/{{projectId}}/{{category.id}}">
+                <span class="category-icon icon-{{category.id}}"></span>
+                <h2>{{category.name}}</h2>
+                <p>{{category.description}}</p>
+            </a>
+        </div>     
+
+    </ion-content>
+</ion-view>

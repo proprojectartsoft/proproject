@@ -1,0 +1,6 @@
+<ion-view title="Forms" id="forms">
+    <ion-content scroll="false">        
+        <canvas id="{{hash}}" class="all-sketch" height="480px" style="width:100%; height:480px" input ng-model="data.value" ng-required="data.required" sketch></canvas>            
+        <span sketch-erase="hash" ng-click="erase()" class="ion-close-circled ion-icon">clear</span>
+    </ion-content>
+</ion-view>

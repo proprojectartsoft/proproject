@@ -1,0 +1,43 @@
+<ion-side-menus cache-view="false">
+    <ion-side-menu-content>
+        <ion-header-bar class="bar-positive">
+            <div class="buttons">
+                <button class="button icon button-clear ion-navicon" ng-click="toggleLeft()"></button>
+            </div>
+            <h1 class="title">{{navTitle}}</h1>
+        </ion-header-bar>
+        <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+    </ion-side-menu-content>
+    <ion-side-menu side="left" class="dark">  
+        <header class="bar bar-header bar-dark">
+            <h1 class="title">Choose project</h1>
+        </header>
+        <ion-content class="has-header dark-bg" >    
+            <ion-list>
+                <ion-item nav-clear menu-close ng-repeat="project in projects" href="#/app/categories/{{project.id}}" ng-click="updateTitle(project)">
+                    {{project.name}}
+                </ion-item>
+            </ion-list>
+
+            <ion-item nav-clear menu-close href="#/app/about" class="dark-bg dark-border">
+                <i class="icon ion-ios7-information-outline"></i>
+                About
+            </ion-item>
+            <ion-item nav-clear menu-close ng-click="sync()">
+                <i class="icon ion-hammer"></i>
+                Sync (not done)
+            </ion-item>
+            <ion-item nav-clear menu-close >
+                <i class="icon ion-person"></i>
+                {{user.username}}
+            </ion-item>
+            <ion-item nav-clear menu-close href="#/login" class="dark-bg dark-border" ng-click="logout();">
+                <i class="icon ion-person"></i>
+                Logout
+            </ion-item>
+
+        </ion-content>
+    </ion-side-menu>
+
+</ion-side-menus>
+

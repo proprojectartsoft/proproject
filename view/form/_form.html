@@ -1,0 +1,30 @@
+<ion-view title="{{navTitle}}" hide-back-button="true" id="form">
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+	</ion-nav-buttons>
+	<div class="bar bar-subheader">
+		<a class="button ion-chevron-left button-clear button-dark" href="#/app/category/{{projectId}}/{{categoryId}}"></a><h2 class="title">{{data.code}} - {{data.label}}</h2>
+	</div>
+	<ion-content>
+		<div style="height: 44px;"></div>
+			<!-- <ion-refresher style="margin-top: 44px;" on-refresh="doRefresh()" pulling-text="Pull to refresh..." refreshing-text="Refreshing!" refreshing-icon="ion-loading-c"></ion-refresher> -->
+		<ion-list>
+		<form on-submit="submit()">
+			<div ng-repeat="fieldset in data.fieldsets" class="question" fs data="fieldset" ng-class="{'fieldset-error': fieldset.errors.length}">
+				<a id="a{{fieldset.$$hashKey}}" class="item-stable item fs" scroll ng-click="toggleFieldset(fieldset, goto)" ng-class="{active: isFieldsetShown(fieldset)}">
+					<i class="icon" ng-class="isFieldsetShown(fieldset) ? '' : 'ion-chevron-down'"></i>
+					<span>{{fieldset.label}}</span>
+					<span class="description">{{fieldset.description}}</span>
+				</a>
+				<field class="item-accordion" data="field" ng-repeat="field in fieldset.fields" ng-show="isFieldsetShown(fieldset)"></field>
+			</div>
+			<div class="padding">
+				<button class="button button-block button-balanced">Submit</button>
+			</div>
+		</form>
+		</ion-list>
+	</ion-content>
+</ion-view>
+
+
+

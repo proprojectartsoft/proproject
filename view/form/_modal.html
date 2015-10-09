@@ -1,0 +1,16 @@
+
+<ion-modal-view class="Absolute-Center" ng-controller="SignatureModalCtrl" cache-view="false">
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h3 class="title" style="text-align: center">Signature</h1>        
+    </ion-header-bar>
+    <ion-content class="has-header" scroll="false">
+        <form name="x" data="value">
+            <canvas id="{{hash}}" class="all-sketch" height="390px" width="340px" input ng-model="data.value" ng-required="data.required" sketch></canvas>            
+        </form>
+        <div class="button-bar" >
+            <a class="button button-positive button-outline" sketch-erase="{{hash}}" ng-click="exit(); erase()">{{hash}}</a>
+            <a class="button button-positive button-outline" sketch-erase="{{hash}}"  ng-click="erase()">Clear</a>            
+            <a class="button button-positive button-outline" ng-click="save(hash)">Save</a>
+        </div>
+    </ion-content>
+</ion-modal-view>

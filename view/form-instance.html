@@ -1,0 +1,24 @@
+<ion-view title="Form Instance" id="form-instance" cache-view="false">
+    <ion-content>
+        <div class="content" >
+            <div  class="list" >      
+                <a class="item item-button-left test-item" ng-click="back()">
+                    Completed: <span class="all-header-details">{{formName}}</span>
+                    <button class="button button-clear  button-positive" >
+                        <i class="icon ion-chevron-left"></i>
+                    </button>
+                </a>
+                <div ng-repeat="fieldset in formData.field_group_instances" fs data="fieldset">
+                    <a id="a{{fieldset.$$hashKey}}" class="item-stable item all-field-header fs" >                            
+                        <span>{{fieldset.name}}</span>
+                        <span class="all-field-description">{{fieldset.guidance}}</span>                            
+                    </a>
+                    <view-field class="item-accordion" data="field" ng-repeat="field in fieldset.field_instances"></view-field>
+                </div>                
+                <div class="padding">
+                    <button class="button button-block button-positive" ng-hide="timestamp" ng-click="share()">Share</button>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
