@@ -28,6 +28,7 @@ angular.module($APP.name).run(function ($ionicPlatform, $rootScope, CategoriesSe
         }
         if (window.StatusBar) {
             StatusBar.styleDefault();
+            StatusBar.overlaysWebView(false);
         }
         var sync = CacheFactory.get('sync');
         if (!sync) {
