@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <widget id="com.ionicframework.protest991347" 
-  version="1.0.0" 
+  version="2.0.2" 
   xmlns="http://www.w3.org/ns/widgets" 
+  xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:cdv="http://cordova.apache.org/ns/1.0" 
   xmlns:gap="http://phonegap.com/ns/1.0">
     
-  <name>protest</name>
+  <name>proproject</name>
   
   <description>
-        An Ionic Framework and Cordova project.
   </description>
     
   <author email="anthony.hanna@proproject.io" href="http://proproject.io/">
-      Ionic Framework Team
   </author>
   
   <content src="index.html"/>

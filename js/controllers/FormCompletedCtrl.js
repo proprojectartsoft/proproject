@@ -1,12 +1,11 @@
 angular.module($APP.name).controller('FormCompletedCtrl', [
     '$scope',
     '$state',
-    'FormInstanceService',
-    '$ionicLoading',
+    'FormInstanceService',   
     '$rootScope',
     '$location',
     '$timeout',
-    function ($scope, $state, FormInstanceService, $ionicLoading, $rootScope, $location, $timeout) {
+    function ($scope, $state, FormInstanceService,  $rootScope, $location, $timeout) {
         $scope.isLoaded = false;
         $scope.hasData = false;
 
