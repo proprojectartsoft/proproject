@@ -1,11 +1,7 @@
 
 var $APP = $APP || {}; // App namespace
 
-<<<<<<< HEAD
-$APP.server = 'http://artvm23.vmnet.ro';
-=======
 //$APP.server = 'http://artvm23.vmnet.ro';
->>>>>>> origin/master
 // $APP.server = 'http://app.proproject.io';
 //$APP.server = 'http://10.29.254.110'
 //$APP.server = 'http://localhost'
@@ -140,6 +136,9 @@ angular.module($APP.name).config([
                         }
                     }
                 })
+
+
+
                 .state('login', {
                     url: "/login",
                     templateUrl: "view/login.html",
