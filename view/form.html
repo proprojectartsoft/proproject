@@ -8,6 +8,7 @@
                         <i class="icon ion-chevron-left"></i>
                     </button>
                 </a>
+                <ion-spinner icon="android" class="all-spinner" ng-hide="isLoaded"></ion-spinner>
                 <form>
                     <div ng-repeat="fieldset in formData.field_group_designs" fs data="fieldset">
                         <a id="a{{fieldset.$$hashKey}}" class="item-stable item all-field-header fs" scroll ng-click="toggleGroup(fieldset, goto)" ng-class="{active: isGroupShown(group)}">                            

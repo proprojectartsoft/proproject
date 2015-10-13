@@ -40,30 +40,7 @@ angular.module($APP.name).controller('FormsCtrl', [
         $scope.change = function (id, name) {
             $rootScope.formId = id;
             $rootScope.formName = name;
-            
-            $scope.loadingPopup = $ionicPopup.alert({
-                title: "Loading",
-                template: "<center><ion-spinner icon='android'></ion-spinner></center>",
-                content: "",
-                buttons: []
-            });
-            
-            FormDesignService.get($rootScope.formId).then(function (data) {
-                $rootScope.rootForm = data;
-                $scope.loadingPopup.close();
-                $location.path("/app/form/" + $rootScope.projectId + "/" + id);
-            }, function errorCallback(response) {
-                $scope.loadingPopup.close();
-                var designsCache = CacheFactory.get('designsCache');
-                if (!designsCache || designsCache.length === 0) {
-                    designsCache = CacheFactory('designsCache');
-                    designsCache.setOptions({
-                        storageMode: 'localStorage'
-                    });
-                }
-                $rootScope.rootForm = designsCache.get($rootScope.formId);
-                $location.path("/app/form/" + $rootScope.projectId + "/" + id);
-            });
+            $location.path("/app/form/" + $rootScope.projectId + "/" + id);
         }
         $scope.back = function () {
             console.log('forms:', $rootScope.projectId, $rootScope.categoryId);

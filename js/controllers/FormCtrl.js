@@ -6,12 +6,25 @@ angular.module($APP.name).controller('FormCtrl', [
     '$location',
     '$rootScope',
     'FormDesignService',
-    function ($scope, FormInstanceService, $ionicModal, FormUpdateService, $location, $rootScope, FormDesignService) {
-        $scope.formData = $rootScope.rootForm;
-
-        $scope.back = function () {
-            $location.path("/about");
-        };
+    'CacheFactory',
+    function ($scope, FormInstanceService, $ionicModal, FormUpdateService, $location, $rootScope, FormDesignService,CacheFactory) {
+        $scope.isLoaded = false;
+        
+        FormDesignService.get($rootScope.formId).then(function (data) {
+            $scope.formData = data;
+            $scope.isLoaded = true;
+        }, function errorCallback(response) {
+            $scope.isLoaded = true;
+            var designsCache = CacheFactory.get('designsCache');
+            if (!designsCache || designsCache.length === 0) {
+                designsCache = CacheFactory('designsCache');
+                designsCache.setOptions({
+                    storageMode: 'localStorage'
+                });
+            }
+            $scope.formData = designsCache.get($rootScope.formId);           
+        });
+        
         $scope.submit = function () {
             FormInstanceService.create($scope.formData).then(function (data) {
                 if (data) {
@@ -25,15 +38,6 @@ angular.module($APP.name).controller('FormCtrl', [
                     $location.path("/app/categories/" + $rootScope.projectId);
                 }
             })
-
-//                    .then(function (data) {
-//                $rootScope.formId = data.id;
-//                FormDesignService.get($rootScope.formId).then(function (data) {
-//                    $rootScope.rootForm = data;
-//                    $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
-//            $location.path("/app/categories/" + $rootScope.projectId);
-//                });
-//            });
         };
         $scope.toggleGroup = function (group, callback) {
             if ($scope.isGroupShown(group)) {
