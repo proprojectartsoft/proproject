@@ -40,6 +40,7 @@ angular.module($APP.name).controller('FormsCtrl', [
         $scope.change = function (id, name) {
             $rootScope.formId = id;
             $rootScope.formName = name;
+            
             $location.path("/app/form/" + $rootScope.projectId + "/" + id);
         }
         $scope.back = function () {

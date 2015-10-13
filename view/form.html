@@ -19,7 +19,7 @@
                         <field data="field" ng-repeat="field in fieldset.field_designs" ng-show="isGroupShown(fieldset)"></field>
                     </div>
                     <div class="padding">
-                        <button type="submit" ng-click="submit(formData)" value="Save" class="button button-block button-positive">Submit</button>
+                        <button type="submit" ng-click="submit(formData)" ng-show="isLoaded" value="Save" class="button button-block button-positive">Submit</button>
                     </div>
                 </form>
 

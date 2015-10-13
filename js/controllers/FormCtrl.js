@@ -1,30 +1,32 @@
 angular.module($APP.name).controller('FormCtrl', [
     '$scope',
     'FormInstanceService',
-    '$ionicModal',
+    '$timeout',
     'FormUpdateService',
     '$location',
     '$rootScope',
     'FormDesignService',
     'CacheFactory',
-    function ($scope, FormInstanceService, $ionicModal, FormUpdateService, $location, $rootScope, FormDesignService,CacheFactory) {
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, FormDesignService, CacheFactory) {
         $scope.isLoaded = false;
-        
-        FormDesignService.get($rootScope.formId).then(function (data) {
-            $scope.formData = data;
-            $scope.isLoaded = true;
-        }, function errorCallback(response) {
-            $scope.isLoaded = true;
-            var designsCache = CacheFactory.get('designsCache');
-            if (!designsCache || designsCache.length === 0) {
-                designsCache = CacheFactory('designsCache');
-                designsCache.setOptions({
-                    storageMode: 'localStorage'
-                });
-            }
-            $scope.formData = designsCache.get($rootScope.formId);           
-        });
-        
+        $timeout(function () {
+            FormDesignService.get($rootScope.formId).then(function (data) {
+                $scope.formData = data;
+                $scope.isLoaded = true;
+            }, function errorCallback(response) {
+                $scope.isLoaded = true;
+                var designsCache = CacheFactory.get('designsCache');
+                if (!designsCache || designsCache.length === 0) {
+                    designsCache = CacheFactory('designsCache');
+                    designsCache.setOptions({
+                        storageMode: 'localStorage'
+                    });
+                }
+                $scope.formData = designsCache.get($rootScope.formId);
+            });            
+        }, 3000);
+
+
         $scope.submit = function () {
             FormInstanceService.create($scope.formData).then(function (data) {
                 if (data) {
