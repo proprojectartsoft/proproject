@@ -5,7 +5,8 @@ angular.module($APP.name).controller('FormsCtrl', [
     '$rootScope',
     'FormInstanceService',
     'CacheFactory',
-    function ($scope, $location, FormDesignService, $rootScope, FormInstanceService, CacheFactory) {
+    '$ionicLoading',
+    function ($scope, $location, FormDesignService, $rootScope, FormInstanceService, CacheFactory, $ionicLoading) {
         $scope.isLoaded = false;
         $scope.hasData = false;
 
@@ -39,10 +40,19 @@ angular.module($APP.name).controller('FormsCtrl', [
         $scope.change = function (id, name) {
             $rootScope.formId = id;
             $rootScope.formName = name;
+            $ionicLoading.show({
+                content: 'Loading',
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 200,
+                showDelay: 0
+            });
             FormDesignService.get($rootScope.formId).then(function (data) {
                 $rootScope.rootForm = data;
+                $ionicLoading.hide();
                 $location.path("/app/form/" + $rootScope.projectId + "/" + id);
             }, function errorCallback(response) {
+                $ionicLoading.hide();
                 var designsCache = CacheFactory.get('designsCache');
                 if (!designsCache || designsCache.length === 0) {
                     designsCache = CacheFactory('designsCache');
