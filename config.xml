@@ -23,6 +23,7 @@
     <access origin="*"/>
     <allow-navigation href="*" />  
   
+    <preference name="SplashScreen" value="splash" />
     <preference name="SplashScreenDelay" value="10000"/>
     <preference name="webviewbounce" value="false"/>
     <preference name="UIWebViewBounce" value="false"/>
