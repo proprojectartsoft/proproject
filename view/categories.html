@@ -1,12 +1,34 @@
 <ion-view title="{{navTitle}}" hide-back-button="true" cache-view="false">
-    <ion-content class="has-header">
-        <div class="list">            
-            <a class="item item-thumbnail-left category-item" ng-repeat="category in categories" ng-click="change(category.id, category.name)"  href="#/app/category/{{projectId}}/{{category.id}}">
-                <span class="category-icon icon-{{category.id}}"></span>
-                <h2>{{category.name}}</h2>
-                <p>{{category.description}}</p>
+    <ion-content class="has-header" style="background-color: #ECEBEB; padding-top:10vw;">
+        <div class="row" >
+            <a class="col pp-icon" href="#/app/category/{{projectId}}/{{categories[0].id}}" ng-click="change(categories[0].id, categories[0].name)">
+                <div class="category-item"><span class="category-icon icon-{{categories[0].id}}"></span></div>
+                <h2>{{categories[0].name}}</h2>
             </a>
-        </div>     
-
+            <a class="col pp-icon" href="#/app/category/{{projectId}}/{{categories[0].id}}" ng-click="change(categories[1].id, categories[1].name)">
+                <div class="category-item"><span class="category-icon icon-{{categories[1].id}}"></span></div>
+                <h2>{{categories[1].name}}</h2>
+            </a>
+        </div>
+        <div class="row" style="margin-top: 5vw">
+            <a class="col pp-icon" href="#/app/category/{{projectId}}/{{categories[2].id}}" ng-click="change(categories[2].id, categories[2].name)">
+                <div class="category-item"><span class="category-icon icon-{{categories[2].id}}"></span></div>
+                <h2>{{categories[2].name}}</h2>
+            </a>
+            <a class="col pp-icon" href="#/app/category/{{projectId}}/{{categories[3].id}}" ng-click="change(categories[3].id, categories[3].name)">
+                <div class="category-item"><span class="category-icon icon-{{categories[3].id}}"></span></div>
+                <h2>{{categories[3].name}}</h2>
+            </a>
+        </div>
+        <div class="row" style="margin-top: 5vw">
+            <a class="col pp-icon" href="#/app/category/{{projectId}}/{{categories[4].id}}" ng-click="change(categories[4].id, categories[4].name)">
+                <div class="category-item"><span class="category-icon icon-{{categories[4].id}}"></span></div>
+                <h2>{{categories[4].name}}</h2>
+            </a>
+            <a class="col pp-icon" href="#/app/category/{{projectId}}/{{categories[5].id}}" ng-click="change(categories[5].id, categories[5].name)">
+                <div class="category-item"><span class="category-icon icon-{{categories[5].id}}"></span></div>
+                <h2>{{categories[5].name}}</h2>
+            </a>
+        </div>
     </ion-content>
 </ion-view>

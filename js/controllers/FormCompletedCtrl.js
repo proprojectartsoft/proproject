@@ -9,9 +9,11 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
     function ($scope, $state, FormInstanceService, $ionicLoading, $rootScope, $location, $timeout) {
         $scope.isLoaded = false;
         $scope.hasData = false;
-        
+
         FormInstanceService.list($rootScope.projectId, $rootScope.categoryId).then(function (data) {
-            $scope.isLoaded = true;
+            $timeout(function () {
+                $scope.isLoaded = true;
+            }, 1000);
             $scope.formInstances = data;
             if (data.length !== 0) {
                 $scope.hasData = true;

@@ -6,25 +6,36 @@
     width:100%;
 }
 .category-icon{
-    position: absolute;
-    left:10px;
-    color:#FFF;
-    background-color: #387EF5;
-    border:2px solid #FFF;
-    border-radius: 50px;
-    font-size: 50px;
-    padding:15px;
-    -webkit-background-clip: padding-box; 
-    -moz-background-clip: padding-box; 
+    left: 10px;
+    color: #FFF;
+    background-color: #11C1F3;
+    border: 2px solid #FFF;
+    border-radius: 100%;
+    font-size: 16.5vw;
+    padding: 3.5vw;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding-box;
     background-clip: padding-box;
 }
 .category-item{
-    background-color: #ECEBEB;
+    margin-left:auto;
+    margin-right:auto; 
+    width: 27vw;
+}
+.pp-icon{
+    text-align: center;
+    text-decoration: none;
+    min-height: 30vw;
+}
+.pp-icon h2{
+    margin-top: 5vw;
+    font-size: 4vw;
+    color: #0F487B;
 }
 
 .test-item{
     color: #02296B !important;
-    background-color: #ECEBEB;
+    background-color: #C1F2FF;
     font-size: 20px;
     font-weight: 500;
     border-bottom:1px solid #aaa;
@@ -38,7 +49,7 @@
     margin-right: auto;
 }
 .form-item-header{
-    background-color: #023A9A;
+    background-color: #245985;
     color:white;
     padding:16px;
 }
@@ -73,7 +84,7 @@
 }
 
 .all-field-header{
-    background-color: #023A9A !important;
+    background-color: #245985 !important;
     color:white !important;
 }
 .all-field-description{
@@ -112,7 +123,7 @@
     right: 8px !important; 
 }
 .all-checkbox-border{
-    border-top:2px solid #023A9A !important;
+    border-top:2px solid #245985 !important;
 }
 .all-radio{
     border-color: #387EF5;

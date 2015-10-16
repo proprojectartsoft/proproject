@@ -4,7 +4,7 @@
             <div  class="list" >                       
                 <a class="item item-button-left test-item" ng-click="back()" href="#/app/category/{{projectId}}/{{formData.category_id}}">
                     Design: <span class="all-header-details">{{formName}}</span>
-                    <button class="button button-clear  button-positive" >
+                    <button class="button button-clear  button-calm" >
                         <i class="icon ion-chevron-left"></i>
                     </button>
                 </a>
@@ -19,7 +19,7 @@
                         <field data="field" ng-repeat="field in fieldset.field_designs" ng-show="isGroupShown(fieldset)"></field>
                     </div>
                     <div class="padding">
-                        <button type="submit" ng-click="submit(formData)" ng-show="isLoaded" value="Save" class="button button-block button-positive">Submit</button>
+                        <button type="submit" ng-click="submit(formData)" ng-show="isLoaded" value="Save" class="button button-block button-calm">Submit</button>
                     </div>
                 </form>
 

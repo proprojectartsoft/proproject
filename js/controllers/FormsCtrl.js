@@ -6,12 +6,15 @@ angular.module($APP.name).controller('FormsCtrl', [
     'FormInstanceService',
     'CacheFactory',
     '$ionicPopup',
-    function ($scope, $location, FormDesignService, $rootScope, FormInstanceService, CacheFactory, $ionicPopup) {
+    '$timeout',
+    function ($scope, $location, FormDesignService, $rootScope, FormInstanceService, CacheFactory, $ionicPopup, $timeout) {
         $scope.isLoaded = false;
         $scope.hasData = false;
 
-        FormDesignService.list($rootScope.categoryId).then(function (data) {
-            $scope.isLoaded = true;
+        FormDesignService.list($rootScope.categoryId).then(function (data) {            
+            $timeout(function () {
+                $scope.isLoaded = true;
+            }, 1000);
             $scope.formDesigns = data;
             if (data.length !== 0) {
                 $scope.hasData = true;
@@ -40,7 +43,7 @@ angular.module($APP.name).controller('FormsCtrl', [
         $scope.change = function (id, name) {
             $rootScope.formId = id;
             $rootScope.formName = name;
-            
+
             $location.path("/app/form/" + $rootScope.projectId + "/" + id);
         }
         $scope.back = function () {

@@ -1,6 +1,6 @@
-<ion-side-menus cache-view="false">
+<ion-side-menus cache-view="false" >
     <ion-side-menu-content>
-        <ion-header-bar class="bar-positive">
+        <ion-header-bar class="bar-calm">
             <div class="buttons">
                 <button class="button icon button-clear ion-navicon" ng-click="toggleLeft()"></button>
             </div>
@@ -14,7 +14,7 @@
         </header>
         <ion-content class="has-header dark-bg" >    
             <ion-list>
-                <ion-item nav-clear menu-close ng-repeat="project in projects" href="#/app/categories/{{project.id}}" ng-click="updateTitle(project)">
+                <ion-item nav-clear menu-close ng-repeat="project in projects" class="dark-bg dark-border" href="#/app/categories/{{project.id}}" ng-click="updateTitle(project)">
                     {{project.name}}
                 </ion-item>
             </ion-list>
@@ -23,11 +23,11 @@
                 <i class="icon ion-ios7-information-outline"></i>
                 About
             </ion-item>
-            <ion-item nav-clear menu-close ng-click="sync()">
+            <ion-item nav-clear menu-close ng-click="sync()" class="dark-bg dark-border" style="color:#fff">
                 <i class="icon ion-hammer"></i>
-                Sync (not done)
+                Sync
             </ion-item>
-            <ion-item nav-clear menu-close >
+            <ion-item nav-clear menu-close  class="dark-bg dark-border" style="color:#fff">
                 <i class="icon ion-person"></i>
                 {{user.username}}
             </ion-item>

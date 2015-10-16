@@ -5,14 +5,16 @@ angular.module($APP.name).controller('RegistersCtrl', [
     '$stateParams',
     'RegisterService',
     '$location',
-    'CacheFactory',
-    function ($scope, $state, $rootScope, $stateParams, RegisterService, $location, CacheFactory) {
+    '$timeout',
+    function ($scope, $state, $rootScope, $stateParams, RegisterService, $location, $timeout) {
         $scope.isLoaded = false;
         $scope.hasData = false;
         if ($stateParams.categoryId) {
             $rootScope.categoryId = $stateParams.categoryId;
             RegisterService.list($rootScope.projectId, $rootScope.categoryId).then(function (data) {
-                $scope.isLoaded = true;
+                $timeout(function () {
+                    $scope.isLoaded = true;
+                }, 1000);
                 $scope.registers = data;
                 if (data.length !== 0) {
                     $scope.hasData = true;

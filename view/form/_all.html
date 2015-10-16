@@ -1,25 +1,25 @@
 
 <!--text-->
-<label for="{{hash}}" class="item item-input item-stacked-label positive-border" ng-class="{required: data.required}" ng-if="data.type == 'text'">
+<label for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required}" ng-if="data.type == 'text'">
     <span class="all-label">{{data.name}}</span>
     <span class="all-description">{{data.guidance}}</span>
     <input input id="{{hash}}" type="text" name="{{data.name}}" ng-model="data.value" value="{{data.default}}" placeholder="{{data.placeholder}}" ng-required="data.required">
 </label>
 
 <!--text area-->
-<label for="{{hash}}" class="item item-input item-stacked-label positive-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'textarea'">
+<label for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'textarea'">
     <textarea input id="{{hash}}" type="text" ng-model="data.value" placeholder="{{data.placeholder}}" ng-required="data.required">{{data.value}}</textarea>
 </label>
 
 <!--password-->
-<label for="{{hash}}" class="item item-input item-stacked-label positive-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'password'">
+<label for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'password'">
     <span class="all-label">{{data.label}}</span>
     <span class="all-description">{{data.description}}</span>
     <input input id="{{hash}}" type="password" name="{{data.name}}" ng-model="data.value" value="{{data.value}}" placeholder="{{data.placeholder}}" ng-required="data.required" />
 </label>
 
 <!--select-->
-<label class="item item-input item-select item-stacked-label positive-border all-padding-topbot" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'select'">
+<label class="item item-input item-select item-stacked-label calm-border all-padding-topbot" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'select'">
     <span class="all-label">{{data.name}}</span>        
     <span class="all-description">{{data.guidance}}</span>  
     <select input id="{{hash}}" ng-model="data.value" ng-init="data.value = data.default_value"  ng-options="option.value as option.name for option in data.option_designs">
@@ -27,14 +27,14 @@
 </label>
 
 <!--email-->
-<label for="{{hash}}" class="item item-input item-stacked-label positive-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'email'">
+<label for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'email'">
     <span class="all-label">{{data.name}}</span>        
     <span class="all-description">{{data.guidance}}</span>  
     <input input id="{{hash}}" type="text" name="{{data.name}}" ng-model="data.value" value="{{data.default}}" placeholder="{{data.placeholder}}" ng-required="data.required">
 </label>
 
 <!--number-->
-<label for="{{hash}}" class="item item-input item-stacked-label positive-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'number'">
+<label for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'number'">
     <span class="all-label">{{data.name}}</span>        
     <span class="all-description">{{data.guidance}}</span> 
     <input input id="{{hash}}" type="number" name="{{data.name}}" ng-model="data.value" value="{{data.default_value}}" placeholder="{{data.placeholder}}" ng-required="data.required">
@@ -42,8 +42,8 @@
 
 
 <!--radio-->
-<div ng-if="data.type == 'radio'" class="positive-border">
-    <div class="item item-label positive-border"><div class="all-label">{{data.name}}</div><span class="all-description">{{data.guidance}}</span></div>
+<div ng-if="data.type == 'radio'" class="calm-border">
+    <div class="item item-label calm-border"><div class="all-label">{{data.name}}</div><span class="all-description">{{data.guidance}}</span></div>
     <label class="item item-checkbox all-padding-leftright" ng-repeat="box in data.option_designs">
         <span class="item-content">{{box.name}}</span>
         <span class="checkbox all-checkbox">
@@ -54,7 +54,7 @@
 </div>
 
 <!--check box-->
-<div class="positive-border" ng-if="data.type == 'checkbox'">
+<div class="calm-border" ng-if="data.type == 'checkbox'">
     <label class="item item-checkbox all-padding-leftright">
         <span class="all-label">{{data.name}}</span>        
         <span class="all-description">{{data.guidance}}</span>   
@@ -66,7 +66,7 @@
 
 <!--check box list-->
 <div ng-if="data.type == 'checkbox_list'">
-    <label class="item item-checkbox all-padding-leftright positive-border">
+    <label class="item item-checkbox all-padding-leftright calm-border">
         <span class="all-label">{{data.name}}</span>        
         <span class="all-description">{{data.guidance}}</span>   
     </label>
@@ -79,29 +79,29 @@
 </div>
 
 <!--signature-->
-<div for="{{hash}}" class="item item-input item-stacked-label signature positive-border" ng-if="data.type == 'signature'" >
+<div for="{{hash}}" class="item item-input item-stacked-label signature calm-border" ng-if="data.type == 'signature'" >
     <span class="all-label">{{data.name}}</span>        
     <span class="all-description">{{data.guidance}}</span> 
-    <a class="button button-positive button-outline all-button" ng-click="directiveClick(hash)">{{data.value ? "Edit signature" : "Insert signature"}}</a>
+    <a class="button button-calm button-outline all-button" ng-click="directiveClick(hash)">{{data.value ? "Edit signature" : "Insert signature"}}</a>
 </div>
 
 <!--date-->
-<div for="{{hash}}" class="item item-input item-stacked-label positive-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'date'" >
+<div for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'date'" >
     <span class="all-label">{{data.name}}</span>        
     <span class="all-description">{{data.guidance}}</span> 
     <input input id="{{hash}}" type="date"  name="{{data.name}}" ng-model="data.value" value="{{data.default_value}}" placeholder="{{data.placeholder}}" ng-required="data.required">
 </div>
 
 <!--time-->
-<div for="{{hash}}" class="item item-input item-stacked-label positive-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'time'" >
+<div for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'time'" >
     <span class="all-label">{{data.name}}</span>        
     <span class="all-description">{{data.guidance}}</span>     
     <input input id="{{hash}}" type="time" name="{{data.name}}" ng-model="data.value" value="{{data.default_value}}" placeholder="{{data.placeholder}}" ng-required="data.required">    
 </div>
 
 <!--test
-<div for="{{hash}}" class="item item-input item-stacked-label signature positive-border" ng-if="data.type == 'test'"  ng-model="data.value">
+<div for="{{hash}}" class="item item-input item-stacked-label signature calm-border" ng-if="data.type == 'test'"  ng-model="data.value">
     <div>{{data.value}}</div>
     ng-click="modalfieldid(data.field_group_design_id, data.id) ; show()"
-    <a class="button button-positive button-outline all-button" ng-click="directiveClick()" >TEST</a>
+    <a class="button button-calm button-outline all-button" ng-click="directiveClick()" >TEST</a>
 </div>-->

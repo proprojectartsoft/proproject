@@ -24,7 +24,7 @@ angular.module($APP.name).controller('FormCtrl', [
                 }
                 $scope.formData = designsCache.get($rootScope.formId);
             });            
-        }, 10);
+        }, 1000);
 
 
         $scope.submit = function () {
