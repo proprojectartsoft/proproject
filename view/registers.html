@@ -8,10 +8,9 @@
                         <i class="icon ion-chevron-left all-chevron"></i>
                     </button>
                 </a>
-                <!--<ion-spinner icon="android" class="all-spinner" ng-hide="isLoaded"></ion-spinner>-->
-                <div class="all-spinner" ng-show="!hasData && isLoaded">
-                    <span class="ion ion-archive all-ion"></span>
-                    <span class="all-ion-text">no data available</span>
+                
+                <div class="all-spinner" ng-show="hasData && isLoaded" style="margin-top:50%">
+                    <span class="all-ion-text" style="font-size: 15vw">{{hasData}}</span>
                 </div>
                 <ion-refresher on-refresh="refresh()" pulling-text="Pull to refresh..." refreshing-text="Refreshing!" spinner="android"></ion-refresher>
                 <div class="list all-itemlist">

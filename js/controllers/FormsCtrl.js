@@ -9,15 +9,13 @@ angular.module($APP.name).controller('FormsCtrl', [
     '$timeout',
     function ($scope, $location, FormDesignService, $rootScope, FormInstanceService, CacheFactory, $ionicPopup, $timeout) {
         $scope.isLoaded = false;
-        $scope.hasData = false;
+        $scope.hasData = '';
 
-        FormDesignService.list($rootScope.categoryId).then(function (data) {            
-            $timeout(function () {
-                $scope.isLoaded = true;
-            }, 1000);
+        FormDesignService.list($rootScope.categoryId).then(function (data) {
+            $scope.isLoaded = true;
             $scope.formDesigns = data;
-            if (data.length !== 0) {
-                $scope.hasData = true;
+            if (data.length === 0) {
+                $scope.hasData = 'no data';
             }
         }, function errorCallback(response) {
             var designsListCache = CacheFactory.get('designsListCache');
@@ -33,9 +31,9 @@ angular.module($APP.name).controller('FormsCtrl', [
         $scope.refresh = function () {
             FormDesignService.list($rootScope.categoryId).then(function (data) {
                 $scope.formDesigns = data;
-                if (data.length !== 0) {
-                    $scope.hasData = true;
-                }
+                if (data.length === 0) {
+                    $scope.hasData = 'no data';
+                }                
                 $scope.$broadcast('scroll.refreshComplete');
             });
         };

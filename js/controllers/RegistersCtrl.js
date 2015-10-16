@@ -8,24 +8,22 @@ angular.module($APP.name).controller('RegistersCtrl', [
     '$timeout',
     function ($scope, $state, $rootScope, $stateParams, RegisterService, $location, $timeout) {
         $scope.isLoaded = false;
-        $scope.hasData = false;
+        $scope.hasData = '';
         if ($stateParams.categoryId) {
             $rootScope.categoryId = $stateParams.categoryId;
             RegisterService.list($rootScope.projectId, $rootScope.categoryId).then(function (data) {
-                $timeout(function () {
-                    $scope.isLoaded = true;
-                }, 1000);
+                $scope.isLoaded = true;
                 $scope.registers = data;
-                if (data.length !== 0) {
-                    $scope.hasData = true;
+                if (data.length === 0) {
+                    $scope.hasData = 'no data';
                 }
             });
         }
         $scope.refresh = function () {
             RegisterService.list($rootScope.projectId, $rootScope.categoryId).then(function (data) {
                 $scope.registers = data;
-                if (data.length !== 0) {
-                    $scope.hasData = true;
+                if (data.length === 0) {
+                    $scope.hasData = 'no data';
                 }
                 $scope.$broadcast('scroll.refreshComplete');
             });

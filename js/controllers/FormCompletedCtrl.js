@@ -11,20 +11,18 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
         $scope.hasData = false;
 
         FormInstanceService.list($rootScope.projectId, $rootScope.categoryId).then(function (data) {
-            $timeout(function () {
-                $scope.isLoaded = true;
-            }, 1000);
+            $scope.isLoaded = true;
             $scope.formInstances = data;
-            if (data.length !== 0) {
-                $scope.hasData = true;
+            if (data.length === 0) {
+                $scope.hasData = 'no data';
             }
         });
 
         $scope.refresh = function () {
             FormInstanceService.list($rootScope.projectId, $rootScope.categoryId).then(function (data) {
                 $scope.formInstances = data;
-                if (data.length !== 0) {
-                    $scope.hasData = true;
+                if (data.length === 0) {
+                    $scope.hasData = 'no data';
                 }
                 $scope.$broadcast('scroll.refreshComplete');
             });
