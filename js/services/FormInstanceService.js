@@ -15,6 +15,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                 );
             },
             create: function (data, index) {
+                console.log($rootScope.projectId)
                 var settingsCache = CacheFactory.get('settings');
                 if (!settingsCache) {
                     settingsCache = CacheFactory('settings');
@@ -30,10 +31,10 @@ angular.module($APP.name).factory('FormInstanceService', [
                     "code": data.code,
                     "hash": null,
                     "project_id": $rootScope.projectId,
-                    "user_id": user.id,
                     "customer_id": data.customer_id,
                     "category": data.category,
                     "category_id": data.category_id,
+                    "user_id": user.id,
                     "created_on": 0,
                     "formDesignId": data.id,
                     "field_group_instances": []
@@ -43,13 +44,40 @@ angular.module($APP.name).factory('FormInstanceService', [
                 for (var i = 0; i < data.field_group_designs.length; i++) {
                     requestGroup = {
                         "id": 0,
-                        "name": "Register test group",
-                        "guidance": "description",
-                        "position": 0,
+                        "name": data.field_group_designs[i].name,
+                        "guidance": data.field_group_designs[i].guidance,
+                        "position": data.field_group_designs[i].position,
                         "form_instance_id": 0,
                         "field_instances": []
-                    }
+                    };
                     for (var j = 0; j < data.field_group_designs[i].field_designs.length; j++) {
+                        var field_values;
+                        if (data.field_group_designs[i].field_designs[j].type !== 'checkbox_list') {
+                            if (!data.field_group_designs[i].field_designs[j].value) {
+                                field_values = [];
+                            }
+                            else {
+                                field_values = [{
+                                        "id": 0,
+                                        "value": data.field_group_designs[i].field_designs[j].value,
+                                        "position": data.field_group_designs[i].field_designs[j].position,
+                                        "field_instance_id": 0
+                                    }];
+                            }
+                        }
+                        else {
+                            field_values = [];
+                            for (var z = 0; z < data.field_group_designs[i].field_designs[j].option_instances.length; z++) {
+                                if (data.field_group_designs[i].field_designs[j].option_instances[z].value === true) {
+                                    field_values.push({
+                                        "id": 0,
+                                        "value": data.field_group_designs[i].field_designs[j].option_instances[z].name,
+                                        "position": data.field_group_designs[i].field_designs[j].option_instances[z].position,
+                                        "field_instance_id": 0
+                                    })
+                                }
+                            }
+                        }
                         requestField = {
                             "id": 0,
                             "name": data.field_group_designs[i].field_designs[j].name,
@@ -63,14 +91,9 @@ angular.module($APP.name).factory('FormInstanceService', [
                             "field_group_instance_id": 0,
                             "default_value": data.field_group_designs[i].field_designs[j].default_value,
                             "register_nominated": data.field_group_designs[i].field_designs[j].register_nominated,
-                            "option_instances": data.field_group_designs[i].field_designs[j].option_design,
-                            "field_values": [{
-                                    "id": 0,
-                                    "value": data.field_group_designs[i].field_designs[j].value,
-                                    "position": 0,
-                                    "field_instance_id": 0
-                                }]
-                        }
+                            "option_instances": data.field_group_designs[i].field_designs[j].option_instances,
+                            "field_values": field_values
+                        };
                         requestFieldList.push(requestField);
                     }
                     requestGroup.field_instances = requestFieldList;

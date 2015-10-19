@@ -1,9 +1,9 @@
 angular.module($APP.name).controller('CategoriesCtrl', [
     '$scope',
     '$rootScope',
-    'CategoriesService',
+    'ProjectService',
     'CacheFactory',
-    function ($scope, $rootScope, CategoriesService, CacheFactory) {
+    function ($scope, $rootScope, ProjectService, CacheFactory) {
 
         //Load the categories list from cache if exist
 //        if (!$scope.categories) {
@@ -23,7 +23,14 @@ angular.module($APP.name).controller('CategoriesCtrl', [
 //                }
 //            }
 //        }
-
+        if (!$rootScope.projects) {
+            ProjectService.list().then(function (data) {
+                $rootScope.online = true;
+                $rootScope.projects = data;
+                $rootScope.navTitle = data[0].name;
+                $rootScope.projectId = data[0].id;
+            });
+        }
         $scope.change = function (id, name) {
             $rootScope.categoryId = id;
             $rootScope.categoryName = name;

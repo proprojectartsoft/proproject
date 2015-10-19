@@ -53,6 +53,7 @@ angular.module($APP.name).factory('SyncService', [
 //
             ProjectService.list().then(function (projects) {
                 list = projects;
+                $rootScope.projects = projects;
                 $rootScope.$broadcast('syncDown.complete');
                 $rootScope.$broadcast('sync.projects.ready');
             });

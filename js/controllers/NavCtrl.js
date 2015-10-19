@@ -126,7 +126,6 @@ angular.module($APP.name).controller('NavCtrl', [
         }
 
 
-
         $scope.updateTitle = function (project) {
             $rootScope.navTitle = project.name;
             $rootScope.projectId = project.id;
@@ -138,7 +137,6 @@ angular.module($APP.name).controller('NavCtrl', [
             }
         };
 
-//        var settingsCache = CacheFactory.get('settings');        
-//        $rootScope.currentUser = settingsCache.get("user");
+
     }
 ]);

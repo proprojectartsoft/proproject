@@ -4,9 +4,8 @@ angular.module($APP.name).factory('AuthService', [
     '$state',
     '$rootScope',
     'CacheFactory',
-    'ReloadMeService',
     '$ionicPopup',
-    function ($http, $location, $state, $rootScope, CacheFactory, ReloadMeService, $ionicPopup) {
+    function ($http, $location, $state, $rootScope, CacheFactory, $ionicPopup) {
         var userRoles = {
             'pub': {
                 'title': 'pub',
@@ -270,7 +269,12 @@ angular.module($APP.name).factory('AuthService', [
 
             },
             logout: function (success, error) {
-                $http.post($APP.server + '/api/logout', {withCredentials: true}).success(function () {
+                CacheFactory.destroy('reloadCache');
+                changeUser({
+                    username: '',
+                    role: userRoles.pub
+                });
+                $http.post($APP.server + '/pub/logout', {withCredentials: true}).success(function () {
                     changeUser({
                         username: '',
                         role: userRoles.pub

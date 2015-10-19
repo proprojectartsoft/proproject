@@ -7,7 +7,8 @@ angular.module($APP.name).controller('FormCtrl', [
     '$rootScope',
     'FormDesignService',
     'CacheFactory',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, FormDesignService, CacheFactory) {
+    '$ionicPopup',
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, FormDesignService, CacheFactory, $ionicPopup) {
         $scope.isLoaded = false;
         $timeout(function () {
             FormDesignService.get($rootScope.formId).then(function (data) {
@@ -23,23 +24,39 @@ angular.module($APP.name).controller('FormCtrl', [
                     });
                 }
                 $scope.formData = designsCache.get($rootScope.formId);
-            });            
+            });
         }, 1000);
 
 
         $scope.submit = function () {
-            FormInstanceService.create($scope.formData).then(function (data) {
-                if (data) {
-                    $rootScope.formId = data.id;
-                    FormInstanceService.get($rootScope.formId).then(function (data) {
-                        $rootScope.rootForm = data;
-                        $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
+
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'New form',
+                template: 'Are you sure you want to submit the data?'
+            });
+            confirmPopup.then(function (res) {
+                if (res) {
+                    FormInstanceService.create($scope.formData).then(function (data) {
+                        if (data) {
+                            $rootScope.formId = data.id;
+                            FormInstanceService.get($rootScope.formId).then(function (data) {
+                                $rootScope.rootForm = data;
+                                $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
+                            })
+                        }
+                        else {
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'New form',
+                                template: 'Submision failed.',
+                            });
+                            alertPopup.then(function (res) {
+                                $location.path("/app/categories/" + $rootScope.projectId);
+                            });
+                        }
                     })
                 }
-                else {
-                    $location.path("/app/categories/" + $rootScope.projectId);
-                }
-            })
+            });
+
         };
         $scope.toggleGroup = function (group, callback) {
             if ($scope.isGroupShown(group)) {
