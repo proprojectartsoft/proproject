@@ -50,6 +50,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                         "form_instance_id": 0,
                         "field_instances": []
                     };
+                    requestGroup = [];
                     for (var j = 0; j < data.field_group_designs[i].field_designs.length; j++) {
                         var field_values;
                         if (data.field_group_designs[i].field_designs[j].type !== 'checkbox_list') {
