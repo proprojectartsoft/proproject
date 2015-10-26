@@ -11,37 +11,35 @@ angular.module($APP.name).controller('FormsCtrl', [
         $scope.isLoaded = false;
         $scope.hasData = '';
 
-        FormDesignService.list($rootScope.categoryId).then(function (data) {
-            $scope.isLoaded = true;
-            $scope.formDesigns = data;
-            if (data.length === 0) {
-                $scope.hasData = 'no data';
+        var designsCache = CacheFactory.get('designsCache');
+        if (!designsCache || designsCache.length === 0) {
+            designsCache = CacheFactory('designsCache');
+            designsCache.setOptions({
+                storageMode: 'localStorage'
+            });
+        }
+        
+        var aux;
+        $rootScope.formDesigns = [];
+        angular.forEach(designsCache.keys(), function (key) {
+            aux = designsCache.get(key);
+            if (aux.category_id === $rootScope.categoryId) {
+                $rootScope.formDesigns.push(aux);
             }
-        }, function errorCallback(response) {
-            var designsListCache = CacheFactory.get('designsListCache');
-            if (!designsListCache || designsListCache.length === 0) {
-                designsListCache = CacheFactory('designsListCache');
-                designsListCache.setOptions({
-                    storageMode: 'localStorage'
-                });
-            }
-            $scope.formDesigns = designsListCache.get($rootScope.categoryId);
         });
 
         $scope.refresh = function () {
             FormDesignService.list($rootScope.categoryId).then(function (data) {
-                $scope.formDesigns = data;
+                $rootScope.formDesigns = data;
                 if (data.length === 0) {
                     $scope.hasData = 'no data';
-                }                
+                }
                 $scope.$broadcast('scroll.refreshComplete');
             });
         };
 
-        $scope.change = function (id, name) {
-            $rootScope.formId = id;
-            $rootScope.formName = name;
-
+        $scope.change = function (id) {
+            $rootScope.formData = designsCache.get(id);
             $location.path("/app/form/" + $rootScope.projectId + "/" + id);
         }
         $scope.back = function () {

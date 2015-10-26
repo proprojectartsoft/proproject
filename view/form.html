@@ -3,12 +3,11 @@
         <div class="content" >
             <div  class="list" >                       
                 <a class="item item-button-left test-item" ng-click="back()" href="#/app/category/{{projectId}}/{{formData.category_id}}">
-                    Design: <span class="all-header-details">{{formName}}</span>
+                    Design: <span class="all-header-details">{{formData.name}}</span>
                     <button class="button button-clear  button-calm" >
                         <i class="icon ion-chevron-left"></i>
                     </button>
                 </a>
-                <ion-spinner icon="android" class="all-spinner" ng-hide="isLoaded"></ion-spinner>
                 <form>
                     <div ng-repeat="fieldset in formData.field_group_designs" fs data="fieldset">
                         <a id="a{{fieldset.$$hashKey}}" class="item-stable item all-field-header fs" scroll ng-click="toggleGroup(fieldset, goto)" ng-class="{active: isGroupShown(group)}">                            
@@ -19,7 +18,7 @@
                         <field data="field" ng-repeat="field in fieldset.field_designs" ng-show="isGroupShown(fieldset)"></field>
                     </div>
                     <div class="padding">
-                        <button type="submit" ng-click="submit(formData)" ng-show="isLoaded" value="Save" class="button button-block button-calm">Submit</button>
+                        <button type="submit" ng-click="submit(formData)" value="Save" class="button button-block button-calm">Submit</button>
                     </div>
                 </form>
 

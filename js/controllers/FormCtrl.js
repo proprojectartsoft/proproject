@@ -9,25 +9,6 @@ angular.module($APP.name).controller('FormCtrl', [
     'CacheFactory',
     '$ionicPopup',
     function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, FormDesignService, CacheFactory, $ionicPopup) {
-        $scope.isLoaded = false;
-        $timeout(function () {
-            FormDesignService.get($rootScope.formId).then(function (data) {
-                $scope.formData = data;
-                $scope.isLoaded = true;
-            }, function errorCallback(response) {
-                $scope.isLoaded = true;
-                var designsCache = CacheFactory.get('designsCache');
-                if (!designsCache || designsCache.length === 0) {
-                    designsCache = CacheFactory('designsCache');
-                    designsCache.setOptions({
-                        storageMode: 'localStorage'
-                    });
-                }
-                $scope.formData = designsCache.get($rootScope.formId);
-            });
-        }, 1000);
-
-
         $scope.submit = function () {
 
             var confirmPopup = $ionicPopup.confirm({
@@ -43,15 +24,6 @@ angular.module($APP.name).controller('FormCtrl', [
                                 $rootScope.rootForm = data;
                                 $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
                             })
-                        }
-                        else {
-                            var alertPopup = $ionicPopup.alert({
-                                title: 'New form',
-                                template: 'Submision failed.',
-                            });
-                            alertPopup.then(function (res) {
-                                $location.path("/app/categories/" + $rootScope.projectId);
-                            });
                         }
                     })
                 }

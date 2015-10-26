@@ -2,7 +2,9 @@ angular.module($APP.name).factory('FormInstanceService', [
     '$rootScope',
     '$http',
     'CacheFactory',
-    function ($rootScope, $http, CacheFactory) {
+    '$ionicPopup',
+    '$location',
+    function ($rootScope, $http, CacheFactory, $ionicPopup, $location) {
 
         return {
             get: function (id) {
@@ -15,7 +17,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                 );
             },
             create: function (data, index) {
-                console.log($rootScope.projectId)
+                console.log('data', data)
                 var settingsCache = CacheFactory.get('settings');
                 if (!settingsCache) {
                     settingsCache = CacheFactory('settings');
@@ -50,6 +52,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                         "form_instance_id": 0,
                         "field_instances": []
                     };
+                    requestField = [];
                     for (var j = 0; j < data.field_group_designs[i].field_designs.length; j++) {
                         var field_values;
                         if (data.field_group_designs[i].field_designs[j].type !== 'checkbox_list') {
@@ -122,6 +125,21 @@ angular.module($APP.name).factory('FormInstanceService', [
                         $rootScope.toBeUploadedCount = sync.keys().length;
                         $rootScope.toBeUploadedCount++;
                         sync.put($rootScope.toBeUploadedCount, data);
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Submision failed.',
+                            template: 'You are offline. Submit forms by syncing next time you are online',
+                        });
+                        alertPopup.then(function (res) {
+                            $location.path("/app/category/" + $rootScope.projectId + '/' + $rootScope.categoryId);
+                        });
+                    }
+                    else{
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Submision failed.',
+                            template: 'Incorrect data, try again',
+                        });
+                        alertPopup.then(function (res) {
+                        });
                     }
                 });
             },

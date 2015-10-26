@@ -9,7 +9,18 @@ angular.module($APP.name).factory('SyncService', [
     'RegisterService',
     'ProjectService',
     '$rootScope',
-    function ($http, CacheFactory, $q, $ionicPopup, $timeout, FormInstanceService, FormDesignService, RegisterService, ProjectService, $rootScope) {
+    'CategoriesService',
+    function ($http, CacheFactory, $q, $ionicPopup, $timeout, FormInstanceService, FormDesignService, RegisterService, ProjectService, $rootScope, CategoriesService) {
+        var projectsReadyDestroyer = function () {
+        };
+        var categoriesReadyDestroyer = function () {
+        };
+        var designReadyDestroyer = function () {
+        };
+        var designCountReadyDestroyer = function () {
+        };
+        var designFCountReadyDestroyer = function () {
+        };
         function up() {
             console.log("Calling up function");
 
@@ -32,7 +43,7 @@ angular.module($APP.name).factory('SyncService', [
                     }
 //                    console.log(i, form.length)
                     if (i === forms.length - 1) {
-                        $rootScope.$broadcast('syncUp.complete');
+                        $rootScope.$emit('syncUp.complete');
                     }
                 }
                 if (aux === forms.length) {
@@ -42,80 +53,174 @@ angular.module($APP.name).factory('SyncService', [
             } else {
                 // No forms to send - sync up is complete
                 console.log('sync up is complete - no forms to send');
-                $rootScope.$broadcast('syncUp.complete');
+                $rootScope.$emit('syncUp.complete');
             }
         }
 
         function down() {
             console.log("Calling down function");
-//
-            var list, aux = 0, x = [];
-//
+            //PROJECT CACHE
+            var projectsCache = CacheFactory.get('projectsCache');
+            if (projectsCache) {
+                projectsCache.destroy();
+                projectsCache = CacheFactory('projectsCache');
+                projectsCache.setOptions({
+                    storageMode: 'localStorage'
+                });
+            } else {
+                projectsCache = CacheFactory('projectsCache');
+                projectsCache.setOptions({
+                    storageMode: 'localStorage'
+                });
+            }
+
+
+
+
+
+            //USER CACHE
+            var settings = CacheFactory.get('settings');
+            if (!settings || settings.length === 0) {
+                settings = CacheFactory('settings');
+                settings.setOptions({
+                    storageMode: 'localStorage'
+                });
+            }
+            $rootScope.currentUser = settings.get('user');
+
+            $rootScope.projects = [];
+
             ProjectService.list().then(function (projects) {
-                list = projects;
                 $rootScope.projects = projects;
-                $rootScope.$broadcast('syncDown.complete');
+                for (var i = 0; i < projects.length; i++) {
+                    projectsCache.put(projects[i].id, projects[i]);
+                }
+                console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
                 $rootScope.$broadcast('sync.projects.ready');
             });
-            $rootScope.formregisters = false;
-            $rootScope.forminstances = false;
-            $rootScope.formdesign = false;
-            $rootScope.$on('sync.projects.ready', function () {
-                var designsCache = CacheFactory.get('designsCache');
-                if (designsCache) {
-                    designsCache.destroy();
-                }
-                var designsListCache = CacheFactory.get('designsListCache');
-                if (designsListCache) {
-                    designsListCache.destroy();
-                }
+            projectsReadyDestroyer = $rootScope.$on('sync.projects.ready', function () {
 
-                var settings = CacheFactory.get('settings');
-                if (!settings || settings.length === 0) {
-                    settings = CacheFactory('settings');
-                    settings.setOptions({
+//                console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+//                $rootScope.$emit('syncDown.complete');
+//                CATEGORIES CACHE
+                var categoriesCache = CacheFactory.get('categoriesCache');
+                if (!categoriesCache) {
+                    categoriesCache = CacheFactory('categoriesCache');
+                    categoriesCache.setOptions({
                         storageMode: 'localStorage'
                     });
                 }
-                $rootScope.currentUser = settings.get('user');
-                console.log(settings.get("user"));
+                $rootScope.categories = [];
+                CategoriesService.list().then(function (categories) {
+                    console.log(categories)
+//                    for (var i = 0; i < categories.length; i++) {
+                    angular.forEach(categories, function (ctg) {
+                        categoriesCache.put(ctg.id, ctg);
+                        $rootScope.categories.push(ctg);
+                    });
+
+                    $rootScope.$emit('sync.categories.ready');
+                });
+            });
+
+
+            categoriesReadyDestroyer = $rootScope.$on('sync.categories.ready', function () {
+                $rootScope.designFCount = 0;
+                $rootScope.designTotal = 0;
+                $rootScope.designCount = 0;
+                $rootScope.categSw = 0;
+                $rootScope.sw = 0;
+
+                angular.forEach($rootScope.categories, function (ctg) {
+                    FormDesignService.list(ctg.id).then(function (formDesigns) {
+                        $rootScope.designFCount++;
+                        $rootScope.designTotal += formDesigns.length;
+                    })
+                });
+                $rootScope.$watch('designFCount', function () {
+                    if ($rootScope.sw === 0) {
+                        $rootScope.sw++;
+                        $rootScope.$emit('sync.design.ready');
+//                        $rootScope.$emit('syncDown.complete');
+                    }
+                });
+            });
+//            $rootScope.$on('sync.design.ready', function () {
+//                $rootScope.instanceFCount = 0;
+//                $rootScope.instanceTotal = 0;
+//                $rootScope.sw = 0;
+//
+//                angular.forEach($rootScope.projects, function (prj) {
+//                    FormInstanceService.list(prj.id).then(function (formInstance) {
+//                        $rootScope.instanceFCount++;
+//                        $rootScope.instanceTotal += formInstance.length;
+//                    })
+//                });
+//                $rootScope.$watch('instanceFCount', function () {
+//                    if ($rootScope.instanceFCount === $rootScope.projects.length && $rootScope.sw === 0) {
+//                        $rootScope.sw++;
+//                        $rootScope.$emit('sync.instance.ready');
+//                    }
+//                });
+//            });
+//            $rootScope.$on('sync.instance.ready', function () {
+//                $rootScope.registerFCount = 0;
+//                $rootScope.registerTotal = 0;
+//                $rootScope.sw = 0;
+//
+//                angular.forEach($rootScope.projects, function (prj) {
+//                    RegisterService.list(prj.id).then(function (formRegister) {
+//                        $rootScope.registerFCount++;
+//                        $rootScope.registerTotal += formRegister.length;
+//                    })
+//                });
+//                $rootScope.$watch('registerFCount', function () {
+//                    if ($rootScope.registerFCount === $rootScope.projects.length && $rootScope.sw === 0) {
+//                        $rootScope.sw++;
+//                        $rootScope.$emit('size.ready');
+//                    }
+//                });
+//            });
+            designReadyDestroyer = $rootScope.$on('sync.design.ready', function () {
+                $rootScope.designCount = 0;
+                $rootScope.designFCount = 0;
+                //DESIGNS CACHE
                 var designsCache = CacheFactory.get('designsCache');
-                if (!designsCache || designsCache.length === 0) {
+                if (designsCache) {
+                    var list = designsCache.keys();
+                    for (var i = 0; i < list.length; i++) {
+                        designsCache.remove(list[i]);
+                    }
+                }
+                else {
                     designsCache = CacheFactory('designsCache');
                     designsCache.setOptions({
                         storageMode: 'localStorage'
                     });
                 }
-                var designsListCache = CacheFactory.get('designsListCache');
-                if (!designsListCache || designsListCache.length === 0) {
-                    designsListCache = CacheFactory('designsListCache');
-                    designsListCache.setOptions({
-                        storageMode: 'localStorage'
-                    });
-                }
-
-                angular.forEach($rootScope.categories, function (categ) {                    
-                    FormDesignService.list(categ.id).then(function (formDesigns) {
-                        designsListCache.put(categ.id, formDesigns);
-                        console.log(designsListCache, categ.id, formDesigns)
+                angular.forEach($rootScope.categories, function (ctg) {
+                    FormDesignService.list(ctg.id).then(function (formDesigns) {
+                        $rootScope.designFCount++;
                         for (var k = 0; k < formDesigns.length; k++) {
                             FormDesignService.get(formDesigns[k].id).then(function (design) {
                                 designsCache.put(design.id, design);
+                                $rootScope.designCount++;
                             });
                         }
                     })
                 });
-
+                designFCountReadyDestroyer = $rootScope.$watch('designFCount', function () {
+                    if ($rootScope.designFCount === $rootScope.categories.length) {
+                        designCountReadyDestroyer = $rootScope.$watch('designCount', function () {
+                            if ($rootScope.designCount === $rootScope.designTotal) {
+                                console.log('wut')
+//                                $rootScope.$broadcast('sync.design.ready')
+                                $rootScope.$broadcast('syncDown.complete');
+                            }
+                        });
+                    }
+                });
             });
-//
-//            $rootScope.$on('sync.formdesign.ready', function () {
-//                aux++;
-//                if (aux === (list.length * 6)) {
-//                    dataCache.put('offlineData', x);            
-//                }
-//
-//
-//            });
 
         }
 
@@ -130,6 +235,11 @@ angular.module($APP.name).factory('SyncService', [
                 $rootScope.$$listeners['syncUp.complete'] = undefined;
                 $rootScope.$on('syncUp.complete', function (event, args) {
                     console.log("syncUp complete");
+                    projectsReadyDestroyer();
+                    categoriesReadyDestroyer();
+                    designReadyDestroyer();        
+                    designCountReadyDestroyer();        
+                    designFCountReadyDestroyer();        
                     down();
                 });
 
