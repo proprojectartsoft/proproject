@@ -28,6 +28,10 @@ angular.module($APP.name).controller('RegistersCtrl', [
                 $scope.$broadcast('scroll.refreshComplete');
             });
         }
+        $scope.designsFix = function () {
+            console.log('test', $rootScope.projectId, $rootScope.categoryId, $rootScope.formDesigns)
+            $location.path("/app/category/" + $rootScope.projectId + "/" + $rootScope.categoryId);
+        }
         $scope.change = function (code) {
             $rootScope.formName = code;
             $location.path("/app/register/" + $rootScope.projectId + "/" + $rootScope.formId);

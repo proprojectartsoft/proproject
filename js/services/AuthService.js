@@ -5,7 +5,8 @@ angular.module($APP.name).factory('AuthService', [
     '$rootScope',
     'CacheFactory',
     '$ionicPopup',
-    function ($http, $location, $state, $rootScope, CacheFactory, $ionicPopup) {
+    'SyncService',
+    function ($http, $location, $state, $rootScope, CacheFactory, $ionicPopup, SyncService) {
         var userRoles = {
             'pub': {
                 'title': 'pub',
@@ -244,6 +245,7 @@ angular.module($APP.name).factory('AuthService', [
                 }).then(function (data) {
                     changeUser(data.data.data);
                     $rootScope.online = true;
+                    SyncService.sync();
                     console.log(data);
                     return data.data.data;
 //                    success(data.data.data);
@@ -251,19 +253,28 @@ angular.module($APP.name).factory('AuthService', [
 
                 }, function errorCallback(response) {
                     if (response.status === 0) {
-                        if ($rootScope.online) {
-                            alert('No internet connection');
-                            $rootScope.online = false;
-                        }
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Offline',
+                            template: 'No internet connection',
+                        });
+                        alertPopup.then(function (res) {                            
+                        });
                     }
                     if (response.status === 502) {
-                        if ($rootScope.online) {
-                            $rootScope.online = false;
-                            alert('Server offline');
-                        }
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Offline',
+                            template: 'Server offline',
+                        });
+                        alertPopup.then(function (res) {                            
+                        });
                     }
                     if (response.status === 400) {
-                        alert('Incorrect user data');
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Error',
+                            template: 'Incorrect user data.',
+                        });
+                        alertPopup.then(function (res) {                            
+                        });
                     }
                 });
 

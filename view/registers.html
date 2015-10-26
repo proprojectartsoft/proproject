@@ -8,7 +8,7 @@
                         <i class="icon ion-chevron-left all-chevron"></i>
                     </button>
                 </a>
-                
+
                 <div class="all-spinner" ng-show="hasData && isLoaded" style="margin-top:50%">
                     <span class="all-ion-text" style="font-size: 15vw">{{hasData}}</span>
                 </div>
@@ -28,7 +28,7 @@
         </div>
     </ion-content>
     <div class="tabs tabs-calm tabs-icon-only">
-        <a class="tab-item" href="#/app/category/{{projectId}}/{{categoryId}}">
+        <a class="tab-item" ng-click="designsFix()">
             <i class="icon ion-ios-compose-outline"></i>
         </a>
         <a class="tab-item">
