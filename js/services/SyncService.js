@@ -237,9 +237,6 @@ angular.module($APP.name).factory('SyncService', [
                     console.log("syncUp complete");
                     projectsReadyDestroyer();
                     categoriesReadyDestroyer();
-                    designReadyDestroyer();        
-                    designCountReadyDestroyer();        
-                    designFCountReadyDestroyer();        
                     down();
                 });
 
