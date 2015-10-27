@@ -11,6 +11,16 @@ angular.module($APP.name).factory('SyncService', [
     '$rootScope',
     'CategoriesService',
     function ($http, CacheFactory, $q, $ionicPopup, $timeout, FormInstanceService, FormDesignService, RegisterService, ProjectService, $rootScope, CategoriesService) {
+        var projectsReadyDestroyer = function () {
+        };
+        var categoriesReadyDestroyer = function () {
+        };
+        var designReadyDestroyer = function () {
+        };
+        var designCountReadyDestroyer = function () {
+        };
+        var designFCountReadyDestroyer = function () {
+        };
         function up() {
             console.log("Calling up function");
 
@@ -85,10 +95,14 @@ angular.module($APP.name).factory('SyncService', [
                 for (var i = 0; i < projects.length; i++) {
                     projectsCache.put(projects[i].id, projects[i]);
                 }
-                $rootScope.$emit('sync.projects.ready');
+                console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
+                $rootScope.$broadcast('sync.projects.ready');
             });
-            $rootScope.$on('sync.projects.ready', function () {
-                //CATEGORIES CACHE
+            projectsReadyDestroyer = $rootScope.$on('sync.projects.ready', function () {
+
+//                console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+//                $rootScope.$emit('syncDown.complete');
+//                CATEGORIES CACHE
                 var categoriesCache = CacheFactory.get('categoriesCache');
                 if (!categoriesCache) {
                     categoriesCache = CacheFactory('categoriesCache');
@@ -109,7 +123,8 @@ angular.module($APP.name).factory('SyncService', [
                 });
             });
 
-            $rootScope.$on('sync.categories.ready', function () {
+
+            categoriesReadyDestroyer = $rootScope.$on('sync.categories.ready', function () {
                 $rootScope.designFCount = 0;
                 $rootScope.designTotal = 0;
                 $rootScope.designCount = 0;
@@ -166,7 +181,7 @@ angular.module($APP.name).factory('SyncService', [
 //                    }
 //                });
 //            });
-            $rootScope.$on('sync.design.ready', function () {
+            designReadyDestroyer = $rootScope.$on('sync.design.ready', function () {
                 $rootScope.designCount = 0;
                 $rootScope.designFCount = 0;
                 //DESIGNS CACHE
@@ -194,9 +209,9 @@ angular.module($APP.name).factory('SyncService', [
                         }
                     })
                 });
-                $rootScope.$watch('designFCount', function () {
+                designFCountReadyDestroyer = $rootScope.$watch('designFCount', function () {
                     if ($rootScope.designFCount === $rootScope.categories.length) {
-                        $rootScope.$watch('designCount', function () {
+                        designCountReadyDestroyer = $rootScope.$watch('designCount', function () {
                             if ($rootScope.designCount === $rootScope.designTotal) {
                                 console.log('wut')
 //                                $rootScope.$broadcast('sync.design.ready')
@@ -220,6 +235,8 @@ angular.module($APP.name).factory('SyncService', [
                 $rootScope.$$listeners['syncUp.complete'] = undefined;
                 $rootScope.$on('syncUp.complete', function (event, args) {
                     console.log("syncUp complete");
+                    projectsReadyDestroyer();
+                    categoriesReadyDestroyer();
                     down();
                 });
 
