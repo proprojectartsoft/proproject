@@ -16,7 +16,7 @@
                     <div class="item">
                         <div ng-repeat="label in data.records.names" class="register-value">
                             <small ng-if="label != 'instance_id' && label != 'Date completed'">{{label}}</small><br ng-if="label != 'instance_id' && label != 'Date completed'">
-                            <b ng-if="label != 'instance_id' && label != 'Date completed' && register[label].substring(0, 5) != 'data:'">{{register[label] ? (register[label] == "true" ? "Yes" : (register[label] == "false" ? "No" : (register[label] == "||NULL||" ? "-" : register[label]))) : "-"}}</b>
+                            <b class="pp-whitespace" ng-if="label != 'instance_id' && label != 'Date completed' && register[label].substring(0, 5) != 'data:'">{{register[label] ? (register[label] == "true" ? "Yes" : (register[label] == "false" ? "No" : (register[label] == "||NULL||" ? "-" : register[label]))) : "-"}}</b>
                             <img ng-if="register[label].substring(0, 5) == 'data:'" ng-src="{{register[label]}}">
                         </div>
                         <div class="register-value">

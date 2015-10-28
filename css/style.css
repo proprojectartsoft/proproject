@@ -1,3 +1,7 @@
+textarea {
+    resize: none;
+    overflow:hidden;
+}
 
 .login-logo{
     margin-top: 50px;
@@ -347,4 +351,8 @@
 
 .all-header-details{
     color: #387EF5;
+}
+
+.pp-whitespace{
+    white-space: pre-line;
 }

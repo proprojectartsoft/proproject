@@ -10,7 +10,7 @@
 <label for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'textarea'">
     <span class="all-label">{{data.name}}</span>
     <span class="all-description">{{data.guidance}}</span>
-    <textarea input id="{{hash}}" type="text" ng-model="data.value" placeholder="{{data.placeholder}}" ng-required="data.required">{{data.value}}</textarea>
+    <textarea ng-auto-expand id="{{hash}}" type="text" ng-model="data.value" placeholder="{{data.placeholder}}" ng-required="data.required">{{data.value}}</textarea>
 </label>
 
 <!--password-->
