@@ -42,7 +42,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                     "field_group_instances": []
                 };
                 var requestGroupList = [], requestFieldList = [];
-                var requestGroup, requestField;
+                var requestGroup, requestField, requestOptions;
                 for (var i = 0; i < data.field_group_designs.length; i++) {
                     requestGroup = {
                         "id": 0,
@@ -81,6 +81,15 @@ angular.module($APP.name).factory('FormInstanceService', [
                                 }
                             }
                         }
+                        requestOptions = [];
+                        for (var p = 0; p < data.field_group_designs[i].field_designs[j].option_designs.length; p++) {
+                            requestOptions.push({
+                                "enables_freeform": data.field_group_designs[i].field_designs[j].option_designs[p].enables_freeform,
+                                "id": 0,
+                                "name": data.field_group_designs[i].field_designs[j].option_designs[p].name,
+                                "value": data.field_group_designs[i].field_designs[j].option_designs[p].value
+                            })
+                        }
                         requestField = {
                             "id": 0,
                             "name": data.field_group_designs[i].field_designs[j].name,
@@ -94,7 +103,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                             "field_group_instance_id": 0,
                             "default_value": data.field_group_designs[i].field_designs[j].default_value,
                             "register_nominated": data.field_group_designs[i].field_designs[j].register_nominated,
-                            "option_instances": data.field_group_designs[i].field_designs[j].option_instances,
+                            "option_instances": requestOptions,
                             "field_values": field_values
                         };
                         requestFieldList.push(requestField);
@@ -133,7 +142,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                             $location.path("/app/category/" + $rootScope.projectId + '/' + $rootScope.categoryId);
                         });
                     }
-                    else{
+                    else {
                         var alertPopup = $ionicPopup.alert({
                             title: 'Submision failed.',
                             template: 'Incorrect data, try again',

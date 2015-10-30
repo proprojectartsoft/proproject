@@ -1,7 +1,7 @@
 <ion-view title="Registers" class="all-view-bg" cache-view="false" cache-view="false">
     <ion-content>
         <div class="content" >
-            <div  class="list">                       
+            <div  class="list all-header-tabs">                       
                 <a class="item item-button-left test-item" ng-click="back()" href="#/app/categories/{{projectId}}">
                     {{categoryName}} - registers 
                     <button class="button button-clear  button-calm" >
@@ -18,10 +18,10 @@
                         <i class="icon ion-search placeholder-icon"></i>
                         <input type="text" placeholder="Search">
                     </label>
-                    <a class="item" ng-repeat="reg in registers" ng-click="change(reg.code)" >
-                        <span class="col col-25 reg form-item pp-whitespace">{{reg.code}}</span>
-                        <span class="col col-50 reg pp-whitespace"> {{reg.name}}</span>
-                        <span class="col col-25 reg"><span class="badge badge-calm">{{reg.completed}}</span></span>
+                    <a class="item" ng-repeat="reg in registers" ng-click="change(reg.code)" style="display:table; border:none; width:100%; border-bottom:2px solid #AAA">
+                        <span class="reg form-item pp-whitespace" style="display: table-cell; width:30%;vertical-align: middle">{{reg.code}}</span>
+                        <span class="reg" style="display: table-cell;padding-left:5px;vertical-align: middle; width:60%"><span class="  pp-whitespace"> {{reg.name}}</span></span>
+                        <span class="badge badge-calm" style="vertical-align: middle">{{reg.completed}}</span>
                     </a>
                 </div>
             </div> 
