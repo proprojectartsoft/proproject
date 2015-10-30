@@ -1,8 +1,8 @@
 
 var $APP = $APP || {}; // App namespace
 
-// $APP.server = 'http://artvm23.vmnet.ro';
- $APP.server = 'http://app.proproject.io';
+$APP.server = 'http://artvm23.vmnet.ro';
+ // $APP.server = 'http://app.proproject.io';
 //$APP.server = 'http://10.29.254.110'
 //$APP.server = 'http://localhost'
 //$APP.server = 'http://proproject.artsoft-consult.ro';
