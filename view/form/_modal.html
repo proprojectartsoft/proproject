@@ -1,13 +1,13 @@
 
 <ion-modal-view class="Absolute-Center" ng-controller="SignatureModalCtrl" cache-view="false">
-    <ion-header-bar class="bar bar-header bar-calm" style="max-height:40px">
-        <h3 class="title" style="text-align: center;max-height:40px>Signature</h1>        
+    <ion-header-bar class="bar bar-header bar-calm">
+        <h3 class="title" style="text-align: center">Signature</h1>        
     </ion-header-bar>
     <ion-content class="has-header" scroll="false">
         <form name="x" data="value">
             <canvas id="{{hash}}" class="all-sketch" height="390px" width="340px" input ng-model="data.value" ng-required="data.required" sketch></canvas>            
         </form>
-        <div class="button-bar" >
+        <div class="button-bar" style="margin-top:-5px">
             <!--<a class="button button-calm button-outline" sketch-erase="{{hash}}" ng-click="exit(); erase()">{{hash}}</a>-->
             <a class="button button-calm button-outline" sketch-erase="{{hash}}"  ng-click="erase()">Clear</a>            
             <a class="button button-calm button-outline" ng-click="save(hash)">Save</a>
