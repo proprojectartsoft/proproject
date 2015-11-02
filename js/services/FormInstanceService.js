@@ -54,10 +54,18 @@ angular.module($APP.name).factory('FormInstanceService', [
                     };
                     requestFieldList = [];
                     for (var j = 0; j < data.field_group_designs[i].field_designs.length; j++) {
-                        var field_values;
-                        if (data.field_group_designs[i].field_designs[j].type !== 'checkbox_list') {
-                            if (!data.field_group_designs[i].field_designs[j].value) {
-                                field_values = [];
+                        var field_values = [];
+                        if (data.field_group_designs[i].field_designs[j].type == 'checkbox_list') {
+                            field_values = [];
+                        }
+                        else {
+                            if (data.field_group_designs[i].field_designs[j].type == 'select') {
+                                field_values = [{
+                                        "id": 0,
+                                        "value": data.field_group_designs[i].field_designs[j].value,
+                                        "position": data.field_group_designs[i].field_designs[j].position,
+                                        "field_instance_id": 0
+                                    }];
                             }
                             else {
                                 field_values = [{
@@ -68,19 +76,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                                     }];
                             }
                         }
-                        else {
-                            field_values = [];
-                            for (var z = 0; z < data.field_group_designs[i].field_designs[j].option_instances.length; z++) {
-                                if (data.field_group_designs[i].field_designs[j].option_instances[z].value === true) {
-                                    field_values.push({
-                                        "id": 0,
-                                        "value": data.field_group_designs[i].field_designs[j].option_instances[z].name,
-                                        "position": data.field_group_designs[i].field_designs[j].option_instances[z].position,
-                                        "field_instance_id": 0
-                                    })
-                                }
-                            }
-                        }
+
                         requestOptions = [];
                         for (var p = 0; p < data.field_group_designs[i].field_designs[j].option_designs.length; p++) {
                             requestOptions.push({
@@ -109,7 +105,9 @@ angular.module($APP.name).factory('FormInstanceService', [
                         requestFieldList.push(requestField);
                     }
                     requestGroup.field_instances = requestFieldList;
+//                        console.log('groupdata',requestGroup)
                     requestGroupList.push(requestGroup);
+//                        console.log('groups',requestGroupList)
                 }
                 requestForm.field_group_instances = requestGroupList;
 
