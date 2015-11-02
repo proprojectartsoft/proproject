@@ -145,7 +145,7 @@ textarea {
     top: 0; left: 0; bottom: 0; right: 0;
     height: 480px;
     width:340px;
-    min-height: 480px;
+    min-height: 486px;
     max-height: 480px;
 }
 .all-sketch-icon{

@@ -3,7 +3,7 @@
     <span class="description" ng-if="data.type == 'message'">{{data.guidance}}</span>
     <ul class="list padding-right">
         <li>
-            <span style="font-size:14px" ng-if="data.type == 'checkbox'">{{data.value[0].value == "true" ? "Yes" : "No"}}</span>
+            <span style="font-size:14px" ng-if="data.type == 'checkbox'">{{data.field_values[0].value ? 'yes':'no'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'text'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'textarea'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'email'">{{data.field_values ? data.field_values[0].value : '-'}}</span>

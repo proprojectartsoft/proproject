@@ -20,8 +20,8 @@
                     </label>
 
                     <a class="item" ng-repeat="form in formInstances" ng-click="change(form.id)" >
-                        <span class="col col-20 reg"><span class="form-item">{{form.code}}</span></span>
-                        <span class="col col-70 reg"> {{form.name}}</span>
+                        <span class="form-item">{{form.code}}</span>
+                        {{form.name}}
                     </a>
                 </div>
             </div> 

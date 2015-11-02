@@ -23,7 +23,7 @@
 <!--select-->
 <label class="item item-input item-select item-stacked-label calm-border all-padding-topbot" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'select'">
     <span class="all-label">{{data.name}}</span>        
-    <span class="all-description">{{data.guidance}}</span>  
+    <span class="all-description" style="margin-right: 80px">{{data.guidance}}</span>  
     <select input id="{{hash}}" ng-model="data.value" ng-init="data.value = data.default_value"  ng-options="option.value as option.name for option in data.option_designs">
     </select>
 </label>
@@ -47,7 +47,7 @@
 <div ng-if="data.type == 'radio'" class="calm-border">
     <div class="item item-label calm-border"><div class="all-label">{{data.name}}</div><span class="all-description">{{data.guidance}}</span></div>
     <label class="item item-checkbox all-padding-leftright" ng-repeat="box in data.option_designs">
-        <span class="item-content">{{box.name}}</span>
+        <span class="item-content" style="margin-right: 30px">{{box.name}}</span>
         <span class="checkbox all-checkbox">
             <input input type="radio" ng-model="data.value" ng-value="box.value" ng-required="data.required" name="{{hash}}">
         </span>
@@ -59,7 +59,7 @@
 <div class="calm-border" ng-if="data.type == 'checkbox'">
     <label class="item item-checkbox all-padding-leftright">
         <span class="all-label">{{data.name}}</span>        
-        <span class="all-description">{{data.guidance}}</span>   
+        <span class="all-description" style="margin-right: 30px">{{data.guidance}}</span>   
         <span class="checkbox all-checkbox">
             <input input id="{{hash}}" type="checkbox" name="{{data.name}}" ng-model="data.value" value="1" ng-required="data.required">
         </span>
@@ -73,7 +73,7 @@
         <span class="all-description">{{data.guidance}}</span>   
     </label>
     <label class="item item-checkbox all-padding-leftright" ng-repeat="box in data.option_designs">
-        <span class="all-label">{{box.name}}</span>        
+        <span class="all-label" style="margin-right: 30px">{{box.name}}</span>        
         <span class="checkbox all-checkbox">
             <input input id="{{hash}}" type="checkbox" name="{{box.name}}" ng-model="box.value" value="1" ng-required="data.required">
         </span>
