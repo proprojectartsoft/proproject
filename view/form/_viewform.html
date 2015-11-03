@@ -9,6 +9,8 @@
             <span style="font-size:14px" ng-if="data.type == 'email'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'number'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'radio'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
+            <span style="font-size:14px" ng-if="data.type == 'date'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
+            <span style="font-size:14px" ng-if="data.type == 'time'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'select'">{{data.field_values ? data.field_values[0].value : "-"}}</span>
             <span style="font-size:14px" ng-if="data.type == 'signature' && data.field_values[0].value"><img ng-src="{{data.field_values[0].value}}"></span>
             <span style="font-size:14px" ng-if="data.type == 'checkbox_list'">

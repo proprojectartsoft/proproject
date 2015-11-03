@@ -55,17 +55,28 @@ angular.module($APP.name).factory('FormInstanceService', [
                     requestFieldList = [];
                     for (var j = 0; j < data.field_group_designs[i].field_designs.length; j++) {
                         var field_values = [];
-                        if (data.field_group_designs[i].field_designs[j].type == 'checkbox_list') {
+                        if (data.field_group_designs[i].field_designs[j].type === 'checkbox_list') {
                             field_values = [];
                         }
                         else {
-                            if (data.field_group_designs[i].field_designs[j].type == 'select') {
-                                field_values = [{
-                                        "id": 0,
-                                        "value": data.field_group_designs[i].field_designs[j].value,
-                                        "position": data.field_group_designs[i].field_designs[j].position,
-                                        "field_instance_id": 0
-                                    }];
+                            if (data.field_group_designs[i].field_designs[j].type === 'date' || data.field_group_designs[i].field_designs[j].type === 'time') {
+                                console.log('date/time', data.field_group_designs[i].field_designs[j])
+                                if (data.field_group_designs[i].field_designs[j].value === null || data.field_group_designs[i].field_designs[j].value === undefined) {
+                                    field_values = [{
+                                            "id": 0,
+                                            "value": 0,
+                                            "position": data.field_group_designs[i].field_designs[j].position,
+                                            "field_instance_id": 0
+                                        }];
+                                }
+                                else {
+                                    field_values = [{
+                                            "id": 0,
+                                            "value": data.field_group_designs[i].field_designs[j].value,
+                                            "position": data.field_group_designs[i].field_designs[j].position,
+                                            "field_instance_id": 0
+                                        }];
+                                }
                             }
                             else {
                                 field_values = [{
