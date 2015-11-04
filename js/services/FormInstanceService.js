@@ -79,12 +79,17 @@ angular.module($APP.name).factory('FormInstanceService', [
                                 }
                             }
                             else {
-                                field_values = [{
-                                        "id": 0,
-                                        "value": data.field_group_designs[i].field_designs[j].value,
-                                        "position": data.field_group_designs[i].field_designs[j].position,
-                                        "field_instance_id": 0
-                                    }];
+                                if (data.field_group_designs[i].field_designs[j].value) {
+                                    field_values = [{
+                                            "id": 0,
+                                            "value": data.field_group_designs[i].field_designs[j].value,
+                                            "position": data.field_group_designs[i].field_designs[j].position,
+                                            "field_instance_id": 0
+                                        }];
+                                }
+                                else {
+                                    field_values = []
+                                }
                             }
                         }
 
