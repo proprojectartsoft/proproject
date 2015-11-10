@@ -38,6 +38,17 @@ angular.module($APP.name).controller('FormCtrl', [
             }
             callback();
         };
+        $scope.repeatGroup = function (x) {
+            var aux = {};
+            angular.copy(x, aux);
+            $scope.formData.field_group_designs.push(aux);
+        };
+        $scope.repeatField = function (x, y) {
+            var test = {};
+            angular.copy(y, test);
+            x.field_designs.push(test);
+            console.log('yey', $scope.formData);
+        }
         $scope.isGroupShown = function (group) {
             return $scope.shownGroup === group;
         };
