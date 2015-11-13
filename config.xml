@@ -14,7 +14,6 @@
   
     <content src="index.html"/>
     
-    <preference name="phonegap-version" value="cli-5.2.0" />
     <gap:config-file platform="android" parent="/manifest">
         <application android:theme="@android:style/Theme.NoTitleBar"></application>
     </gap:config-file>
