@@ -16,7 +16,7 @@
                             <a id="a{{fieldset.$$hashKey}}" scroll ng-click="toggleGroup(fieldset, goto)" ng-class="{active: isGroupShown(group)}" style="float:right;width:50px;text-align:right">                                                            
                                 <span class="icon ion-chevron-down all-chevron"></span>                                                            
                             </a>
-                            <a ng-click="repeatGroup(fieldset)" style="float:right;width:50px;text-align:right">                                                            
+                            <a ng-click="repeatGroup(fieldset)" style="float:right;width:50px;text-align:right" ng-show="fieldset.repeatable">                                                            
                                 <span class="icon ion-plus all-chevron"></span>                                                            
                             </a>
                             <span class="all-field-description">{{fieldset.guidance}}</span>
@@ -25,7 +25,7 @@
                             <!--                            <a ng-click="repeatField(fieldset, field)" style="float:right;width:50px;text-align:right">                                                            
                                                             <span class="icon ion-plus all-chevron"></span>                                                            
                                                         </a>-->
-                            <a class="all-field-repeat" ng-click="repeatField(fieldset, field)" ><span class="icon ion-plus all-chevron"></span> </a>
+                            <a class="all-field-repeat" ng-click="repeatField(fieldset, field)" ng-show="field.repeatable"><span class="icon ion-plus all-chevron"></span> </a>
                             <field data="field"></field>
                         </div>
 
