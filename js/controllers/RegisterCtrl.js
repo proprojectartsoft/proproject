@@ -29,11 +29,11 @@ angular.module($APP.name).controller('RegisterCtrl', [
                 $scope.listHelp = [];
                 $scope.data = data;
                 $scope.num = $scope.data.records.values.length;
-                $scope.data.records.names = [];
-                for (var i = 0; i < $scope.data.records.values[0].length; i++) {
-                    $scope.data.records.names.push($scope.data.records.values[0][i].key);
-                    $scope.listHelp.push({'name': $scope.data.records.values[0][i].key, 'index': i});
-                }
+                // $scope.data.records.names = [];
+                // for (var i = 0; i < $scope.data.records.values[0].length; i++) {
+                //     $scope.data.records.names.push($scope.data.records.values[0][i].key);
+                //     $scope.listHelp.push({'name': $scope.data.records.values[0][i].key, 'index': i});
+                // }
             });
             $scope.$broadcast('scroll.refreshComplete');
         }
