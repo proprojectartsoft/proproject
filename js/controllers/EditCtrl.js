@@ -1,4 +1,4 @@
-angular.module($APP.name).controller('FormCtrl', [
+angular.module($APP.name).controller('EditCtrl', [
     '$scope',
     'FormInstanceService',
     '$timeout',
@@ -9,20 +9,21 @@ angular.module($APP.name).controller('FormCtrl', [
     'CacheFactory',
     '$ionicPopup',
     function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, FormDesignService, CacheFactory, $ionicPopup) {
-        $scope.submit = function () {
-
+        $scope.formData = $rootScope.rootForm;
+        console.log($scope.formData, $rootScope.formData)
+        $scope.submit = function (help) {
+            console.log(help, $rootScope.formId)
             var confirmPopup = $ionicPopup.confirm({
-                title: 'New form',
-                template: 'Are you sure you want to submit the data?'
+                title: 'Edit form',
+                template: 'Are you sure you want to edit this form?'
             });
             confirmPopup.then(function (res) {
                 if (res) {
-                    FormInstanceService.create($scope.formData).then(function (data) {
+                    FormInstanceService.update($rootScope.formId, $scope.formData).then(function (data) {
                         if (data) {
                             $rootScope.formId = data.id;
                             FormInstanceService.get($rootScope.formId).then(function (data) {
-                                $rootScope.rootForm = data;
-                                $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
+                                $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
                             })
                         }
                     })
@@ -40,51 +41,48 @@ angular.module($APP.name).controller('FormCtrl', [
         };
         $scope.repeatGroup = function (x) {
             var aux = {};
-            console.log(x)
             angular.copy(x, aux);
             aux.repeatable = false;
             aux.id = 0;
-            for (var i = 0; i < aux.field_designs.length; i++) {
-                aux.field_designs[i].field_group_design_id = 0;
-                aux.field_designs[i].id = 0;
-                if (aux.field_designs[i].option_designs) {
-                    for (var j = 0; j < aux.field_designs[i].option_designs.length; j++) {
-                        aux.field_designs[i].option_designs[j].id = 0;
-                        aux.field_designs[i].option_designs[j].field_design_id = 0;
+            for (var i = 0; i < aux.field_instances.length; i++) {
+                aux.field_instances[i].field_group_instance_id = 0;
+                aux.field_instances[i].id = 0;
+                if (aux.field_instances.option_instances) {
+                    for (var j = 0; j < aux.field_instances[i].option_instances.length; j++) {
+                        aux.field_instances[i].option_instances[j].id = 0;
+                        aux.field_instances[i].option_instances[j].field_instance_id = 0;
                     }
                 }
-                if (aux.field_designs[i].field_values) {
-                    for (var j = 0; j < aux.field_designs[i].field_values.length; j++) {
-                        aux.field_designs[i].field_values[j].id = 0;
-                        aux.field_designs[i].field_values[j].field_design_id = 0;
-                    }
+                for (var j = 0; j < aux.field_instances[i].field_values.length; j++) {
+                    aux.field_instances[i].field_values[j].id = 0;
+                    aux.field_instances[i].field_values[j].field_instance_id = 0;
                 }
             }
-            for (var i = 0; i < $scope.formData.field_group_designs.length; i++) {
-                if (x === $scope.formData.field_group_designs[i]) {
-                    $scope.formData.field_group_designs.splice(i + 1, 0, aux);
+            for (var i = 0; i < $scope.formData.field_group_instances.length; i++) {
+                if (x === $scope.formData.field_group_instances[i]) {
+                    $scope.formData.field_group_instances.splice(i + 1, 0, aux);
                     break;
                 }
             }
         };
         $scope.repeatField = function (x, y) {
-            console.log(x, y)
             var test = {};
             angular.copy(y, test);
             test.repeatable = false;
             test.id = 0;
-            for (var i = 0; i < x.field_designs.length; i++) {
-                if (x.field_designs[i] === y) {
-                    if (x.field_designs.option_designs) {
-                        for (var j = 0; j < x.field_designs.option_designs.length; j++) {
-                            test.field_designs.option_designs[j].id = 0;
+            for (var i = 0; i < x.field_instances.length; i++) {
+                if (x.field_instances[i] === y) {
+                    if (x.field_instances.field_values) {
+                        for (var j = 0; j <= x.field_instances.field_values.length; j++) {
+                            test.field_instances.field_values[j].id = 0;
                         }
                     }
-                    x.field_designs.splice(i + 1, 0, test);
+                    x.field_instances.splice(i + 1, 0, test);
                     break;
                 }
             }
         }
+
         $scope.isGroupShown = function (group) {
             return $scope.shownGroup === group;
         };

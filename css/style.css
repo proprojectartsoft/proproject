@@ -359,8 +359,26 @@ textarea {
 .all-field-repeat{
     position: absolute;
     z-index: 10;
-    right: 15px;
-    top: 0px;
-    padding-top: 10px;
-    padding-right: 5px;
+    left: 5px;
+    top: 15px;
+    padding: 6px 10px;
+    background-color: #245985;
+}
+.help{
+    position: absolute;
+    z-index: 9999;
+    background-color: #fff;
+    padding: 6px 10px;
+    margin-left: 5px;
+    margin-top: 25px;
+}
+.more-margin{
+    margin-left:25px;
+}
+.more-margin input{
+    margin-left:25px;
+}
+.all-req:after{
+    content:'*';
+    color:red;
 }

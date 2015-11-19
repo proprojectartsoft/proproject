@@ -1,0 +1,35 @@
+<ion-view title="Form" id="form" cache-view="false">
+    <ion-content>
+        <div class="content" >
+            <div  class="list" >                       
+                <a class="item item-button-left test-item" ng-click="back()" href="#/app/view/{{projectId}}/{{formData.category_id}}">
+                    Form: <span class="all-header-details">{{formData.name}}</span>
+                    <button class="button button-clear  button-calm" >
+                        <i class="icon ion-chevron-left"></i>
+                    </button>
+                </a>
+                <form>
+                    <div ng-repeat="fieldset in formData.field_group_instances track by $index" fs data="fieldset">
+                        <a ng-click="repeatGroup(fieldset)" class="help" ng-show="fieldset.repeatable">                                                            
+                            <span class="icon ion-plus all-chevron"></span>                                                            
+                        </a>
+                        <div id="a{{fieldset.$$hashKey}}" scroll ng-click="toggleGroup(fieldset, goto)" ng-class="{active: isGroupShown(group)}" class="item-stable item fs all-field-header" style="width:100%">
+                            <span style="margin-left:23px">{{fieldset.name}}</span>                                                     
+                            <span style="float:right;width:50px;text-align:right" class="icon ion-chevron-down all-chevron"></span>                                                            
+                            <span class="all-field-description" style="margin-left:23px">{{fieldset.guidance}}</span>
+                        </div>
+                        <div ng-repeat="field in fieldset.field_instances" style="position: relative" ng-show="isGroupShown(fieldset)">
+                            <a class="all-field-repeat" ng-click="repeatField(fieldset, field)" ng-show="field.repeatable"><span class="icon ion-plus"  style="color:#fff"></span> </a>
+                            <edit data="field"></edit>
+                        </div>
+
+                    </div>
+                    <div class="padding">
+                        <button type="submit" ng-click="submit(formData)" value="Save" class="button button-block button-calm">Submit</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

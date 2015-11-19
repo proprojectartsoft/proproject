@@ -9,27 +9,25 @@
                     </button>
                 </a>
                 <ion-refresher on-refresh="refresh()" pulling-text="Pull to refresh..." refreshing-text="Refreshing!" spinner="android"></ion-refresher>
-                <div ng-repeat="register in data.records.values">
+                <div ng-repeat="register in data.records.values track by $index">   
                     <div class="form-item-header">
-                        <b>{{num - $index}})</b> <b ng-repeat="(key, value) in register track by $index" ng-if="key === 'Date completed'">{{dateToString(value)}}</b>
+                        <span>{{num-$index}})&nbsp;{{help('Date completed', register) | date:'EEE, dd MMM yyyy hh:mm a'}}</span>
                     </div>
                     <div class="item">
-                        <div ng-repeat="label in data.records.names" class="register-value">
-                            <small ng-if="label != 'instance_id' && label != 'Date completed'">{{label}}</small><br ng-if="label != 'instance_id' && label != 'Date completed'">
-                            <b class="pp-whitespace" ng-if="label != 'instance_id' && label != 'Date completed' && register[label].substring(0, 5) != 'data:'">{{register[label] ? (register[label] == "true" ? "Yes" : (register[label] == "false" ? "No" : (register[label] == "||NULL||" ? "-" : register[label]))) : "-"}}</b>
-                            <img ng-if="register[label].substring(0, 5) == 'data:'" ng-src="{{register[label]}}">
+                        <div class="register-value" ng-repeat="label in data.records.names track by $index" style="margin-bottom: 10px">
+                            <div ng-if="label != 'instance_id'"><strong>{{label}}</strong></div>
+                            <span ng-if="label != 'Date completed' && help(label, register).substring(0, 5) != 'data:'">{{help(label, register) ? (help(label, register) == "true" ? "Yes" : (help(label, register) == "false" ? "No" : (help(label, register) == "||NULL||" ? "-" : help(label, register)))) : "-"}}</span>
+                            <img ng-if="register[label].substring(0, 5) == 'data:'" ng-src="{{help(label, register)}}">
                         </div>
                         <div class="register-value">
-                            <small>User</small><br>
-                            <b>{{register['User']}}</b>
+                            <div><strong>User</strong></div>
+                            <span >{{help('User', register)}}</span>
                         </div>
                         <div class="register-value">
-                            <a ng-click="change(register['instance_id'])" class="button button-block button-calm">View Form</a>
+                            <a ng-click="change(register)" class="button button-block button-calm">View Form</a>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </ion-content>

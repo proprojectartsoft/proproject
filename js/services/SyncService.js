@@ -23,7 +23,6 @@ angular.module($APP.name).factory('SyncService', [
         };
         function up() {
             console.log("Calling up function");
-
             var sync = CacheFactory.get('sync');
             console.log('SYNC');
             if (!sync || sync.length === 0) {
@@ -95,13 +94,9 @@ angular.module($APP.name).factory('SyncService', [
                 for (var i = 0; i < projects.length; i++) {
                     projectsCache.put(projects[i].id, projects[i]);
                 }
-                console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
                 $rootScope.$broadcast('sync.projects.ready');
             });
             projectsReadyDestroyer = $rootScope.$on('sync.projects.ready', function () {
-
-//                console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-//                $rootScope.$emit('syncDown.complete');
 //                CATEGORIES CACHE
                 var categoriesCache = CacheFactory.get('categoriesCache');
                 if (!categoriesCache) {
@@ -112,8 +107,6 @@ angular.module($APP.name).factory('SyncService', [
                 }
                 $rootScope.categories = [];
                 CategoriesService.list().then(function (categories) {
-                    console.log(categories)
-//                    for (var i = 0; i < categories.length; i++) {
                     angular.forEach(categories, function (ctg) {
                         categoriesCache.put(ctg.id, ctg);
                         $rootScope.categories.push(ctg);
@@ -141,7 +134,6 @@ angular.module($APP.name).factory('SyncService', [
                     if ($rootScope.sw === 0) {
                         $rootScope.sw++;
                         $rootScope.$emit('sync.design.ready');
-//                        $rootScope.$emit('syncDown.complete');
                     }
                 });
             });

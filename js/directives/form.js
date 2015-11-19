@@ -5,7 +5,6 @@ angular.module($APP.name).directive('form', ['$parse', '$ionicPopup', '$rootScop
                 return {
                     pre: function ($scope, $elem, $attrs) {
                         $rootScope.sketch = false;
-
                         if (!$attrs["novalidate"]) {
                             $elem.attr("novalidate", "novalidate");
                         }
@@ -25,7 +24,7 @@ angular.module($APP.name).directive('form', ['$parse', '$ionicPopup', '$rootScop
                             }
 
                             data.errors = [];
-                            if (data.required && (data.value === undefined || data.value === "" || data.value.length === 0 || data.value === $rootScope.sketch)) {
+                            if (data.required && data.value && (data.value === undefined || data.value === "" || data.value.length === 0 || data.value === $rootScope.sketch)) {
                                 data.errors.push({type: 'required', message: data.label + ' is required.'});
                             }
                             else if (data.minLength !== undefined && data.value !== undefined && data.value.length < data.minLength) {
@@ -104,11 +103,9 @@ angular.module($APP.name).directive('form', ['$parse', '$ionicPopup', '$rootScop
 
                             }
                         });
-
                         $scope.$on('validateField', function (data) {
                             data.targetScope.data = $scope.validateField(data.targetScope.data, true);
                         });
-
                         var fn = $parse($attrs.onSubmit);
                         $elem.bind('submit', function () {
                             $scope.$broadcast('submit');
@@ -128,9 +125,6 @@ angular.module($APP.name).directive('form', ['$parse', '$ionicPopup', '$rootScop
                             $scope.$apply(function (event) {
                                 fn($scope, {$event: event});
                             });
-
-
-
                         });
                     }
                 };

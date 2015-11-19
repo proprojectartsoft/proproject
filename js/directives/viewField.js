@@ -13,19 +13,13 @@ angular.module($APP.name).directive('viewField', ['$http', '$compile', '$parse',
                 $scope.hash = "H" + $scope.$id;
 
                 if ($scope.data.type === "time") {
-                    if ($scope.data.field_values[0].value !== '0') {
-                        $scope.data.field_values[0].value = $scope.data.field_values[0].value.substr(11, 5)
-                    }
-                    else{
-                        $scope.data.field_values[0].value = '-'
+                    if ($scope.data.field_values[0].value === '0') {
+                        $scope.data.field_values[0].value = '-';
                     }
                 }
                 if ($scope.data.type === "date") {
-                    if ($scope.data.field_values[0].value !== '0') {
-                        $scope.data.field_values[0].value = $scope.data.field_values[0].value.substr(0, 10)
-                    }
-                    else{
-                        $scope.data.field_values[0].value = '-'
+                    if ($scope.data.field_values[0].value === '0') {
+                        $scope.data.field_values[0].value = '-';
                     }
                 }
 

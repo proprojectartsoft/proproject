@@ -1,51 +1,51 @@
 
 <!--text-->
 <label for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required}" ng-if="data.type == 'text'">
-    <span class="all-label">{{data.name}}</span>
-    <span class="all-description">{{data.guidance}}</span>
-    <input input id="{{hash}}" type="text" name="{{data.name}}" ng-model="data.value" value="{{data.default}}" placeholder="{{data.placeholder}}" ng-required="data.required">
+    <span class="all-label more-margin all-req" ng-class="{'all-req' : data.required }">{{data.name}}</span>
+    <span class="all-description more-margin">{{data.guidance}}</span>
+    <input style="margin-left:25px" input id="{{hash}}" type="text" name="{{data.name}}" ng-model="data.value" value="{{data.default}}" placeholder="{{data.placeholder}}" ng-required="data.required">
 </label>
 
 <!--text area-->
 <label for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'textarea'">
-    <span class="all-label">{{data.name}}</span>
-    <span class="all-description">{{data.guidance}}</span>
-    <textarea ng-auto-expand id="{{hash}}" type="text" ng-model="data.value" placeholder="{{data.placeholder}}" ng-required="data.required">{{data.value}}</textarea>
+    <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>
+    <span class="all-description more-margin">{{data.guidance}}</span>
+    <textarea style="margin-left:25px" ng-auto-expand id="{{hash}}" type="text" ng-model="data.value" placeholder="{{data.placeholder}}" ng-required="data.required">{{data.value}}</textarea>
 </label>
 
 <!--password-->
 <label for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'password'">
-    <span class="all-label">{{data.label}}</span>
-    <span class="all-description">{{data.description}}</span>
-    <input input id="{{hash}}" type="password" name="{{data.name}}" ng-model="data.value" value="{{data.value}}" placeholder="{{data.placeholder}}" ng-required="data.required" />
+    <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.label}}</span>
+    <span class="all-description more-margin">{{data.description}}</span>
+    <input input style="margin-left:25px" id="{{hash}}" type="password" name="{{data.name}}" ng-model="data.value" value="{{data.value}}" placeholder="{{data.placeholder}}" ng-required="data.required" />
 </label>
 
 <!--select-->
 <label class="item item-input item-select item-stacked-label calm-border all-padding-topbot" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'select'">
-    <span class="all-label">{{data.name}}</span>        
-    <span class="all-description" style="margin-right: 80px">{{data.guidance}}</span>  
+    <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
+    <span class="all-description more-margin" style="margin-right: 80px">{{data.guidance}}</span>  
     <select input id="{{hash}}" ng-model="data.value" ng-init="data.value = data.default_value"  ng-options="option.value as option.name for option in data.option_designs">
     </select>
 </label>
 
 <!--email-->
 <label for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'email'">
-    <span class="all-label">{{data.name}}</span>        
-    <span class="all-description">{{data.guidance}}</span>  
-    <input input id="{{hash}}" type="text" name="{{data.name}}" ng-model="data.value" value="{{data.default}}" placeholder="{{data.placeholder}}" ng-required="data.required">
+    <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
+    <span class="all-description more-margin">{{data.guidance}}</span>  
+    <input input style="margin-left:25px" id="{{hash}}" type="text" name="{{data.name}}" ng-model="data.value" value="{{data.default}}" placeholder="{{data.placeholder}}" ng-required="data.required">
 </label>
 
 <!--number-->
 <label for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'number'">
-    <span class="all-label">{{data.name}}</span>        
-    <span class="all-description">{{data.guidance}}</span> 
-    <input input id="{{hash}}" type="number" name="{{data.name}}" ng-model="data.value" value="{{data.default_value}}" placeholder="{{data.placeholder}}" ng-required="data.required">
+    <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
+    <span class="all-description more-margin">{{data.guidance}}</span> 
+    <input input style="margin-left:25px" id="{{hash}}" type="number" name="{{data.name}}" ng-model="data.value" value="{{data.default_value}}" placeholder="{{data.placeholder}}" ng-required="data.required">
 </label>
 
 
 <!--radio-->
 <div ng-if="data.type == 'radio'" class="calm-border">
-    <div class="item item-label calm-border"><div class="all-label">{{data.name}}</div><span class="all-description">{{data.guidance}}</span></div>
+    <div class="item item-label calm-border"><div class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</div><span class="all-description">{{data.guidance}}</span></div>
     <label class="item item-checkbox all-padding-leftright" ng-repeat="box in data.option_designs">
         <span class="item-content" style="margin-right: 30px">{{box.name}}</span>
         <span class="checkbox all-checkbox">
@@ -58,8 +58,8 @@
 <!--check box-->
 <div class="calm-border" ng-if="data.type == 'checkbox'">
     <label class="item item-checkbox all-padding-leftright">
-        <span class="all-label">{{data.name}}</span>        
-        <span class="all-description" style="margin-right: 30px">{{data.guidance}}</span>   
+        <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
+        <span class="all-description more-margin" style="margin-right: 30px">{{data.guidance}}</span>   
         <span class="checkbox all-checkbox">
             <input input id="{{hash}}" type="checkbox" name="{{data.name}}" ng-model="data.value" value="1" ng-required="data.required">
         </span>
@@ -69,8 +69,8 @@
 <!--check box list-->
 <div ng-if="data.type == 'checkbox_list'">
     <label class="item item-checkbox all-padding-leftright calm-border">
-        <span class="all-label">{{data.name}}</span>        
-        <span class="all-description">{{data.guidance}}</span>   
+        <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
+        <span class="all-description more-margin">{{data.guidance}}</span>   
     </label>
     <label class="item item-checkbox all-padding-leftright" ng-repeat="box in data.option_designs">
         <span class="all-label" style="margin-right: 30px">{{box.name}}</span>        
@@ -82,23 +82,23 @@
 
 <!--signature-->
 <div for="{{hash}}" class="item item-input item-stacked-label signature calm-border" ng-if="data.type == 'signature'" >
-    <span class="all-label">{{data.name}}</span>        
-    <span class="all-description">{{data.guidance}}</span> 
-    <a class="button button-calm button-outline all-button" ng-click="directiveClick(hash)">{{data.value ? "Edit signature" : "Insert signature"}}</a>
+    <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
+    <span class="all-description more-margin">{{data.guidance}}</span> 
+    <a class="button button-calm button-outline all-button more-margin" ng-click="directiveClick(hash)">{{data.value ? "Edit signature" : "Insert signature"}}</a>
 </div>
 
 <!--date-->
 <div for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'date'" >
-    <span class="all-label">{{data.name}}</span>        
-    <span class="all-description">{{data.guidance}}</span> 
-    <input input id="{{hash}}" type="date"  name="{{data.name}}" ng-model="data.value" value="{{data.default_value}}" placeholder="{{data.placeholder}}" ng-required="data.required">
+    <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
+    <span class="all-description more-margin">{{data.guidance}}</span> 
+    <input input style="margin-left:25px" id="{{hash}}" type="date"  name="{{data.name}}" ng-model="data.value" value="{{data.default_value}}" placeholder="{{data.placeholder}}" ng-required="data.required">
 </div>
 
 <!--time-->
 <div for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'time'" >
-    <span class="all-label">{{data.name}}</span>        
-    <span class="all-description">{{data.guidance}}</span>     
-    <input input id="{{hash}}" type="time" name="{{data.name}}" ng-model="data.value" value="{{data.default_value}}" placeholder="{{data.placeholder}}" ng-required="data.required">    
+    <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
+    <span class="all-description more-margin">{{data.guidance}}</span>     
+    <input input style="margin-left:25px" id="{{hash}}" type="time" name="{{data.name}}" ng-model="data.value" value="{{data.default_value}}" placeholder="{{data.placeholder}}" ng-required="data.required">    
 </div>
 
 <!--test

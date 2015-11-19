@@ -1,7 +1,6 @@
 
 var $APP = $APP || {}; // App namespace
-
-// $APP.server = 'http://artvm23.vmnet.ro';
+//$APP.server = 'http://artvm23.vmnet.ro';
  $APP.server = 'http://app.proproject.io';
 //$APP.server = 'http://10.29.254.110'
 //$APP.server = 'http://localhost'
@@ -26,6 +25,17 @@ angular.module($APP.name).run(function ($ionicPlatform, $rootScope, CategoriesSe
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         }
+        function getAndroidVersion(ua) {
+            ua = (ua || navigator.userAgent).toLowerCase();
+            var match = ua.match(/android\s([0-9\.]*)/);
+            return match ? match[1] : false;
+        }
+        ;
+
+        getAndroidVersion(); //"4.2.1"
+        parseInt(getAndroidVersion(), 10); //4
+        parseFloat(getAndroidVersion()); //4.2
+        console.log(getAndroidVersion())
         if (window.StatusBar) {
             StatusBar.styleDefault();
             StatusBar.overlaysWebView(false);
@@ -92,6 +102,16 @@ angular.module($APP.name).config([
                         'menuContent': {
                             templateUrl: "view/form.html",
                             controller: 'FormCtrl'
+                        }
+                    }
+                })
+                .state('app.edit', {
+                    url: "/edit/:projectId/:formId",
+                    reload: true,
+                    views: {
+                        'menuContent': {
+                            templateUrl: "view/edit.html",
+                            controller: 'EditCtrl'
                         }
                     }
                 })

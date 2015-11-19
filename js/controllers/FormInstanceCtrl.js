@@ -21,5 +21,8 @@ angular.module($APP.name).controller('FormInstanceCtrl', [
                 $location.path("/app/view/" + $rootScope.projectId + "/" + $scope.formData.category_id);
             }
         };
+        $scope.edit = function(){
+            $location.path("/app/edit/" + $rootScope.projectId + "/" + $scope.formData.id);
+        }
     }
 ]);
