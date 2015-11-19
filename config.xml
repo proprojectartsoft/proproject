@@ -78,5 +78,7 @@
     <gap:splash src="img/splash/Default-Landscape.png" gap:platform="ios" width="1024" height="768" />
     <gap:splash src="img/splash/Default-Portrait@2x.png" gap:platform="ios" width="1536" height="2048" />
     <gap:splash src="img/splash/Default-Landscape@2x.png" gap:platform="ios" width="2048" height="1536" />
-  
+    
+    <platform name="ios" />
+    <platform name="android" />
 </widget>
