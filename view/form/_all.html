@@ -58,7 +58,7 @@
 <!--check box-->
 <div class="calm-border" ng-if="data.type == 'checkbox'">
     <label class="item item-checkbox all-padding-leftright">
-        <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
+        <span class="all-label more-margin" ng-class="{'all-req' : data.required }" style="margin-right:30px; white-space: pre-wrap">{{data.name}}</span>        
         <span class="all-description more-margin" style="margin-right: 30px">{{data.guidance}}</span>   
         <span class="checkbox all-checkbox">
             <input input id="{{hash}}" type="checkbox" name="{{data.name}}" ng-model="data.value" value="1" ng-required="data.required">
@@ -73,7 +73,7 @@
         <span class="all-description more-margin">{{data.guidance}}</span>   
     </label>
     <label class="item item-checkbox all-padding-leftright" ng-repeat="box in data.option_designs">
-        <span class="all-label" style="margin-right: 30px">{{box.name}}</span>        
+        <span class="all-label" style="margin-right:30px; white-space: pre-wrap">{{box.name}}</span>        
         <span class="checkbox all-checkbox">
             <input input id="{{hash}}" type="checkbox" name="{{box.name}}" ng-model="box.value" value="1" ng-required="data.required">
         </span>

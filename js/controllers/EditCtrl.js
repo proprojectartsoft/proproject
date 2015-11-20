@@ -6,9 +6,9 @@ angular.module($APP.name).controller('EditCtrl', [
     '$location',
     '$rootScope',
     'FormDesignService',
-    'CacheFactory',
+    '$ionicScrollDelegate',
     '$ionicPopup',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, FormDesignService, CacheFactory, $ionicPopup) {
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, FormDesignService, $ionicScrollDelegate, $ionicPopup) {
         $scope.formData = $rootScope.rootForm;
         console.log($scope.formData, $rootScope.formData)
         $scope.submit = function (help) {
@@ -31,13 +31,34 @@ angular.module($APP.name).controller('EditCtrl', [
             });
 
         };
-        $scope.toggleGroup = function (group, callback) {
+        function elmYPosition(id) {
+            var elm = document.getElementById(id);
+            var y = elm.offsetTop;
+            var node = elm;
+            while (node.offsetParent && node.offsetParent !== document.body) {
+                node = node.offsetParent;
+                y += node.offsetTop;
+            }
+            return y;
+        }
+
+        $scope.goto = function (id) {
+            if (id) {
+                $scope.scroll_ref = $timeout(function () { // we need little delay
+                    var stopY = elmYPosition(id) - 40;
+                    console.log(stopY)
+                    $ionicScrollDelegate.scrollTo(0, stopY, true);
+
+                }, 50);
+            }
+        }
+        $scope.toggleGroup = function (group, id) {
             if ($scope.isGroupShown(group)) {
                 $scope.shownGroup = null;
             } else {
                 $scope.shownGroup = group;
             }
-            callback();
+            $scope.goto(id);
         };
         $scope.repeatGroup = function (x) {
             var aux = {};
