@@ -32,30 +32,36 @@ angular.module($APP.name).directive('edit', [
                     }
                 }
                 if ($scope.data.type === "checkbox") {
-                    if ($scope.data.field_values[0].value === "true") {
-                        $scope.data.field_values[0].value = true;
-                    }
-                    else {
-                        $scope.data.field_values[0].value = false;
+                    if ($scope.data.field_values[0]) {
+                        if ($scope.data.field_values[0].value === "true") {
+                            $scope.data.field_values[0].value = true;
+                        }
+                        else {
+                            $scope.data.field_values[0].value = false;
+                        }
                     }
                 }
                 if ($scope.data.type === "date") {
-                    var aux = $scope.data.field_values[0].value.substr(0, 4)
-                    var fix = $scope.data.field_values[0].value.substr(3, 2) + '-' + $scope.data.field_values[0].value.substr(0, 2) + '-' + $scope.data.field_values[0].value.substr(6, 4);
-                    if ($scope.data.field_values[0].value !== '0' && $scope.data.field_values[0].value !== 0 && aux !== '1969') {
-                        $scope.data.field_values[0].value = new Date(fix)
-                    }
-                    else {
-                        $scope.data.field_values[0].value = new Date(null);
+                    if ($scope.data.field_values[0]) {
+                        var aux = $scope.data.field_values[0].value.substr(0, 4)
+                        var fix = $scope.data.field_values[0].value.substr(3, 2) + '-' + $scope.data.field_values[0].value.substr(0, 2) + '-' + $scope.data.field_values[0].value.substr(6, 4);
+                        if ($scope.data.field_values[0].value !== '0' && $scope.data.field_values[0].value !== 0 && aux !== '1969') {
+                            $scope.data.field_values[0].value = new Date(fix)
+                        }
+                        else {
+                            $scope.data.field_values[0].value = new Date(null);
+                        }
                     }
                 }
                 if ($scope.data.type === "time") {
-                    var aux = $scope.data.field_values[0].value.substr(0, 4)
-                    if ($scope.data.field_values[0].value !== '0' && $scope.data.field_values[0].value !== 0 && aux !== '1969') {
-                        $scope.data.field_values[0].value = new Date("01 " + $scope.data.field_values[0].value)
-                    }
-                    else {
-                        $scope.data.field_values[0].value = new Date(null);
+                    if ($scope.data.field_values[0]) {
+                        var aux = $scope.data.field_values[0].value.substr(0, 4)
+                        if ($scope.data.field_values[0].value !== '0' && $scope.data.field_values[0].value !== 0 && aux !== '1969') {
+                            $scope.data.field_values[0].value = new Date("01 " + $scope.data.field_values[0].value)
+                        }
+                        else {
+                            $scope.data.field_values[0].value = new Date(null);
+                        }
                     }
                 }
 

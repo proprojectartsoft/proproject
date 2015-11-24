@@ -2,7 +2,7 @@
     <ion-content>
         <div class="content" >
             <div  class="list all-header-tabs">                       
-                <a class="item item-button-left test-item" ng-click="back()" href="#/app/categories/{{projectId}}">
+                <a class="item item-button-left test-item" ng-click="back()" ui-sref="app.categories({projectId:projectId})">
                     {{categoryName}} - registers 
                     <button class="button button-clear  button-calm" >
                         <i class="icon ion-chevron-left all-chevron"></i>
@@ -18,7 +18,7 @@
                         <i class="icon ion-search placeholder-icon"></i>
                         <input type="text" placeholder="Search">
                     </label>
-                    <a class="item" ng-repeat="reg in registers" ng-click="change(reg.code)" style="display:table; border:none; width:100%; border-bottom:2px solid #AAA">
+                    <a class="item" ng-repeat="reg in registers" ui-sref="app.register({projectId:projectId, code:reg.code, categoryId: categoryId})" style="display:table; border:none; width:100%; border-bottom:2px solid #AAA">
                         <span class="reg form-item pp-whitespace" style="display: table-cell; width:30%;vertical-align: middle">{{reg.code}}</span>
                         <span class="reg" style="display: table-cell;padding-left:5px;vertical-align: middle; width:60%"><span class="  pp-whitespace"> {{reg.name}}</span></span>
                         <span class="badge badge-calm" style="vertical-align: middle">{{reg.completed}}</span>
@@ -28,13 +28,13 @@
         </div>
     </ion-content>
     <div class="tabs tabs-calm tabs-icon-only">
-        <a class="tab-item" ng-click="designsFix()">
+        <a class="tab-item" ui-sref="app.forms({projectId:projectId, categoryId:categoryId})">
             <i class="icon ion-ios-compose-outline"></i>
         </a>
         <a class="tab-item">
             <i class="icon ion-ios-box"></i>
         </a>
-        <a class="tab-item" href="#/app/view/{{projectId}}/{{categoryId}}">
+        <a class="tab-item" ui-sref="app.completed({projectId:projectId, categoryId:categoryId})">
             <i class="icon ion-ios-eye-outline"></i>
         </a>
     </div>

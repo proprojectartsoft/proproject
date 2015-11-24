@@ -2,14 +2,23 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
     '$scope',
     '$state',
     'FormInstanceService',
-    '$ionicLoading',
+    'CacheFactory',
     '$rootScope',
     '$location',
-    '$timeout',
-    function ($scope, $state, FormInstanceService, $ionicLoading, $rootScope, $location, $timeout) {
+    '$stateParams',
+    function ($scope, $state, FormInstanceService, CacheFactory, $rootScope, $location, $stateParams) {
         $scope.isLoaded = false;
         $scope.hasData = false;
-
+        
+        var categoriesCache = CacheFactory.get('categoriesCache');
+        if (!categoriesCache || categoriesCache.length === 0) {
+            categoriesCache = CacheFactory('categoriesCache');
+            categoriesCache.setOptions({
+                storageMode: 'localStorage'
+            });
+        }
+        $scope.categoryName = categoriesCache.get($stateParams.categoryId).name;
+        $rootScope.categoryId = $stateParams.categoryId;
         FormInstanceService.list($rootScope.projectId, $rootScope.categoryId).then(function (data) {
             $scope.isLoaded = true;
             $scope.formInstances = data;

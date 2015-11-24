@@ -5,10 +5,11 @@ angular.module($APP.name).controller('RegistersCtrl', [
     '$stateParams',
     'RegisterService',
     '$location',
-    '$timeout',
-    function ($scope, $state, $rootScope, $stateParams, RegisterService, $location, $timeout) {
+    'CacheFactory',
+    function ($scope, $state, $rootScope, $stateParams, RegisterService, $location, CacheFactory) {
         $scope.isLoaded = false;
         $scope.hasData = '';
+        
         if ($stateParams.categoryId) {
             $rootScope.categoryId = $stateParams.categoryId;
             RegisterService.list($rootScope.projectId, $rootScope.categoryId).then(function (data) {
@@ -19,6 +20,14 @@ angular.module($APP.name).controller('RegistersCtrl', [
                 }
             });
         }
+        var categoriesCache = CacheFactory.get('categoriesCache');
+        if (!categoriesCache || categoriesCache.length === 0) {
+            categoriesCache = CacheFactory('categoriesCache');
+            categoriesCache.setOptions({
+                storageMode: 'localStorage'
+            });
+        }
+        $scope.categoryName = categoriesCache.get($stateParams.categoryId).name;
         $scope.refresh = function () {
             RegisterService.list($rootScope.projectId, $rootScope.categoryId).then(function (data) {
                 $scope.registers = data;
@@ -27,20 +36,6 @@ angular.module($APP.name).controller('RegistersCtrl', [
                 }
                 $scope.$broadcast('scroll.refreshComplete');
             });
-        }
-        $scope.designsFix = function () {
-            console.log('test', $rootScope.projectId, $rootScope.categoryId, $rootScope.formDesigns)
-            $location.path("/app/category/" + $rootScope.projectId + "/" + $rootScope.categoryId);
-        }
-        $scope.change = function (code) {
-            $rootScope.formName = code;
-            $location.path("/app/register/" + $rootScope.projectId + "/" + $rootScope.formId);
-        };
-        $scope.back = function () {
-            console.log('registers:', $rootScope.projectId, $rootScope.categoryId);
-        };
-        $scope.register = function () {
-            $state.go("app.register");
-        };
+        }        
     }
 ]);

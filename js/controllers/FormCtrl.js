@@ -5,10 +5,19 @@ angular.module($APP.name).controller('FormCtrl', [
     'FormUpdateService',
     '$location',
     '$rootScope',
-    'FormDesignService',
+    'CacheFactory',
     '$ionicScrollDelegate',
     '$ionicPopup',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, FormDesignService, $ionicScrollDelegate, $ionicPopup) {
+    '$stateParams',
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams) {
+        var designsCache = CacheFactory.get('designsCache');
+        if (!designsCache || designsCache.length === 0) {
+            designsCache = CacheFactory('designsCache');
+            designsCache.setOptions({
+                storageMode: 'localStorage'
+            });
+        }
+        $scope.formData = designsCache.get($stateParams.formId);
         $scope.submit = function () {
 
             var confirmPopup = $ionicPopup.confirm({
@@ -59,7 +68,7 @@ angular.module($APP.name).controller('FormCtrl', [
             }
             $scope.goto(id);
         };
-        
+
         $scope.repeatGroup = function (x) {
             var aux = {};
             console.log(x)

@@ -8,16 +8,20 @@ angular.module($APP.name).controller('RegisterCtrl', [
     'FormInstanceService',
     'CacheFactory',
     function ($scope, $rootScope, $stateParams, RegisterService, $stateParams, $location, FormInstanceService, CacheFactory) {
-        RegisterService.get($rootScope.formName).then(function (data) {
+        
+        $rootScope.categoryId = $stateParams.categoryId;
+        RegisterService.get($stateParams.code).then(function (data) {
             $scope.listHelp = [];
             $scope.data = data;
             $scope.num = $scope.data.records.values.length;
-//            $scope.data.records.names = [];
-//            for (var i = 0; i < $scope.data.records.values[0].length; i++) {
-//                $scope.data.records.names.push($scope.data.records.values[0][i].key);
-//                $scope.listHelp.push({'name': $scope.data.records.values[0][i].key, 'index': i});
-//            }
         });
+        var categoriesCache = CacheFactory.get('categoriesCache');
+        if (!categoriesCache || categoriesCache.length === 0) {
+            categoriesCache = CacheFactory('categoriesCache');
+            categoriesCache.setOptions({
+                storageMode: 'localStorage'
+            });
+        }
 
         $scope.dateToString = function (val) {
             var date = new Date(parseInt(val));
@@ -29,11 +33,6 @@ angular.module($APP.name).controller('RegisterCtrl', [
                 $scope.listHelp = [];
                 $scope.data = data;
                 $scope.num = $scope.data.records.values.length;
-                // $scope.data.records.names = [];
-                // for (var i = 0; i < $scope.data.records.values[0].length; i++) {
-                //     $scope.data.records.names.push($scope.data.records.values[0][i].key);
-                //     $scope.listHelp.push({'name': $scope.data.records.values[0][i].key, 'index': i});
-                // }
             });
             $scope.$broadcast('scroll.refreshComplete');
         }
@@ -50,7 +49,6 @@ angular.module($APP.name).controller('RegisterCtrl', [
         }
 
         $scope.back = function () {
-//            $location.path("/app/view/" + $rootScope.projectId + "/form/1");
             console.log($stateParams);
         };
         $scope.change = function (reg) {

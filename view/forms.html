@@ -3,7 +3,7 @@
         <div class="content all-header-tabs">
             <ion-refresher on-refresh="refresh()" pulling-text="Pull to refresh..." refreshing-text="Refreshing!" spinner="android"></ion-refresher>
             <div  class="list">                       
-                <a class="item item-button-left test-item" ng-click="back()" href="#/app/categories/{{projectId}}">
+                <a class="item item-button-left test-item" ui-sref="app.categories({projectId:projectId})">
                     {{categoryName}} - designs
                     <button class="button button-clear  button-calm" >
                         <i class="icon ion-chevron-left all-chevron"></i>
@@ -18,7 +18,7 @@
                         <i class="icon ion-search placeholder-icon"></i>
                         <input type="text" placeholder="Search">
                     </label>
-                    <a class="item" ng-repeat="form in formDesigns" ng-click="change(form.id, form.code)">
+                    <a class="item" ng-repeat="form in formDesigns" ui-sref="app.form({projectId:projectId, formId:form.id})">
                         <span class="form-item">{{form.code}}</span>
                         {{form.name}}
                     </a>
@@ -30,10 +30,10 @@
         <a class="tab-item">
             <i class="icon ion-ios-compose"></i>
         </a>
-        <a class="tab-item" href="#/app/registers/{{projectId}}/{{categoryId}}">
+        <a class="tab-item" ui-sref="app.registers({projectId:projectId, categoryId:categoryId})">
             <i class="icon ion-ios-box-outline"></i>
         </a>
-        <a class="tab-item" href="#/app/view/{{projectId}}/{{categoryId}}">
+        <a class="tab-item" ui-sref="app.completed({projectId:projectId, categoryId:categoryId})">
             <i class="icon ion-ios-eye-outline"></i>
         </a>
     </div>

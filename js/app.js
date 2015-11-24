@@ -69,6 +69,9 @@ angular.module($APP.name).config([
                 })
                 .state('app.categories', {
                     url: "/categories/:projectId",
+                    params: {
+                        projectId: null
+                    },
                     views: {
                         'menuContent': {
                             templateUrl: "view/categories.html",
@@ -88,6 +91,10 @@ angular.module($APP.name).config([
 
                 .state('app.forms', {
                     url: "/category/:projectId/:categoryId",
+                    params: {
+                        projectId: null,
+                        categoryId: null
+                    },
                     reload: true,
                     views: {
                         'menuContent': {
@@ -98,6 +105,10 @@ angular.module($APP.name).config([
                 })
                 .state('app.form', {
                     url: "/form/:projectId/:formId",
+                    params: {
+                        projectId: null,
+                        formId: null
+                    },
                     reload: true,
                     views: {
                         'menuContent': {
@@ -108,6 +119,10 @@ angular.module($APP.name).config([
                 })
                 .state('app.edit', {
                     url: "/edit/:projectId/:formId",
+                    params: {
+                        projectId: null,
+                        formId: null
+                    },
                     reload: true,
                     views: {
                         'menuContent': {
@@ -118,6 +133,11 @@ angular.module($APP.name).config([
                 })
                 .state('app.formInstance', {
                     url: "/view/:projectId/:type/:formId",
+                    params: {
+                        projectId: null,
+                        type: null,
+                        formId: null
+                    },
                     reload: true,
                     views: {
                         'menuContent': {
@@ -128,6 +148,10 @@ angular.module($APP.name).config([
                 })
                 .state('app.completed', {
                     url: "/view/:projectId/:categoryId",
+                    params: {
+                        projectId: null,
+                        categoryId: null
+                    },
                     reload: true,
                     views: {
                         'menuContent': {
@@ -138,6 +162,10 @@ angular.module($APP.name).config([
                 })
                 .state('app.registers', {
                     url: "/registers/:projectId/:categoryId",
+                    params: {
+                        projectId: null,
+                        categoryId: null
+                    },
                     reload: true,
                     cache: false,
                     views: {
@@ -148,7 +176,12 @@ angular.module($APP.name).config([
                     }
                 })
                 .state('app.register', {
-                    url: "/register/:projectId/:code",
+                    url: "/register/:projectId/:categoryId/:code",
+                    params: {
+                        categoryId: null,
+                        projectId: null,
+                        code: null
+                    },
                     reload: true,
                     views: {
                         'menuContent': {
@@ -157,9 +190,6 @@ angular.module($APP.name).config([
                         }
                     }
                 })
-
-
-
                 .state('login', {
                     url: "/login",
                     templateUrl: "view/login.html",

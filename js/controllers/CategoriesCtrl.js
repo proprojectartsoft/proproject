@@ -5,12 +5,23 @@ angular.module($APP.name).controller('CategoriesCtrl', [
     'CacheFactory',
     function ($scope, $rootScope, ProjectService, CacheFactory) {
 
-            
-        $scope.change = function (id, name) {
-            $rootScope.categoryId = id;
-            $rootScope.categoryName = name;
-        };
-        console.log($rootScope.projects)
+//        var categoriesCache = CacheFactory.get('categoriesCache');
+//        if (!categoriesCache || categoriesCache.length === 0) {
+//            categoriesCache = CacheFactory('categoriesCache');
+//            categoriesCache.setOptions({
+//                storageMode: 'localStorage'
+//            });
+//        }
+//        $rootScope.categories = [];
+//        angular.forEach(categoriesCache.keys(), function (key) {
+//            $rootScope.categories.push(categoriesCache.get(key));
+//        });
+//
+//        $scope.change = function (id, name) {
+//            $rootScope.categoryId = id;
+//            $rootScope.categoryName = name;
+//        };
+//        console.log($rootScope.categories);
 
     }
 ]);
