@@ -17,7 +17,8 @@ angular.module($APP.name).directive('edit', [
                     $scope.data.value = $scope.data.field_values[0];
                     for (var i = 0; i < $scope.data.option_instances.length; i++) {
                         if ($scope.data.field_values[0] && $scope.data.field_values[0].value === $scope.data.option_instances[i].value) {
-                            $scope.data.value = $scope.data.option_instances[i].value;
+                            $scope.data.value = $scope.data.option_instances[i];
+                            $scope.data.value = 'x';
                         }
                     }
                 }
@@ -78,9 +79,10 @@ angular.module($APP.name).directive('edit', [
                         $scope.data.value = $scope.data.value ? true : false;
                     }
                     if ($scope.data.type === "select") {
+                        console.log($scope.data)
                         for (var i = 0; i < $scope.data.option_instances.length; i++) {
-                            if ($scope.data.value === $scope.data.option_instances[i].value) {
-                                $scope.data.value = $scope.data.option_instances[i].value;
+                            if ($scope.data.field_values[0].value === $scope.data.option_instances[i].value) {
+                                $scope.data.value = $scope.data.option_instances[i].value;                                
                             }
                         }
                     }
@@ -103,25 +105,25 @@ angular.module($APP.name).directive('edit', [
                     $scope.submit = true;
                 });
 
-                $scope.$watch('data.errors', function (data) {
-                    if (data && data.length) {
-                        angular.element($elem[0].firstChild).addClass('has-error');
-                        $rootScope.$emit('invalidField', $scope.data);
-                    }
-                    else {
-                        angular.element($elem[0].firstChild).removeClass('has-error');
-                        $rootScope.$emit('validField', $scope.data);
-                    }
-                });
+//                $scope.$watch('data.errors', function (data) {
+//                    if (data && data.length) {
+//                        angular.element($elem[0].firstChild).addClass('has-error');
+//                        $rootScope.$emit('invalidField', $scope.data);
+//                    }
+//                    else {
+//                        angular.element($elem[0].firstChild).removeClass('has-error');
+//                        $rootScope.$emit('validField', $scope.data);
+//                    }
+//                });
 
-                $scope.$watch('data.value', function (data) {
-                    if ($scope.value !== $scope.data.value) {
-                        $scope.dirty = true;
-                    }
-                    if ((!$scope.data.value && $scope.dirty) || $scope.submit || ($scope.data.value && $scope.data.errors && $scope.data.errors.length)) {
-                        $scope.$emit('validateField', $scope.data);
-                    }
-                });
+//                $scope.$watch('data.value', function (data) {
+//                    if ($scope.value !== $scope.data.value) {
+//                        $scope.dirty = true;
+//                    }
+//                    if ((!$scope.data.value && $scope.dirty) || $scope.submit || ($scope.data.value && $scope.data.errors && $scope.data.errors.length)) {
+//                        $scope.$emit('validateField', $scope.data);
+//                    }
+//                });
                 $scope.$on('focus', function () {
                     $elem.addClass('focus');
                 });

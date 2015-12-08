@@ -12,7 +12,7 @@ angular.module($APP.name).controller('EditCtrl', [
         $scope.formData = $rootScope.rootForm;
         console.log($scope.formData, $rootScope.formData)
         $scope.submit = function (help) {
-            console.log(help, $rootScope.formId)
+//            console.log(help, $rootScope.formId)
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Edit form',
                 template: 'Are you sure you want to edit this form?'

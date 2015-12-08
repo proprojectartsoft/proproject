@@ -25,7 +25,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                 if (MM < 10) {
                     MM = '0' + MM;
                 }
-                console.log(obj)
+//                console.log(obj)
                 x = dd + '-' + MM + '-' + yyyy;
                 return  x;
 
@@ -270,7 +270,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                             if (field_values[0].value === null || field_values[0].value === undefined) {
                                 field_values[0].value = 0;
                             } else {
-                                console.log(data.field_group_instances[i].field_instances[j])
+//                                console.log(data.field_group_instances[i].field_instances[j])
                                 field_values[0].value = dateTimeSave(data.field_group_instances[i].field_instances[j]);
                             }
                         }
@@ -300,7 +300,8 @@ angular.module($APP.name).factory('FormInstanceService', [
 //                        console.log('groups',requestGroupList)
                 }
                 requestForm.field_group_instances = requestGroupList;
-                console.log('create.requestForm', requestForm);
+                console.log('edit.raw', data);
+                console.log('edit.req', requestForm);
 
                 return $http.put($APP.server + '/api/forminstance', requestForm, {
                     params: {'id': id}
