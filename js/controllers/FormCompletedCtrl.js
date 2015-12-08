@@ -9,7 +9,7 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
     function ($scope, $state, FormInstanceService, CacheFactory, $rootScope, $location, $stateParams) {
         $scope.isLoaded = false;
         $scope.hasData = false;
-        
+        console.log($stateParams)
         var categoriesCache = CacheFactory.get('categoriesCache');
         if (!categoriesCache || categoriesCache.length === 0) {
             categoriesCache = CacheFactory('categoriesCache');
@@ -19,7 +19,7 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
         }
         $scope.categoryName = categoriesCache.get($stateParams.categoryId).name;
         $rootScope.categoryId = $stateParams.categoryId;
-        FormInstanceService.list($rootScope.projectId, $rootScope.categoryId).then(function (data) {
+        FormInstanceService.list($stateParams.projectId, $stateParams.categoryId).then(function (data) {
             $scope.isLoaded = true;
             $scope.formInstances = data;
             if (data.length === 0) {
@@ -28,7 +28,7 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
         });
 
         $scope.refresh = function () {
-            FormInstanceService.list($rootScope.projectId, $rootScope.categoryId).then(function (data) {
+            FormInstanceService.list($stateParams.projectId, $stateParams.categoryId).then(function (data) {
                 $scope.formInstances = data;
                 if (data.length === 0) {
                     $scope.hasData = 'no data';

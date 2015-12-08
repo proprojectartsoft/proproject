@@ -38,7 +38,7 @@ angular.module($APP.name).controller('FormsCtrl', [
         $scope.categoryName = categoriesCache.get($stateParams.categoryId).name;
 
         $scope.refresh = function () {
-            FormDesignService.list($rootScope.categoryId).then(function (data) {
+            FormDesignService.list($stateParams.categoryId).then(function (data) {
                 $rootScope.formDesigns = data;
                 if (data.length === 0) {
                     $scope.hasData = 'no data';

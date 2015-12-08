@@ -12,7 +12,7 @@ angular.module($APP.name).controller('RegistersCtrl', [
         
         if ($stateParams.categoryId) {
             $rootScope.categoryId = $stateParams.categoryId;
-            RegisterService.list($rootScope.projectId, $rootScope.categoryId).then(function (data) {
+            RegisterService.list($stateParams.projectId, $stateParams.categoryId).then(function (data) {
                 $scope.isLoaded = true;
                 $scope.registers = data;
                 if (data.length === 0) {
@@ -29,7 +29,7 @@ angular.module($APP.name).controller('RegistersCtrl', [
         }
         $scope.categoryName = categoriesCache.get($stateParams.categoryId).name;
         $scope.refresh = function () {
-            RegisterService.list($rootScope.projectId, $rootScope.categoryId).then(function (data) {
+            RegisterService.list($stateParams.projectId, $stateParams.categoryId).then(function (data) {
                 $scope.registers = data;
                 if (data.length === 0) {
                     $scope.hasData = 'no data';
