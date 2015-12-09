@@ -39,11 +39,15 @@ angular.module($APP.name).controller('FormsCtrl', [
 
         $scope.refresh = function () {
             FormDesignService.list($stateParams.categoryId).then(function (data) {
-                $rootScope.formDesigns = data;
-                if (data.length === 0) {
-                    $scope.hasData = 'no data';
+                if (data) {
+                    $rootScope.formDesigns = data;
+                    if (data.length === 0) {
+                        $scope.hasData = 'no data';
+                    }
                 }
                 $scope.$broadcast('scroll.refreshComplete');
+            }, function (payload) {
+                console.log("ups", payload);
             });
         };
 

@@ -9,8 +9,9 @@ angular.module($APP.name).factory('FormDesignService', [
                 }).then(
                         function (payload) {
                             return payload.data;
-                        }
-                );
+                        }, function (err) {
+                    console.log('xhai')
+                });
             },
             list: function (categoryId) {
                 return $http.get($APP.server + '/api/formdesign', {
@@ -18,8 +19,9 @@ angular.module($APP.name).factory('FormDesignService', [
                 }).then(
                         function (payload) {
                             return payload.data;
-                        }
-                );
+                        }, function (err) {
+                    console.log('xhai')
+                });
             }
         };
     }

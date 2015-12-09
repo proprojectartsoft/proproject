@@ -35,7 +35,7 @@ angular.module($APP.name).factory('SyncService', [
                     var formX = sync.get(forms[i]);
                     if (formX) {
                         console.log('* form uploaded', forms[i]);
-                        FormInstanceService.create(formX, true).then(function (response) {
+                        FormInstanceService.create_sync(formX).then(function (response) {
                             sync.remove(forms[i]);
 //                            aux++
                         });
@@ -90,11 +90,16 @@ angular.module($APP.name).factory('SyncService', [
             $rootScope.projects = [];
 
             ProjectService.list().then(function (projects) {
-                $rootScope.projects = projects;
-                for (var i = 0; i < projects.length; i++) {
-                    projectsCache.put(projects[i].id, projects[i]);
+                if (projects) {
+                    $rootScope.projects = projects;
+                    for (var i = 0; i < projects.length; i++) {
+                        projectsCache.put(projects[i].id, projects[i]);
+                    }
+                    $rootScope.$broadcast('sync.projects.ready');
                 }
-                $rootScope.$broadcast('sync.projects.ready');
+                else {
+                    $rootScope.$broadcast('syncDown.complete');
+                }
             });
             projectsReadyDestroyer = $rootScope.$on('sync.projects.ready', function () {
 //                CATEGORIES CACHE
@@ -137,42 +142,6 @@ angular.module($APP.name).factory('SyncService', [
                     }
                 });
             });
-//            $rootScope.$on('sync.design.ready', function () {
-//                $rootScope.instanceFCount = 0;
-//                $rootScope.instanceTotal = 0;
-//                $rootScope.sw = 0;
-//
-//                angular.forEach($rootScope.projects, function (prj) {
-//                    FormInstanceService.list(prj.id).then(function (formInstance) {
-//                        $rootScope.instanceFCount++;
-//                        $rootScope.instanceTotal += formInstance.length;
-//                    })
-//                });
-//                $rootScope.$watch('instanceFCount', function () {
-//                    if ($rootScope.instanceFCount === $rootScope.projects.length && $rootScope.sw === 0) {
-//                        $rootScope.sw++;
-//                        $rootScope.$emit('sync.instance.ready');
-//                    }
-//                });
-//            });
-//            $rootScope.$on('sync.instance.ready', function () {
-//                $rootScope.registerFCount = 0;
-//                $rootScope.registerTotal = 0;
-//                $rootScope.sw = 0;
-//
-//                angular.forEach($rootScope.projects, function (prj) {
-//                    RegisterService.list(prj.id).then(function (formRegister) {
-//                        $rootScope.registerFCount++;
-//                        $rootScope.registerTotal += formRegister.length;
-//                    })
-//                });
-//                $rootScope.$watch('registerFCount', function () {
-//                    if ($rootScope.registerFCount === $rootScope.projects.length && $rootScope.sw === 0) {
-//                        $rootScope.sw++;
-//                        $rootScope.$emit('size.ready');
-//                    }
-//                });
-//            });
             designReadyDestroyer = $rootScope.$on('sync.design.ready', function () {
                 $rootScope.designCount = 0;
                 $rootScope.designFCount = 0;

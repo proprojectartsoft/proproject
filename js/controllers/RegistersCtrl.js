@@ -9,13 +9,18 @@ angular.module($APP.name).controller('RegistersCtrl', [
     function ($scope, $state, $rootScope, $stateParams, RegisterService, $location, CacheFactory) {
         $scope.isLoaded = false;
         $scope.hasData = '';
-        
+
         if ($stateParams.categoryId) {
             $rootScope.categoryId = $stateParams.categoryId;
             RegisterService.list($stateParams.projectId, $stateParams.categoryId).then(function (data) {
                 $scope.isLoaded = true;
                 $scope.registers = data;
-                if (data.length === 0) {
+                if (data) {
+                    if (data.length === 0 ) {
+                        $scope.hasData = 'no data';
+                    }
+                }
+                else{
                     $scope.hasData = 'no data';
                 }
             });
@@ -30,12 +35,14 @@ angular.module($APP.name).controller('RegistersCtrl', [
         $scope.categoryName = categoriesCache.get($stateParams.categoryId).name;
         $scope.refresh = function () {
             RegisterService.list($stateParams.projectId, $stateParams.categoryId).then(function (data) {
-                $scope.registers = data;
-                if (data.length === 0) {
-                    $scope.hasData = 'no data';
+                if (data) {
+                    $scope.registers = data;
+                    if (data.length === 0) {
+                        $scope.hasData = 'no data';
+                    }
                 }
                 $scope.$broadcast('scroll.refreshComplete');
             });
-        }        
+        }
     }
 ]);

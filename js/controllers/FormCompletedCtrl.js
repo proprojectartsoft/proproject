@@ -22,7 +22,12 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
         FormInstanceService.list($stateParams.projectId, $stateParams.categoryId).then(function (data) {
             $scope.isLoaded = true;
             $scope.formInstances = data;
-            if (data.length === 0) {
+            if (data) {
+                if (data.length === 0) {
+                    $scope.hasData = 'no data';
+                }
+            }
+            else {
                 $scope.hasData = 'no data';
             }
         });
@@ -30,8 +35,10 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
         $scope.refresh = function () {
             FormInstanceService.list($stateParams.projectId, $stateParams.categoryId).then(function (data) {
                 $scope.formInstances = data;
-                if (data.length === 0) {
-                    $scope.hasData = 'no data';
+                if (data) {
+                    if (data.length === 0) {
+                        $scope.hasData = 'no data';
+                    }
                 }
                 $scope.$broadcast('scroll.refreshComplete');
             });

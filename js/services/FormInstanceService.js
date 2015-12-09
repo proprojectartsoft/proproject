@@ -56,8 +56,9 @@ angular.module($APP.name).factory('FormInstanceService', [
                 }).then(
                         function (payload) {
                             return payload.data;
-                        }
-                );
+                        }, function (err) {
+                    console.log('xhai')
+                });
             },
             create: function (data) {
                 console.log('data', data)
@@ -198,7 +199,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                             template: 'You are offline. Submit forms by syncing next time you are online',
                         });
                         alertPopup.then(function (res) {
-                            $location.path("/app/category/" + $rootScope.projectId + '/' + $rootScope.categoryId);
+                            $location.path("/app/category/" + $rootScope.projectId + '/' + requestForm.category_id);
                         });
                     }
                     else {
@@ -209,6 +210,15 @@ angular.module($APP.name).factory('FormInstanceService', [
                         alertPopup.then(function (res) {
                         });
                     }
+                });
+            },
+            create_sync: function (dataIn) {
+                return $http({
+                    method: 'POST',
+                    url: $APP.server + '/api/forminstance',
+                    data: dataIn
+                }).then(function (response) {
+                    console.log(response);
                 });
             },
             update: function (id, data) {
@@ -303,12 +313,12 @@ angular.module($APP.name).factory('FormInstanceService', [
                 console.log('edit.raw', data);
                 console.log('edit.req', requestForm);
 
-                return $http.put($APP.server + '/api/forminstance', requestForm, {
-                    params: {'id': id}
-                }).then(function (payload) {
-                    $rootScope.$broadcast('instanceCreated');
-                    return payload.data;
-                });
+//                return $http.put($APP.server + '/api/forminstance', requestForm, {
+//                    params: {'id': id}
+//                }).then(function (payload) {
+//                    $rootScope.$broadcast('instanceCreated');
+//                    return payload.data;
+//                });
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     params: {'id': id}
                 }).then(function (payload) {
@@ -351,8 +361,9 @@ angular.module($APP.name).factory('FormInstanceService', [
                 }).then(
                         function (payload) {
                             return payload.data;
-                        }
-                );
+                        }, function (err) {
+                    console.log('xhai')
+                });
             }
         };
     }

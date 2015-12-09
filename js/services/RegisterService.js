@@ -9,8 +9,9 @@ angular.module($APP.name).factory('RegisterService', [
                 }).then(
                         function (payload) {
                             return payload.data;
-                        }
-                );
+                        }, function (err) {
+                    console.log('xhai')
+                });
             },
             get: function (code) {
                 return $http.get($APP.server + '/api/registernominated', {
@@ -18,8 +19,9 @@ angular.module($APP.name).factory('RegisterService', [
                 }).then(
                         function (payload) {
                             return payload.data;
-                        }
-                );
+                        }, function (err) {
+                    console.log('xhai')
+                });
             }
         };
     }

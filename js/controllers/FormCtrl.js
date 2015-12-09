@@ -19,7 +19,7 @@ angular.module($APP.name).controller('FormCtrl', [
         }
         $scope.formData = designsCache.get($stateParams.formId);
         $scope.submit = function () {
-
+            
             var confirmPopup = $ionicPopup.confirm({
                 title: 'New form',
                 template: 'Are you sure you want to submit the data?'

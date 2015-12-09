@@ -17,8 +17,9 @@ angular.module($APP.name).factory('ProjectService', [
 //                                projectsCache.put(payload.data[i].id, payload.data[i]);
 //                            }
                             return payload.data;
-                        }
-                );
+                        }, function (err) {
+                    console.log('xhai')
+                });
             },
             clearProjCache: function () {
                 var projectsCache = CacheFactory.get('projectsCache');
