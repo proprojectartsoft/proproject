@@ -6,11 +6,11 @@ angular.module($APP.name).factory('SyncService', [
     '$timeout',
     'FormInstanceService',
     'FormDesignService',
-    'RegisterService',
+    'InstanceService',
     'ProjectService',
     '$rootScope',
     'CategoriesService',
-    function ($http, CacheFactory, $q, $ionicPopup, $timeout, FormInstanceService, FormDesignService, RegisterService, ProjectService, $rootScope, CategoriesService) {
+    function ($http, CacheFactory, $q, $ionicPopup, $timeout, FormInstanceService, FormDesignService, InstanceService, ProjectService, $rootScope, CategoriesService) {
         var projectsReadyDestroyer = function () {
         };
         var categoriesReadyDestroyer = function () {
@@ -33,10 +33,12 @@ angular.module($APP.name).factory('SyncService', [
                 var aux = 0;
                 for (var i = 0; i < forms.length; i++) {
                     var formX = sync.get(forms[i]);
+                    $rootScope.formi = forms[i];
                     if (formX) {
                         console.log('* form uploaded', forms[i]);
                         FormInstanceService.create_sync(formX).then(function (response) {
-                            sync.remove(forms[i]);
+                            console.log('formXXXXXXXXXXXXXXXXX', $rootScope.formi)
+                            sync.remove($rootScope.formi);
 //                            aux++
                         });
                     }
@@ -87,10 +89,9 @@ angular.module($APP.name).factory('SyncService', [
             }
             $rootScope.currentUser = settings.get('user');
 
-            $rootScope.projects = [];
-
             ProjectService.list().then(function (projects) {
                 if (projects) {
+                    $rootScope.projects = [];
                     $rootScope.projects = projects;
                     for (var i = 0; i < projects.length; i++) {
                         projectsCache.put(projects[i].id, projects[i]);
@@ -190,8 +191,29 @@ angular.module($APP.name).factory('SyncService', [
 
         return {
             sync: function () {
-                // Once sync up has complete, start syncing down.
+                console.log('ce plm');
+                InstanceService.reload().success(function (x) {
+                    console.log('success');
+                    // Open a popup to block the UI
+                    $rootScope.syncPopup = $ionicPopup.alert({
+                        title: "Syncing",
+                        template: "<center><ion-spinner icon='android'></ion-spinner></center>",
+                        content: "",
+                        buttons: []
+                    });
 
+                    // We need to delay slightly to allow popup above to instantiate
+                    $timeout(function () {
+                        console.log("STARTING SYNC");
+                        up();
+                    }, 200);
+                }).error(function (y) {
+                    $ionicPopup.alert({
+                        title: 'You are Offline',
+                        content: 'Please go online to sync your data.'
+                    });
+                });
+                // Once sync up has complete, start syncing down.
                 // First remove the listener, if it exists. Then add.
                 $rootScope.$$listeners['syncUp.complete'] = undefined;
                 $rootScope.$on('syncUp.complete', function (event, args) {
@@ -212,31 +234,17 @@ angular.module($APP.name).factory('SyncService', [
                     $rootScope.syncPopup.close();
                 });
 
-                if (window.navigator.onLine) {
 
-                    // Open a popup to block the UI
-                    $rootScope.syncPopup = $ionicPopup.alert({
-                        title: "Syncing",
-                        template: "<center><ion-spinner icon='android'></ion-spinner></center>",
-                        content: "",
-                        buttons: []
-                    });
-
-                    // We need to delay slightly to allow popup above to instantiate
-                    $timeout(function () {
-                        console.log("STARTING SYNC");
-                        up();
-                    }, 200);
-
-                    // We will call Sync.down() once Sync.up() has completed.
-                    //Sync.down();
-                }
-                else {
-                    $ionicPopup.alert({
-                        title: 'You are Offline',
-                        content: 'Please go online to sync your data.'
-                    });
-                }
+//                if (window.navigator.onLine) {
+//
+//                    
+//
+//                    // We will call Sync.down() once Sync.up() has completed.
+//                    //Sync.down();
+//                }
+//                else {
+//                    
+//                }
             },
             upSync: function () {
                 console.log("Calling up factory method");

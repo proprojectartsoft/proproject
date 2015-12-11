@@ -126,16 +126,7 @@ angular.module($APP.name).factory('AuthService', [
                 $http.get($APP.server + '/api/me', {withCredentials: true}).success(function (user) {
                     console.log(user);
                 });
-            },
-            reload: function (callback) {
-                console.log('2')
-                $http.get($APP.server + '/api/me', {withCredentials: true}).success(function (user) {
-                    changeUser(user);
-                    if (callback) {
-                        callback(user);
-                    }
-                });
-            },
+            },            
             isLoggedIn: function (user) {
                 var ok = false;
                 if (user === undefined)
@@ -257,7 +248,7 @@ angular.module($APP.name).factory('AuthService', [
                             title: 'Offline',
                             template: 'No internet connection',
                         });
-                        alertPopup.then(function (res) {                            
+                        alertPopup.then(function (res) {
                         });
                     }
                     if (response.status === 502) {
@@ -265,7 +256,7 @@ angular.module($APP.name).factory('AuthService', [
                             title: 'Offline',
                             template: 'Server offline',
                         });
-                        alertPopup.then(function (res) {                            
+                        alertPopup.then(function (res) {
                         });
                     }
                     if (response.status === 400) {
@@ -273,7 +264,7 @@ angular.module($APP.name).factory('AuthService', [
                             title: 'Error',
                             template: 'Incorrect user data.',
                         });
-                        alertPopup.then(function (res) {                            
+                        alertPopup.then(function (res) {
                         });
                     }
                 });
