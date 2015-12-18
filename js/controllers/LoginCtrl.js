@@ -3,7 +3,8 @@ angular.module($APP.name).controller('LoginCtrl', [
     '$state',
     'AuthService',
     'CacheFactory',
-    function ($scope, $state, AuthService, CacheFactory) {
+    'SyncService',
+    function ($scope, $state, AuthService, CacheFactory, SyncService) {
         $scope.user = [];
         $scope.user.username = "";
         $scope.user.password = "";
@@ -53,7 +54,9 @@ angular.module($APP.name).controller('LoginCtrl', [
                             rememberCache.destroy();
                         }
                     }
+                    SyncService.sync();
                     $state.go("app.categories");
+
                 }
             });
         };

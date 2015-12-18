@@ -222,8 +222,7 @@ angular.module($APP.name).factory('AuthService', [
                     data: user
                 }).then(function (data) {
                     changeUser(data.data.data);
-                    $rootScope.online = true;
-                    SyncService.sync();
+                    $rootScope.online = true;                    
                     return data.data.data;
                 }, function errorCallback(response) {
                     if (response.status === 0) {
