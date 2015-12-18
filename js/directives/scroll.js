@@ -23,7 +23,7 @@ angular.module($APP.name).directive('scroll', [
                     console.log('what', id)
                     id = id ? id : $attrs["id"];
                     if (id) {
-                        
+
                         $scope.scroll_ref = $timeout(function () { // we need little delay
                             var stopY = elmYPosition(id) - 90;
                             $ionicScrollDelegate.scrollTo(0, stopY, true);

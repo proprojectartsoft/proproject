@@ -10,9 +10,8 @@ angular.module($APP.name).controller('EditCtrl', [
     '$ionicPopup',
     function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, FormDesignService, $ionicScrollDelegate, $ionicPopup) {
         $scope.formData = $rootScope.rootForm;
-        console.log($scope.formData, $rootScope.formData)
+
         $scope.submit = function (help) {
-//            console.log(help, $rootScope.formId)
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Edit form',
                 template: 'Are you sure you want to edit this form?'
@@ -46,12 +45,12 @@ angular.module($APP.name).controller('EditCtrl', [
             if (id) {
                 $scope.scroll_ref = $timeout(function () { // we need little delay
                     var stopY = elmYPosition(id) - 40;
-                    console.log(stopY)
                     $ionicScrollDelegate.scrollTo(0, stopY, true);
 
                 }, 50);
             }
-        }
+        };
+
         $scope.toggleGroup = function (group, id) {
             if ($scope.isGroupShown(group)) {
                 $scope.shownGroup = null;
@@ -60,6 +59,7 @@ angular.module($APP.name).controller('EditCtrl', [
             }
             $scope.goto(id);
         };
+
         $scope.repeatGroup = function (x) {
             var aux = {};
             angular.copy(x, aux);
@@ -86,6 +86,7 @@ angular.module($APP.name).controller('EditCtrl', [
                 }
             }
         };
+
         $scope.repeatField = function (x, y) {
             var test = {};
             angular.copy(y, test);
@@ -102,14 +103,16 @@ angular.module($APP.name).controller('EditCtrl', [
                     break;
                 }
             }
-        }
+        };
 
         $scope.isGroupShown = function (group) {
             return $scope.shownGroup === group;
         };
+
         $scope.$on('updateScopeFromDirective', function () {
             FormUpdateService.addProduct($scope.formData, $scope.modalHelper);
         });
+
         $scope.$on('moduleSaveChanges', function () {
             $scope.formData = FormUpdateService.getProducts();
         });

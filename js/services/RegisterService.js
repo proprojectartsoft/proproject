@@ -10,7 +10,6 @@ angular.module($APP.name).factory('RegisterService', [
                         function (payload) {
                             return payload.data;
                         }, function (err) {
-                    console.log('xhai')
                 });
             },
             get: function (code) {
@@ -20,7 +19,6 @@ angular.module($APP.name).factory('RegisterService', [
                         function (payload) {
                             return payload.data;
                         }, function (err) {
-                    console.log('xhai')
                 });
             }
         };

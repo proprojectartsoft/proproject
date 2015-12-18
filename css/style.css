@@ -382,3 +382,13 @@ textarea {
     content:'*';
     color:red;
 }
+.pp-addimg{
+    border: 1px solid #E5F4FD;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+.pp-adding-left{
+    margin-left:55px;
+    background-color:red;
+}

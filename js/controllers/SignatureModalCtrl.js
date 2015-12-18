@@ -4,17 +4,20 @@ angular.module($APP.name).controller('SignatureModalCtrl', [
     'FormUpdateService',
     'FieldUpdateService',
     function ($scope, $rootScope, FormUpdateService, FieldUpdateService) {
-        $scope.data = [];        
-        $scope.exit = function () {            
+        $scope.data = [];
+
+        $scope.exit = function () {
             $scope.templateClick('');
             $scope.modal.hide();
         };
+
         $scope.save = function (hash) {
             $scope.data.value = document.getElementById(hash).toDataURL("image/png");
             $scope.templateClick($scope.data.value);
             $scope.modal.hide();
 
         };
+
         $scope.templateClick = function (newValue) {
             $scope.aux = FormUpdateService.getProducts();
             $scope.xua = FieldUpdateService.getProducts();

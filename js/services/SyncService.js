@@ -37,29 +37,22 @@ angular.module($APP.name).factory('SyncService', [
                     if (formX) {
                         console.log('* form uploaded', forms[i]);
                         FormInstanceService.create_sync(formX).then(function (response) {
-                            console.log('formXXXXXXXXXXXXXXXXX', $rootScope.formi)
                             sync.remove($rootScope.formi);
-//                            aux++
                         });
                     }
-//                    console.log(i, form.length)
                     if (i === forms.length - 1) {
                         $rootScope.$emit('syncUp.complete');
                     }
                 }
                 if (aux === forms.length) {
-                    sync.remove("3");
                 }
 
             } else {
-                // No forms to send - sync up is complete
-                console.log('sync up is complete - no forms to send');
                 $rootScope.$emit('syncUp.complete');
             }
         }
 
         function down() {
-            console.log("Calling down function");
             //PROJECT CACHE
             var projectsCache = CacheFactory.get('projectsCache');
             if (projectsCache) {
@@ -74,10 +67,6 @@ angular.module($APP.name).factory('SyncService', [
                     storageMode: 'localStorage'
                 });
             }
-
-
-
-
 
             //USER CACHE
             var settings = CacheFactory.get('settings');
@@ -175,8 +164,6 @@ angular.module($APP.name).factory('SyncService', [
                     if ($rootScope.designFCount === $rootScope.categories.length) {
                         designCountReadyDestroyer = $rootScope.$watch('designCount', function () {
                             if ($rootScope.designCount === $rootScope.designTotal) {
-                                console.log('wut')
-//                                $rootScope.$broadcast('sync.design.ready')
                                 $rootScope.$broadcast('syncDown.complete');
                             }
                         });
@@ -186,65 +173,52 @@ angular.module($APP.name).factory('SyncService', [
 
         }
 
-
-
-
         return {
             sync: function () {
-                console.log('ce plm');
-                InstanceService.reload().success(function (x) {
-                    console.log('success');
-                    // Open a popup to block the UI
-                    $rootScope.syncPopup = $ionicPopup.alert({
-                        title: "Syncing",
-                        template: "<center><ion-spinner icon='android'></ion-spinner></center>",
-                        content: "",
-                        buttons: []
+                try {
+                    InstanceService.reload().success(function (x) {
+                        $rootScope.syncPopup = $ionicPopup.alert({
+                            title: "Syncing",
+                            template: "<center><ion-spinner icon='android'></ion-spinner></center>",
+                            content: "",
+                            buttons: []
+                        });
+
+                        // We need to delay slightly to allow popup above to instantiate
+                        $timeout(function () {
+                            console.log("STARTING SYNC");
+                            up();
+                        }, 200);
+                    }).error(function (y) {
+                        $ionicPopup.alert({
+                            title: 'You are Offline',
+                            content: 'Please go online to sync your data.'
+                        });
+                    });
+                    // Once sync up has complete, start syncing down.
+                    // First remove the listener, if it exists. Then add.
+                    $rootScope.$$listeners['syncUp.complete'] = undefined;
+                    $rootScope.$on('syncUp.complete', function (event, args) {
+                        console.log("syncUp complete");
+                        projectsReadyDestroyer();
+                        categoriesReadyDestroyer();
+                        designReadyDestroyer();
+                        designFCountReadyDestroyer();
+                        designCountReadyDestroyer();
+                        down();
                     });
 
-                    // We need to delay slightly to allow popup above to instantiate
-                    $timeout(function () {
-                        console.log("STARTING SYNC");
-                        up();
-                    }, 200);
-                }).error(function (y) {
-                    $ionicPopup.alert({
-                        title: 'You are Offline',
-                        content: 'Please go online to sync your data.'
+                    // First remove the listener, if it exists. Then add.
+                    $rootScope.$$listeners['syncDown.complete'] = undefined;
+                    $rootScope.$on('syncDown.complete', function (event, args) {
+                        console.log("syncDown complete");
+                        // Close the sync progress popup
+                        $rootScope.syncPopup.close();
                     });
-                });
-                // Once sync up has complete, start syncing down.
-                // First remove the listener, if it exists. Then add.
-                $rootScope.$$listeners['syncUp.complete'] = undefined;
-                $rootScope.$on('syncUp.complete', function (event, args) {
-                    console.log("syncUp complete");
-                    projectsReadyDestroyer();
-                    categoriesReadyDestroyer();
-                    designReadyDestroyer();
-                    designFCountReadyDestroyer();
-                    designCountReadyDestroyer();
-                    down();
-                });
-
-                // First remove the listener, if it exists. Then add.
-                $rootScope.$$listeners['syncDown.complete'] = undefined;
-                $rootScope.$on('syncDown.complete', function (event, args) {
-                    console.log("syncDown complete");
-                    // Close the sync progress popup
-                    $rootScope.syncPopup.close();
-                });
-
-
-//                if (window.navigator.onLine) {
-//
-//                    
-//
-//                    // We will call Sync.down() once Sync.up() has completed.
-//                    //Sync.down();
-//                }
-//                else {
-//                    
-//                }
+                }
+                catch (e) {
+                    console.log('error', e);
+                }
             },
             upSync: function () {
                 console.log("Calling up factory method");

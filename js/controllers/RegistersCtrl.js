@@ -1,12 +1,10 @@
 angular.module($APP.name).controller('RegistersCtrl', [
     '$scope',
-    '$state',
     '$rootScope',
     '$stateParams',
     'RegisterService',
-    '$location',
     'CacheFactory',
-    function ($scope, $state, $rootScope, $stateParams, RegisterService, $location, CacheFactory) {
+    function ($scope, $rootScope, $stateParams, RegisterService, CacheFactory) {
         $scope.isLoaded = false;
         $scope.hasData = '';
 
@@ -16,15 +14,16 @@ angular.module($APP.name).controller('RegistersCtrl', [
                 $scope.isLoaded = true;
                 $scope.registers = data;
                 if (data) {
-                    if (data.length === 0 ) {
+                    if (data.length === 0) {
                         $scope.hasData = 'no data';
                     }
                 }
-                else{
+                else {
                     $scope.hasData = 'no data';
                 }
             });
         }
+
         var categoriesCache = CacheFactory.get('categoriesCache');
         if (!categoriesCache || categoriesCache.length === 0) {
             categoriesCache = CacheFactory('categoriesCache');
@@ -32,7 +31,9 @@ angular.module($APP.name).controller('RegistersCtrl', [
                 storageMode: 'localStorage'
             });
         }
+
         $scope.categoryName = categoriesCache.get($stateParams.categoryId).name;
+
         $scope.refresh = function () {
             RegisterService.list($stateParams.projectId, $stateParams.categoryId).then(function (data) {
                 if (data) {

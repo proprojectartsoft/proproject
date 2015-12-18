@@ -5,12 +5,11 @@ angular.module($APP.name).factory('FormDesignService', [
         return {
             get: function (id) {
                 return $http.get($APP.server + '/api/formdesign', {
-                    params: {id: id},
+                    params: {id: id}
                 }).then(
                         function (payload) {
                             return payload.data;
                         }, function (err) {
-                    console.log('xhai')
                 });
             },
             list: function (categoryId) {
@@ -20,7 +19,6 @@ angular.module($APP.name).factory('FormDesignService', [
                         function (payload) {
                             return payload.data;
                         }, function (err) {
-                    console.log('xhai')
                 });
             }
         };

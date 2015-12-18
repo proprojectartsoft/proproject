@@ -62,7 +62,7 @@ angular.module($APP.name).directive('form', ['$parse', '$ionicPopup', '$rootScop
                                 }
                             }
                             return true;
-                        }
+                        };
 
                         $scope.validateFieldset = function (fieldsets, valid) {
                             if (fieldsets.fields) {
@@ -76,7 +76,7 @@ angular.module($APP.name).directive('form', ['$parse', '$ionicPopup', '$rootScop
                                 }
                             }
                             return valid;
-                        }
+                        };
 
                         $scope.validate = function () {
                             var valid = true;
@@ -86,7 +86,7 @@ angular.module($APP.name).directive('form', ['$parse', '$ionicPopup', '$rootScop
                                 }
                             }
                             return valid;
-                        }
+                        };
 
                         $scope.$watch('data.disabled', function (data) {
                             if ($scope.data && $scope.data.disabled !== undefined) {

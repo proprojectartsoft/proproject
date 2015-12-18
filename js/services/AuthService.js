@@ -79,19 +79,16 @@ angular.module($APP.name).factory('AuthService', [
                 else {
                     if (role.title === userRoles.user.title) {
                         if (access.title === userRoles.user.title) {
-//                            ok = userRoles.user.access;
                             ok = true;
                         }
                     }
                     if (role.title === userRoles.super.title) {
                         if (access.title === userRoles.super.title) {
-//                            ok = userRoles.super.access;
                             ok = true;
                         }
                     }
                     if (role.title === userRoles.admin.title) {
                         if (access.title === userRoles.admin.title) {
-//                            ok = userRoles.admin.access;
                             ok = true;
                         }
                     }
@@ -101,7 +98,6 @@ angular.module($APP.name).factory('AuthService', [
             init: function (accessLevel) {
                 $http.get($APP.server + '/api/me', {withCredentials: true}).success(function (user) {
                     changeUser(user);
-                    console.log('1');
                     var role = $rootScope.currentUser.role;
                     if (!role)
                         role = userRoles.pub;
@@ -109,7 +105,6 @@ angular.module($APP.name).factory('AuthService', [
                         $state.go('login');
                     }
                     else {
-//                        $state.go('app.categories');
                     }
 
                 }).error(function (data, status, headers, config) {
@@ -122,16 +117,13 @@ angular.module($APP.name).factory('AuthService', [
                 });
             },
             meTest: function () {
-                console.log('2.5')
                 $http.get($APP.server + '/api/me', {withCredentials: true}).success(function (user) {
-                    console.log(user);
                 });
             },            
             isLoggedIn: function (user) {
                 var ok = false;
                 if (user === undefined)
                     user = $rootScope.currentUser;
-//                if (user.role.access === userRoles.user.access || user.role.access === userRoles.super.access || user.role.access === userRoles.admin.access) {
                 if (user.username === $rootScope.currentUser.username) {
                     ok = true;
                 }
@@ -180,7 +172,6 @@ angular.module($APP.name).factory('AuthService', [
                                 $rootScope.online = false;
                             }
                             $rootScope.currentUser = settingsCache.get("user");
-                            console.log($rootScope.currentUser)
                             if ($rootScope.currentUser) {
                                 $state.go("app.categories");
                             }
@@ -190,7 +181,6 @@ angular.module($APP.name).factory('AuthService', [
                                 $rootScope.online = false;
                                 alert('Server offline');
                             }
-
                         }
                         if (response.status === 400) {
                             alert('Incorrect user data');
@@ -198,15 +188,12 @@ angular.module($APP.name).factory('AuthService', [
                     });
                 }
                 else {
-//                    console.log('no current user');
-//                    $state.go('login');
                 }
             },
             isLoggedInWithCallback: function () {
                 var loggedIn = this.isLoggedIn;
                 $http.get($APP.server + '/api/me', {withCredentials: true}).success(function (user) {
                     if (loggedIn(user)) {
-//                        $state.go('app.categories');
                     }
                     else {
                         $location.path('/login');
@@ -237,11 +224,7 @@ angular.module($APP.name).factory('AuthService', [
                     changeUser(data.data.data);
                     $rootScope.online = true;
                     SyncService.sync();
-                    console.log(data);
                     return data.data.data;
-//                    success(data.data.data);
-//                    ReloadMeService.set(user.username, user.password);
-
                 }, function errorCallback(response) {
                     if (response.status === 0) {
                         var alertPopup = $ionicPopup.alert({

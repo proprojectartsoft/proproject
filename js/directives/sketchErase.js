@@ -8,7 +8,6 @@ angular.module($APP.name).directive('sketchErase', [
                     var myCanvas = document.getElementById($attrs.sketchErase);
                     var ctx = myCanvas.getContext('2d');
                     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-//                    console.log(ctx)
                 };
             }
         };

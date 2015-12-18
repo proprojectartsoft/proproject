@@ -25,41 +25,8 @@ angular.module($APP.name).directive('field', [
                     $scope.modal = modal;
                 });
                 $scope.$on('submit', function () {
-
                     if ($scope.data.type === "checkbox") {
                         $scope.data.value = $scope.data.value ? true : false;
-                    }
-
-                    if ($scope.data.type === "checkbox_list") {
-//                        $scope.data.value = $scope.data.value ? true : false;
-//                        var list = [];
-//                        for(var i=0;i< $scope.data.option_designs.length;i++){
-//                            if($scope.data.option_designs[i].value === 'true' || $scope.data.option_designs[i].value === true){
-//                                list.push($scope.)
-//                            }
-//                        }
-                    }
-
-                    if ($scope.data.type === "radio") {
-//                        console.log($scope.data);
-                    }
-
-                    if ($scope.data.type === "date") {
-//                        //transform to yyyy/mm/dd
-//                        var today = new Date();
-//                        var dd = today.getDate();
-//                        var MM = today.getMonth() + 1; //January is 0!
-//
-//                        var yyyy = today.getFullYear();
-//                        if (dd < 10) {
-//                            dd = '0' + dd;
-//                        }
-//                        if (MM < 10) {
-//                            MM = '0' + MM;
-//                        }
-//                        var today = yyyy + '-' + MM + '-' + dd;
-//                        $scope.data.value = today;
-//                        console.log('today', today);
                     }
                     $scope.submit = true;
                 });
@@ -67,7 +34,6 @@ angular.module($APP.name).directive('field', [
                     $scope.modalHelper = [];
                     $scope.modalHelper.groupId = $scope.data.field_group_design_id;
                     $scope.modalHelper.fieldId = $scope.data.id;
-//                    $rootScope.signatureHash = $scope.hash;
                     $ionicModal.fromTemplateUrl('view/form/_modal.html', {
                         scope: $scope,
                         animation: 'slide-in-up',
@@ -76,13 +42,12 @@ angular.module($APP.name).directive('field', [
                         focusFirstInput: true
                     }).then(function (modal) {
                         $scope.modal = modal;
-                        $scope.modal.hash = $scope.hash
+                        $scope.modal.hash = $scope.hash;
                         FieldUpdateService.addProduct($scope.modalHelper);
                         $rootScope.$broadcast('updateScopeFromDirective');
                         $scope.modal.show();
                     });
-
-                }
+                };
 
                 $scope.$watch('data.errors', function (data) {
                     if (data && data.length) {

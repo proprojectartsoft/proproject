@@ -9,7 +9,7 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
     function ($scope, $state, FormInstanceService, CacheFactory, $rootScope, $location, $stateParams) {
         $scope.isLoaded = false;
         $scope.hasData = false;
-        console.log($stateParams)
+
         var categoriesCache = CacheFactory.get('categoriesCache');
         if (!categoriesCache || categoriesCache.length === 0) {
             categoriesCache = CacheFactory('categoriesCache');
@@ -17,8 +17,10 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
                 storageMode: 'localStorage'
             });
         }
+
         $scope.categoryName = categoriesCache.get($stateParams.categoryId).name;
         $rootScope.categoryId = $stateParams.categoryId;
+
         FormInstanceService.list($stateParams.projectId, $stateParams.categoryId).then(function (data) {
             $scope.isLoaded = true;
             $scope.formInstances = data;
@@ -43,6 +45,7 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
                 $scope.$broadcast('scroll.refreshComplete');
             });
         };
+
         $scope.change = function (id) {
             $rootScope.formId = id;
             FormInstanceService.get($rootScope.formId).then(function (data) {
@@ -50,11 +53,12 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
                 $location.path("/app/view/" + $rootScope.projectId + "/form/" + id);
             });
         };
+
         $scope.test = function () {
-            console.log('test');
         };
+
         $scope.form = function (completedFormId) {
-            $state.go("app.form")
-        }
+            $state.go("app.form");
+        };
     }
 ]);

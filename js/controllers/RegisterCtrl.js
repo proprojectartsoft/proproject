@@ -8,13 +8,14 @@ angular.module($APP.name).controller('RegisterCtrl', [
     'FormInstanceService',
     'CacheFactory',
     function ($scope, $rootScope, $stateParams, RegisterService, $stateParams, $location, FormInstanceService, CacheFactory) {
-        
         $rootScope.categoryId = $stateParams.categoryId;
+
         RegisterService.get($stateParams.code).then(function (data) {
             $scope.listHelp = [];
             $scope.data = data;
             $scope.num = $scope.data.records.values.length;
         });
+
         var categoriesCache = CacheFactory.get('categoriesCache');
         if (!categoriesCache || categoriesCache.length === 0) {
             categoriesCache = CacheFactory('categoriesCache');
@@ -44,19 +45,18 @@ angular.module($APP.name).controller('RegisterCtrl', [
             }
             return '-';
         };
-        $scope.increment = function (x) {
-            console.log(x);
-        }
 
+        $scope.increment = function (x) {
+        }
         $scope.back = function () {
-            console.log($stateParams);
         };
+
         $scope.change = function (reg) {
             $rootScope.formId = $scope.help('instance_id', reg);
             FormInstanceService.get($rootScope.formId).then(function (data) {
                 $rootScope.rootForm = data;
                 $location.path("/app/view/" + $rootScope.projectId + "/register/" + $rootScope.formId);
             });
-        }
+        };
     }
 ]);

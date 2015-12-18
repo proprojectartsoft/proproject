@@ -25,7 +25,6 @@ angular.module($APP.name).factory('FormInstanceService', [
                 if (MM < 10) {
                     MM = '0' + MM;
                 }
-//                console.log(obj)
                 x = dd + '-' + MM + '-' + yyyy;
                 return  x;
 
@@ -57,11 +56,9 @@ angular.module($APP.name).factory('FormInstanceService', [
                         function (payload) {
                             return payload.data;
                         }, function (err) {
-                    console.log('xhai')
                 });
             },
             create: function (data) {
-                console.log('data', data)
                 var settingsCache = CacheFactory.get('settings');
                 if (!settingsCache) {
                     settingsCache = CacheFactory('settings');
@@ -105,7 +102,6 @@ angular.module($APP.name).factory('FormInstanceService', [
                         }
                         else {
                             if (data.field_group_designs[i].field_designs[j].type === 'date' || data.field_group_designs[i].field_designs[j].type === 'time') {
-                                console.log('date/time', data.field_group_designs[i].field_designs[j])
                                 if (data.field_group_designs[i].field_designs[j].value === null || data.field_group_designs[i].field_designs[j].value === undefined) {
                                     field_values = [{
                                             "id": 0,
@@ -167,9 +163,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                         requestFieldList.push(requestField);
                     }
                     requestGroup.field_instances = requestFieldList;
-//                        console.log('groupdata',requestGroup)
                     requestGroupList.push(requestGroup);
-//                        console.log('groups',requestGroupList)
                 }
                 requestForm.field_group_instances = requestGroupList;
 
@@ -190,13 +184,12 @@ angular.module($APP.name).factory('FormInstanceService', [
                         sync.setOptions({
                             storageMode: 'localStorage'
                         });
-                        console.log('pana aici')
                         $rootScope.toBeUploadedCount = sync.keys().length;
                         $rootScope.toBeUploadedCount++;
                         sync.put($rootScope.toBeUploadedCount, requestForm);
                         var alertPopup = $ionicPopup.alert({
                             title: 'Submision failed.',
-                            template: 'You are offline. Submit forms by syncing next time you are online',
+                            template: 'You are offline. Submit forms by syncing next time you are online'
                         });
                         alertPopup.then(function (res) {
                             $location.path("/app/category/" + $rootScope.projectId + '/' + requestForm.category_id);
@@ -205,7 +198,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                     else {
                         var alertPopup = $ionicPopup.alert({
                             title: 'Submision failed.',
-                            template: 'Incorrect data, try again',
+                            template: 'Incorrect data, try again'
                         });
                         alertPopup.then(function (res) {
                         });
@@ -218,7 +211,6 @@ angular.module($APP.name).factory('FormInstanceService', [
                     url: $APP.server + '/api/forminstance',
                     data: dataIn
                 }).then(function (response) {
-                    console.log(response);
                 });
             },
             update: function (id, data) {
@@ -280,7 +272,6 @@ angular.module($APP.name).factory('FormInstanceService', [
                             if (field_values[0].value === null || field_values[0].value === undefined) {
                                 field_values[0].value = 0;
                             } else {
-//                                console.log(data.field_group_instances[i].field_instances[j])
                                 field_values[0].value = dateTimeSave(data.field_group_instances[i].field_instances[j]);
                             }
                         }
@@ -305,20 +296,10 @@ angular.module($APP.name).factory('FormInstanceService', [
                         requestFieldList.push(requestField);
                     }
                     requestGroup.field_instances = requestFieldList;
-//                        console.log('groupdata',requestGroup)
                     requestGroupList.push(requestGroup);
-//                        console.log('groups',requestGroupList)
                 }
                 requestForm.field_group_instances = requestGroupList;
-                console.log('edit.raw', data);
-                console.log('edit.req', requestForm);
 
-//                return $http.put($APP.server + '/api/forminstance', requestForm, {
-//                    params: {'id': id}
-//                }).then(function (payload) {
-//                    $rootScope.$broadcast('instanceCreated');
-//                    return payload.data;
-//                });
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     params: {'id': id}
                 }).then(function (payload) {
@@ -337,7 +318,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                         sync.put($rootScope.toBeUploadedCount, requestForm);
                         var alertPopup = $ionicPopup.alert({
                             title: 'Edit failed.',
-                            template: 'You are offline. Edit forms by syncing next time you are online',
+                            template: 'You are offline. Edit forms by syncing next time you are online'
                         });
                         alertPopup.then(function (res) {
                             $location.path("/app/category/" + $rootScope.projectId + '/' + $rootScope.categoryId);
@@ -346,7 +327,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                     else {
                         var alertPopup = $ionicPopup.alert({
                             title: 'Edit failed.',
-                            template: 'Incorrect data, try again',
+                            template: 'Incorrect data, try again'
                         });
                         alertPopup.then(function (res) {
                         });
@@ -355,14 +336,12 @@ angular.module($APP.name).factory('FormInstanceService', [
 
             },
             list: function (projectId, categoryId) {
-                //api/forminstance
                 return $http.get($APP.server + '/api/forminstance', {
                     params: {projectId: projectId, categoryId: categoryId}
                 }).then(
                         function (payload) {
                             return payload.data;
                         }, function (err) {
-                    console.log('xhai')
                 });
             }
         };

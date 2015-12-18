@@ -11,9 +11,7 @@ angular.module($APP.name).service('UserService', [
                     data: dataIn
                 }).success(function (response) {
                     $rootScope.$broadcast('reloadTableEvent');
-                    console.log(response);
                 }).error(function (response) {
-                    console.log(response);
                 });
             },
             create: function (dataIn) {
@@ -23,9 +21,7 @@ angular.module($APP.name).service('UserService', [
                     data: dataIn
                 }).success(function (response) {
                     $rootScope.$broadcast('reloadTableEvent');
-                    console.log(response);
                 }).error(function (response) {
-                    console.log(response);
                 });
             },
             signUp: function (dataIn) {
@@ -36,7 +32,6 @@ angular.module($APP.name).service('UserService', [
                 }).success(function (response) {
                     $location.path('/login.html');
                 }).error(function (response) {
-                    console.log(response);
                 });
             },
             list: function () {

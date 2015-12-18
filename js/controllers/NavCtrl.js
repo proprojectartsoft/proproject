@@ -2,14 +2,11 @@ angular.module($APP.name).controller('NavCtrl', [
     '$rootScope',
     '$state',
     'AuthService',
-    'ProjectService',
     '$scope',
     '$ionicSideMenuDelegate',
     'CacheFactory',
     'SyncService',
-    'CategoriesService',
-    function ($rootScope, $state, AuthService, ProjectService, $scope, $ionicSideMenuDelegate, CacheFactory, SyncService, CategoriesService) {
-        console.log('user', $rootScope.currentUser);
+    function ($rootScope, $state, AuthService, $scope, $ionicSideMenuDelegate, CacheFactory, SyncService) {
         $scope.toggleLeft = function () {
             $ionicSideMenuDelegate.toggleLeft();
         };
@@ -66,13 +63,10 @@ angular.module($APP.name).controller('NavCtrl', [
         }
         $rootScope.$watch('projects', function (newValue, oldValue) {
             if ($rootScope.projects[0]) {
-                console.log($rootScope.projects[0])
                 $rootScope.navTitle = $rootScope.projects[0].name;
                 $rootScope.projectId = $rootScope.projects[0].id;
             }
         });
-
-
 
         $scope.updateTitle = function (project) {
             $rootScope.navTitle = project.name;
@@ -82,7 +76,5 @@ angular.module($APP.name).controller('NavCtrl', [
         $scope.sync = function () {
             SyncService.sync();
         };
-
-
     }
 ]);

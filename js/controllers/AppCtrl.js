@@ -1,14 +1,8 @@
 angular.module($APP.name).controller('AppCtrl', [
     '$rootScope',
-    '$state',
-    'AuthService',
-    'ProjectService',
     '$scope',
-    '$ionicSideMenuDelegate',
     'CacheFactory',
-    'SyncService',
-    'CategoriesService',
-    function ($rootScope, $state, AuthService, ProjectService, $scope, $ionicSideMenuDelegate, CacheFactory, SyncService, CategoriesService) {
+    function ($rootScope,    $scope,  CacheFactory) {
         var settings = CacheFactory.get('settings');
         if (!settings || settings.length === 0) {
             settings = CacheFactory('settings');
@@ -22,6 +16,7 @@ angular.module($APP.name).controller('AppCtrl', [
         categoriesCache.setOptions({
             storageMode: 'localStorage'
         });
+        
         $rootScope.categories = [];
         angular.forEach(categoriesCache.keys(), function (key) {
             $rootScope.categories.push(categoriesCache.get(key));
@@ -32,6 +27,7 @@ angular.module($APP.name).controller('AppCtrl', [
             storageMode: 'localStorage'
         });
         $rootScope.projects = [];
+        
         $rootScope.$watch('projectsCache.keys()', function (newValue, oldValue) {
             angular.forEach(projectsCache.keys(), function (key) {
                 $rootScope.projects.push(projectsCache.get(key));

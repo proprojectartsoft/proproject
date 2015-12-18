@@ -1,12 +1,9 @@
 angular.module($APP.name).controller('LoginCtrl', [
-    '$rootScope',
     '$scope',
     '$state',
     'AuthService',
-    '$ionicPopup',
-    'ReloadMeService',
     'CacheFactory',
-    function ($rootScope, $scope, $state, AuthService, $ionicPopup, ReloadMeService, CacheFactory) {
+    function ( $scope, $state, AuthService,  CacheFactory) {
         $scope.user = [];
         $scope.user.username = "";
         $scope.user.password = "";
@@ -28,7 +25,6 @@ angular.module($APP.name).controller('LoginCtrl', [
             });
         }
         else{
-//        if (reloadCache) {
             AuthService.isLoggedInCache();
         }
         $scope.hasRemember = rememberCache.get('remember');
@@ -58,21 +54,6 @@ angular.module($APP.name).controller('LoginCtrl', [
                     $state.go("app.categories");
                 }
             });
-
-//                    then(function (data) {
-//                
-//            }, function error(err) {
-//                if (!$scope.popupOpen) {
-//                    $scope.popupOpen = true;
-//                    $ionicPopup.alert({
-//                        title: 'Invalid login',
-//                        content: 'Please enter valid username and password.'
-//                    }).then(function (rest) {
-//                        $scope.popupOpen = false;
-//                    });
-//                }
-//                $rootScope.error = 'Failed to login';
-//            });
         };
     }
 ]);

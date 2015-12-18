@@ -3,11 +3,8 @@ angular.module($APP.name).controller('FormsCtrl', [
     '$stateParams',
     'FormDesignService',
     '$rootScope',
-    'FormInstanceService',
     'CacheFactory',
-    '$ionicPopup',
-    '$timeout',
-    function ($scope, $stateParams, FormDesignService, $rootScope, FormInstanceService, CacheFactory, $ionicPopup, $timeout) {
+    function ($scope, $stateParams, FormDesignService, $rootScope, CacheFactory) {
         $scope.isLoaded = false;
         $scope.hasData = '';
         $scope.categoryId = $stateParams.categoryId;
@@ -47,12 +44,10 @@ angular.module($APP.name).controller('FormsCtrl', [
                 }
                 $scope.$broadcast('scroll.refreshComplete');
             }, function (payload) {
-                console.log("ups", payload);
             });
         };
 
         $scope.back = function () {
-            console.log('forms:', $rootScope.projectId, $rootScope.categoryId);
         };
     }
 ]);
