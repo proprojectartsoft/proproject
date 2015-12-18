@@ -3,7 +3,7 @@ angular.module($APP.name).controller('LoginCtrl', [
     '$state',
     'AuthService',
     'CacheFactory',
-    function ( $scope, $state, AuthService,  CacheFactory) {
+    function ($scope, $state, AuthService, CacheFactory) {
         $scope.user = [];
         $scope.user.username = "";
         $scope.user.password = "";
@@ -23,8 +23,10 @@ angular.module($APP.name).controller('LoginCtrl', [
             reloadCache.setOptions({
                 storageMode: 'localStorage'
             });
+            console.log('x', reloadCache.get('reload'))
         }
-        else{
+        var aux = reloadCache.get('reload');
+        if (aux) {
             AuthService.isLoggedInCache();
         }
         $scope.hasRemember = rememberCache.get('remember');
