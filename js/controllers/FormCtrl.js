@@ -18,7 +18,7 @@ angular.module($APP.name).controller('FormCtrl', [
                 storageMode: 'localStorage'
             });
         }
-        
+
         $scope.formData = designsCache.get($stateParams.formId);
         $scope.shownGroup = $scope.formData.field_group_designs[0];
         $scope.pictures = [
@@ -32,7 +32,7 @@ angular.module($APP.name).controller('FormCtrl', [
                 "formInstanceId": 0
             }
         ];
-        
+
         $scope.submit = function () {
             var confirmPopup = $ionicPopup.confirm({
                 title: 'New form',
@@ -51,16 +51,26 @@ angular.module($APP.name).controller('FormCtrl', [
                                     list[i].formInstanceId = $rootScope.formId;
                                     list[i].projectId = $stateParams.projectId;
                                 }
-                                ImageService.create($scope.pictures).then(function (x) {
+                                if (list.length >= 1) {
+                                    if (list[0].base64String !== "") {
+                                        ImageService.create($scope.pictures).then(function (x) {
+                                            $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
+                                        });
+                                    }
+                                    else {
+                                        $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
+                                    }
+                                }
+                                else {
                                     $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
-                                });
+                                }
                             });
                         }
                     });
                 }
             });
         };
-        
+
         function elmYPosition(id) {
             var elm = document.getElementById(id);
             var y = elm.offsetTop;
@@ -109,7 +119,7 @@ angular.module($APP.name).controller('FormCtrl', [
                 }
             }
         };
-        
+
         $scope.repeatField = function (x, y) {
             var test = {};
             angular.copy(y, test);
@@ -127,7 +137,7 @@ angular.module($APP.name).controller('FormCtrl', [
                 }
             }
         };
-        
+
         $scope.toggleGroup = function (group, id) {
             if ($scope.isGroupShown(group)) {
                 $scope.shownGroup = null;
@@ -160,7 +170,7 @@ angular.module($APP.name).controller('FormCtrl', [
                 });
             }
         };
-        
+
         $scope.isLastPicture = function (index) {
             if (index === 8) {
                 return false;
@@ -174,7 +184,7 @@ angular.module($APP.name).controller('FormCtrl', [
                 }
             }
         };
-        
+
         $scope.addPicture = function (index) {
             $rootScope.imgUp = $ionicPopup.alert({
                 title: "Uploading",
@@ -215,7 +225,7 @@ angular.module($APP.name).controller('FormCtrl', [
                 $scope.pictures[0].comment = "";
             }
         };
-        
+
         $scope.convertToDataURLviaCanvas = function (url, callback) {
             var img = new Image();
             img.crossOrigin = 'Anonymous';
