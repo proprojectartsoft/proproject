@@ -40,6 +40,12 @@ angular.module($APP.name).controller('FormCtrl', [
             });
             confirmPopup.then(function (res) {
                 if (res) {
+                    $rootScope.formUp = $ionicPopup.alert({
+                        title: "Submitting",
+                        template: "<center><ion-spinner icon='android'></ion-spinner></center>",
+                        content: "",
+                        buttons: []
+                    });
                     FormInstanceService.create($scope.formData).then(function (data) {
                         if (data) {
                             $rootScope.formId = data.id;
@@ -54,14 +60,17 @@ angular.module($APP.name).controller('FormCtrl', [
                                 if (list.length >= 1) {
                                     if (list[0].base64String !== "") {
                                         ImageService.create($scope.pictures).then(function (x) {
+                                            $rootScope.formUp.close();
                                             $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
                                         });
                                     }
                                     else {
+                                        $rootScope.formUp.close();
                                         $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
                                     }
                                 }
                                 else {
+                                    $rootScope.formUp.close();
                                     $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
                                 }
                             });
