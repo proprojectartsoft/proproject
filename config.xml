@@ -20,6 +20,7 @@
     
     <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
+    <plugin name="com.synconset.imagepicker" spec="1.0.4" source="pgb" />
     <access origin="*"/>
     <allow-navigation href="*" />  
   
