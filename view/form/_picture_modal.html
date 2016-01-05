@@ -1,0 +1,40 @@
+<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">New photo</h1>
+    </ion-header-bar>
+    <ion-content class="has-tabs">
+        <form>
+            <div class="list">
+                <div class="item">
+                    <div class="img-box" style="width: 50vw; height: 50vw">
+                        <img ng-show="item.base64String !== ''" ng-src="{{item.base64String}}">
+                        <img ng-show="item.base64String === ''" ng-src="http://placehold.it/100x100">
+                    </div>
+                </div>
+                <label class="item">
+                    <span class="input-label">Title</span>
+                    <input style="width: 100%" type="text" ng-model="item.title">
+                </label>
+                <label class="item">
+                    <span class="input-label">Tags</span>
+                    <input style="width: 100%" type="text" ng-model="item.tags">
+                </label>
+                <label class="item ">
+                    <span class="input-label">Comments</span>
+                    <textarea style="width: 100%; height:100px" type="text" ng-model="item.comment"></textarea>
+                </label>
+            </div>
+        </form>
+    </ion-content>
+    <div class="tabs tabs-icon-only">
+        <a class="tab-item">
+            <i class="icon ion-camera" ng-click="takePicture()"></i>
+        </a>
+        <a class="tab-item">
+            <i class="icon ion-images" ng-click="addPicture()"></i>
+        </a>
+        <a class="tab-item" ng-click="doShow()">
+            <i class="icon ion-android-done"></i>
+        </a>
+    </div>
+</ion-modal-view>

@@ -392,3 +392,28 @@ textarea {
     margin-left:55px;
     background-color:red;
 }
+
+.img-box{
+    width: 25vw;
+    height: 25vw;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    color: #fff;
+    position: relative;
+}
+.img-box img{
+    height: 100%;
+    position: absolute;
+}
+.img-box button{
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    z-index: 99;
+    right: 0px;
+    padding: 10px 15px;
+    background: rgba(51,51,51,0.6);
+    color: #fff;
+    border: none;
+}

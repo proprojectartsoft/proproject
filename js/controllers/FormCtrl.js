@@ -10,7 +10,8 @@ angular.module($APP.name).controller('FormCtrl', [
     '$ionicPopup',
     '$stateParams',
     'ImageService',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ImageService) {
+    '$ionicModal',
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ImageService, $ionicModal) {
         var designsCache = CacheFactory.get('designsCache');
         if (!designsCache || designsCache.length === 0) {
             designsCache = CacheFactory('designsCache');
@@ -21,7 +22,7 @@ angular.module($APP.name).controller('FormCtrl', [
 
         $scope.formData = designsCache.get($stateParams.formId);
         $scope.shownGroup = $scope.formData.field_group_designs[0];
-        $scope.pictures = [
+        $scope.imgURI = [
             {
                 "id": 0,
                 "base64String": "",
@@ -32,7 +33,66 @@ angular.module($APP.name).controller('FormCtrl', [
                 "formInstanceId": 0
             }
         ];
+        $scope.trim = function () {
+            $scope.pictures = [];
+            var i, j, temparray, chunk = 3;
+            for (i = 0, j = $scope.imgURI.length; i < j; i += chunk) {
+                temparray = $scope.imgURI.slice(i, i + chunk);
+                $scope.pictures.push(temparray);
+            }
+            console.log($scope.imgURI)
+        };
+        $scope.trim();
+        $scope.addSpot = function () {
+            if ($scope.imgURI.length < 9) {
+                $scope.imgURI.push({"id": $scope.pictures.length, "base64String": "", "comment": "", "tags": "", "title": " ", "projectId": 0, "formInstanceId": 0});
+                $scope.imgCounter++;
+                $scope.trim();
+            }
+        };
+        $scope.delSpot = function (id) {
+            for (var i = 0; i < $scope.imgURI.length; i++) {
+                if ($scope.imgURI[i].id === id) {
+                    $scope.imgURI.splice(i, 1);
+                    $scope.trim();
+                    console.log('x')
+                    break;
+                }
+            }
+        };
+        $scope.test = function (item) {
+            console.log('item', item);
+            $scope.item = item;
+            $scope.itemClone = angular.copy(item);
+            $ionicModal.fromTemplateUrl('view/form/_picture_modal.html', {
+                scope: $scope
+            }).then(function (modal) {
+                $scope.picModal = modal;
+                $scope.picModal.show();
+            });
+        };
+        $scope.doShow = function () {
+            $scope.picModal.hide();
+        };
+        $scope.takePicture = function (id) {
+            var options = {
+                quality: 75,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                allowEdit: false,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 1000,
+                targetHeight: 1000,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: true
+            };
 
+            $cordovaCamera.getPicture(options).then(function (imageData) {
+                $scope.item.img = "data:image/jpeg;base64," + imageData;
+            }, function (err) {
+                // An error occured. Show a message to the user
+            });
+        }
         $scope.submit = function () {
             var confirmPopup = $ionicPopup.confirm({
                 title: 'New form',
@@ -166,33 +226,33 @@ angular.module($APP.name).controller('FormCtrl', [
             $scope.formData = FormUpdateService.getProducts();
         });
 
-        $scope.addPictureSlot = function () {
-            if ($scope.pictures.length < 9) {
-                $scope.pictures.push({
-                    "id": $scope.pictures.length,
-                    "base64String": "",
-                    "comment": "",
-                    "tags": "",
-                    "title": " ",
-                    "projectId": 0,
-                    "formInstanceId": 0
-                });
-            }
-        };
+//        $scope.addPictureSlot = function () {
+//            if ($scope.pictures.length < 9) {
+//                $scope.imgURI.push({
+//                    "id": $scope.pictures.length,
+//                    "base64String": "",
+//                    "comment": "",
+//                    "tags": "",
+//                    "title": " ",
+//                    "projectId": 0,
+//                    "formInstanceId": 0
+//                });
+//            }
+//        };
 
-        $scope.isLastPicture = function (index) {
-            if (index === 8) {
-                return false;
-            }
-            else {
-                if (index + 1 === $scope.pictures.length) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            }
-        };
+//        $scope.isLastPicture = function (index) {
+//            if (index === 8) {
+//                return false;
+//            }
+//            else {
+//                if (index + 1 === $scope.pictures.length) {
+//                    return true;
+//                }
+//                else {
+//                    return false;
+//                }
+//            }
+//        };
 
         $scope.addPicture = function (index) {
             $rootScope.imgUp = $ionicPopup.alert({

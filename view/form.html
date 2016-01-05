@@ -29,37 +29,53 @@
                     <span style="margin-left:23px">Attach pictures</span>
                     <span  style="float:right;width:50px;text-align:right; color:#fff !important; font-size:23px; margin-right: 5px" class="icon ion-android-attach all-chevron"></span>                                                            
                 </div>
-                <div id="image-container" ng-show="isGroupShown(fieldset)" >
-                    <div class="item" ng-repeat="pic in pictures track by $index">
-                        <div>
-                            <button ng-if="pic.base64String" class="button icon ion-android-close" style="float:right" ng-click="removePicture(pic.id)"></button>
-                            <button ng-if="!pic.base64String" class="button icon ion-android-image" style="float:right" ng-click="addPicture(pic.id)"></button>
-                            <button ng-show="isLastPicture(pic.id)" class="button icon ion-android-add" style="" ng-click="addPictureSlot()"></button>
-                            <div ng-if="!isLastPicture(pic.id)" style="width:calc(100% - 120px);display:inline-block;margin-left:55px">
-                                <img ng-if="pic.base64String" class="pp-addimg" data-ng-src ="data:image/png;base64,{{pic.base64String}}" height='100px' width='100px'>                        
-                                <img ng-if="!pic.base64String" class="pp-addimg" src="img/ic.png"  height='100px' width='100px' style="border: 1px solid #E5F4FD;">                        
-                            </div>
-                            <div ng-if="isLastPicture(pic.id)" style="width:calc(100% - 120px);display:inline-block;">
-                                <img ng-if="pic.base64String" class="pp-addimg" data-ng-src ="data:image/png;base64,{{pic.base64String}}" height='100px' width='100px'>                        
-                                <img ng-if="!pic.base64String" class="pp-addimg" src="img/ic.png"  height='100px' width='100px' style="border: 1px solid #E5F4FD;">                        
-                            </div>
-                            <div>
-                                <label class="all-label" style ="border-top: 1px solid #E5F4FD;margin-top: 5px;padding-top: 5px;">
-                                    Title                                  
-                                </label>
-                                <input style="padding-left:5px;width:100%" ng-model="pic.title" type="text">
-                                <label class="all-label" >
-                                    Comment
-                                </label>
-                                <input style="padding-left:5px;width:100%" ng-model="pic.comment" type="text">
-                                <label class="all-label" >
-                                    Tags
-                                </label>
-                                <input style="padding-left:5px;width:100%"  ng-model="pic.tags"type="text">
+                <!--                <div id="image-container" ng-show="isGroupShown(fieldset)" >
+                                    <div class="item" ng-repeat="pic in pictures track by $index">
+                                        <div>
+                                            <button ng-if="pic.base64String" class="button icon ion-android-close" style="float:right" ng-click="removePicture(pic.id)"></button>
+                                            <button ng-if="!pic.base64String" class="button icon ion-android-image" style="float:right" ng-click="addPicture(pic.id)"></button>
+                                            <button ng-show="isLastPicture(pic.id)" class="button icon ion-android-add" style="" ng-click="addPictureSlot()"></button>
+                                            <div ng-if="!isLastPicture(pic.id)" style="width:calc(100% - 120px);display:inline-block;margin-left:55px">
+                                                <img ng-if="pic.base64String" class="pp-addimg" data-ng-src ="data:image/png;base64,{{pic.base64String}}" height='100px' width='100px'>                        
+                                                <img ng-if="!pic.base64String" class="pp-addimg" src="img/ic.png"  height='100px' width='100px' style="border: 1px solid #E5F4FD;">                        
+                                            </div>
+                                            <div ng-if="isLastPicture(pic.id)" style="width:calc(100% - 120px);display:inline-block;">
+                                                <img ng-if="pic.base64String" class="pp-addimg" data-ng-src ="data:image/png;base64,{{pic.base64String}}" height='100px' width='100px'>                        
+                                                <img ng-if="!pic.base64String" class="pp-addimg" src="img/ic.png"  height='100px' width='100px' style="border: 1px solid #E5F4FD;">                        
+                                            </div>
+                                            <div>
+                                                <label class="all-label" style ="border-top: 1px solid #E5F4FD;margin-top: 5px;padding-top: 5px;">
+                                                    Title                                  
+                                                </label>
+                                                <input style="padding-left:5px;width:100%" ng-model="pic.title" type="text">
+                                                <label class="all-label" >
+                                                    Comment
+                                                </label>
+                                                <input style="padding-left:5px;width:100%" ng-model="pic.comment" type="text">
+                                                <label class="all-label" >
+                                                    Tags
+                                                </label>
+                                                <input style="padding-left:5px;width:100%"  ng-model="pic.tags"type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                <ion-item ng-show="isGroupShown(fieldset)" >
+                    <div class="row" ng-repeat="picrow in pictures">
+                        <div class="col" ng-repeat="pic in picrow">
+                            <div class="img-box-container">
+                                <div class="img-box" ng-click="test(pic)">
+                                    <button ng-click="delSpot(pic.id)">x</button>
+                                    <img ng-show="pic.base64String !== ''" ng-src="{{pic.base64String}}">
+                                    <img ng-show="pic.base64String === ''" ng-src="http://placehold.it/100x100">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div style="width: calc(100% + 10px); margin-left:-5px">
+                        <button ng-show="imgURI.length !== 9" class="button button-block button-dark" ng-click="addSpot()"><i class="ion-plus"></i><i class="ion-image" style="font-size:19px; padding-left: 4px"></i></button>
+                    </div>
+                </ion-item>
                 <div class="padding">
                     <button type="submit" ng-click="submit(formData)" value="Save" class="button button-block button-calm">Submit</button>
                 </div>
