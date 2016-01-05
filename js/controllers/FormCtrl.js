@@ -19,7 +19,7 @@ angular.module($APP.name).controller('FormCtrl', [
                 storageMode: 'localStorage'
             });
         }
-
+        $scope.imgCounter = 1;
         $scope.formData = designsCache.get($stateParams.formId);
         $scope.shownGroup = $scope.formData.field_group_designs[0];
         $scope.imgURI = [
@@ -45,7 +45,7 @@ angular.module($APP.name).controller('FormCtrl', [
         $scope.trim();
         $scope.addSpot = function () {
             if ($scope.imgURI.length < 9) {
-                $scope.imgURI.push({"id": $scope.pictures.length, "base64String": "", "comment": "", "tags": "", "title": " ", "projectId": 0, "formInstanceId": 0});
+                $scope.imgURI.push({"id": $scope.imgCounter, "base64String": "", "comment": "", "tags": "", "title": " ", "projectId": 0, "formInstanceId": 0});
                 $scope.imgCounter++;
                 $scope.trim();
             }
@@ -55,7 +55,6 @@ angular.module($APP.name).controller('FormCtrl', [
                 if ($scope.imgURI[i].id === id) {
                     $scope.imgURI.splice(i, 1);
                     $scope.trim();
-                    console.log('x')
                     break;
                 }
             }
@@ -111,7 +110,7 @@ angular.module($APP.name).controller('FormCtrl', [
                             $rootScope.formId = data.id;
                             FormInstanceService.get($rootScope.formId).then(function (data) {
                                 $rootScope.rootForm = data;
-                                var list = $scope.pictures;
+                                var list = $scope.imgURI;
                                 for (var i = 0; i < list.length; i++) {
                                     list[i].id = 0;
                                     list[i].formInstanceId = $rootScope.formId;
@@ -119,7 +118,7 @@ angular.module($APP.name).controller('FormCtrl', [
                                 }
                                 if (list.length >= 1) {
                                     if (list[0].base64String !== "") {
-                                        ImageService.create($scope.pictures).then(function (x) {
+                                        ImageService.create(list).then(function (x) {
                                             $rootScope.formUp.close();
                                             $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
                                         });
