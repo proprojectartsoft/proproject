@@ -394,8 +394,10 @@ textarea {
 }
 
 .img-box{
-    width: 25vw;
-    height: 25vw;
+    /*    width: 25vw;
+        height: 25vw;*/
+    width: 95px;
+    height: 95px;
     overflow: hidden;
     margin-left: auto;
     margin-right: auto;
