@@ -11,7 +11,8 @@ angular.module($APP.name).controller('FormCtrl', [
     '$stateParams',
     'ImageService',
     '$ionicModal',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ImageService, $ionicModal) {
+    '$cordovaCamera',
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ImageService, $ionicModal, $cordovaCamera) {
         var designsCache = CacheFactory.get('designsCache');
         if (!designsCache || designsCache.length === 0) {
             designsCache = CacheFactory('designsCache');

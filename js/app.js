@@ -14,7 +14,8 @@ angular.module($APP.name, [
     'ionic-datepicker',
     'ionic-timepicker',
     'angularMoment',
-    'angular-cache'
+    'angular-cache',
+    'ngCordova'
 ]);
 angular.module($APP.name).run(function ($ionicPlatform, $rootScope, CategoriesService, CacheFactory) {
 
