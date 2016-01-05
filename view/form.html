@@ -61,6 +61,16 @@
                                     </div>
                                 </div>-->
                 <ion-item ng-show="isGroupShown(fieldset)" >
+                    <div class="row">
+                        <div class="col">
+                            <div class="img-box-container">
+                                <div class="img-box">
+                                    <button ng-click="delSpot(pic.id)">x</button>
+                                    <img ng-src="http://placehold.it/100x100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row" ng-repeat="picrow in pictures">
                         <div class="col" ng-repeat="pic in picrow">
                             <div class="img-box-container">
