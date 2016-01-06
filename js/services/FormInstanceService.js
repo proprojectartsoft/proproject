@@ -190,8 +190,8 @@ angular.module($APP.name).factory('FormInstanceService', [
                         var alertPopup = $ionicPopup.alert({
                             title: 'Submision failed.',
                             template: 'You are offline. Submit forms by syncing next time you are online'
-                        });
-                        alertPopup.then(function (res) {
+                        }).then(function (res) {
+                            $rootScope.formUp.close();
                             $location.path("/app/category/" + $rootScope.projectId + '/' + requestForm.category_id);
                         });
                     }
@@ -300,7 +300,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                 }
                 requestForm.field_group_instances = requestGroupList;
 
-                return $http.post($APP.server + '/api/forminstance', requestForm, {
+                return $http.put($APP.server + '/api/forminstance', requestForm, {
                     params: {'id': id}
                 }).then(function (payload) {
                     return payload.data;

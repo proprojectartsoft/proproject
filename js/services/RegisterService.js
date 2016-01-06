@@ -4,7 +4,7 @@ angular.module($APP.name).factory('RegisterService', [
     function ($http) {
         return {
             list: function (projectId, categoryId) {
-                return $http.get($APP.server + '/api/registernominated', {
+                return $http.get($APP.server + '/api/newregister', {
                     params: {projectid: projectId, categoryid: categoryId},
                 }).then(
                         function (payload) {
@@ -13,7 +13,7 @@ angular.module($APP.name).factory('RegisterService', [
                 });
             },
             get: function (code) {
-                return $http.get($APP.server + '/api/registernominated', {
+                return $http.get($APP.server + '/api/newregister', {
                     params: {code: code}
                 }).then(
                         function (payload) {

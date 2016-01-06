@@ -60,7 +60,7 @@
         <span class="all-description more-margin" style="margin-right: 30px">{{data.guidance}}</span>   
         <span class="checkbox all-checkbox">
             <input ng-if="data.field_values[0].value === true" input id="{{hash}}" type="checkbox" name="{{data.name}}" ng-model="data.field_values[0].value" value="1" ng-required="data.required">
-            <input ng-if="data.field_values[0].value === false" input id="{{hash}}" type="checkbox" name="{{data.name}}" ng-model="data.field_values[0].value" value="1" ng-required="data.required">
+            <input ng-if="data.field_values[0].value !== true" input id="{{hash}}" type="checkbox" name="{{data.name}}" ng-model="data.field_values[0].value" value="1" ng-required="data.required">
         </span>
     </label>
 </div>

@@ -40,6 +40,9 @@ angular.module($APP.name).directive('edit', [
                             $scope.data.field_values[0].value = false;
                         }
                     }
+                    else {
+                        $scope.data.field_values.push({'value': false});
+                    }
                 }
                 if ($scope.data.type === "date") {
                     if ($scope.data.field_values[0]) {

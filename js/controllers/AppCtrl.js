@@ -2,7 +2,19 @@ angular.module($APP.name).controller('AppCtrl', [
     '$rootScope',
     '$scope',
     'CacheFactory',
-    function ($rootScope,    $scope,  CacheFactory) {
+    function ($rootScope, $scope, CacheFactory) {
+        var getAndroidVersion = function (ua) {
+            ua = (ua || navigator.userAgent).toLowerCase();
+            var match = ua.match(/android\s([0-9\.]*)/);
+            return match ? match[1] : false;
+        };
+
+
+        getAndroidVersion(); //"4.2.1"
+        parseInt(getAndroidVersion(), 10); //4
+        parseFloat(getAndroidVersion()); //4.2
+        $rootScope.androidOk = parseFloat(getAndroidVersion()) > 4.4;
+
         var settings = CacheFactory.get('settings');
         if (!settings || settings.length === 0) {
             settings = CacheFactory('settings');
@@ -16,7 +28,7 @@ angular.module($APP.name).controller('AppCtrl', [
         categoriesCache.setOptions({
             storageMode: 'localStorage'
         });
-        
+
         $rootScope.categories = [];
         angular.forEach(categoriesCache.keys(), function (key) {
             $rootScope.categories.push(categoriesCache.get(key));
@@ -27,7 +39,7 @@ angular.module($APP.name).controller('AppCtrl', [
             storageMode: 'localStorage'
         });
         $rootScope.projects = [];
-        
+
         $rootScope.$watch('projectsCache.keys()', function (newValue, oldValue) {
             angular.forEach(projectsCache.keys(), function (key) {
                 $rootScope.projects.push(projectsCache.get(key));

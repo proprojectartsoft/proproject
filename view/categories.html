@@ -1,5 +1,5 @@
 <ion-view title="{{navTitle}}" hide-back-button="true" cache-view="false">
-    <ion-content class="has-header" style="background-color: #ECEBEB; padding-top:10vw;">
+    <ion-content class="has-header" style="background-color: #ECEBEB; padding-top:10vw;" ng-class="{fixDisplay: androidOk !== true}">
         <div class="row" >
             <a class="col pp-icon" href="#/app/category/{{projectId}}/{{categories[0].id}}" ui-sref="app.forms({projectId:projectId, categoryId:categories[0].id})">
                 <div class="category-item"><span class="category-icon icon-{{categories[0].id}}"></span></div>

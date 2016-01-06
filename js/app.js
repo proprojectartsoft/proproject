@@ -1,7 +1,7 @@
 
 var $APP = $APP || {}; // App namespace
 //$APP.server = 'http://app.preprod.proproject.io/';
-$APP.server = 'http://proproject.artsoft-consult.ro/';
+//$APP.server = 'http://proproject.artsoft-consult.ro/';
 $APP.name = 'proproject';
 $APP.mobile = true;
 $APP.CONFIG;
@@ -23,17 +23,7 @@ angular.module($APP.name).run(function ($ionicPlatform, $rootScope, CategoriesSe
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         }
-        var getAndroidVersion = function (ua) {
-            ua = (ua || navigator.userAgent).toLowerCase();
-            var match = ua.match(/android\s([0-9\.]*)/);
-            return match ? match[1] : false;
-        };
-
-
-        getAndroidVersion(); //"4.2.1"
-        parseInt(getAndroidVersion(), 10); //4
-        parseFloat(getAndroidVersion()); //4.2
-        console.log(getAndroidVersion())
+        
 
         if (window.StatusBar) {
             StatusBar.styleDefault();

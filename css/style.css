@@ -403,6 +403,7 @@ textarea {
     margin-right: auto;
     color: #fff;
     position: relative;
+    border:1px solid #ccc;
 }
 .img-box img{
     height: 100%;
@@ -425,4 +426,10 @@ textarea {
     height: 100px;
     min-height: 100px;
     background-color:red;
+}
+.fixDisplay .pp-icon{
+    min-height: 50px;
+}
+.fixDisplay .pp-icon h2{
+    color: red;
 }
