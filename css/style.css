@@ -427,9 +427,11 @@ textarea {
     min-height: 100px;
     background-color:red;
 }
-.fixDisplay .pp-icon{
-    min-height: 50px;
+.fixDisplay .category-icon{
+    font-size: 3.5em;
+    padding: 0.3em;
 }
 .fixDisplay .pp-icon h2{
-    color: red;
+    margin-top: 1.3em;
+    font-size: 1.1em;
 }
