@@ -193,7 +193,7 @@ angular.module($APP.name).factory('FormInstanceService', [
 //                        }).then(function (res) {
 //                            $rootScope.formUp.close();
                         });
-//                        $rootScope.formUp.close();
+                        $rootScope.formUp.close();
                         $location.path("/app/category/" + $rootScope.projectId + '/' + requestForm.category_id);
                     }
                     else {
