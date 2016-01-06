@@ -190,18 +190,19 @@ angular.module($APP.name).factory('FormInstanceService', [
                         var alertPopup = $ionicPopup.alert({
                             title: 'Submision failed.',
                             template: 'You are offline. Submit forms by syncing next time you are online'
-                        }).then(function (res) {
-                            $rootScope.formUp.close();
-                            $location.path("/app/category/" + $rootScope.projectId + '/' + requestForm.category_id);
+//                        }).then(function (res) {
+//                            $rootScope.formUp.close();
+
                         });
+                        $location.path("/app/category/" + $rootScope.projectId + '/' + requestForm.category_id);
                     }
                     else {
                         var alertPopup = $ionicPopup.alert({
                             title: 'Submision failed.',
                             template: 'Incorrect data, try again'
                         });
-                        alertPopup.then(function (res) {
-                        });
+//                        alertPopup.then(function (res) {
+//                        });
                     }
                 });
             },
@@ -320,16 +321,14 @@ angular.module($APP.name).factory('FormInstanceService', [
                             title: 'Edit failed.',
                             template: 'You are offline. Edit forms by syncing next time you are online'
                         });
-                        alertPopup.then(function (res) {
-                            $location.path("/app/category/" + $rootScope.projectId + '/' + $rootScope.categoryId);
-                        });
+//                        alertPopup.then(function (res) {
+                        $location.path("/app/category/" + $rootScope.projectId + '/' + $rootScope.categoryId);
+//                        });
                     }
                     else {
                         var alertPopup = $ionicPopup.alert({
                             title: 'Edit failed.',
                             template: 'Incorrect data, try again'
-                        });
-                        alertPopup.then(function (res) {
                         });
                     }
                 });
