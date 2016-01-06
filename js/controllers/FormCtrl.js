@@ -135,6 +135,8 @@ angular.module($APP.name).controller('FormCtrl', [
                                 }
                             });
                         }
+                    }, function (payload) {
+                        $rootScope.formUp.close();
                     });
                 }
             });

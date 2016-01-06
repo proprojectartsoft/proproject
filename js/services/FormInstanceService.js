@@ -176,7 +176,6 @@ angular.module($APP.name).factory('FormInstanceService', [
                 }).then(function (payload) {
                     return payload.data;
                 }, function (payload) {
-                    $rootScope.formUp.close();
                     if (payload.status === 0 || payload.status === 502) {
                         var sync = CacheFactory.get('sync');
                         if (!sync) {
@@ -194,7 +193,7 @@ angular.module($APP.name).factory('FormInstanceService', [
 //                        }).then(function (res) {
 //                            $rootScope.formUp.close();
                         });
-                        $rootScope.formUp.close();
+//                        $rootScope.formUp.close();
                         $location.path("/app/category/" + $rootScope.projectId + '/' + requestForm.category_id);
                     }
                     else {
