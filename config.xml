@@ -23,7 +23,8 @@
     </gap:config-file>
     
     <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
-    <gap:plugin name="org.apache.cordova.splashscreen" />
+    <plugin name="com.synconset.imagepicker" spec="1.0.4" source="pgb" />
+    <gap:plugin name="org.apache.cordova.camera" source="npm" />
     <plugin name="com.synconset.imagepicker" spec="1.0.4" source="pgb" />
     <access origin="*"/>
     <allow-navigation href="*" />  
@@ -43,11 +44,7 @@
         <param name="ios-package" onload="true" value="CDVStatusBar"/>
     </feature>
     <platform name="android">
-    	<plugin name="Camera" value="org.apache.cordova.CameraLauncher" />
         <preference name="android-minSdkVersion" value="14"/>
-    </platform>
-    <platform name="ios">
-    	<plugin name="Camera" value="CDVCamera" />
     </platform>
     <icon src="img/icons/android/drawable-ldpi/ic_launcher.png" gap:platform="android" gap:qualifier="ldpi" />
     <icon src="img/icons/android/drawable-madpi/ic_launcher.png" gap:platform="android" gap:qualifier="mdpi" />
