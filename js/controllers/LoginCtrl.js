@@ -24,7 +24,6 @@ angular.module($APP.name).controller('LoginCtrl', [
             reloadCache.setOptions({
                 storageMode: 'localStorage'
             });
-            console.log('x', reloadCache.get('reload'))
         }
         var aux = reloadCache.get('reload');
         if (aux) {
@@ -47,13 +46,13 @@ angular.module($APP.name).controller('LoginCtrl', [
                     var rememberCache = CacheFactory.get('rememberCache');
                     if (rememberCache) {
                         if ($scope.user.rememberMe) {
-                            rememberCache.put('remember', {'username': $scope.user.username, 'password': $scope.user.password});
-                            reloadCache.put('reload', {'username': $scope.user.username, 'password': $scope.user.password});
+                            rememberCache.put('remember', {'username': $scope.user.username, 'password': $scope.user.password});                            
                         }
                         else {
                             rememberCache.destroy();
                         }
                     }
+                    reloadCache.put('reload', {'username': $scope.user.username, 'password': $scope.user.password});
                     SyncService.sync();
                     $state.go("app.categories");
 

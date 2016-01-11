@@ -12,14 +12,14 @@ angular.module($APP.name).service('InstanceService', [
                 );
             },
             reload: function () {
-                var rememberCache = CacheFactory.get('rememberCache');
-                if (!rememberCache) {
-                    rememberCache = CacheFactory('rememberCache');
-                    rememberCache.setOptions({
+                var reloadCache = CacheFactory.get('reloadCache');
+                if (!reloadCache) {
+                    reloadCache = CacheFactory('reloadCache');
+                    reloadCache.setOptions({
                         storageMode: 'localStorage'
                     });
-                }
-                $rootScope.currentUser = rememberCache.get("remember");
+                }                               
+                $rootScope.currentUser = reloadCache.get("reload");
                 var user = $rootScope.currentUser;
                 if (user) {
                     return $http({

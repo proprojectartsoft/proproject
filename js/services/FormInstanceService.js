@@ -174,7 +174,6 @@ angular.module($APP.name).factory('FormInstanceService', [
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     withCredentials: true
                 }).then(function (payload) {
-                    console.log('gag')
                     return payload.data;
                 }, function (payload) {                    
                     if (payload.status === 0 || payload.status === 502) {
