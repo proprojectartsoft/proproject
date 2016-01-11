@@ -89,6 +89,7 @@ angular.module($APP.name).controller('FormCtrl', [
 
             $cordovaCamera.getPicture(options).then(function (imageData) {
                 $scope.item.img = imageData;
+                console.log('$scope.item.img',$scope.item.img)
             }, function (err) {
                 // An error occured. Show a message to the user
             });
@@ -266,6 +267,7 @@ angular.module($APP.name).controller('FormCtrl', [
                         $scope.convertToDataURLviaCanvas(results[0], function (base64Img) {
                             $scope.$apply(function () {
                                 $scope.item.img = base64Img.replace(/^data:image\/(png|jpg);base64,/, "");
+                                console.log('$scope.item.img gallery',$scope.item.img)
                                 $rootScope.imgUp.close();
                             });
                         });
