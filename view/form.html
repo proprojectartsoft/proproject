@@ -66,7 +66,7 @@
                             <div class="img-box-container">
                                 <div class="img-box" ng-click="test(pic)">
                                     <button ng-click="delSpot(pic.id)">x</button>
-                                    <img ng-show="pic.base64String !== ''" ng-src="{{pic.base64String}}">
+                                    <img ng-show="pic.base64String !== ''" data-ng-src ="data:image/png;base64,{{pic.base64String}}">
                                     <img ng-show="pic.base64String === ''" ng-src="img/ic.png">
                                 </div>
                             </div>
