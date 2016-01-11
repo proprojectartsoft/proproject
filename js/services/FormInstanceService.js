@@ -176,7 +176,12 @@ angular.module($APP.name).factory('FormInstanceService', [
                 }).then(function (payload) {
                     console.log('gag')
                     return payload.data;
+<<<<<<< HEAD
                 }, function (payload) {                    
+=======
+                }, function (payload) {
+                    $rootScope.formUp.close();
+>>>>>>> origin/master
                     if (payload.status === 0 || payload.status === 502) {
                         var sync = CacheFactory.get('sync');
                         if (!sync) {
