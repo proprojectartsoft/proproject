@@ -174,8 +174,9 @@ angular.module($APP.name).factory('FormInstanceService', [
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     withCredentials: true
                 }).then(function (payload) {
+                    console.log('gag')
                     return payload.data;
-                }, function (payload) {
+                }, function (payload) {                    
                     if (payload.status === 0 || payload.status === 502) {
                         var sync = CacheFactory.get('sync');
                         if (!sync) {
@@ -190,19 +191,20 @@ angular.module($APP.name).factory('FormInstanceService', [
                         var alertPopup = $ionicPopup.alert({
                             title: 'Submision failed.',
                             template: 'You are offline. Submit forms by syncing next time you are online'
-//                        }).then(function (res) {
-//                            $rootScope.formUp.close();
+                        }).then(function (res) {
+                            $location.path("/app/category/" + $rootScope.projectId + '/' + requestForm.category_id);
+                            $rootScope.$broadcast('errorInfiniteScroll');
                         });
-                        $rootScope.formUp.close();
-                        $location.path("/app/category/" + $rootScope.projectId + '/' + requestForm.category_id);
+
+
                     }
                     else {
-                        var alertPopup = $ionicPopup.alert({
+                        var alertPopup2 = $ionicPopup.alert({
                             title: 'Submision failed.',
                             template: 'Incorrect data, try again'
                         });
-//                        alertPopup.then(function (res) {
-//                        });
+                        alertPopup2.then(function (res) {
+                        });
                     }
                 });
             },

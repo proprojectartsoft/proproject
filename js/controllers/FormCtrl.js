@@ -92,7 +92,11 @@ angular.module($APP.name).controller('FormCtrl', [
             }, function (err) {
                 // An error occured. Show a message to the user
             });
-        }
+        };
+        $scope.$on('errorInfiniteScroll', function () {
+            console.log('close')
+            $rootScope.formUp.close();
+        });
         $scope.submit = function () {
             var confirmPopup = $ionicPopup.confirm({
                 title: 'New form',
