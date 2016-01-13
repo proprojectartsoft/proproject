@@ -1,7 +1,7 @@
 angular.module($APP.name).factory('SyncService', [
     '$http',
     'CacheFactory',
-    '$q',
+    '$state',
     '$ionicPopup',
     '$timeout',
     'FormInstanceService',
@@ -10,7 +10,7 @@ angular.module($APP.name).factory('SyncService', [
     'ProjectService',
     '$rootScope',
     'CategoriesService',
-    function ($http, CacheFactory, $q, $ionicPopup, $timeout, FormInstanceService, FormDesignService, InstanceService, ProjectService, $rootScope, CategoriesService) {
+    function ($http, CacheFactory, $state, $ionicPopup, $timeout, FormInstanceService, FormDesignService, InstanceService, ProjectService, $rootScope, CategoriesService) {
         var projectsReadyDestroyer = function () {
         };
         var categoriesReadyDestroyer = function () {
@@ -80,6 +80,7 @@ angular.module($APP.name).factory('SyncService', [
 
             ProjectService.list().then(function (projects) {
                 if (projects) {
+                    var projectsCache = CacheFactory.get('projectsCache');
                     $rootScope.projects = [];
                     $rootScope.projects = projects;
                     for (var i = 0; i < projects.length; i++) {
@@ -189,6 +190,7 @@ angular.module($APP.name).factory('SyncService', [
                         up();
                     }, 200);
                 }).error(function (y) {
+                    console.log(y)
                     $ionicPopup.alert({
                         title: 'You are Offline',
                         content: 'Please go online to sync your data.'
@@ -212,6 +214,7 @@ angular.module($APP.name).factory('SyncService', [
                 $rootScope.$on('syncDown.complete', function (event, args) {
                     console.log("syncDown complete");
                     // Close the sync progress popup
+                    $state.go('app.categories', {'projectId': $rootScope.projectId});
                     $rootScope.syncPopup.close();
                 });
             },

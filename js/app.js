@@ -1,7 +1,7 @@
 
 var $APP = $APP || {}; // App namespace
- $APP.server = 'http://app.preprod.proproject.io/';
-//$APP.server = 'http://artvm23.vmnet.ro';
+// $APP.server = 'http://app.preprod.proproject.io/';
+$APP.server = 'http://artvm23.vmnet.ro';
 $APP.name = 'proproject';
 $APP.mobile = true;
 $APP.CONFIG;

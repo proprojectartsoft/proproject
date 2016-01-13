@@ -10,6 +10,7 @@ angular.module($APP.name).controller('NavCtrl', [
         $scope.toggleLeft = function () {
             $ionicSideMenuDelegate.toggleLeft();
         };
+        
 
         $scope.logout = function () {
             var projectsCache = CacheFactory.get('projectsCache');

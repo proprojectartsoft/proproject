@@ -9,7 +9,7 @@
                         <i class="icon ion-chevron-left all-chevron"></i>
                     </button>
                 </a>
-                
+
                 <div class="all-spinner" ng-show="!hasData && isLoaded">
                     <span class="all-ion-text">{{hasData}}</span>
                 </div>
@@ -18,7 +18,7 @@
                         <i class="icon ion-search placeholder-icon"></i>
                         <input type="text" placeholder="Search">
                     </label>
-                    <a class="item" ng-repeat="form in formDesigns" ui-sref="app.form({projectId:projectId, formId:form.id})">
+                    <a class="item" ng-repeat="form in formDesigns" ng-show="form.permission > 0" ng-click="changeForm(form.id)">
                         <span class="form-item">{{form.code}}</span>
                         {{form.name}}
                     </a>

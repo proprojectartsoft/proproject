@@ -46,11 +46,17 @@ angular.module($APP.name).controller('LoginCtrl', [
                     var rememberCache = CacheFactory.get('rememberCache');
                     if (rememberCache) {
                         if ($scope.user.rememberMe) {
-                            rememberCache.put('remember', {'username': $scope.user.username, 'password': $scope.user.password});                            
-                        }
-                        else {
+                            rememberCache.put('remember', {'username': $scope.user.username, 'password': $scope.user.password});
+                        } else {
                             rememberCache.destroy();
                         }
+                    }
+                    var reloadCache = CacheFactory.get('reloadCache');
+                    if (!reloadCache) {
+                        reloadCache = CacheFactory('reloadCache');
+                        reloadCache.setOptions({
+                            storageMode: 'localStorage'
+                        });
                     }
                     reloadCache.put('reload', {'username': $scope.user.username, 'password': $scope.user.password});
                     SyncService.sync();

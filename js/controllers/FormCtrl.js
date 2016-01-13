@@ -13,6 +13,7 @@ angular.module($APP.name).controller('FormCtrl', [
     '$ionicModal',
     '$cordovaCamera',
     function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ImageService, $ionicModal, $cordovaCamera) {
+
         var designsCache = CacheFactory.get('designsCache');
         if (!designsCache || designsCache.length === 0) {
             designsCache = CacheFactory('designsCache');
@@ -41,7 +42,6 @@ angular.module($APP.name).controller('FormCtrl', [
                 temparray = $scope.imgURI.slice(i, i + chunk);
                 $scope.pictures.push(temparray);
             }
-            console.log($scope.imgURI)
         };
         $scope.trim();
         $scope.addSpot = function () {
@@ -60,6 +60,7 @@ angular.module($APP.name).controller('FormCtrl', [
                 }
             }
         };
+        console.log($scope.formData)
         $scope.test = function (item) {
             console.log('item', item);
             $scope.item = item;
@@ -94,7 +95,7 @@ angular.module($APP.name).controller('FormCtrl', [
             });
         };
         $scope.$on('errorInfiniteScroll', function () {
-            console.log('close')
+            console.log('close');
             $rootScope.formUp.close();
         });
         $scope.submit = function () {
@@ -113,31 +114,35 @@ angular.module($APP.name).controller('FormCtrl', [
                     FormInstanceService.create($scope.formData).then(function (data) {
                         if (data) {
                             $rootScope.formId = data.id;
-                            FormInstanceService.get($rootScope.formId).then(function (data) {
-                                $rootScope.rootForm = data;
-                                var list = $scope.imgURI;
-                                for (var i = 0; i < list.length; i++) {
-                                    list[i].id = 0;
-                                    list[i].formInstanceId = $rootScope.formId;
-                                    list[i].projectId = $stateParams.projectId;
-                                }
-                                if (list.length >= 1) {
-                                    if (list[0].base64String !== "") {
-                                        ImageService.create(list).then(function (x) {
+                            if (!data.message) {
+                                FormInstanceService.get($rootScope.formId).then(function (data) {
+                                    $rootScope.rootForm = data;
+                                    var list = $scope.imgURI;
+                                    for (var i = 0; i < list.length; i++) {
+                                        list[i].id = 0;
+                                        list[i].formInstanceId = $rootScope.formId;
+                                        list[i].projectId = $stateParams.projectId;
+                                    }
+                                    if (list.length >= 1) {
+                                        if (list[0].base64String !== "") {
+                                            ImageService.create(list).then(function (x) {
+                                                $rootScope.formUp.close();
+                                                $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
+                                            });
+                                        } else {
                                             $rootScope.formUp.close();
                                             $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
-                                        });
-                                    }
-                                    else {
+                                        }
+                                    } else {
                                         $rootScope.formUp.close();
                                         $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
                                     }
-                                }
-                                else {
-                                    $rootScope.formUp.close();
-                                    $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
-                                }
-                            });
+
+                                });
+                            } else {
+                                $rootScope.formUp.close();
+
+                            }
                         }
                     });
                 }
@@ -288,8 +293,7 @@ angular.module($APP.name).controller('FormCtrl', [
                     $scope.pictures[i].base64String = angular.copy($scope.pictures[i + 1].base64String);
                 }
                 $scope.pictures.splice($scope.pictures.length - 1, 1)
-            }
-            else {
+            } else {
                 $scope.pictures[0].base64String = "";
                 $scope.pictures[0].comment = "";
             }

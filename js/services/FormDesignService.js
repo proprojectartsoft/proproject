@@ -20,6 +20,15 @@ angular.module($APP.name).factory('FormDesignService', [
                             return payload.data;
                         }, function (err) {
                 });
+            },
+            checkpermission: function(id){
+                return $http.get($APP.server + '/api/formdesign/checkpermission', {
+                    params: {id: id}
+                }).then(
+                        function (payload) {
+                            return payload.data;
+                        }, function (err) {
+                });
             }
         };
     }

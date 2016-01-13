@@ -9,8 +9,7 @@ angular.module($APP.name).controller('EditCtrl', [
     '$ionicScrollDelegate',
     '$ionicPopup',
     function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, FormDesignService, $ionicScrollDelegate, $ionicPopup) {
-        $scope.formData = $rootScope.rootForm;
-
+        $scope.formData = $rootScope.rootForm;        
         $scope.submit = function (help) {
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Edit form',

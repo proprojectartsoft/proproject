@@ -75,8 +75,7 @@ angular.module($APP.name).factory('AuthService', [
                     if (!role.title)
                         role = userRoles.pub;
                     ok = 0;
-                }
-                else {
+                } else {
                     if (role.title === userRoles.user.title) {
                         if (access.title === userRoles.user.title) {
                             ok = true;
@@ -103,15 +102,13 @@ angular.module($APP.name).factory('AuthService', [
                         role = userRoles.pub;
                     if (!(accessLevel.title === role.title)) {
                         $state.go('login');
-                    }
-                    else {
+                    } else {
                     }
 
                 }).error(function (data, status, headers, config) {
                     if (status === 403) {
                         $location.path('/login');
-                    }
-                    else if (status === 502) {
+                    } else if (status === 502) {
                         $rootScope.online = false;
                     }
                 });
@@ -119,7 +116,7 @@ angular.module($APP.name).factory('AuthService', [
             meTest: function () {
                 $http.get($APP.server + '/api/me', {withCredentials: true}).success(function (user) {
                 });
-            },            
+            },
             isLoggedIn: function (user) {
                 var ok = false;
                 if (user === undefined)
@@ -186,23 +183,20 @@ angular.module($APP.name).factory('AuthService', [
                             alert('Incorrect user data');
                         }
                     });
-                }
-                else {
+                } else {
                 }
             },
             isLoggedInWithCallback: function () {
                 var loggedIn = this.isLoggedIn;
                 $http.get($APP.server + '/api/me', {withCredentials: true}).success(function (user) {
                     if (loggedIn(user)) {
-                    }
-                    else {
+                    } else {
                         $location.path('/login');
                     }
                 }).error(function (data, status, headers, config) {
                     if (status === 403) {
                         $location.path('/login');
-                    }
-                    else if (status === 502) {
+                    } else if (status === 502) {
                         $rootScope.online = false;
                     }
                 });
@@ -222,7 +216,7 @@ angular.module($APP.name).factory('AuthService', [
                     data: user
                 }).then(function (data) {
                     changeUser(data.data.data);
-                    $rootScope.online = true;                    
+                    $rootScope.online = true;
                     return data.data.data;
                 }, function errorCallback(response) {
                     if (response.status === 0) {
@@ -249,21 +243,36 @@ angular.module($APP.name).factory('AuthService', [
                         alertPopup.then(function (res) {
                         });
                     }
+                    if (response.status === 401) {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Error',
+                            template: 'Your account has been de-activated. Contact your supervisor for further information.',
+                        });
+                        alertPopup.then(function (res) {
+                        });
+                    }
                 });
 
             },
-            logout: function (success, error) {
-                CacheFactory.destroy('reloadCache');
-                changeUser({
-                    username: '',
-                    role: userRoles.pub
+            me: function () {
+                return $http.get($APP.server + '/api/me').then(function (user) {
+                    return user.data;
+                }, function errorCallback(response) {
+                    $rootScope.online = false;
+
                 });
-                $http.post($APP.server + '/pub/logout', {withCredentials: true}).success(function () {
+            },
+            logout: function () {
+                CacheFactory.destroy('reloadCache');
+                return $http.post('http://artvm23.vmnet.ro/pub/logout', {}).success(function () {
+                    
                     changeUser({
                         username: '',
                         role: userRoles.pub
                     });
-                }).error(error);
+                }).error(function (error) {
+                    return error;
+                });
             },
             userRoles: userRoles,
             user: $rootScope.currentUser
