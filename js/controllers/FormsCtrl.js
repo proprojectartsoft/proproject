@@ -128,7 +128,7 @@ angular.module($APP.name).controller('FormsCtrl', [
                         if (syncCache) {
                             syncCache.destroy();
                         }
-
+                        $state.go('app.categories', {'projectId': $rootScope.projectId});
                         SyncService.sync();
                     });
                 }

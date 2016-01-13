@@ -58,10 +58,11 @@ angular.module($APP.name).controller('CategoriesCtrl', [
             AuthService.logout().success(function () {
                 $state.go('login');
             }, function () {
-            });            
+            });
         };
-        
-         $rootScope.$on('doSync', function () {
+
+        $rootScope.$on('doSync', function () {
+            $state.go('app.categories', {'projectId': $rootScope.projectId});
             SyncService.sync();
         });
     }

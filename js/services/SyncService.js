@@ -213,8 +213,7 @@ angular.module($APP.name).factory('SyncService', [
                 $rootScope.$$listeners['syncDown.complete'] = undefined;
                 $rootScope.$on('syncDown.complete', function (event, args) {
                     console.log("syncDown complete");
-                    // Close the sync progress popup
-                    $state.go('app.categories', {'projectId': $rootScope.projectId});
+                    // Close the sync progress popup                    
                     $rootScope.syncPopup.close();
                 });
             },
