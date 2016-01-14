@@ -172,7 +172,7 @@ angular.module($APP.name).controller('FormCtrl', [
         $scope.repeatGroup = function (x) {
             var aux = {};
             angular.copy(x, aux);
-            aux.repeatable = false;
+            aux.repeatable = true;
             aux.id = 0;
             for (var i = 0; i < aux.field_designs.length; i++) {
                 aux.field_designs[i].field_group_design_id = 0;
@@ -201,7 +201,7 @@ angular.module($APP.name).controller('FormCtrl', [
         $scope.repeatField = function (x, y) {
             var test = {};
             angular.copy(y, test);
-            test.repeatable = false;
+            test.repeatable = true;
             test.id = 0;
             for (var i = 0; i < x.field_designs.length; i++) {
                 if (x.field_designs[i] === y) {

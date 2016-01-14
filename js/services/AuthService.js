@@ -127,7 +127,6 @@ angular.module($APP.name).factory('AuthService', [
                 return ok;
             },
             isLoggedInCache: function () {
-
                 var settingsCache = CacheFactory.get('settings');
                 if (!settingsCache) {
                     settingsCache = CacheFactory('settings');

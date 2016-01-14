@@ -23,16 +23,7 @@ angular.module($APP.name).controller('RegistersCtrl', [
                 }
             });
         }
-
-        var categoriesCache = CacheFactory.get('categoriesCache');
-        if (!categoriesCache || categoriesCache.length === 0) {
-            categoriesCache = CacheFactory('categoriesCache');
-            categoriesCache.setOptions({
-                storageMode: 'localStorage'
-            });
-        }
-
-        $scope.categoryName = categoriesCache.get($stateParams.categoryId).name;
+        $scope.categoryName = $rootScope.categories[$stateParams.categoryId - 1].name;
 
         $scope.refresh = function () {
             RegisterService.list($stateParams.projectId, $stateParams.categoryId).then(function (data) {

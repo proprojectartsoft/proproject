@@ -62,7 +62,7 @@ angular.module($APP.name).controller('EditCtrl', [
         $scope.repeatGroup = function (x) {
             var aux = {};
             angular.copy(x, aux);
-            aux.repeatable = false;
+            aux.repeatable = true;
             aux.id = 0;
             for (var i = 0; i < aux.field_instances.length; i++) {
                 aux.field_instances[i].field_group_instance_id = 0;
@@ -89,7 +89,7 @@ angular.module($APP.name).controller('EditCtrl', [
         $scope.repeatField = function (x, y) {
             var test = {};
             angular.copy(y, test);
-            test.repeatable = false;
+            test.repeatable = true;
             test.id = 0;
             for (var i = 0; i < x.field_instances.length; i++) {
                 if (x.field_instances[i] === y) {

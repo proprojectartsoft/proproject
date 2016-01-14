@@ -17,13 +17,13 @@ angular.module($APP.name, [
     'angular-cache',
     'ngCordova'
 ]);
-angular.module($APP.name).run(function ($ionicPlatform, $rootScope, CategoriesService, CacheFactory) {
+angular.module($APP.name).run(function ($ionicPlatform, CacheFactory) {
 
     $ionicPlatform.ready(function () {
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         }
-        
+
 
         if (window.StatusBar) {
             StatusBar.styleDefault();

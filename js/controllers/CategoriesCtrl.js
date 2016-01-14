@@ -20,10 +20,6 @@ angular.module($APP.name).controller('CategoriesCtrl', [
             if (projectsCache) {
                 projectsCache.destroy();
             }
-            var categoriesCache = CacheFactory.get('categoriesCache');
-            if (categoriesCache) {
-                categoriesCache.destroy();
-            }
             var designsCache = CacheFactory.get('designsCache');
             if (designsCache) {
                 designsCache.destroy();
@@ -60,7 +56,7 @@ angular.module($APP.name).controller('CategoriesCtrl', [
             }, function () {
             });
         };
-
+        SyncService.newsync();
         $rootScope.$on('doSync', function () {
             $state.go('app.categories', {'projectId': $rootScope.projectId});
             SyncService.sync();

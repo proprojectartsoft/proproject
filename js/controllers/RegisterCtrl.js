@@ -15,15 +15,6 @@ angular.module($APP.name).controller('RegisterCtrl', [
             $scope.data = data;
             $scope.num = $scope.data.records.values.length;
         });
-
-        var categoriesCache = CacheFactory.get('categoriesCache');
-        if (!categoriesCache || categoriesCache.length === 0) {
-            categoriesCache = CacheFactory('categoriesCache');
-            categoriesCache.setOptions({
-                storageMode: 'localStorage'
-            });
-        }
-
         $scope.dateToString = function (val) {
             var date = new Date(parseInt(val));
             return date.toString();

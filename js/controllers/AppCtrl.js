@@ -24,16 +24,6 @@ angular.module($APP.name).controller('AppCtrl', [
         }
         $scope.user = settings.get("user");
 
-        var categoriesCache = CacheFactory('categoriesCache');
-        categoriesCache.setOptions({
-            storageMode: 'localStorage'
-        });
-
-        $rootScope.categories = [];
-        angular.forEach(categoriesCache.keys(), function (key) {
-            $rootScope.categories.push(categoriesCache.get(key));
-        });
-
         var projectsCache = CacheFactory('projectsCache');
         projectsCache.setOptions({
             storageMode: 'localStorage'

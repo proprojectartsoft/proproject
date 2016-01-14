@@ -10,16 +10,19 @@ angular.module($APP.name).controller('NavCtrl', [
         $scope.toggleLeft = function () {
             $ionicSideMenuDelegate.toggleLeft();
         };
+        $rootScope.categories = [
+            {"id": 1, "name": "Health and Safety", "description": "Health and safety category", "image_url": "healthsafety"},
+            {"id": 2, "name": "Design", "description": "Design category", "image_url": "design"},
+            {"id": 3, "name": "Quality Assurance", "description": "Quality Assurance category", "image_url": "qa"},
+            {"id": 4, "name": "Contractual", "description": "Contractual category", "image_url": "contractual"},
+            {"id": 5, "name": "Environmental", "description": "Environmental category", "image_url": "environmental"},
+            {"id": 6, "name": "Financial", "description": "Financial category", "image_url": "financial"}
+        ];
         
-
         $scope.logout = function () {
             var projectsCache = CacheFactory.get('projectsCache');
             if (projectsCache) {
                 projectsCache.destroy();
-            }
-            var categoriesCache = CacheFactory.get('categoriesCache');
-            if (categoriesCache) {
-                categoriesCache.destroy();
             }
             var designsCache = CacheFactory.get('designsCache');
             if (designsCache) {

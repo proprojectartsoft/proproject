@@ -26,7 +26,8 @@ angular.module($APP.name).controller('LoginCtrl', [
             });
         }
         var aux = reloadCache.get('reload');
-        if (aux) {
+        console.log('aux')
+        if (aux) {            
             AuthService.isLoggedInCache();
         }
         $scope.hasRemember = rememberCache.get('remember');
@@ -59,7 +60,7 @@ angular.module($APP.name).controller('LoginCtrl', [
                         });
                     }
                     reloadCache.put('reload', {'username': $scope.user.username, 'password': $scope.user.password});
-                    SyncService.sync();
+//                    SyncService.sync();
                     $state.go("app.categories");
 
                 }

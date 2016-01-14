@@ -174,7 +174,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     withCredentials: true
                 }).then(function (payload) {
-                    if(payload.data.message){
+                    if (payload.data.message) {
                         var alertPopup3 = $ionicPopup.alert({
                             title: 'Submision failed.',
                             template: 'You have not permission to do this operation'
@@ -185,7 +185,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                         });
                     }
                     return payload.data;
-                }, function (payload) {                    
+                }, function (payload) {
                     if (payload.status === 0 || payload.status === 502) {
                         var sync = CacheFactory.get('sync');
                         if (!sync) {
@@ -348,6 +348,15 @@ angular.module($APP.name).factory('FormInstanceService', [
             list: function (projectId, categoryId) {
                 return $http.get($APP.server + '/api/forminstance', {
                     params: {projectId: projectId, categoryId: categoryId}
+                }).then(
+                        function (payload) {
+                            return payload.data;
+                        }, function (err) {
+                });
+            },
+            list_mobile: function (projectId) {
+                return $http.get($APP.server + '/api/forminstance', {
+                    params: {projectId: projectId}
                 }).then(
                         function (payload) {
                             return payload.data;

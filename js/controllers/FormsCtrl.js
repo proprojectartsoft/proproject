@@ -27,10 +27,6 @@ angular.module($APP.name).controller('FormsCtrl', [
             if (projectsCache) {
                 projectsCache.destroy();
             }
-            var categoriesCache = CacheFactory.get('categoriesCache');
-            if (categoriesCache) {
-                categoriesCache.destroy();
-            }
             var designsCache = CacheFactory.get('designsCache');
             if (designsCache) {
                 designsCache.destroy();
@@ -84,14 +80,8 @@ angular.module($APP.name).controller('FormsCtrl', [
             }
         });
 
-        var categoriesCache = CacheFactory.get('categoriesCache');
-        if (!categoriesCache || categoriesCache.length === 0) {
-            categoriesCache = CacheFactory('categoriesCache');
-            categoriesCache.setOptions({
-                storageMode: 'localStorage'
-            });
-        }
-        $scope.categoryName = categoriesCache.get($stateParams.categoryId).name;
+
+        $scope.categoryName = $rootScope.categories[$stateParams.categoryId - 1].name;
 
         $scope.refresh = function () {
             FormDesignService.list($stateParams.categoryId).then(function (data) {
