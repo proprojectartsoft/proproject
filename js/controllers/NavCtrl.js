@@ -10,6 +10,7 @@ angular.module($APP.name).controller('NavCtrl', [
         $scope.toggleLeft = function () {
             $ionicSideMenuDelegate.toggleLeft();
         };
+
         $rootScope.categories = [
             {"id": 1, "name": "Health and Safety", "description": "Health and safety category", "image_url": "healthsafety"},
             {"id": 2, "name": "Design", "description": "Design category", "image_url": "design"},
@@ -18,7 +19,7 @@ angular.module($APP.name).controller('NavCtrl', [
             {"id": 5, "name": "Environmental", "description": "Environmental category", "image_url": "environmental"},
             {"id": 6, "name": "Financial", "description": "Financial category", "image_url": "financial"}
         ];
-        
+
         $scope.logout = function () {
             var projectsCache = CacheFactory.get('projectsCache');
             if (projectsCache) {
@@ -62,15 +63,51 @@ angular.module($APP.name).controller('NavCtrl', [
             });
 
         };
+        $rootScope.getOut = function () {
+            var projectsCache = CacheFactory.get('projectsCache');
+            if (projectsCache) {
+                projectsCache.destroy();
+            }
+            var designsCache = CacheFactory.get('designsCache');
+            if (designsCache) {
+                designsCache.destroy();
+            }
+            var instanceCache = CacheFactory.get('instanceCache');
+            if (instanceCache) {
+                instanceCache.destroy();
+            }
+            var registersCache = CacheFactory.get('registersCache');
+            if (registersCache) {
+                registersCache.destroy();
+            }
+            var registerCache = CacheFactory.get('registerCache');
+            if (registerCache) {
+                registerCache.destroy();
+            }
+
+            var reloadCache = CacheFactory.get('reloadCache');
+            if (reloadCache) {
+                reloadCache.destroy();
+            }
+
+            var syncCache = CacheFactory.get('sync');
+            if (syncCache) {
+                syncCache.destroy();
+            }
+
+            var settingsCache = CacheFactory.get('settings');
+            if (settingsCache) {
+                settingsCache.destroy();
+            }
+
+            AuthService.logout(function () {
+                $state.go('login');
+            }, function () {
+            });
+        };
         $scope.meTest = function () {
             AuthService.meTest();
         }
-        $rootScope.$watch('projects', function (newValue, oldValue) {
-            if ($rootScope.projects[0]) {
-                $rootScope.navTitle = $rootScope.projects[0].name;
-                $rootScope.projectId = $rootScope.projects[0].id;
-            }
-        });
 
         $scope.updateTitle = function (project) {
             $rootScope.navTitle = project.name;
@@ -80,5 +117,10 @@ angular.module($APP.name).controller('NavCtrl', [
         $scope.sync = function () {
             SyncService.sync();
         };
+
+        $rootScope.$on('sync.todo', function () {
+            $state.go('app.categories', {'projectId': $rootScope.projectId});
+            $scope.sync();
+        });
     }
 ]);

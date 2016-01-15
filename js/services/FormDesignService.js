@@ -36,6 +36,8 @@ angular.module($APP.name).factory('FormDesignService', [
                         function (payload) {
                             return payload.data;
                         }, function (err) {
+                }, function(result){
+                    console.log('sadsadkbasndkasn')
                 });
             }
         };

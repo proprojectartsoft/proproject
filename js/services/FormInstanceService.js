@@ -4,7 +4,9 @@ angular.module($APP.name).factory('FormInstanceService', [
     'CacheFactory',
     '$ionicPopup',
     '$location',
-    function ($rootScope, $http, CacheFactory, $ionicPopup, $location) {
+    '$timeout',
+    '$state',
+    function ($rootScope, $http, CacheFactory, $ionicPopup, $location, $timeout, $state) {
         var dateTimeSave = function (obj) {
             var aux;
             if (obj.value) {
@@ -173,20 +175,22 @@ angular.module($APP.name).factory('FormInstanceService', [
 
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     withCredentials: true
-                }).then(function (payload) {
-                    if (payload.data.message) {
-                        var alertPopup3 = $ionicPopup.alert({
-                            title: 'Submision failed.',
-                            template: 'You have not permission to do this operation'
-                        }).then(function (res) {
-//                            $location.path("/app/categories/" + $rootScope.projectId );
-                            $rootScope.$broadcast('errorInfiniteScroll');
-                            $rootScope.$broadcast('doSync');
-                        });
+                }).success(function (payload, status) {
+                    if (payload.message) {
+                        $timeout(function () {
+                            var alertPopup3 = $ionicPopup.alert({
+                                title: 'Submision failed.',
+                                template: 'You have not permission to do this operation'
+                            });
+                            alertPopup3.then(function (res) {
+                                $rootScope.$broadcast('sync.todo');
+                            });
+                        }, 10);
                     }
                     return payload.data;
-                }, function (payload) {
-                    if (payload.status === 0 || payload.status === 502) {
+                }).error(function (payload, status) {
+                    $rootScope.$broadcast('closesync');
+                    if (status === 0 || status === 502) {
                         var sync = CacheFactory.get('sync');
                         if (!sync) {
                             sync = CacheFactory('sync');
@@ -197,15 +201,15 @@ angular.module($APP.name).factory('FormInstanceService', [
                         $rootScope.toBeUploadedCount = sync.keys().length;
                         $rootScope.toBeUploadedCount++;
                         sync.put($rootScope.toBeUploadedCount, requestForm);
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Submision failed.',
-                            template: 'You are offline. Submit forms by syncing next time you are online'
-                        }).then(function (res) {
-                            $location.path("/app/category/" + $rootScope.projectId + '/' + requestForm.category_id);
-                            $rootScope.$broadcast('errorInfiniteScroll');
+                        $timeout(function () {
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Submision failed.',
+                                template: 'You are offline. Submit forms by syncing next time you are online'
+                            }).then(function (res) {
+                                $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': requestForm.category_id});
+                            });
                         });
-
-
+//                        }, 1);
                     }
                     else {
                         var alertPopup2 = $ionicPopup.alert({
@@ -216,6 +220,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                         });
                     }
                 });
+
             },
             create_sync: function (dataIn) {
                 return $http({
@@ -223,6 +228,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                     url: $APP.server + '/api/forminstance',
                     data: dataIn
                 }).then(function (response) {
+                    return response.data;
                 });
             },
             update: function (id, data) {

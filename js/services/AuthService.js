@@ -257,14 +257,13 @@ angular.module($APP.name).factory('AuthService', [
                 return $http.get($APP.server + '/api/me').then(function (user) {
                     return user.data;
                 }, function errorCallback(response) {
-                    $rootScope.online = false;
-
+                    return response;
                 });
             },
             logout: function () {
                 CacheFactory.destroy('reloadCache');
-                return $http.post('http://artvm23.vmnet.ro/pub/logout', {}).success(function () {
-                    
+                return $http.post($APP.server + '/pub/logout', {}).success(function () {
+
                     changeUser({
                         username: '',
                         role: userRoles.pub

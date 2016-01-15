@@ -12,7 +12,9 @@ angular.module($APP.name).controller('FormCtrl', [
     'ImageService',
     '$ionicModal',
     '$cordovaCamera',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ImageService, $ionicModal, $cordovaCamera) {
+    '$state',
+    'SyncService',
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ImageService, $ionicModal, $cordovaCamera, $state, SyncService) {
 
         var designsCache = CacheFactory.get('designsCache');
         if (!designsCache || designsCache.length === 0) {
@@ -94,10 +96,10 @@ angular.module($APP.name).controller('FormCtrl', [
                 // An error occured. Show a message to the user
             });
         };
-        $scope.$on('errorInfiniteScroll', function () {
-            console.log('close');
-            $rootScope.formUp.close();
-        });
+//        $scope.$on('errorInfiniteScroll', function () {
+//            console.log('close');
+//            $rootScope.formUp.close();
+//        });
         $scope.submit = function () {
             var confirmPopup = $ionicPopup.confirm({
                 title: 'New form',
@@ -105,13 +107,15 @@ angular.module($APP.name).controller('FormCtrl', [
             });
             confirmPopup.then(function (res) {
                 if (res) {
-                    $rootScope.formUp = $ionicPopup.alert({
+
+                    var formUp = $ionicPopup.alert({
                         title: "Submitting",
                         template: "<center><ion-spinner icon='android'></ion-spinner></center>",
                         content: "",
                         buttons: []
                     });
-                    FormInstanceService.create($scope.formData).then(function (data) {
+
+                    FormInstanceService.create($scope.formData).success(function (data) {
                         if (data) {
                             $rootScope.formId = data.id;
                             if (!data.message) {
@@ -126,25 +130,26 @@ angular.module($APP.name).controller('FormCtrl', [
                                     if (list.length >= 1) {
                                         if (list[0].base64String !== "") {
                                             ImageService.create(list).then(function (x) {
-                                                $rootScope.formUp.close();
-                                                $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
+                                                $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
                                             });
                                         } else {
-                                            $rootScope.formUp.close();
-                                            $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
+                                            formUp.close();
+                                            $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
                                         }
                                     } else {
-                                        $rootScope.formUp.close();
-                                        $location.path("/app/view/" + $rootScope.projectId + "/form/" + data.id);
+                                        formUp.close();
+                                        $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
                                     }
-
-                                });
-                            } else {
-                                $rootScope.formUp.close();
-
+                                })
                             }
                         }
+                    }).error(function (data, status) {
+                        $timeout(function () {
+                            formUp.close();
+                        });
+//                        }, 1);
                     });
+
                 }
             });
         };
@@ -234,34 +239,6 @@ angular.module($APP.name).controller('FormCtrl', [
         $scope.$on('moduleSaveChanges', function () {
             $scope.formData = FormUpdateService.getProducts();
         });
-
-//        $scope.addPictureSlot = function () {
-//            if ($scope.pictures.length < 9) {
-//                $scope.imgURI.push({
-//                    "id": $scope.pictures.length,
-//                    "base64String": "",
-//                    "comment": "",
-//                    "tags": "",
-//                    "title": " ",
-//                    "projectId": 0,
-//                    "formInstanceId": 0
-//                });
-//            }
-//        };
-
-//        $scope.isLastPicture = function (index) {
-//            if (index === 8) {
-//                return false;
-//            }
-//            else {
-//                if (index + 1 === $scope.pictures.length) {
-//                    return true;
-//                }
-//                else {
-//                    return false;
-//                }
-//            }
-//        };
 
         $scope.addPicture = function (index) {
             $rootScope.imgUp = $ionicPopup.alert({

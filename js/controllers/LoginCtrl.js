@@ -4,7 +4,8 @@ angular.module($APP.name).controller('LoginCtrl', [
     'AuthService',
     'CacheFactory',
     'SyncService',
-    function ($scope, $state, AuthService, CacheFactory, SyncService) {
+    '$rootScope',
+    function ($scope, $state, AuthService, CacheFactory, SyncService, $rootScope) {
         $scope.user = [];
         $scope.user.username = "";
         $scope.user.password = "";
@@ -27,7 +28,7 @@ angular.module($APP.name).controller('LoginCtrl', [
         }
         var aux = reloadCache.get('reload');
         console.log('aux')
-        if (aux) {            
+        if (aux) {
             AuthService.isLoggedInCache();
         }
         $scope.hasRemember = rememberCache.get('remember');
@@ -60,9 +61,8 @@ angular.module($APP.name).controller('LoginCtrl', [
                         });
                     }
                     reloadCache.put('reload', {'username': $scope.user.username, 'password': $scope.user.password});
-//                    SyncService.sync();
-                    $state.go("app.categories");
-
+                    SyncService.sync();
+                    $state.go('app.categories', {'projectId': $rootScope.projectId});
                 }
             });
         };
