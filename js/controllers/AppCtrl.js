@@ -9,7 +9,6 @@ angular.module($APP.name).controller('AppCtrl', [
             return match ? match[1] : false;
         };
 
-
         getAndroidVersion(); //"4.2.1"
         parseInt(getAndroidVersion(), 10); //4
         parseFloat(getAndroidVersion()); //4.2

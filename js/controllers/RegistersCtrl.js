@@ -7,9 +7,22 @@ angular.module($APP.name).controller('RegistersCtrl', [
     'AuthService',
     '$ionicPopup',
     '$state',
-    function ($scope, $rootScope, $stateParams, RegisterService, CacheFactory, AuthService, $ionicPopup, $state) {
+    '$ionicScrollDelegate',
+    '$timeout',
+    function ($scope, $rootScope, $stateParams, RegisterService, CacheFactory, AuthService, $ionicPopup, $state, $ionicScrollDelegate, $timeout) {
         $scope.isLoaded = false;
         $scope.hasData = '';
+        $rootScope.slideHeader = false;
+        $rootScope.slideHeaderPrevious = 0;
+        $rootScope.slideHeaderHelper = false;
+
+        $scope.$on('$stateChangeSuccess', function () {
+            console.log('state change registers');
+//            $timeout(function () {
+////                $ionicScrollDelegate.scrollTop();
+//            });
+        });
+
 
         AuthService.me().then(function (user) {
             if (user && user.active === false) {

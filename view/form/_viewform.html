@@ -3,18 +3,22 @@
     <span class="description" ng-if="data.type == 'message'">{{data.guidance}}</span>
     <ul class="list padding-right">
         <li>
-            <span style="font-size:14px" ng-if="data.type == 'checkbox'">{{data.field_values[0].value ? 'yes':'no'}}</span>
+            <span style="font-size:14px" ng-if="data.type == 'checkbox'">{{data.field_values[0].value === 'true' ? 'yes':'no'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'text'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'textarea'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'email'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'number'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
-            <span style="font-size:14px" ng-if="data.type == 'radio'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'date'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'time'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
-            <span style="font-size:14px" ng-if="data.type == 'select'">{{data.field_values ? data.field_values[0].value : "-"}}</span>
+            <span style="font-size:14px" ng-if="data.type == 'radio'">
+                <span class="all-checkboxlist-item" ng-repeat="option in data.field_values" ng-if='option.value == "true"'>{{option.name}}</span>
+            </span> 
+            <span style="font-size:14px" ng-if="data.type == 'select'">
+                <span class="all-checkboxlist-item" ng-repeat="option in data.field_values" ng-if='option.value == "true"'>{{option.name}}</span>
+            </span> 
             <span style="font-size:14px" ng-if="data.type == 'signature' && data.field_values[0].value"><img ng-src="{{data.field_values[0].value}}"></span>
             <span style="font-size:14px" ng-if="data.type == 'checkbox_list'">
-                <span class="all-checkboxlist-item" ng-repeat="option in data.option_instances" ng-if='option.value == "true"'>{{option.name}}</span>
+                <span class="all-checkboxlist-item" ng-repeat="option in data.field_values" ng-if='option.value == "true"'>{{option.name}}</span>
             </span> 
             <!--<span ng-if="data.type != 'checkbox' && data.type!='text' && data.type!='select' && data.type!='signature'">{{data.value[0].value ? data.value[0].value : "-"}}</span>-->
         </li>

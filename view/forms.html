@@ -1,15 +1,14 @@
-<ion-view title="Forms" class="all-view-bg" cache-view="false" >
-    <ion-content>
+<ion-view title="Forms" class="all-view-bg"  cache-view="false" ng-class="{'bar-hide': slideHeader, 'bar-helper':slideHeaderHelper}">
+    <ion-header-bar class="bar-subheader item-button-left test-item" ui-sref="app.categories({projectId:projectId})">
+        {{categoryName}} - designs
+        <button class="button button-clear  button-calm" >
+            <i class="icon ion-chevron-left all-chevron"></i>
+        </button>
+    </ion-header-bar>
+    <ion-content scroll-watch class="scrollx">
         <div class="content all-header-tabs">
             <ion-refresher on-refresh="refresh()" pulling-text="Pull to refresh..." refreshing-text="Refreshing!" spinner="android"></ion-refresher>
             <div  class="list">                       
-                <a class="item item-button-left test-item" ui-sref="app.categories({projectId:projectId})">
-                    {{categoryName}} - designs
-                    <button class="button button-clear  button-calm" >
-                        <i class="icon ion-chevron-left all-chevron"></i>
-                    </button>
-                </a>
-
                 <div class="all-spinner" ng-show="!hasData && isLoaded">
                     <span class="all-ion-text">{{hasData}}</span>
                 </div>
@@ -18,7 +17,7 @@
                         <i class="icon ion-search placeholder-icon"></i>
                         <input type="text" placeholder="Search">
                     </label>
-                    <a class="item" ng-repeat="form in formDesigns" ng-show="form.permission > 0" ng-click="changeForm(form.id)">
+                    <a class="item" ng-repeat="form in formDesigns| orderBy:'code'" ng-show="form.permission > 0" ng-click="changeForm(form.id)">
                         <span class="form-item">{{form.code}}</span>
                         {{form.name}}
                     </a>
@@ -30,10 +29,10 @@
         <a class="tab-item">
             <i class="icon ion-ios-compose"></i>
         </a>
-        <a class="tab-item" ui-sref="app.registers({projectId:projectId, categoryId:categoryId})">
+        <a class="tab-item" ui-sref="app.registers({projectId:projectId, categoryId:categoryId})" ui-sref-opts="{reload: true}">
             <i class="icon ion-ios-box-outline"></i>
         </a>
-        <a class="tab-item" ui-sref="app.completed({projectId:projectId, categoryId:categoryId})">
+        <a class="tab-item" ui-sref="app.completed({projectId:projectId, categoryId:categoryId})" ui-sref-opts="{reload: true}">
             <i class="icon ion-ios-eye-outline"></i>
         </a>
     </div>

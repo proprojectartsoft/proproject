@@ -10,6 +10,14 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
     '$ionicPopup',
     function ($scope, $state, FormInstanceService, CacheFactory, $rootScope, $location, $stateParams, AuthService, $ionicPopup) {
         $scope.isLoaded = false;
+        $rootScope.slideHeader = false;
+        $rootScope.slideHeaderPrevious = 0;
+        $rootScope.slideHeaderHelper = false;
+        
+        $scope.getFullCode = function (row) {
+            return row.project_number + '-' + row.code + '-Rev' + row.revision + '-' + row.form_number;
+        };
+        
         AuthService.me().then(function (user) {
             if (user && user.active === false) {
                 var alertPopup = $ionicPopup.alert({

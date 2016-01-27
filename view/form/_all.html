@@ -1,7 +1,7 @@
 
 <!--text-->
 <label for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required}" ng-if="data.type == 'text'">
-    <span class="all-label more-margin all-req" ng-class="{'all-req' : data.required }">{{data.name}}</span>
+    <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>
     <span class="all-description more-margin">{{data.guidance}}</span>
     <input style="margin-left:25px" input id="{{hash}}" type="text" name="{{data.name}}" ng-model="data.value" value="{{data.default}}" placeholder="{{data.placeholder}}" ng-required="data.required">
 </label>
@@ -30,7 +30,7 @@
 
 <!--email-->
 <label for="{{hash}}" class="item item-input item-stacked-label calm-border" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'email'">
-    <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
+    <span class="all-label more-margin all-reqemail" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
     <span class="all-description more-margin">{{data.guidance}}</span>  
     <input input style="margin-left:25px" id="{{hash}}" type="text" name="{{data.name}}" ng-model="data.value" value="{{data.default}}" placeholder="{{data.placeholder}}" ng-required="data.required">
 </label>
@@ -49,9 +49,8 @@
     <label class="item item-checkbox all-padding-leftright" ng-repeat="box in data.option_designs">
         <span class="item-content" style="margin-right: 30px">{{box.name}}</span>
         <span class="checkbox all-checkbox">
-            <input input type="radio" ng-model="data.value" ng-value="box.value" ng-required="data.required" name="{{hash}}">
+            <input input type="radio" ng-model="data.value" value="{{box.value}}" ng-required="data.required" name="{{hash}}">
         </span>
-
     </label>
 </div>
 

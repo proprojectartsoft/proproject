@@ -1,13 +1,15 @@
-<ion-view title="Form Instance" id="form-instance" cache-view="false">
-    <ion-content>
+<ion-view title="Form Instance" id="form-instance" cache-view="false" ng-class="{'bar-hide': slideHeader, 'bar-helper':slideHeaderHelper}">
+    <ion-header-bar class="bar-subheader item-button-left test-item" ng-click="back()">
+        <span style="max-width: calc(100% - 30px);overflow: hidden;white-space: nowrap;display: block;text-overflow: ellipsis;">
+            Completed: <span class="all-header-details">{{formData.name}}</span>
+        </span>
+        <button class="button button-clear  button-calm" >
+            <i class="icon ion-chevron-left all-chevron"></i>
+        </button>
+    </ion-header-bar>
+    <ion-content scroll-watch>
         <div class="content" >
             <div  class="list" >      
-                <a class="item item-button-left test-item" ng-click="back()">
-                    Completed: <span class="all-header-details">{{formName}}</span>
-                    <button class="button button-clear  button-calm" >
-                        <i class="icon ion-chevron-left"></i>
-                    </button>
-                </a>
                 <div ng-repeat="fieldset in formData.field_group_instances" fs data="fieldset">
                     <a id="a{{fieldset.$$hashKey}}" class="item-stable item all-field-header fs" >                            
                         <span>{{fieldset.name}}</span>

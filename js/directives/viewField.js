@@ -1,5 +1,5 @@
-angular.module($APP.name).directive('viewField', ['$http', '$compile', '$parse',
-    function ($http, $compile, $parse) {
+angular.module($APP.name).directive('viewField', ['$http', '$compile', '$parse', 'ConvertersService',
+    function ($http, $compile, $parse, ConvertersService) {
         return {
             templateUrl: 'view/form/_viewform.html',
             restrict: 'EA',
@@ -12,20 +12,8 @@ angular.module($APP.name).directive('viewField', ['$http', '$compile', '$parse',
                 $scope.submit = false;
                 $scope.hash = "H" + $scope.$id;
 
-                if ($scope.data.type === "time") {
-                    if ($scope.data.field_values[0]) {
-                        if ($scope.data.field_values[0].value === '0') {
-                            $scope.data.field_values[0].value = '-';
-                        }
-                    }
-                }
-                if ($scope.data.type === "date") {
-                    if ($scope.data.field_values[0]) {
-                        if ($scope.data.field_values[0].value === '0') {
-                            $scope.data.field_values[0].value = '-';
-                        }
-                    }
-                }
+
+                
 
                 $scope.$on('submit', function () {
                     $scope.submit = true;

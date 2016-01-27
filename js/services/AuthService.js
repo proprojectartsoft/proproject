@@ -257,7 +257,8 @@ angular.module($APP.name).factory('AuthService', [
                 return $http.get($APP.server + '/api/me').then(function (user) {
                     return user.data;
                 }, function errorCallback(response) {
-                    return response;
+                    $rootScope.online = false;
+
                 });
             },
             logout: function () {
@@ -270,6 +271,13 @@ angular.module($APP.name).factory('AuthService', [
                     });
                 }).error(function (error) {
                     return error;
+                });
+            },
+            forgotpassword: function (email) {
+                return $http.post($APP.server + '/pub/forgetpassword', '', {
+                    params: {'email': email}
+                }).then(function (payload) {
+                    return payload.data;
                 });
             },
             userRoles: userRoles,

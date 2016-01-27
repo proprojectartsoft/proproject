@@ -9,10 +9,14 @@ angular.module($APP.name).controller('RegisterCtrl', [
     'CacheFactory',
     function ($scope, $rootScope, $stateParams, RegisterService, $stateParams, $location, FormInstanceService, CacheFactory) {
         $rootScope.categoryId = $stateParams.categoryId;
+        $rootScope.slideHeader = false;
+        $rootScope.slideHeaderPrevious = 0;
+        $rootScope.slideHeaderHelper = false;
 
         RegisterService.get($stateParams.code).then(function (data) {
             $scope.listHelp = [];
             $scope.data = data;
+            $scope.parsedData = $scope.transform(data.records)
             $scope.num = $scope.data.records.values.length;
         });
         $scope.dateToString = function (val) {
@@ -37,17 +41,31 @@ angular.module($APP.name).controller('RegisterCtrl', [
             return '-';
         };
 
-        $scope.increment = function (x) {
-        }
-        $scope.back = function () {
-        };
-
-        $scope.change = function (reg) {
-            $rootScope.formId = $scope.help('instance_id', reg);
+        $scope.change = function (id) {
+            $rootScope.formId = id;
+            console.log(id)
             FormInstanceService.get($rootScope.formId).then(function (data) {
                 $rootScope.rootForm = data;
                 $location.path("/app/view/" + $rootScope.projectId + "/register/" + $rootScope.formId);
             });
+        };
+
+        $scope.transform = function (data) {
+            var list = [];
+            var aux;
+            angular.forEach(data.values, function (register) {
+                aux = {};
+                angular.forEach(register, function (reg) {
+                    if (reg.key === 'Date completed') {
+                        aux['date_completed'] = reg.value;
+                    }
+                    else {
+                        aux[reg.key] = reg.value;
+                    }
+                });
+                list.push(aux);
+            });
+            return list;
         };
     }
 ]);

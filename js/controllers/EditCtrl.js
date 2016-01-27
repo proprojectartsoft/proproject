@@ -9,7 +9,11 @@ angular.module($APP.name).controller('EditCtrl', [
     '$ionicScrollDelegate',
     '$ionicPopup',
     function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, FormDesignService, $ionicScrollDelegate, $ionicPopup) {
-        $scope.formData = $rootScope.rootForm;        
+        $scope.formData = angular.copy($rootScope.rootForm);
+        FormInstanceService.get($rootScope.formId).then(function (data) {
+            $rootScope.formData = data;
+            $scope.formData = data;
+        });
         $scope.submit = function (help) {
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Edit form',
@@ -19,16 +23,33 @@ angular.module($APP.name).controller('EditCtrl', [
                 if (res) {
                     FormInstanceService.update($rootScope.formId, $scope.formData).then(function (data) {
                         if (data) {
+                            $rootScope.formId = data;
+                            $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
+                        }
+                    });
+                }
+            });
+        };
+        $scope.saveAsNew = function () {
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Edit form',
+                template: 'Are you sure you want to save this form?'
+            });
+            confirmPopup.then(function (res) {
+                if (res) {
+                    FormInstanceService.save_as($scope.formData).then(function (data) {
+                        if (data) {
                             $rootScope.formId = data.id;
                             FormInstanceService.get($rootScope.formId).then(function (data) {
                                 $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
-                            })
+                            });
                         }
-                    })
+                    });
                 }
             });
 
         };
+
         function elmYPosition(id) {
             var elm = document.getElementById(id);
             var y = elm.offsetTop;

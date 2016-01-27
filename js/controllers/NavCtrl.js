@@ -10,7 +10,7 @@ angular.module($APP.name).controller('NavCtrl', [
         $scope.toggleLeft = function () {
             $ionicSideMenuDelegate.toggleLeft();
         };
-
+        
         $rootScope.categories = [
             {"id": 1, "name": "Health and Safety", "description": "Health and safety category", "image_url": "healthsafety"},
             {"id": 2, "name": "Design", "description": "Design category", "image_url": "design"},

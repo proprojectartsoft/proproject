@@ -18,8 +18,19 @@ angular.module($APP.name, [
     'angular-cache',
     'ngCordova'
 ]);
-angular.module($APP.name).run(function ($ionicPlatform, CacheFactory) {
+angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, $window) {
 
+    var wrap = function (method) {
+        var orig = $window.window.history[method];
+        $window.window.history[method] = function () {
+            var retval = orig.apply(this, Array.prototype.slice.call(arguments));
+            $anchorScroll();
+            return retval;
+        };
+    };
+    wrap('pushState');
+    wrap('replaceState');
+    
     $ionicPlatform.ready(function () {
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -36,7 +47,6 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory) {
         sync.setOptions({
             storageMode: 'localStorage'
         });
-
 
     });
 
@@ -156,6 +166,7 @@ angular.module($APP.name).config([
                     },
                     reload: true,
                     cache: false,
+                    autoscroll: false,
                     views: {
                         'menuContent': {
                             templateUrl: "view/registers.html",
@@ -178,11 +189,17 @@ angular.module($APP.name).config([
                         }
                     }
                 })
+                .state('forgotpassword', {
+                    url: "/forgotpassword",
+                    templateUrl: "view/forgotpassword.html",
+                    controller: "ForgotPasswordCtrl"
+                })
                 .state('login', {
                     url: "/login",
                     templateUrl: "view/login.html",
                     controller: "LoginCtrl"
                 });
+
         $urlRouterProvider.otherwise('/login'); //hardcoded for start
     }
 ]);

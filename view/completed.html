@@ -1,13 +1,13 @@
-<ion-view title="Test" class="all-view-bg" cache-view="false">
-    <ion-content class="has-tabs">
+<ion-view title="Test" class="all-view-bg" cache-view="false" ng-class="{'bar-hide': slideHeader, 'bar-helper':slideHeaderHelper}">
+    <ion-header-bar class="bar-subheader item-button-left test-item" ui-sref="app.categories({projectId:projectId})">
+        {{categoryName}} - completed
+        <button class="button button-clear  button-calm" >
+            <i class="icon ion-chevron-left all-chevron"></i>
+        </button>
+    </ion-header-bar>
+    <ion-content class="has-tabs" scroll-watch>
         <div class="content">            
-            <div  class="list">                       
-                <a class="item item-button-left test-item" href="#/app/categories/{{projectId}}">
-                    {{categoryName}} - completed
-                    <button class="button button-clear  button-calm" >
-                        <i class="icon ion-chevron-left all-chevron"></i>
-                    </button>
-                </a>                
+            <div  class="list">                                    
                 <ion-spinner icon="android" class="all-spinner" ng-hide="isLoaded"></ion-spinner>
                 <div class="all-spinner" ng-show="!hasData && isLoaded">
                     <span class="all-ion-text">{{hasData}}</span>
@@ -19,8 +19,8 @@
                         <input type="text" placeholder="Search">
                     </label>
 
-                    <a class="item" ng-repeat="form in formInstances" ng-click="change(form.id)" >
-                        <span class="form-item">{{form.code}}</span>
+                    <a class="item" ng-repeat="form in formInstances| orderBy:'-created_on'" ng-click="change(form.id)" >
+                        <span class="form-item">{{getFullCode(form)}}</span>
                         {{form.name}}
                     </a>
                 </div>

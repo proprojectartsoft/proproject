@@ -2,7 +2,8 @@ angular.module($APP.name).directive('field', [
     '$rootScope',
     'FieldUpdateService',
     '$ionicModal',
-    function ($rootScope, FieldUpdateService, $ionicModal) {
+    'ConvertersService',
+    function ($rootScope, FieldUpdateService, $ionicModal, ConvertersService) {
 
         return {
             templateUrl: 'view/form/_all.html',
@@ -24,6 +25,8 @@ angular.module($APP.name).directive('field', [
                 }).then(function (modal) {
                     $scope.modal = modal;
                 });
+                $scope.data = ConvertersService.viewField($scope.data);
+
                 $scope.$on('submit', function () {
                     if ($scope.data.type === "checkbox") {
                         $scope.data.value = $scope.data.value ? true : false;

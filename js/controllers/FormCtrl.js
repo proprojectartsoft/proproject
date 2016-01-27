@@ -107,15 +107,13 @@ angular.module($APP.name).controller('FormCtrl', [
             });
             confirmPopup.then(function (res) {
                 if (res) {
-
-                    var formUp = $ionicPopup.alert({
+                    $rootScope.formUp = $ionicPopup.alert({
                         title: "Submitting",
                         template: "<center><ion-spinner icon='android'></ion-spinner></center>",
                         content: "",
                         buttons: []
                     });
-
-                    FormInstanceService.create($scope.formData).success(function (data) {
+                    FormInstanceService.create($scope.formData).then(function (data) {
                         if (data) {
                             $rootScope.formId = data.id;
                             if (!data.message) {
@@ -130,38 +128,24 @@ angular.module($APP.name).controller('FormCtrl', [
                                     if (list.length >= 1) {
                                         if (list[0].base64String !== "") {
                                             ImageService.create(list).then(function (x) {
-                                                $timeout(function () {
-                                                    formUp.close();
-                                                });
                                                 $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
                                             });
                                         } else {
-                                            $timeout(function () {
-                                                formUp.close();
-                                            });
+                                            $rootScope.formUp.close();
                                             $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
                                         }
                                     } else {
-                                        $timeout(function () {
-                                            formUp.close();
-                                        });
+                                        $rootScope.formUp.close();
                                         $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
                                     }
-                                })
-                            }
-                            else {
-                                $timeout(function () {
-                                    formUp.close();
+                                }, function(){
+                                    console.log('adasdkasndjksandiosandoasnop')
                                 });
                             }
                         }
-                    }).error(function (data, status) {
-                        $timeout(function () {
-                            formUp.close();
-                        });
-//                        }, 1);
+                    },function(){
+                        console.log('asdknasdijasndoiasndoqwnoinm')
                     });
-
                 }
             });
         };

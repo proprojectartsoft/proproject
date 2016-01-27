@@ -8,10 +8,18 @@ angular.module($APP.name).controller('FormsCtrl', [
     '$state',
     '$ionicPopup',
     'SyncService',
-    function ($scope, $stateParams, FormDesignService, $rootScope, CacheFactory, AuthService, $state, $ionicPopup, SyncService) {
+    '$anchorScroll',
+    function ($scope, $stateParams, FormDesignService, $rootScope, CacheFactory, AuthService, $state, $ionicPopup, SyncService, $anchorScroll) {
         $scope.isLoaded = false;
         $scope.hasData = '';
         $scope.categoryId = $stateParams.categoryId;
+        $rootScope.slideHeader = false;
+        $rootScope.slideHeaderPrevious = 0;
+        $rootScope.slideHeaderHelper = false;
+
+        $rootScope.$on('$stateChangeStart', function () {
+            $anchorScroll.yOffset = 0;
+        });
 
         AuthService.me().then(function (user) {
             if (user && user.active === false) {
@@ -122,5 +130,10 @@ angular.module($APP.name).controller('FormsCtrl', [
                 console.log(error)
             });
         };
+        $scope.fixScroll = function () {
+            $rootScope.slideHeader = false;
+            $rootScope.slideHeaderPrevious = 0;
+            $rootScope.slideHeaderHelper = false;
+        }
     }
 ]);

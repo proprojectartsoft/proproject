@@ -37,10 +37,10 @@
 <!--radio-->
 <div ng-if="data.type == 'radio'" class="calm-border">
     <div class="item item-label calm-border"><div class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</div><span class="all-description more-margin">{{data.guidance}}</span></div>
-    <label class="item item-checkbox all-padding-leftright" ng-repeat="box in data.option_designs">
+    <label class="item item-checkbox all-padding-leftright" ng-repeat="box in data.field_values">
         <span class="item-content" style="margin-right: 30px">{{box.name}}</span>
         <span class="checkbox all-checkbox">
-            <input input type="radio" ng-model="data.field_values[0].value" ng-value="box.value" ng-required="data.required" name="{{hash}}">
+            <input input type="radio" ng-model="data.value" ng-value="box.name" ng-required="data.required" name="{{hash}}">
         </span>
     </label>
 </div>
@@ -49,7 +49,10 @@
 <label class="item item-input item-select item-stacked-label calm-border all-padding-topbot" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'select'">
     <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
     <span class="all-description more-margin" style="margin-right: 80px">{{data.guidance}}</span>  
-    <select input id="{{hash}}" ng-model="data.field_values[0].value" ng-init="data.value = data.default_value"  ng-options="option.value as option.name for option in data.option_instances">
+    <!--    <select input id="{{hash}}" ng-model="data.field_values[0].value" ng-init="data.value = data.default_value"  ng-options="option.value as option.name for option in data.option_instances">
+        </select>-->
+    <select id="{{hash}}" ng-model="data.value">            
+        <option ng-repeat="option in data.field_values" ng-value="option.name">{{option.name}}</option>
     </select>
 </label>
 
@@ -70,7 +73,7 @@
         <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
         <span class="all-description more-margin">{{data.guidance}}</span>   
     </label>
-    <label class="item item-checkbox all-padding-leftright" ng-repeat="box in data.option_instances">
+    <label class="item item-checkbox all-padding-leftright" ng-repeat="box in data.field_values">
         <span class="all-label" style="margin-right: 30px">{{box.name}}</span>        
         <span class="checkbox all-checkbox">
             <input ng-if="box.value === true" input id="{{hash}}" ng-model="box.value" type="checkbox" name="{{data.name}}"  checked ng-required="data.required" >
