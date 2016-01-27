@@ -189,10 +189,10 @@ angular.module($APP.name).service('ConvertersService', [
                 field_values = [];
                 angular.forEach(field.field_values, function (option_value) {
                     if (option_value.value === true) {
-                        field_helper = {"id": 0, "name": option_value.name, "value": true, "position": field.position, "field_instance_id": 0};
+                        field_helper = {"id": option_value.id, "name": option_value.name, "value": true, "position": field.position, "field_instance_id": 0};
                     }
                     else {
-                        field_helper = {"id": 0, "name": option_value.name, "value": false, "position": field.position, "field_instance_id": 0};
+                        field_helper = {"id": option_value.id, "name": option_value.name, "value": false, "position": field.position, "field_instance_id": 0};
                     }
                     field_values.push(field_helper);
                 });
