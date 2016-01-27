@@ -1,7 +1,7 @@
 
 var $APP = $APP || {}; // App namespace
- $APP.server = 'http://app.preprod.proproject.io/';
-//$APP.server = 'http://artvm23.vmnet.ro';
+// $APP.server = 'http://app.preprod.proproject.io/';
+$APP.server = 'http://artvm23.vmnet.ro';
 //$APP.server = 'http://proproject.artsoft-consult.ro';
 $APP.name = 'proproject';
 $APP.mobile = true;
@@ -20,16 +20,7 @@ angular.module($APP.name, [
 ]);
 angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, $window) {
 
-    var wrap = function (method) {
-        var orig = $window.window.history[method];
-        $window.window.history[method] = function () {
-            var retval = orig.apply(this, Array.prototype.slice.call(arguments));
-            $anchorScroll();
-            return retval;
-        };
-    };
-    wrap('pushState');
-    wrap('replaceState');
+    
     
     $ionicPlatform.ready(function () {
         if (window.cordova && window.cordova.plugins.Keyboard) {
