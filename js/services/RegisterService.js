@@ -12,9 +12,9 @@ angular.module($APP.name).factory('RegisterService', [
                         }, function (err) {
                 });
             },
-            get: function (code) {
+            get: function (code, id) {
                 return $http.get($APP.server + '/api/newregister', {
-                    params: {code: code}
+                    params: {code: code, projectid: id}
                 }).then(
                         function (payload) {
                             return payload.data;

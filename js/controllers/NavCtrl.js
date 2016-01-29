@@ -10,7 +10,16 @@ angular.module($APP.name).controller('NavCtrl', [
         $scope.toggleLeft = function () {
             $ionicSideMenuDelegate.toggleLeft();
         };
-        
+
+        var settingsCache = CacheFactory.get('settings');
+        if (!settingsCache) {
+            settingsCache = CacheFactory('settings');
+            settingsCache.setOptions({
+                storageMode: 'localStorage'
+            });
+        }
+        $scope.user = settingsCache.get("user");
+
         $rootScope.categories = [
             {"id": 1, "name": "Health and Safety", "description": "Health and safety category", "image_url": "healthsafety"},
             {"id": 2, "name": "Design", "description": "Design category", "image_url": "design"},

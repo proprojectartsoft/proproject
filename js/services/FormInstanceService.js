@@ -21,6 +21,7 @@ angular.module($APP.name).factory('FormInstanceService', [
             },
             create: function (data) {
                 var requestForm = ConvertersService.designToInstance(data)
+                console.log(requestForm)
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     withCredentials: true
                 }).then(function (payload) {

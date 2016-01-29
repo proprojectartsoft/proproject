@@ -11,7 +11,7 @@ angular.module($APP.name).service('ConvertersService', [
                     field_values = [{"id": 0, "name": field.value, "value": field.value, "position": field.position, "field_instance_id": 0}];
                 }
                 else {
-                    field_values = [{"id": 0, "name": field.value, "value": field.value, "position": field.position, "field_instance_id": 0}];
+                    field_values = [{"id": 0, "name": field.value, "value": '', "position": field.position, "field_instance_id": 0}];
                 }
             }
             if (field.type === 'date') {

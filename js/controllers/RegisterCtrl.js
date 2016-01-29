@@ -12,8 +12,8 @@ angular.module($APP.name).controller('RegisterCtrl', [
         $rootScope.slideHeader = false;
         $rootScope.slideHeaderPrevious = 0;
         $rootScope.slideHeaderHelper = false;
-
-        RegisterService.get($stateParams.code).then(function (data) {
+        
+        RegisterService.get($stateParams.code, $stateParams.projectId).then(function (data) {
             $scope.listHelp = [];
             $scope.data = data;
             $scope.parsedData = $scope.transform(data.records)
@@ -25,7 +25,7 @@ angular.module($APP.name).controller('RegisterCtrl', [
         };
 
         $scope.refresh = function () {
-            RegisterService.get($rootScope.formName).then(function (data) {
+            RegisterService.get($rootScope.formName, $stateParams.projectId).then(function (data) {
                 $scope.listHelp = [];
                 $scope.data = data;
                 $scope.num = $scope.data.records.values.length;
