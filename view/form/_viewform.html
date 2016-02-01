@@ -3,11 +3,11 @@
     <span class="description" ng-if="data.type == 'message'">{{data.guidance}}</span>
     <ul class="list padding-right">
         <li>
-            <span style="font-size:14px" ng-if="data.type == 'checkbox'">{{data.field_values[0].value === 'true' ? 'yes':'no'}}</span>
-            <span style="font-size:14px" ng-if="data.type == 'text'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
-            <span style="font-size:14px" ng-if="data.type == 'textarea'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
-            <span style="font-size:14px" ng-if="data.type == 'email'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
-            <span style="font-size:14px" ng-if="data.type == 'number'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
+            <span style="font-size:14px;white-space: pre-line;" ng-if="data.type == 'checkbox'">{{data.field_values[0].value === 'true' ? 'yes':'no'}}</span>
+            <span style="font-size:14px;white-space: pre-line;" ng-if="data.type == 'text'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
+            <span style="font-size:14px;white-space: pre-line;" ng-if="data.type == 'textarea'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
+            <span style="font-size:14px;white-space: pre-line;" ng-if="data.type == 'email'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
+            <span style="font-size:14px;white-space: pre-line;" ng-if="data.type == 'number'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'date'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'time'">{{data.field_values ? data.field_values[0].value : '-'}}</span>
             <span style="font-size:14px" ng-if="data.type == 'radio'">

@@ -13,11 +13,16 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
         $rootScope.slideHeader = false;
         $rootScope.slideHeaderPrevious = 0;
         $rootScope.slideHeaderHelper = false;
-        
+
         $scope.getFullCode = function (row) {
-            return row.project_number + '-' + row.code + '-Rev' + row.revision + '-' + row.form_number;
+            if (row.revision !== '0') {
+                return row.code + '-Rev' + row.revision + '-' + row.form_number;
+            }
+            else {
+                return row.code + '-' + row.form_number;
+            }
         };
-        
+
         AuthService.me().then(function (user) {
             if (user && user.active === false) {
                 var alertPopup = $ionicPopup.alert({

@@ -80,9 +80,18 @@ angular.module($APP.name).factory('SyncService', [
                             console.log('Some error occurred, but we get going:', result);
                         },
                         function success(result) {
+                            var sw = false;
                             $rootScope.projects = result[0];
-                            $rootScope.projectId = result[0][0].id;
-                            $rootScope.navTitle = result[0][0].name;
+                            
+                            angular.forEach($rootScope.projects, function (proj) {
+                                if (proj.id === $rootScope.projectId && proj.name === $rootScope.navTitle) {
+                                    sw = true;
+                                }                                
+                            });
+                            if (!sw) {                                
+                                $rootScope.projectId = result[0][0].id;
+                                $rootScope.navTitle = result[0][0].name;
+                            }
                             for (var i = 0; i < result[0].length; i++) {
                                 projectsCache.put(result[0][i].id, result[0][i]);
                             }

@@ -16,7 +16,7 @@
                     <div class="item">
                         <div class="register-value" ng-repeat="label in data.records.names track by $index" style="margin-bottom: 10px">
                             <div ng-if="label != 'instance_id'"><strong>{{label}}</strong></div>
-                            <span ng-if="label != 'date_completed' && reg[label].substring(0, 5) != 'data:'">{{reg[label] ? (reg[label] == "true" ? "Yes" : (reg[label] == "false" ? "No" : (reg[label] == "||NULL||" ? "-" : reg[label]))) : "-"}}</span>
+                            <span style="white-space: pre-line;" ng-if="label != 'date_completed' && reg[label].substring(0, 5) != 'data:'">{{reg[label] ? (reg[label] == "true" ? "Yes" : (reg[label] == "false" ? "No" : (reg[label] == "||NULL||" ? "-" : reg[label]))) : "-"}}</span>
                             <img ng-if="register[label].substring(0, 5) == 'data:'" ng-src="{{reg[label]}}">
                         </div>
                         <div class="register-value">
