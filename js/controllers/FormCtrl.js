@@ -128,6 +128,7 @@ angular.module($APP.name).controller('FormCtrl', [
                                     if (list.length >= 1) {
                                         if (list[0].base64String !== "") {
                                             ImageService.create(list).then(function (x) {
+                                                $rootScope.formUp.close();
                                                 $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
                                             });
                                         } else {
@@ -138,12 +139,12 @@ angular.module($APP.name).controller('FormCtrl', [
                                         $rootScope.formUp.close();
                                         $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
                                     }
-                                }, function(){
+                                }, function () {
                                     console.log('adasdkasndjksandiosandoasnop')
                                 });
                             }
                         }
-                    },function(){
+                    }, function () {
                         console.log('asdknasdijasndoiasndoqwnoinm')
                     });
                 }

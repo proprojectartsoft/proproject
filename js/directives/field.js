@@ -16,15 +16,12 @@ angular.module($APP.name).directive('field', [
                 $scope.dirty = false;
                 $scope.submit = false;
                 $scope.hash = "H" + $scope.$id;
-                $ionicModal.fromTemplateUrl('view/form/_modal.html', {
-                    scope: $scope,
-                    animation: 'slide-in-up',
-                    backdropClickToClose: false,
-                    hardwareBackButtonClose: false,
-                    focusFirstInput: true
-                }).then(function (modal) {
-                    $scope.modal = modal;
-                });
+
+                $scope.save = function () {
+                    $scope.data.value = document.getElementById($scope.hash).toDataURL("image/png");
+                    $scope.modal.hide();
+                }
+
                 $scope.data = ConvertersService.viewField($scope.data);
 
                 $scope.$on('submit', function () {
@@ -34,15 +31,10 @@ angular.module($APP.name).directive('field', [
                     $scope.submit = true;
                 });
                 $scope.directiveClick = function (hash) {
-                    $scope.modalHelper = [];
-                    $scope.modalHelper.groupId = $scope.data.field_group_design_id;
-                    $scope.modalHelper.fieldId = $scope.data.id;
                     $ionicModal.fromTemplateUrl('view/form/_modal.html', {
                         scope: $scope,
-                        animation: 'slide-in-up',
                         backdropClickToClose: false,
                         hardwareBackButtonClose: false,
-                        focusFirstInput: true
                     }).then(function (modal) {
                         $scope.modal = modal;
                         $scope.modal.hash = $scope.hash;
