@@ -16,7 +16,7 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
 
         $scope.getFullCode = function (row) {
             if (row.revision !== '0') {
-                return row.code + '-Rev' + row.revision + '-' + row.form_number;
+                return row.code + '-' + row.form_number + '-Rev' + row.revision;
             }
             else {
                 return row.code + '-' + row.form_number;

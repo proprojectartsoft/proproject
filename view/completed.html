@@ -20,8 +20,8 @@
                     </label>
 
                     <a class="item" ng-repeat="form in formInstances| orderBy:'-created_on'" ng-click="change(form.id)" >
-                        <span class="form-item">{{getFullCode(form)}}</span>
-                        {{form.name}}
+                        <span class="form-item">{{::getFullCode(form)}}</span>
+                        {{::form.name}}
                     </a>
                 </div>
             </div> 
