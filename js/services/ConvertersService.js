@@ -183,6 +183,9 @@ angular.module($APP.name).service('ConvertersService', [
             }
             if (field.type === 'checkbox' || field.type === 'signature' || field.type === 'checkbox_list' || field.type === 'text' || field.type === 'textarea'
                     || field.type === 'email' || field.type === 'number') {
+                if (!field.field_values[0].value) {
+                    field.field_values[0].value = "";
+                }
                 field_values = field.field_values;
             }
             if (field.type === 'checkbox_list') {

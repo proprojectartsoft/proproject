@@ -12,7 +12,7 @@ angular.module($APP.name).directive('edit', [
                 $scope.dirty = false;
                 $scope.submit = false;
                 $scope.hash = "H" + $scope.$id;
-                
+
                 if ($scope.data.type === "select") {
                     if ($scope.data.field_values[0]) {
                         for (var i = 0; i < $scope.data.field_values.length; i++) {
@@ -48,9 +48,15 @@ angular.module($APP.name).directive('edit', [
                         if ($scope.data.field_values[0].value !== 0) {
                             aux = $scope.data.field_values[0].value.substr(0, 4);
                             var fix = $scope.data.field_values[0].value.substr(3, 2) + '.' + $scope.data.field_values[0].value.substr(0, 2) + '.' + $scope.data.field_values[0].value.substr(6, 4);
+                            var fix2 = $scope.data.field_values[0].value.substr(3, 2) + ' ' + $scope.data.field_values[0].value.substr(0, 2) + ' ' + $scope.data.field_values[0].value.substr(6, 4);
                         }
                         if ($scope.data.field_values[0].value !== '0' && $scope.data.field_values[0].value !== 0 && aux !== '1969') {
-                            $scope.data.field_values[0].value = new Date(fix);
+                            fix = new Date(fix);
+                            //DON'T CHANGE                           
+                            if (fix == 'Invalid data') {
+                                fix = new Date(fix2);
+                            }
+                            $scope.data.field_values[0].value = fix;
                         }
                         else {
                             $scope.data.field_values[0].value = new Date(null);
@@ -61,7 +67,8 @@ angular.module($APP.name).directive('edit', [
 
                 if ($scope.data.type === "time") {
                     if ($scope.data.field_values[0] && $scope.data.field_values[0].value !== '0' && $scope.data.field_values[0].value !== 0 && $scope.data.field_values[0].value !== "") {
-                        $scope.data.field_values[0].value = new Date("01 " + $scope.data.field_values[0].value)
+//                        $scope.data.field_values[0].value = new Date("01 " + $scope.data.field_values[0].value)
+                        $scope.data.field_values[0].value = new Date("Mon, 25 Dec 1995 " + $scope.data.field_values[0].value)
                     }
                 }
                 if ($scope.data.type === "radio" && $scope.data.field_values.length > 0) {
@@ -71,7 +78,7 @@ angular.module($APP.name).directive('edit', [
                         }
                     });
                 }
-                
+
                 $scope.$on('submit', function () {
                     if ($scope.data.type === "signature") {
                         $scope.data.value = $scope.data.field_values[0].value;
