@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.protest991347" 
-        version="2.0.24" 
+        version="2.0.25" 
         xmlns="http://www.w3.org/ns/widgets" 
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:cdv="http://cordova.apache.org/ns/1.0" 
@@ -31,7 +31,7 @@
     <allow-navigation href="*" />  
   
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="5000"/>
+    <preference name="SplashScreenDelay" value="2000"/>
     <preference name="webviewbounce" value="false"/>
     <preference name="UIWebViewBounce" value="false"/>
     <preference name="DisallowOverscroll" value="true"/>
