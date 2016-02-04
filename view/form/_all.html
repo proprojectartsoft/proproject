@@ -83,6 +83,7 @@
 <div for="{{hash}}" class="item item-input item-stacked-label signature calm-border" ng-if="data.type == 'signature'" >
     <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
     <span class="all-description more-margin">{{data.guidance}}</span> 
+    <img ng-if="data.value" ng-src="{{data.value}}" alt="signature" style="border: 1px solid #D7E0E2;height:200px; padding: 0px calc(50% - 115px);  margin-left: 20px; display: block">
     <a class="button button-calm button-outline all-button more-margin" ng-click="directiveClick(hash)">{{data.value ? "Edit signature" : "Insert signature"}}</a>
 </div>
 

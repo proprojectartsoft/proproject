@@ -16,7 +16,7 @@
             <span style="font-size:14px" ng-if="data.type == 'select'">
                 <span class="all-checkboxlist-item" ng-repeat="option in data.field_values" ng-if='option.value == "true"'>{{option.name}}</span>
             </span> 
-            <span style="font-size:14px" ng-if="data.type == 'signature' && data.field_values[0].value"><img ng-src="{{data.field_values[0].value}}"></span>
+            <span style="font-size:14px" ng-if="data.type == 'signature' && data.field_values[0].value"><img ng-src="{{data.field_values[0].value}}" style="border: 1px solid #D7E0E2;height:200px; padding: 0px calc(50% - 115px);  margin-left: 20px; display: block"></span>
             <span style="font-size:14px" ng-if="data.type == 'checkbox_list'">
                 <span class="all-checkboxlist-item" ng-repeat="option in data.field_values" ng-if='option.value == "true"'>{{option.name}}</span>
             </span> 

@@ -31,7 +31,7 @@
     <allow-navigation href="*" />  
   
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="2000"/>
+    <preference name="SplashScreenDelay" value="4000"/>
     <preference name="webviewbounce" value="false"/>
     <preference name="UIWebViewBounce" value="false"/>
     <preference name="DisallowOverscroll" value="true"/>
