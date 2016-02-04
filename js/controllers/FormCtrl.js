@@ -79,15 +79,14 @@ angular.module($APP.name).controller('FormCtrl', [
         };
         $scope.takePicture = function (id) {
             var options = {
-                quality: 75,
+                quality: 60,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.CAMERA,
                 allowEdit: false,
                 encodingType: Camera.EncodingType.JPEG,
-                targetWidth: 1000,
-                targetHeight: 1000,
                 popoverOptions: CameraPopoverOptions,
-                saveToPhotoAlbum: true
+                saveToPhotoAlbum: true,
+                correctOrientation: true
             };
 
             $cordovaCamera.getPicture(options).then(function (imageData) {
