@@ -6,7 +6,9 @@ angular.module($APP.name).factory('SyncService', [
     'FormDesignService',
     'ProjectService',
     '$rootScope',
-    function ($q, CacheFactory, $ionicPopup, FormInstanceService, FormDesignService, ProjectService, $rootScope) {
+    '$http',
+    '$timeout',
+    function ($q, CacheFactory, $ionicPopup, FormInstanceService, FormDesignService, ProjectService, $rootScope, $http, $timeout) {
 
         return {
             sync: function () {
@@ -16,51 +18,53 @@ angular.module($APP.name).factory('SyncService', [
                 var sync = CacheFactory.get('sync');
                 var forms;
 
-                if (projectsCache) {
-                    projectsCache.removeAll();
-                } else {
-                    projectsCache = CacheFactory('projectsCache');
-                    projectsCache.setOptions({
-                        storageMode: 'localStorage'
-                    });
-                    projectsCache.removeAll();
-                }
-                if (designsCache) {
-                    designsCache.removeAll();
-                }
-                else {
-                    designsCache = CacheFactory('designsCache');
-                    designsCache.setOptions({
-                        storageMode: 'localStorage'
-                    });
-                    designsCache.removeAll();
-                }
-                if (!sync || sync.length === 0) {
-                    sync = CacheFactory('sync');
-                }
-                forms = sync.keys();
-
-                if (forms) {
-                    for (var i = 0; i < forms.length; i++) {
-                        var formX = sync.get(forms[i]);
-                        $rootScope.formi = forms[i];
-                        if (formX) {
-                            requests.push(FormDesignService.checkpermission(formX.formDesignId).then(function (result) {
-                                if (result === true) {
-                                    FormInstanceService.create_sync(formX)
-                                }
-                            }));
-                        }
-                    }
-                }
-
-                $rootScope.syncPopup = $ionicPopup.alert({
+                var syncPopup = $ionicPopup.alert({
                     title: "Syncing",
                     template: "<center><ion-spinner icon='android'></ion-spinner></center>",
                     content: "",
                     buttons: []
                 });
 
+                function clear() {
+
+                    if (projectsCache) {
+                        projectsCache.removeAll();
+                    } else {
+                        projectsCache = CacheFactory('projectsCache');
+                        projectsCache.setOptions({
+                            storageMode: 'localStorage'
+                        });
+                        projectsCache.removeAll();
+                    }
+                    if (designsCache) {
+                        designsCache.removeAll();
+                    }
+                    else {
+                        designsCache = CacheFactory('designsCache');
+                        designsCache.setOptions({
+                            storageMode: 'localStorage'
+                        });
+                        designsCache.removeAll();
+                    }
+                    if (!sync || sync.length === 0) {
+                        sync = CacheFactory('sync');
+                    }
+                    forms = sync.keys();
+
+                    if (forms) {
+                        for (var i = 0; i < forms.length; i++) {
+                            var formX = sync.get(forms[i]);
+                            $rootScope.formi = forms[i];
+                            if (formX) {
+                                requests.push(FormDesignService.checkpermission(formX.formDesignId).then(function (result) {
+                                    if (result === true) {
+                                        FormInstanceService.create_sync(formX)
+                                    }
+                                }));
+                            }
+                        }
+                    }
+                }
                 function asyncCall(listOfPromises, onErrorCallback, finalCallback) {
                     listOfPromises = listOfPromises || [];
                     onErrorCallback = onErrorCallback || angular.noop;
@@ -74,33 +78,44 @@ angular.module($APP.name).factory('SyncService', [
                     });
                     $q.all(newListOfPromises).then(finalCallback);
                 }
+                return $http.get($APP.server + '/api/me').then(function (user) {
+                    clear();
+                    asyncCall(requests,
+                            function error(result) {
+                                console.log('Some error occurred, but we get going:', result);
+                            },
+                            function success(result) {
+                                var sw = false;
+                                $rootScope.projects = result[0];
 
-                asyncCall(requests,
-                        function error(result) {
-                            console.log('Some error occurred, but we get going:', result);
-                        },
-                        function success(result) {
-                            var sw = false;
-                            $rootScope.projects = result[0];
-                            
-                            angular.forEach($rootScope.projects, function (proj) {
-                                if (proj.id === $rootScope.projectId && proj.name === $rootScope.navTitle) {
-                                    sw = true;
-                                }                                
-                            });
-                            if (!sw) {                                
-                                $rootScope.projectId = result[0][0].id;
-                                $rootScope.navTitle = result[0][0].name;
+                                angular.forEach($rootScope.projects, function (proj) {
+                                    if (proj.id === $rootScope.projectId && proj.name === $rootScope.navTitle) {
+                                        sw = true;
+                                    }
+                                });
+                                if (!sw) {
+                                    $rootScope.projectId = result[0][0].id;
+                                    $rootScope.navTitle = result[0][0].name;
+                                }
+                                for (var i = 0; i < result[0].length; i++) {
+                                    projectsCache.put(result[0][i].id, result[0][i]);
+                                }
+                                for (var i = 0; i < result[1].length; i++) {
+                                    designsCache.put(result[1][i].id, result[1][i]);
+                                }
+                                syncPopup.close();
                             }
-                            for (var i = 0; i < result[0].length; i++) {
-                                projectsCache.put(result[0][i].id, result[0][i]);
-                            }
-                            for (var i = 0; i < result[1].length; i++) {
-                                designsCache.put(result[1][i].id, result[1][i]);
-                            }
-                            $rootScope.syncPopup.close();
-                        }
-                );
+                    );
+                }, function errorCallback(response) {
+                    $timeout(function () {
+                        syncPopup.close();
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Offline',
+                            template: 'Could not connect to the cloud'
+                        });
+                    });
+                });
+
             }
         };
     }
