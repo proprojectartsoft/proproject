@@ -110,6 +110,7 @@ textarea {
 }
 .all-label{
     display:block;
+    white-space: pre-wrap;
 }
 .all-padding-topbot{
     padding-top:16px;

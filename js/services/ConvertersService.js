@@ -227,6 +227,7 @@ angular.module($APP.name).service('ConvertersService', [
                     "category_id": design.category_id,
                     "user_id": $rootScope.thisUser.id,
                     "created_on": new Date().getTime(),
+                    "updated_on": new Date().getTime(),
                     "formDesignId": design.id,
                     "field_group_instances": []
                 };
@@ -333,6 +334,7 @@ angular.module($APP.name).service('ConvertersService', [
                     "category_id": data.category_id,
                     "user_id": $rootScope.thisUser.id,
                     "created_on": data.created_on,
+                    "updated_on": new Date().getTime(),
                     "formDesignId": data.formDesignId,
                     "form_number": data.form_number,
                     "userName": data.userName,
@@ -410,6 +412,7 @@ angular.module($APP.name).service('ConvertersService', [
                     "category_id": data.category_id,
                     "user_id": $rootScope.thisUser.id,
                     "created_on": new Date().getTime(),
+                    "updated_on": new Date().getTime(),
                     "formDesignId": data.formDesignId,
                     "field_group_instances": []
                 };

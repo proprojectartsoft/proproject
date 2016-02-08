@@ -22,9 +22,9 @@
 
 <!--select-->
 <label class="item item-input item-select item-stacked-label calm-border all-padding-topbot" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'select'">
-    <span class="all-label more-margin" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
-    <span class="all-description more-margin" style="margin-right: 80px">{{data.guidance}}</span>  
-    <select input id="{{hash}}" ng-model="data.value" ng-init="data.value = data.default_value"  ng-options="option.value as option.name for option in data.option_designs">
+    <span class="all-label more-margin" style="    width: calc(100% - 100px);" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
+    <span class="all-description more-margin" style="width: calc(100% - 100px);">{{data.guidance}}</span>  
+    <select style="max-width: 20px" input id="{{hash}}" ng-model="data.value" ng-init="data.value = data.default_value"  ng-options="option.value as option.name for option in data.option_designs">
     </select>
 </label>
 
@@ -57,8 +57,8 @@
 <!--check box-->
 <div class="calm-border" ng-if="data.type == 'checkbox'">
     <label class="item item-checkbox all-padding-leftright">
-        <span class="all-label more-margin" ng-class="{'all-req' : data.required }" style="margin-right:30px; white-space: pre-wrap">{{data.name}}</span>        
-        <span class="all-description more-margin" style="margin-right: 30px">{{data.guidance}}</span>   
+        <span class="all-label more-margin" ng-class="{'all-req' : data.required }" style="    width: calc(100% - 70px); white-space: pre-wrap">{{data.name}}</span>        
+        <span class="all-description more-margin" style="    width: calc(100% - 70px);">{{data.guidance}}</span>   
         <span class="checkbox all-checkbox">
             <input input id="{{hash}}" type="checkbox" name="{{data.name}}" ng-model="data.value" value="1" ng-required="data.required">
         </span>
@@ -72,8 +72,8 @@
         <span class="all-description more-margin">{{data.guidance}}</span>   
     </label>
     <label class="item item-checkbox all-padding-leftright" ng-repeat="box in data.option_designs">
-        <span class="all-label" style="margin-right:30px; white-space: pre-wrap">{{box.name}}</span>        
-        <span class="checkbox all-checkbox">
+        <span class="all-label" style="width:calc(100% - 40px); display: inline-block;white-space: pre-wrap">{{box.name}}</span>        
+        <span class="checkbox all-checkbox" style="width: 35px">
             <input input id="{{hash}}" type="checkbox" name="{{box.name}}" ng-model="box.value" value="1" ng-required="data.required">
         </span>
     </label>    
