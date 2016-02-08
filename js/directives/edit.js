@@ -1,6 +1,6 @@
 angular.module($APP.name).directive('edit', [
-    '$ionicModal', '$rootScope',
-    function ($ionicModal, $rootScope) {
+    '$ionicModal', '$rootScope', '$timeout',
+    function ($ionicModal, $rootScope, $timeout) {
 
         return {
             templateUrl: 'view/form/_all_edit.html',
@@ -14,13 +14,14 @@ angular.module($APP.name).directive('edit', [
                 $scope.submit = false;
                 $scope.hash = "H" + $scope.$id;
                 $scope.save = function () {
-                    $scope.data.field_values[0].value = document.getElementById($scope.hash).toDataURL("image/png");
-                    console.log($scope.data)
-                    $scope.modal.hide();
+                    $timeout(function () {
+                        $scope.data.field_values[0].value = angular.copy(document.getElementById($scope.hash).toDataURL("image/png"));
+                        $scope.modal.hide();
+                        $scope.modal.remove();
+                    });
+
                 }
-                if($scope.data.type === 'signature'){
-                    console.log($scope.data)
-                }
+
                 $scope.directiveClick = function (hash) {
                     $ionicModal.fromTemplateUrl('view/form/_modal.html', {
                         scope: $scope,
@@ -28,10 +29,11 @@ angular.module($APP.name).directive('edit', [
                         hardwareBackButtonClose: false,
                     }).then(function (modal) {
                         $scope.modal = modal;
-                        $scope.modal.hash = $scope.hash;
+                        console.log(modal)
+//                        $scope.modal.hash = $scope.hash;
 //                        FieldUpdateService.addProduct($scope.modalHelper);
                         $rootScope.$broadcast('updateScopeFromDirective');
-                        $scope.modal.show();
+                        $scope.modal.show();                        
                     });
                 };
 

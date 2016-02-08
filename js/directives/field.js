@@ -20,7 +20,8 @@ angular.module($APP.name).directive('field', [
                 $scope.save = function () {
                     $scope.data.value = document.getElementById($scope.hash).toDataURL("image/png");
                     $scope.modal.hide();
-                }
+                    $scope.modal.remove();
+                };
 
                 $scope.data = ConvertersService.viewField($scope.data);
 

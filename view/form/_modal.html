@@ -1,4 +1,8 @@
-
+<script>
+    var myCanvas = document.getElementById($scope.hash);
+    var ctx = myCanvas.getContext('2d');
+    ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+</script>
 <ion-modal-view class="Absolute-Center" cache-view="false">
     <ion-header-bar class="bar bar-header bar-calm">
         <h3 class="title" style="text-align: center">Signature</h1>        
@@ -6,7 +10,7 @@
 
     <ion-content class="has-header" scroll="false">
         <form name="x" data="value">
-            <canvas id="{{hash}}" class="all-sketch" height="390px" width="340px" input ng-model="data.value" ng-required="data.required" sketch></canvas>            
+            <canvas id="{{hash}}" class="all-sketch" height="390px" width="340px" input ng-model="value" ng-required="data.required" sketch></canvas>            
         </form>
 
         <div class="button-bar" style="margin-top:-5px">
