@@ -11,9 +11,9 @@ angular.module($APP.name).controller('FormsCtrl', [
     '$anchorScroll',
     '$ionicSideMenuDelegate',
     function ($scope, $stateParams, FormDesignService, $rootScope, CacheFactory, AuthService, $state, $ionicPopup, SyncService, $anchorScroll, $ionicSideMenuDelegate) {
-        
+
         $ionicSideMenuDelegate.canDragContent(false);
-        
+
         $scope.isLoaded = false;
         $scope.hasData = '';
         $scope.categoryId = $stateParams.categoryId;
@@ -110,30 +110,6 @@ angular.module($APP.name).controller('FormsCtrl', [
             });
         };
 
-        $scope.changeForm = function (id) {
-            FormDesignService.checkpermission(id).then(function (result) {
-                if (result === true) {
-                    $state.go('app.form', {'projectId': $rootScope.projectId, 'formId': id});
-                }
-                else {
-                    if (result === false) {
-                        var alertPopup3 = $ionicPopup.alert({
-                            title: 'Submision failed.',
-                            template: 'You no longer have permission to acces that form. A sync will be triggered.'
-                        }).then(function (res) {
-
-                            $state.go('app.categories', {'projectId': $rootScope.projectId});
-                            SyncService.sync();
-                        });
-                    }
-                    else {
-                        $state.go('app.form', {'projectId': $rootScope.projectId, 'formId': id});
-                    }
-                }
-            }, function (error) {
-                console.log(error)
-            });
-        };
         $scope.fixScroll = function () {
             $rootScope.slideHeader = false;
             $rootScope.slideHeaderPrevious = 0;

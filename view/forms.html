@@ -17,7 +17,7 @@
                         <i class="icon ion-search placeholder-icon"></i>
                         <input type="text" placeholder="Search">
                     </label>
-                    <a class="item" ng-repeat="form in formDesigns| orderBy:'code'" ng-show="form.permission > 0" ng-click="changeForm(form.id)">
+                    <a class="item" ng-repeat="form in formDesigns| orderBy:'code'" ng-show="form.permission > 0" ui-sref="app.form({projectId:projectId, formId:form.id})">
                         <span class="form-item">{{form.code}}</span>
                         {{form.name}}
                     </a>
