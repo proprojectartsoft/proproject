@@ -89,14 +89,14 @@ angular.module($APP.name).factory('SyncService', [
                     var currentVersion = settingsCache.get("version");
                     var doRequest;
                     if (currentVersion !== version.data) {
+                        clear();
                         doRequest = requests.concat(upRequests);
                         console.log(currentVersion, version.data);
                     }
                     else {
                         doRequest = upRequests;
                         console.log('OK', currentVersion, version.data)
-                    }
-                    clear();
+                    }                    
                     asyncCall(doRequest,
                             function error(result) {
                                 console.log('Some error occurred, but we get going:', result);
