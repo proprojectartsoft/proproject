@@ -4,7 +4,9 @@ angular.module($APP.name).controller('FormInstanceCtrl', [
     '$stateParams',
     '$location',
     'FormInstanceService',
-    function ($scope, $rootScope, $stateParams, $location, FormInstanceService) {
+    '$ionicSideMenuDelegate',
+    function ($scope, $rootScope, $stateParams, $location, FormInstanceService, $ionicSideMenuDelegate) {
+        $ionicSideMenuDelegate.canDragContent(false);
         $scope.isLoaded = false;
         $scope.hasData = false;
         $scope.formData = $rootScope.rootForm;

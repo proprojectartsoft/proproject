@@ -24,8 +24,10 @@
 <label class="item item-input item-select item-stacked-label calm-border all-padding-topbot" ng-class="{required: data.required, 'has-error': data.errors.length}" ng-if="data.type == 'select'">
     <span class="all-label more-margin" style="    width: calc(100% - 100px);" ng-class="{'all-req' : data.required }">{{data.name}}</span>        
     <span class="all-description more-margin" style="width: calc(100% - 100px);">{{data.guidance}}</span>  
-    <select style="max-width: 20px" input id="{{hash}}" ng-model="data.value" ng-init="data.value = data.default_value"  ng-options="option.value as option.name for option in data.option_designs">
-    </select>
+    <span>
+        <select style="max-width:calc(100% - 40px);top:auto;right: auto;direction:ltr; padding: 0px 0px 0px 21px" input id="{{hash}}" ng-model="data.value" ng-init="data.value = data.default_value"  ng-options="option.value as option.name for option in data.option_designs">
+        </select>
+    </span>
 </label>
 
 <!--email-->

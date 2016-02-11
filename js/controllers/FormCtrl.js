@@ -14,8 +14,11 @@ angular.module($APP.name).controller('FormCtrl', [
     '$cordovaCamera',
     '$state',
     'SyncService',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ImageService, $ionicModal, $cordovaCamera, $state, SyncService) {
+    '$ionicSideMenuDelegate',
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ImageService, $ionicModal, $cordovaCamera, $state, SyncService, $ionicSideMenuDelegate) {        
 
+        $ionicSideMenuDelegate.canDragContent(false);
+        
         var designsCache = CacheFactory.get('designsCache');
         if (!designsCache || designsCache.length === 0) {
             designsCache = CacheFactory('designsCache');
@@ -143,7 +146,7 @@ angular.module($APP.name).controller('FormCtrl', [
                                 });
                             }
                         }
-                    }, function () {
+                    }, function errorCallback(payload) {
                         console.log('asdknasdijasndoiasndoqwnoinm')
                     });
                 }

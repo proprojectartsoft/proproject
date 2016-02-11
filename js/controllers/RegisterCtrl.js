@@ -6,9 +6,10 @@ angular.module($APP.name).controller('RegisterCtrl', [
     '$stateParams',
     '$location',
     'FormInstanceService',
-    'CacheFactory',
-    function ($scope, $rootScope, $stateParams, RegisterService, $stateParams, $location, FormInstanceService, CacheFactory) {
+    '$ionicSideMenuDelegate',
+    function ($scope, $rootScope, $stateParams, RegisterService, $stateParams, $location, FormInstanceService, $ionicSideMenuDelegate) {
         $rootScope.categoryId = $stateParams.categoryId;
+        $ionicSideMenuDelegate.canDragContent(false);
         $rootScope.slideHeader = false;
         $rootScope.slideHeaderPrevious = 0;
         $rootScope.slideHeaderHelper = false;

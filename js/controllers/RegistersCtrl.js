@@ -7,10 +7,11 @@ angular.module($APP.name).controller('RegistersCtrl', [
     'AuthService',
     '$ionicPopup',
     '$state',
-    '$ionicScrollDelegate',
+    '$ionicSideMenuDelegate',
     '$timeout',
-    function ($scope, $rootScope, $stateParams, RegisterService, CacheFactory, AuthService, $ionicPopup, $state, $ionicScrollDelegate, $timeout) {
+    function ($scope, $rootScope, $stateParams, RegisterService, CacheFactory, AuthService, $ionicPopup, $state, $ionicSideMenuDelegate, $timeout) {
         $scope.isLoaded = false;
+        $ionicSideMenuDelegate.canDragContent(false);
         $scope.hasData = '';
         $rootScope.slideHeader = false;
         $rootScope.slideHeaderPrevious = 0;

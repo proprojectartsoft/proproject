@@ -1,6 +1,6 @@
 
 var $APP = $APP || {}; // App namespace
-  $APP.server = 'http://app.preprod.proproject.io/';
+//  $APP.server = 'http://app.preprod.proproject.io/';
 // $APP.server = 'http://artvm23.vmnet.ro';
 //$APP.server = 'http://proproject.artsoft-consult.ro';
 $APP.name = 'proproject';

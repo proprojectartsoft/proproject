@@ -280,6 +280,13 @@ angular.module($APP.name).factory('AuthService', [
                     return payload.data;
                 });
             },
+            version: function () {
+                return $http.get($APP.server + '/api/userversion/session', '', {
+                }).then(function (payload) {
+                    console.log(payload.data)
+                    return payload.data;
+                });
+            },
             userRoles: userRoles,
             user: $rootScope.currentUser
         };

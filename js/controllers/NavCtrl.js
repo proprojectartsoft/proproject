@@ -10,7 +10,6 @@ angular.module($APP.name).controller('NavCtrl', [
         $scope.toggleLeft = function () {
             $ionicSideMenuDelegate.toggleLeft();
         };
-
         var settingsCache = CacheFactory.get('settings');
         if (!settingsCache) {
             settingsCache = CacheFactory('settings');
@@ -117,6 +116,10 @@ angular.module($APP.name).controller('NavCtrl', [
         $scope.meTest = function () {
             AuthService.meTest();
         }
+        
+        AuthService.version().then(function(version){
+            settingsCache.put("version", version);
+        });
 
         $scope.updateTitle = function (project) {
             $rootScope.navTitle = project.name;

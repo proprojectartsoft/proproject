@@ -13,8 +13,10 @@ angular.module($APP.name).factory('SyncService', [
         return {
             sync: function () {
                 var requests = [ProjectService.list(), FormDesignService.list_mobile()];
+                var upRequests = [];
                 var projectsCache = CacheFactory.get('projectsCache');
                 var designsCache = CacheFactory.get('designsCache');
+                var settingsCache = CacheFactory.get('settings');
                 var sync = CacheFactory.get('sync');
                 var forms;
 
@@ -26,7 +28,12 @@ angular.module($APP.name).factory('SyncService', [
                 });
 
                 function clear() {
-
+                    if (!settingsCache) {
+                        settingsCache = CacheFactory('settingsCache');
+                        settingsCache.setOptions({
+                            storageMode: 'localStorage'
+                        });
+                    }
                     if (projectsCache) {
                         projectsCache.removeAll();
                     } else {
@@ -56,7 +63,7 @@ angular.module($APP.name).factory('SyncService', [
                             var formX = sync.get(forms[i]);
                             $rootScope.formi = forms[i];
                             if (formX) {
-                                requests.push(FormDesignService.checkpermission(formX.formDesignId).then(function (result) {
+                                upRequests.push(FormDesignService.checkpermission(formX.formDesignId).then(function (result) {
                                     if (result === true) {
                                         FormInstanceService.create_sync(formX)
                                     }
@@ -78,31 +85,43 @@ angular.module($APP.name).factory('SyncService', [
                     });
                     $q.all(newListOfPromises).then(finalCallback);
                 }
-                return $http.get($APP.server + '/api/me').then(function (user) {
+                return $http.get($APP.server + '/api/userversion/session').then(function (version) {
+                    var currentVersion = settingsCache.get("version");
+                    var doRequest;
+                    if (currentVersion !== version.data) {
+                        doRequest = requests.concat(upRequests);
+                        console.log(currentVersion, version.data);
+                    }
+                    else {
+                        doRequest = upRequests;
+                        console.log('OK', currentVersion, version.data)
+                    }
                     clear();
-                    asyncCall(requests,
+                    asyncCall(doRequest,
                             function error(result) {
                                 console.log('Some error occurred, but we get going:', result);
                             },
                             function success(result) {
                                 var sw = false;
-                                $rootScope.projects = result[0];
-
-                                angular.forEach($rootScope.projects, function (proj) {
-                                    if (proj.id === $rootScope.projectId && proj.name === $rootScope.navTitle) {
-                                        sw = true;
+                                if (currentVersion !== version.data) {
+                                    $rootScope.projects = result[0];
+                                    angular.forEach($rootScope.projects, function (proj) {
+                                        if (proj.id === $rootScope.projectId && proj.name === $rootScope.navTitle) {
+                                            sw = true;
+                                        }
+                                    });
+                                    if (!sw) {
+                                        $rootScope.projectId = result[0][0].id;
+                                        $rootScope.navTitle = result[0][0].name;
                                     }
-                                });
-                                if (!sw) {
-                                    $rootScope.projectId = result[0][0].id;
-                                    $rootScope.navTitle = result[0][0].name;
+                                    for (var i = 0; i < result[0].length; i++) {
+                                        projectsCache.put(result[0][i].id, result[0][i]);
+                                    }
+                                    for (var i = 0; i < result[1].length; i++) {
+                                        designsCache.put(result[1][i].id, result[1][i]);
+                                    }
                                 }
-                                for (var i = 0; i < result[0].length; i++) {
-                                    projectsCache.put(result[0][i].id, result[0][i]);
-                                }
-                                for (var i = 0; i < result[1].length; i++) {
-                                    designsCache.put(result[1][i].id, result[1][i]);
-                                }
+                                currentVersion = version.data;
                                 syncPopup.close();
                             }
                     );

@@ -5,15 +5,17 @@ angular.module($APP.name).controller('EditCtrl', [
     'FormUpdateService',
     '$location',
     '$rootScope',
-    'FormDesignService',
+    '$ionicSideMenuDelegate',
     '$ionicScrollDelegate',
     '$ionicPopup',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, FormDesignService, $ionicScrollDelegate, $ionicPopup) {
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, $ionicSideMenuDelegate, $ionicScrollDelegate, $ionicPopup) {
+        $ionicSideMenuDelegate.canDragContent(false);
         $scope.formData = angular.copy($rootScope.rootForm);
         FormInstanceService.get($rootScope.formId).then(function (data) {
             $rootScope.formData = data;
             $scope.formData = data;
         });
+        
         $scope.submit = function (help) {
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Edit form',
@@ -82,7 +84,8 @@ angular.module($APP.name).controller('EditCtrl', [
 
         $scope.repeatGroup = function (x) {
             var aux = {};
-            angular.copy(x, aux);
+            console.log(x);
+            angular.copy(x, aux);            
             aux.repeatable = true;
             aux.id = 0;
             for (var i = 0; i < aux.field_instances.length; i++) {
@@ -95,10 +98,13 @@ angular.module($APP.name).controller('EditCtrl', [
                     }
                 }
                 for (var j = 0; j < aux.field_instances[i].field_values.length; j++) {
+                    aux.field_instances[i].field_values[j].name =  x.field_instances[i].field_values[j].name;
+                    aux.field_instances[i].field_values[j].value =  x.field_instances[i].field_values[j].value;
                     aux.field_instances[i].field_values[j].id = 0;
                     aux.field_instances[i].field_values[j].field_instance_id = 0;
                 }
             }
+            console.log(aux);
             for (var i = 0; i < $scope.formData.field_group_instances.length; i++) {
                 if (x === $scope.formData.field_group_instances[i]) {
                     $scope.formData.field_group_instances.splice(i + 1, 0, aux);

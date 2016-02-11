@@ -35,11 +35,11 @@ angular.module($APP.name).factory('FormInstanceService', [
                             alertPopup3.then(function (res) {
                                 $rootScope.$broadcast('sync.todo');
                             });
-                        }, 10);
+                        });
                     }
                     return payload.data;
-                }, function (payload) {
-                    $rootScope.formUp.close();
+                }, function errorCallback(payload) {
+//                    $rootScope.formUp.close();
                     if (payload.status === 0 || payload.status === 502) {
                         var sync = CacheFactory.get('sync');
                         if (!sync) {
@@ -52,21 +52,24 @@ angular.module($APP.name).factory('FormInstanceService', [
                         $rootScope.toBeUploadedCount++;
                         sync.put($rootScope.toBeUploadedCount, requestForm);
                         $timeout(function () {
+                            $rootScope.formUp.close();
                             var alertPopup = $ionicPopup.alert({
                                 title: 'Submision failed.',
                                 template: 'You are offline. Submit forms by syncing next time you are online'
                             }).then(function (res) {
                                 $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': requestForm.category_id});
                             });
-                        }, 100);
+                        });
                     }
                     else {
-                        $rootScope.formUp.close();
-                        var alertPopup2 = $ionicPopup.alert({
-                            title: 'Submision failed.',
-                            template: 'Incorrect data, try again'
-                        });
-                        alertPopup2.then(function (res) {
+                        $timeout(function () {
+                            $rootScope.formUp.close();
+                            var alertPopup2 = $ionicPopup.alert({
+                                title: 'Submision failed.',
+                                template: 'Incorrect data, try again'
+                            });
+                            alertPopup2.then(function (res) {
+                            });
                         });
                     }
                 });

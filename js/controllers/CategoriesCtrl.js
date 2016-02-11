@@ -4,9 +4,9 @@ angular.module($APP.name).controller('CategoriesCtrl', [
     '$state',
     '$scope',
     '$ionicPopup',
-    '$rootScope',
-    function (AuthService, CacheFactory, $state, $scope, $ionicPopup, $rootScope) {
-
+    '$ionicSideMenuDelegate',
+    function (AuthService, CacheFactory, $state, $scope, $ionicPopup, $ionicSideMenuDelegate) {
+        $ionicSideMenuDelegate.canDragContent(false);
         AuthService.me().then(function (user) {
             if (user && user.active === false) {
                 var alertPopup = $ionicPopup.alert({

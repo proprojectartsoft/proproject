@@ -9,7 +9,11 @@ angular.module($APP.name).controller('FormsCtrl', [
     '$ionicPopup',
     'SyncService',
     '$anchorScroll',
-    function ($scope, $stateParams, FormDesignService, $rootScope, CacheFactory, AuthService, $state, $ionicPopup, SyncService, $anchorScroll) {
+    '$ionicSideMenuDelegate',
+    function ($scope, $stateParams, FormDesignService, $rootScope, CacheFactory, AuthService, $state, $ionicPopup, SyncService, $anchorScroll, $ionicSideMenuDelegate) {
+        
+        $ionicSideMenuDelegate.canDragContent(false);
+        
         $scope.isLoaded = false;
         $scope.hasData = '';
         $scope.categoryId = $stateParams.categoryId;

@@ -58,7 +58,7 @@ angular.module($APP.name).directive('edit', [
                 }
                 if ($scope.data.type === "checkbox") {
                     if ($scope.data.field_values[0]) {
-                        if ($scope.data.field_values[0].value === "true") {
+                        if ($scope.data.field_values[0].value === "true" || $scope.data.field_values[0].value === true) {
                             $scope.data.field_values[0].value = true;
                         }
                         else {
