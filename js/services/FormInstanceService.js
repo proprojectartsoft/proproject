@@ -20,9 +20,8 @@ angular.module($APP.name).factory('FormInstanceService', [
                         }, function (err) {
                 });
             },
-            create: function (data, list) {
+            create: function (data, imgUri) {
                 var requestForm = ConvertersService.designToInstance(data)
-
 
 //                var sw = true;
 //                if(list.length === 1 && list[0].base64String === ""){
@@ -60,6 +59,8 @@ angular.module($APP.name).factory('FormInstanceService', [
                         });
                     }
                     else {
+                        console.log(payload)
+                        var list = ConvertersService.photoList(imgUri, payload.data.id);
                         if (list.length !== 0) {
                             ImageService.create(list).then(function (x) {
                                 return x;

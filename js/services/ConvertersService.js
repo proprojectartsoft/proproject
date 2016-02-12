@@ -457,13 +457,13 @@ angular.module($APP.name).service('ConvertersService', [
                 requestForm.field_group_instances = requestGroupList;
                 return requestForm;
             },
-            photoList: function (photos) {
+            photoList: function (photos, id) {
                 var list = photos;
                 var requestList = [];
                 for (var i = 0; i < list.length; i++) {
                     if (list[i].base64String !== "") {
                         list[i].id = 0;
-                        list[i].formInstanceId = $rootScope.formId;
+                        list[i].formInstanceId = id;
                         list[i].projectId = $stateParams.projectId;
                         requestList.push(list[i]);
                     }

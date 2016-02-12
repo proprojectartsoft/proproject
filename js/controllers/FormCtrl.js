@@ -112,10 +112,9 @@ angular.module($APP.name).controller('FormCtrl', [
                         content: "",
                         buttons: []
                     });
+                    
 
-                    var list = ConvertersService.photoList($scope.imgURI);
-
-                    FormInstanceService.create($scope.formData, list).then(function (data) {
+                    FormInstanceService.create($scope.formData, $scope.imgURI).then(function (data) {
                         if (data) {
                             $rootScope.formId = data.id;
                             $rootScope.formUp.close();
