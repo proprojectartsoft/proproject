@@ -113,28 +113,32 @@ angular.module($APP.name).controller('FormCtrl', [
                         buttons: []
                     });
 
-
-                    FormInstanceService.create($scope.formData, $scope.imgURI).then(
-                            function successCallback(data) {
-                                $timeout(function () {
-                                    console.log('x')
+                    try {
+                        FormInstanceService.create($scope.formData, $scope.imgURI).then(
+                                function successCallback(data) {
+                                    $timeout(function () {
+                                        console.log('x')
+                                        $rootScope.formUp.close();
+                                    });
+                                    if (data) {
+                                        $rootScope.formId = data.id;
+                                        if (!data.message && data.status !== 0) {
+                                            console.log(data)
+                                            FormInstanceService.get($rootScope.formId).then(function (data) {
+                                                $rootScope.rootForm = data;
+                                                $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
+                                            });
+                                        }
+                                    }
+                                },
+                                function errorCallback(payload) {
+                                    console.log('asdknasdijasndoiasndoqwnoinm')
                                     $rootScope.formUp.close();
                                 });
-                                if (data) {
-                                    $rootScope.formId = data.id;
-                                    if (!data.message && data.status !== 0) {
-                                        console.log(data)
-                                        FormInstanceService.get($rootScope.formId).then(function (data) {
-                                            $rootScope.rootForm = data;
-                                            $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
-                                        });
-                                    }
-                                }
-                            },
-                            function errorCallback(payload) {
-                                console.log('asdknasdijasndoiasndoqwnoinm')
-                                $rootScope.formUp.close();
-                            });
+                    }
+                    catch (err) {
+
+                    }
                 }
             });
         };
