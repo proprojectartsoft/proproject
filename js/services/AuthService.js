@@ -283,7 +283,6 @@ angular.module($APP.name).factory('AuthService', [
             version: function () {
                 return $http.get($APP.server + '/api/userversion/session', '', {
                 }).then(function (payload) {
-                    console.log(payload.data)
                     return payload.data;
                 });
             },

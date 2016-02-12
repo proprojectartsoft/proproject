@@ -61,9 +61,7 @@ angular.module($APP.name).service('ConvertersService', [
             }
             if (field.type === 'select') {
                 field_values = [];
-                console.log(field);
                 angular.forEach(field.option_designs, function (option_value) {
-                    console.log(option_value)
                     if (option_value.value === field.value) {
                         field_helper = {"id": 0, "name": option_value.name, "value": true, "position": field.position, "field_instance_id": 0};
                     }
@@ -75,7 +73,6 @@ angular.module($APP.name).service('ConvertersService', [
             }
             if (field.type === 'radio') {
                 field_values = [];
-                console.log(field);
                 angular.forEach(field.option_designs, function (option_value) {
                     if (option_value.value === field.value) {
                         field_helper = {"id": 0, "name": option_value.name, "value": true, "position": field.position, "field_instance_id": 0};
@@ -88,7 +85,6 @@ angular.module($APP.name).service('ConvertersService', [
             }
             if (field.type === 'checkbox_list') {
                 field_values = [];
-                console.log(field);
                 angular.forEach(field.option_designs, function (option_value) {
                     if (option_value.value === true) {
                         field_helper = {"id": 0, "name": option_value.name, "value": true, "position": field.position, "field_instance_id": 0};
@@ -100,7 +96,6 @@ angular.module($APP.name).service('ConvertersService', [
                 });
             }
             if (field.type === 'signature') {
-                console.log(field)
                 if (field.value) {
                     field_values = [{"id": 0, "name": 'Signature', "value": field.value, "position": field.position, "field_instance_id": 0}];
                 }
@@ -170,7 +165,6 @@ angular.module($APP.name).service('ConvertersService', [
             }
             if (field.type === 'radio') {
                 field_values = [];
-                console.log(field.value)
                 angular.forEach(field.field_values, function (option_value) {
                     if (option_value.name === field.value) {
                         option_value.value = true;
@@ -272,7 +266,6 @@ angular.module($APP.name).service('ConvertersService', [
                     requestGroupList.push(requestGroup);
                 });
                 requestForm.field_group_instances = requestGroupList;
-                console.log('requestInstancetest', requestForm);
                 return(requestForm);
             },
             viewField: function (data) {
@@ -385,7 +378,6 @@ angular.module($APP.name).service('ConvertersService', [
                     requestGroupList.push(requestGroup);
                 });
                 requestForm.field_group_instances = requestGroupList;
-                console.log(requestForm);
                 return requestForm;
             },
             instanceToNew: function (instance) {
@@ -416,7 +408,6 @@ angular.module($APP.name).service('ConvertersService', [
                     "formDesignId": data.formDesignId,
                     "field_group_instances": []
                 };
-                console.log(requestForm);
                 var requestGroupList = [], requestFieldList = [];
                 var requestGroup, requestField;
 
@@ -464,8 +455,20 @@ angular.module($APP.name).service('ConvertersService', [
                     requestGroupList.push(requestGroup);
                 });
                 requestForm.field_group_instances = requestGroupList;
-                console.log(requestForm);
                 return requestForm;
+            },
+            photoList: function (photos) {
+                var list = photos;
+                var requestList = [];
+                for (var i = 0; i < list.length; i++) {
+                    if (list[i].base64String !== "") {
+                        list[i].id = 0;
+                        list[i].formInstanceId = $rootScope.formId;
+                        list[i].projectId = $stateParams.projectId;
+                        requestList.push(list[i]);
+                    }
+                }
+                return requestList;
             }
         };
     }

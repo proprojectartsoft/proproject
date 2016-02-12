@@ -9,16 +9,16 @@ angular.module($APP.name).controller('FormCtrl', [
     '$ionicScrollDelegate',
     '$ionicPopup',
     '$stateParams',
-    'ImageService',
+    'ConvertersService',
     '$ionicModal',
     '$cordovaCamera',
     '$state',
     'SyncService',
     '$ionicSideMenuDelegate',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ImageService, $ionicModal, $cordovaCamera, $state, SyncService, $ionicSideMenuDelegate) {        
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ConvertersService, $ionicModal, $cordovaCamera, $state, SyncService, $ionicSideMenuDelegate) {
 
         $ionicSideMenuDelegate.canDragContent(false);
-        
+
         var designsCache = CacheFactory.get('designsCache');
         if (!designsCache || designsCache.length === 0) {
             designsCache = CacheFactory('designsCache');
@@ -65,7 +65,7 @@ angular.module($APP.name).controller('FormCtrl', [
                 }
             }
         };
-        console.log($scope.formData)
+
         $scope.test = function (item) {
             console.log('item', item);
             $scope.item = item;
@@ -98,10 +98,7 @@ angular.module($APP.name).controller('FormCtrl', [
                 // An error occured. Show a message to the user
             });
         };
-//        $scope.$on('errorInfiniteScroll', function () {
-//            console.log('close');
-//            $rootScope.formUp.close();
-//        });
+
         $scope.submit = function () {
             var confirmPopup = $ionicPopup.confirm({
                 title: 'New form',
@@ -115,32 +112,17 @@ angular.module($APP.name).controller('FormCtrl', [
                         content: "",
                         buttons: []
                     });
-                    FormInstanceService.create($scope.formData).then(function (data) {
+
+                    var list = ConvertersService.photoList($scope.imgURI);
+
+                    FormInstanceService.create($scope.formData, list).then(function (data) {
                         if (data) {
                             $rootScope.formId = data.id;
+                            $rootScope.formUp.close();
                             if (!data.message) {
                                 FormInstanceService.get($rootScope.formId).then(function (data) {
                                     $rootScope.rootForm = data;
-                                    var list = $scope.imgURI;
-                                    for (var i = 0; i < list.length; i++) {
-                                        list[i].id = 0;
-                                        list[i].formInstanceId = $rootScope.formId;
-                                        list[i].projectId = $stateParams.projectId;
-                                    }
-                                    if (list.length >= 1) {
-                                        if (list[0].base64String !== "") {
-                                            ImageService.create(list).then(function (x) {
-                                                $rootScope.formUp.close();
-                                                $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
-                                            });
-                                        } else {
-                                            $rootScope.formUp.close();
-                                            $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
-                                        }
-                                    } else {
-                                        $rootScope.formUp.close();
-                                        $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
-                                    }
+                                    $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
                                 }, function () {
                                     console.log('adasdkasndjksandiosandoasnop')
                                 });

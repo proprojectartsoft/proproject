@@ -7,7 +7,8 @@ angular.module($APP.name).factory('FormInstanceService', [
     '$timeout',
     '$state',
     'ConvertersService',
-    function ($rootScope, $http, CacheFactory, $ionicPopup, $location, $timeout, $state, ConvertersService) {
+    'ImageService',
+    function ($rootScope, $http, CacheFactory, $ionicPopup, $location, $timeout, $state, ConvertersService, ImageService) {
 
         return {
             get: function (id) {
@@ -19,9 +20,30 @@ angular.module($APP.name).factory('FormInstanceService', [
                         }, function (err) {
                 });
             },
-            create: function (data) {
+            create: function (data, list) {
                 var requestForm = ConvertersService.designToInstance(data)
-                console.log(requestForm)
+
+
+//                var sw = true;
+//                if(list.length === 1 && list[0].base64String === ""){
+//                    sw = false;
+//                }
+//                if (list.length >= 1) {
+//                    if (list[0].base64String !== "") {
+//                        ImageService.create(list).then(function (x) {
+//                            $rootScope.formUp.close();
+//                            $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
+//                        });
+//                    } else {
+//                        $rootScope.formUp.close();
+//                        $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
+//                    }
+//                } else {
+//                    $rootScope.formUp.close();
+//                    $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
+//                }
+
+
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     withCredentials: true
                 }).then(function (payload) {
@@ -36,6 +58,13 @@ angular.module($APP.name).factory('FormInstanceService', [
                                 $rootScope.$broadcast('sync.todo');
                             });
                         });
+                    }
+                    else {
+                        if (list.length !== 0) {
+                            ImageService.create(list).then(function (x) {
+                                return x;
+                            });
+                        }
                     }
                     return payload.data;
                 }, function errorCallback(payload) {
