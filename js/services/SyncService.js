@@ -117,6 +117,9 @@ angular.module($APP.name).factory('SyncService', [
                     else {
                         upload();
                         doRequest = upRequests;
+                        if (doRequest.length === 0) {
+                            syncPopup.close();
+                        }
                         console.log('OK', upRequests)
                     }
                     asyncCall(doRequest,
@@ -166,7 +169,10 @@ angular.module($APP.name).factory('SyncService', [
                                 }
 
                                 settingsCache.put("version", currentVersion);
-                                syncPopup.close();
+
+                                $timeout(function () {
+                                    syncPopup.close();
+                                });
                             }
                     );
                 }, function errorCallback(response) {
