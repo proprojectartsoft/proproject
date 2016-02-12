@@ -144,6 +144,27 @@ angular.module($APP.name).factory('SyncService', [
                                     }
                                 }
                                 currentVersion = version.data;
+
+                                if (sync) {
+                                    sync.removeAll();
+                                } else {
+                                    sync = CacheFactory('sync');
+                                    sync.setOptions({
+                                        storageMode: 'localStorage'
+                                    });
+                                    sync.removeAll();
+                                }
+
+                                if (photos) {
+                                    photos.removeAll();
+                                } else {
+                                    photos = CacheFactory('photos');
+                                    photos.setOptions({
+                                        storageMode: 'localStorage'
+                                    });
+                                    photos.removeAll();
+                                }
+
                                 settingsCache.put("version", currentVersion);
                                 syncPopup.close();
                             }

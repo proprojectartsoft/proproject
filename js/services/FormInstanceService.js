@@ -128,7 +128,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                     data: dataIn
                 }).then(function (response) {
                     if (pic) {
-                        var list = ConvertersService.photoList(pic, response);
+                        var list = ConvertersService.photoList(pic, response.data.id);
                         ImageService.create(list).then(function (x) {
                             return x;
                         });
