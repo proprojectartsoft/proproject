@@ -19,7 +19,7 @@ angular.module($APP.name).factory('SyncService', [
                 var settingsCache = CacheFactory.get('settings');
                 var sync = CacheFactory.get('sync');
                 var photos = CacheFactory.get('photos');
-                var forms;
+                var forms, pics, picX, formX;
 
                 var syncPopup = $ionicPopup.alert({
                     title: "Syncing",
@@ -27,7 +27,37 @@ angular.module($APP.name).factory('SyncService', [
                     content: "",
                     buttons: []
                 });
-
+                function upload() {
+                    if (!sync || sync.length === 0) {
+                        sync = CacheFactory('sync');
+                    }
+                    if (!photos) {
+                        photos = CacheFactory('photos');
+                        photos.setOptions({
+                            storageMode: 'localStorage'
+                        });
+                    }
+                    forms = sync.keys();
+                    pics = photos.keys();
+                    console.log('w', forms)
+                    if (forms) {
+                        for (var i = 0; i < forms.length; i++) {
+                            picX = false;
+                            formX = sync.get(forms[i]);
+                            if (pics.indexOf(forms[i]) !== -1) {
+                                picX = photos.get(forms[i]);
+                            }
+                            $rootScope.formi = forms[i];
+                            if (formX) {
+                                upRequests.push(FormDesignService.checkpermission(formX.formDesignId).then(function (result) {
+                                    if (result === true) {
+                                        FormInstanceService.create_sync(formX, picX);
+                                    }
+                                }));
+                            }
+                        }
+                    }
+                }
                 function clear() {
                     if (!settingsCache) {
                         settingsCache = CacheFactory('settingsCache');
@@ -61,25 +91,7 @@ angular.module($APP.name).factory('SyncService', [
                         });
                         designsCache.removeAll();
                     }
-                    if (!sync || sync.length === 0) {
-                        sync = CacheFactory('sync');
-                    }
-                    forms = sync.keys();
-
-                    if (forms) {
-                        for (var i = 0; i < forms.length; i++) {
-                            var formX = sync.get(forms[i]);
-                            var picX = photos.get(forms[i]);
-                            $rootScope.formi = forms[i];
-                            if (formX) {
-                                upRequests.push(FormDesignService.checkpermission(formX.formDesignId).then(function (result) {
-                                    if (result === true) {
-                                        FormInstanceService.create_sync(formX, picX);
-                                    }
-                                }));
-                            }
-                        }
-                    }
+                    upload();
                 }
                 function asyncCall(listOfPromises, onErrorCallback, finalCallback) {
                     listOfPromises = listOfPromises || [];
@@ -100,11 +112,12 @@ angular.module($APP.name).factory('SyncService', [
                     if (currentVersion !== version.data) {
                         clear();
                         doRequest = requests.concat(upRequests);
-                        console.log(currentVersion, version.data);
+                        console.log(doRequest);
                     }
                     else {
+                        upload();
                         doRequest = upRequests;
-                        console.log('OK', currentVersion, version.data)
+                        console.log('OK', upRequests)
                     }
                     asyncCall(doRequest,
                             function error(result) {
