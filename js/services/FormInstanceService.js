@@ -25,10 +25,11 @@ angular.module($APP.name).factory('FormInstanceService', [
 
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     withCredentials: true
-                }).then(function (payload) {
+                }).then(function successCallback(payload) {
+                    console.log('successcica', payload)
                     if (payload.data.message) {
-                        $rootScope.formUp.close();
                         $timeout(function () {
+                            $rootScope.formUp.close();
                             var alertPopup3 = $ionicPopup.alert({
                                 title: 'Submision failed.',
                                 template: 'You have not permission to do this operation'
@@ -77,7 +78,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                         sync.put($rootScope.toBeUploadedCount, requestForm);
                         if (requestList.length !== 0) {
                             photos.put($rootScope.toBeUploadedCount, requestList);
-                        }
+                        }                        
                         $timeout(function () {
                             $rootScope.formUp.close();
                             var alertPopup = $ionicPopup.alert({
@@ -90,7 +91,6 @@ angular.module($APP.name).factory('FormInstanceService', [
                     }
                     else {
                         $timeout(function () {
-                            $rootScope.formUp.close();
                             var alertPopup2 = $ionicPopup.alert({
                                 title: 'Submision failed.',
                                 template: 'Incorrect data, try again'
@@ -99,6 +99,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                             });
                         });
                     }
+                    return payload;
                 });
             },
             create_sync: function (dataIn, pic) {

@@ -114,23 +114,27 @@ angular.module($APP.name).controller('FormCtrl', [
                     });
 
 
-                    FormInstanceService.create($scope.formData, $scope.imgURI).then(function (data) {
-                        $rootScope.formUp.close();
-                        if (data) {
-                            $rootScope.formId = data.id;
-                            if (!data.message) {
-                                FormInstanceService.get($rootScope.formId).then(function (data) {
-                                    $rootScope.rootForm = data;
-                                    $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
-                                }, function () {
-                                    console.log('adasdkasndjksandiosandoasnop')
+                    FormInstanceService.create($scope.formData, $scope.imgURI).then(
+                            function successCallback(data) {
+                                $timeout(function () {
+                                    console.log('x')
+                                    $rootScope.formUp.close();
                                 });
-                            }
-                        }
-                    }, function errorCallback(payload) {
-                        $rootScope.formUp.close();
-                        console.log('asdknasdijasndoiasndoqwnoinm')
-                    });
+                                if (data) {
+                                    $rootScope.formId = data.id;
+                                    if (!data.message && data.status !== 0) {
+                                        console.log(data)
+                                        FormInstanceService.get($rootScope.formId).then(function (data) {
+                                            $rootScope.rootForm = data;
+                                            $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
+                                        });
+                                    }
+                                }
+                            },
+                            function errorCallback(payload) {
+                                console.log('asdknasdijasndoiasndoqwnoinm')
+                                $rootScope.formUp.close();
+                            });
                 }
             });
         };
