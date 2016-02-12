@@ -113,7 +113,9 @@ angular.module($APP.name).controller('FormCtrl', [
                             content: "",
                             buttons: []
                         });
-
+                        $rootScope.$on('stopsubmit', function () {
+                            formUp.close();
+                        });
                         try {
                             FormInstanceService.create($scope.formData, $scope.imgURI).then(
                                     function successCallback(data) {
