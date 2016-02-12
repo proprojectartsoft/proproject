@@ -10,6 +10,15 @@ angular.module($APP.name).factory('ProjectService', [
                         }, function (err) {
                 });
             },
+            list_current: function (active) {
+                return $http.get($APP.server + '/api/project/list', {
+                    params: {active: active}
+                }).then(
+                        function (payload) {
+                            return payload.data;
+                        }
+                );
+            },
             clearProjCache: function () {
                 var projectsCache = CacheFactory.get('projectsCache');
                 if (!projectsCache || projectsCache.length === 0) {

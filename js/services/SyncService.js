@@ -12,12 +12,13 @@ angular.module($APP.name).factory('SyncService', [
 
         return {
             sync: function () {
-                var requests = [ProjectService.list(), FormDesignService.list_mobile()];
+                var requests = [ProjectService.list_current(true), FormDesignService.list_mobile()];
                 var upRequests = [];
                 var projectsCache = CacheFactory.get('projectsCache');
                 var designsCache = CacheFactory.get('designsCache');
                 var settingsCache = CacheFactory.get('settings');
                 var sync = CacheFactory.get('sync');
+                var photos = CacheFactory.get('photos');
                 var forms;
 
                 var syncPopup = $ionicPopup.alert({
@@ -34,6 +35,13 @@ angular.module($APP.name).factory('SyncService', [
                             storageMode: 'localStorage'
                         });
                     }
+                    if (!photos) {
+                        photos = CacheFactory('photos');
+                        photos.setOptions({
+                            storageMode: 'localStorage'
+                        });
+                    }
+
                     if (projectsCache) {
                         projectsCache.removeAll();
                     } else {
@@ -61,11 +69,12 @@ angular.module($APP.name).factory('SyncService', [
                     if (forms) {
                         for (var i = 0; i < forms.length; i++) {
                             var formX = sync.get(forms[i]);
+                            var picX = photos.get(forms[i]);
                             $rootScope.formi = forms[i];
                             if (formX) {
                                 upRequests.push(FormDesignService.checkpermission(formX.formDesignId).then(function (result) {
                                     if (result === true) {
-                                        FormInstanceService.create_sync(formX)
+                                        FormInstanceService.create_sync(formX, picX);
                                     }
                                 }));
                             }
@@ -96,7 +105,7 @@ angular.module($APP.name).factory('SyncService', [
                     else {
                         doRequest = upRequests;
                         console.log('OK', currentVersion, version.data)
-                    }                    
+                    }
                     asyncCall(doRequest,
                             function error(result) {
                                 console.log('Some error occurred, but we get going:', result);
@@ -122,6 +131,7 @@ angular.module($APP.name).factory('SyncService', [
                                     }
                                 }
                                 currentVersion = version.data;
+                                settingsCache.put("version", currentVersion);
                                 syncPopup.close();
                             }
                     );

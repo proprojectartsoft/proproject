@@ -69,18 +69,35 @@ angular.module($APP.name).factory('FormInstanceService', [
                     }
                     return payload.data;
                 }, function errorCallback(payload) {
-//                    $rootScope.formUp.close();
                     if (payload.status === 0 || payload.status === 502) {
                         var sync = CacheFactory.get('sync');
+                        var requestList = [];
                         if (!sync) {
                             sync = CacheFactory('sync');
                         }
                         sync.setOptions({
                             storageMode: 'localStorage'
                         });
+                        var photos = CacheFactory.get('photos');
+                        if (!photos) {
+                            photos = CacheFactory('photos');
+                        }
+                        photos.setOptions({
+                            storageMode: 'localStorage'
+                        });
                         $rootScope.toBeUploadedCount = sync.keys().length;
                         $rootScope.toBeUploadedCount++;
+
+
+                        for (var i = 0; i < imgUri.length; i++) {
+                            if (imgUri[i].base64String !== "") {
+                                requestList.push(imgUri[i]);
+                            }
+                        }
                         sync.put($rootScope.toBeUploadedCount, requestForm);
+                        if (requestList.length !== 0) {
+                            photos.put($rootScope.toBeUploadedCount, requestList);
+                        }
                         $timeout(function () {
                             $rootScope.formUp.close();
                             var alertPopup = $ionicPopup.alert({
@@ -104,12 +121,18 @@ angular.module($APP.name).factory('FormInstanceService', [
                     }
                 });
             },
-            create_sync: function (dataIn) {
+            create_sync: function (dataIn, pic) {
                 return $http({
                     method: 'POST',
                     url: $APP.server + '/api/forminstance',
                     data: dataIn
                 }).then(function (response) {
+                    if (pic) {
+                        var list = ConvertersService.photoList(pic, response);
+                        ImageService.create(list).then(function (x) {
+                            return x;
+                        });
+                    }
                 });
             },
             update: function (id, data) {
