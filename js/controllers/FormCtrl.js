@@ -119,22 +119,65 @@ angular.module($APP.name).controller('FormCtrl', [
                         try {
                             FormInstanceService.create($scope.formData, $scope.imgURI).then(
                                     function successCallback(data) {
-                                        if (data && data.status !== 0 && data.status !== 502 && data.status !== 403) {
-                                            $rootScope.formId = data.id;
-                                            if (!data.message && data.status !== 0) {
-                                                FormInstanceService.get($rootScope.formId).then(function (data) {
-                                                    $rootScope.rootForm = data;
-                                                    formUp.close();
-                                                    $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
+                                        if (data.data.message) {
+                                            formUp.close();
+                                            $timeout(function () {
+                                                var alertPopup3 = $ionicPopup.alert({
+                                                    title: 'Submision failed.',
+                                                    template: 'You have not permission to do this operation'
                                                 });
-                                            }
+                                                alertPopup3.then(function (res) {
+                                                    $rootScope.$broadcast('sync.todo');
+                                                });
+                                            });
                                         }
                                         else {
-                                            formUp.close();
+                                            if (data && data.status !== 0 && data.status !== 502 && data.status !== 403 && data.status !== 400) {
+                                                $rootScope.formId = data.id;
+                                                if (!data.message && data.status !== 0) {
+                                                    FormInstanceService.get($rootScope.formId).then(function (data) {
+                                                        $rootScope.rootForm = data;
+                                                        formUp.close();
+                                                        $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
+                                                    });
+                                                }
+                                            }
+                                            else {
+                                                if (data.status === 400) {
+                                                    formUp.close();
+                                                    $timeout(function () {
+                                                        var alertPopup2 = $ionicPopup.alert({
+                                                            title: 'Submision failed.',
+                                                            template: 'Incorrect data, try again'
+                                                        });
+                                                        alertPopup2.then(function (res) {
+                                                        });
+                                                    });
+                                                }
+                                                else {
+                                                    formUp.close();
+                                                    $timeout(function () {
+                                                        var alertPopup = $ionicPopup.alert({
+                                                            title: 'Submision failed.',
+                                                            template: 'You are offline. Submit forms by syncing next time you are online'
+                                                        }).then(function (res) {
+                                                            $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': requestForm.category_id});
+                                                        });
+                                                    });
+                                                }
+                                            }
                                         }
                                     },
                                     function errorCallback(payload) {
                                         formUp.close();
+                                        $timeout(function () {
+                                            var alertPopup = $ionicPopup.alert({
+                                                title: 'Submision failed.',
+                                                template: 'You are offline. Submit forms by syncing next time you are online'
+                                            }).then(function (res) {
+                                                $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': requestForm.category_id});
+                                            });
+                                        });
                                     });
                         }
                         catch (err) {

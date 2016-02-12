@@ -36,16 +36,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                 }).then(function successCallback(payload) {
 //                    formUp.close();
                     if (payload.data.message) {
-                        $rootScope.$broadcast('stopsubmit');
-                        $timeout(function () {
-                            var alertPopup3 = $ionicPopup.alert({
-                                title: 'Submision failed.',
-                                template: 'You have not permission to do this operation'
-                            });
-                            alertPopup3.then(function (res) {
-                                $rootScope.$broadcast('sync.todo');
-                            });
-                        });
+                        
                     }
                     else {
                         var list = ConvertersService.photoList(imgUri, payload.data.id);
@@ -75,8 +66,6 @@ angular.module($APP.name).factory('FormInstanceService', [
                         });
                         $rootScope.toBeUploadedCount = sync.keys().length;
                         $rootScope.toBeUploadedCount++;
-
-
                         for (var i = 0; i < imgUri.length; i++) {
                             if (imgUri[i].base64String !== "") {
                                 requestList.push(imgUri[i]);
@@ -86,27 +75,6 @@ angular.module($APP.name).factory('FormInstanceService', [
                         if (requestList.length !== 0) {
                             photos.put($rootScope.toBeUploadedCount, requestList);
                         }
-                        $rootScope.$broadcast('stopsubmit');
-                        $timeout(function () {
-//                            formUp.close();
-                            var alertPopup = $ionicPopup.alert({
-                                title: 'Submision failed.',
-                                template: 'You are offline. Submit forms by syncing next time you are online'
-                            }).then(function (res) {
-                                $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': requestForm.category_id});
-                            });
-                        });
-                    }
-                    else {
-                        $rootScope.$broadcast('stopsubmit');
-                        $timeout(function () {
-                            var alertPopup2 = $ionicPopup.alert({
-                                title: 'Submision failed.',
-                                template: 'Incorrect data, try again'
-                            });
-                            alertPopup2.then(function (res) {
-                            });
-                        });
                     }
                     return payload;
                 });
