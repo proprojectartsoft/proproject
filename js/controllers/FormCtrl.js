@@ -119,7 +119,7 @@ angular.module($APP.name).controller('FormCtrl', [
                         try {
                             FormInstanceService.create($scope.formData, $scope.imgURI).then(
                                     function successCallback(data) {
-                                        if (data.data.message) {
+                                        if (data && data.data.message) {
                                             formUp.close();
                                             $timeout(function () {
                                                 var alertPopup3 = $ionicPopup.alert({
