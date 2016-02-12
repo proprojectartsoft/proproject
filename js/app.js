@@ -7,7 +7,7 @@ $APP.name = 'proproject';
 $APP.mobile = true;
 $APP.CONFIG;
 $APP.DEBUG = true;
-//$APP.shareUrl = 'https://app.proproject.co.uk/form/';
+$APP.shareUrl = 'https://app.proproject.co.uk/form/';
 
 
 angular.module($APP.name, [
