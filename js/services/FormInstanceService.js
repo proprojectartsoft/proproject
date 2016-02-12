@@ -21,15 +21,22 @@ angular.module($APP.name).factory('FormInstanceService', [
                 });
             },
             create: function (data, imgUri) {
-                var requestForm = ConvertersService.designToInstance(data)
 
+//                var formUp = $ionicPopup.alert({
+//                    title: "Submitting",
+//                    template: "<center><ion-spinner icon='android'></ion-spinner></center>",
+//                    content: "",
+//                    buttons: []
+//                });
+
+
+                var requestForm = ConvertersService.designToInstance(data)
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     withCredentials: true
                 }).then(function successCallback(payload) {
-                    console.log('successcica', payload)
+//                    formUp.close();
                     if (payload.data.message) {
                         $timeout(function () {
-                            $rootScope.formUp.close();
                             var alertPopup3 = $ionicPopup.alert({
                                 title: 'Submision failed.',
                                 template: 'You have not permission to do this operation'
@@ -78,9 +85,9 @@ angular.module($APP.name).factory('FormInstanceService', [
                         sync.put($rootScope.toBeUploadedCount, requestForm);
                         if (requestList.length !== 0) {
                             photos.put($rootScope.toBeUploadedCount, requestList);
-                        }                        
+                        }
                         $timeout(function () {
-                            $rootScope.formUp.close();
+//                            formUp.close();
                             var alertPopup = $ionicPopup.alert({
                                 title: 'Submision failed.',
                                 template: 'You are offline. Submit forms by syncing next time you are online'
@@ -152,11 +159,17 @@ angular.module($APP.name).factory('FormInstanceService', [
             },
             save_as: function (data) {
                 var requestForm = ConvertersService.instanceToNew(data);
+//                var formUp = $ionicPopup.alert({
+//                    title: "Submitting",
+//                    template: "<center><ion-spinner icon='android'></ion-spinner></center>",
+//                    content: "",
+//                    buttons: []
+//                });
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     withCredentials: true
                 }).then(function (payload) {
                     if (payload.data.message) {
-                        $rootScope.formUp.close();
+//                        formUp.close();
                         $timeout(function () {
                             var alertPopup3 = $ionicPopup.alert({
                                 title: 'Submision failed.',
@@ -169,7 +182,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                     }
                     return payload.data;
                 }, function (payload) {
-                    $rootScope.formUp.close();
+//                    formUp.close();
                     if (payload.status === 0 || payload.status === 502) {
                         var sync = CacheFactory.get('sync');
                         if (!sync) {
@@ -191,7 +204,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                         }, 100);
                     }
                     else {
-                        $rootScope.formUp.close();
+//                        formUp.close();
                         var alertPopup2 = $ionicPopup.alert({
                             title: 'Submision failed.',
                             template: 'Incorrect data, try again'

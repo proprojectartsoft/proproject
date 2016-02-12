@@ -107,7 +107,7 @@ angular.module($APP.name).controller('FormCtrl', [
             confirmPopup.then(function (res) {
                 if (res) {
                     $timeout(function () {
-                        $rootScope.formUp = $ionicPopup.alert({
+                        var formUp = $ionicPopup.alert({
                             title: "Submitting",
                             template: "<center><ion-spinner icon='android'></ion-spinner></center>",
                             content: "",
@@ -117,24 +117,22 @@ angular.module($APP.name).controller('FormCtrl', [
                         try {
                             FormInstanceService.create($scope.formData, $scope.imgURI).then(
                                     function successCallback(data) {
-                                        $timeout(function () {
-                                            console.log('x')
-                                            $rootScope.formUp.close();
-                                        });
-                                        if (data) {
+                                        if (data && data.status !== 0 && data.status !== 502 && data.status !== 403) {
                                             $rootScope.formId = data.id;
                                             if (!data.message && data.status !== 0) {
-                                                console.log(data)
                                                 FormInstanceService.get($rootScope.formId).then(function (data) {
                                                     $rootScope.rootForm = data;
+                                                    formUp.close();
                                                     $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
                                                 });
                                             }
                                         }
+                                        else {
+                                            formUp.close();
+                                        }
                                     },
                                     function errorCallback(payload) {
-                                        console.log('asdknasdijasndoiasndoqwnoinm')
-                                        $rootScope.formUp.close();
+                                        formUp.close();
                                     });
                         }
                         catch (err) {
