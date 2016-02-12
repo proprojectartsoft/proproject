@@ -18,7 +18,8 @@ angular.module($APP.name).controller('FormCtrl', [
     function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ConvertersService, $ionicModal, $cordovaCamera, $state, SyncService, $ionicSideMenuDelegate) {
 
         $ionicSideMenuDelegate.canDragContent(false);
-
+        console.log($rootScope)
+        console.log($scope)
         var designsCache = CacheFactory.get('designsCache');
         if (!designsCache || designsCache.length === 0) {
             designsCache = CacheFactory('designsCache');
@@ -120,8 +121,8 @@ angular.module($APP.name).controller('FormCtrl', [
                             FormInstanceService.create($scope.formData, $scope.imgURI).then(
                                     function successCallback(data) {
                                         if (data && data.data && data.data.message) {
-                                            formUp.close();
                                             $timeout(function () {
+                                                formUp.close();
                                                 var alertPopup3 = $ionicPopup.alert({
                                                     title: 'Submision failed.',
                                                     template: 'You have not permission to do this operation'
@@ -144,8 +145,8 @@ angular.module($APP.name).controller('FormCtrl', [
                                             }
                                             else {
                                                 if (data.status === 400) {
-                                                    formUp.close();
                                                     $timeout(function () {
+                                                        formUp.close();
                                                         var alertPopup2 = $ionicPopup.alert({
                                                             title: 'Submision failed.',
                                                             template: 'Incorrect data, try again'
@@ -154,14 +155,14 @@ angular.module($APP.name).controller('FormCtrl', [
                                                         });
                                                     });
                                                 }
-                                                else {
-                                                    formUp.close();
+                                                else {                                                    
                                                     $timeout(function () {
+                                                        formUp.close();
                                                         var alertPopup = $ionicPopup.alert({
                                                             title: 'Submision failed.',
                                                             template: 'You are offline. Submit forms by syncing next time you are online'
                                                         }).then(function (res) {
-                                                            $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': requestForm.category_id});
+                                                            $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
                                                         });
                                                     });
                                                 }
@@ -169,13 +170,13 @@ angular.module($APP.name).controller('FormCtrl', [
                                         }
                                     },
                                     function errorCallback(payload) {
-                                        formUp.close();
                                         $timeout(function () {
+                                            formUp.close();
                                             var alertPopup = $ionicPopup.alert({
                                                 title: 'Submision failed.',
                                                 template: 'You are offline. Submit forms by syncing next time you are online'
                                             }).then(function (res) {
-                                                $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': requestForm.category_id});
+                                                $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
                                             });
                                         });
                                     });
