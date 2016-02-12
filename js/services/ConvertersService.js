@@ -460,6 +460,7 @@ angular.module($APP.name).service('ConvertersService', [
             photoList: function (photos, id) {
                 var list = photos;
                 var requestList = [];
+                console.log(id)
                 for (var i = 0; i < list.length; i++) {
                     if (list[i].base64String !== "") {
                         list[i].id = 0;
@@ -468,6 +469,7 @@ angular.module($APP.name).service('ConvertersService', [
                         requestList.push(list[i]);
                     }
                 }
+                console.log(requestList)
                 return requestList;
             }
         };
