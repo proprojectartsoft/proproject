@@ -23,26 +23,6 @@ angular.module($APP.name).factory('FormInstanceService', [
             create: function (data, imgUri) {
                 var requestForm = ConvertersService.designToInstance(data)
 
-//                var sw = true;
-//                if(list.length === 1 && list[0].base64String === ""){
-//                    sw = false;
-//                }
-//                if (list.length >= 1) {
-//                    if (list[0].base64String !== "") {
-//                        ImageService.create(list).then(function (x) {
-//                            $rootScope.formUp.close();
-//                            $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
-//                        });
-//                    } else {
-//                        $rootScope.formUp.close();
-//                        $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
-//                    }
-//                } else {
-//                    $rootScope.formUp.close();
-//                    $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
-//                }
-
-
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     withCredentials: true
                 }).then(function (payload) {

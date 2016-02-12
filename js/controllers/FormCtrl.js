@@ -112,12 +112,12 @@ angular.module($APP.name).controller('FormCtrl', [
                         content: "",
                         buttons: []
                     });
-                    
+
 
                     FormInstanceService.create($scope.formData, $scope.imgURI).then(function (data) {
+                        $rootScope.formUp.close();
                         if (data) {
                             $rootScope.formId = data.id;
-                            $rootScope.formUp.close();
                             if (!data.message) {
                                 FormInstanceService.get($rootScope.formId).then(function (data) {
                                     $rootScope.rootForm = data;
@@ -128,6 +128,7 @@ angular.module($APP.name).controller('FormCtrl', [
                             }
                         }
                     }, function errorCallback(payload) {
+                        $rootScope.formUp.close();
                         console.log('asdknasdijasndoiasndoqwnoinm')
                     });
                 }
