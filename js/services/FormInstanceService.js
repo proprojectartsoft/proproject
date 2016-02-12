@@ -36,6 +36,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                 }).then(function successCallback(payload) {
 //                    formUp.close();
                     if (payload.data.message) {
+                        $rootScope.$broadcast('stopsubmit');
                         $timeout(function () {
                             var alertPopup3 = $ionicPopup.alert({
                                 title: 'Submision failed.',
@@ -47,7 +48,6 @@ angular.module($APP.name).factory('FormInstanceService', [
                         });
                     }
                     else {
-                        console.log(payload)
                         var list = ConvertersService.photoList(imgUri, payload.data.id);
                         if (list.length !== 0) {
                             ImageService.create(list).then(function (x) {
@@ -86,6 +86,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                         if (requestList.length !== 0) {
                             photos.put($rootScope.toBeUploadedCount, requestList);
                         }
+                        $rootScope.$broadcast('stopsubmit');
                         $timeout(function () {
 //                            formUp.close();
                             var alertPopup = $ionicPopup.alert({
@@ -97,6 +98,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                         });
                     }
                     else {
+                        $rootScope.$broadcast('stopsubmit');
                         $timeout(function () {
                             var alertPopup2 = $ionicPopup.alert({
                                 title: 'Submision failed.',
