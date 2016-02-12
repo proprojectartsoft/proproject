@@ -177,10 +177,12 @@ angular.module($APP.name).factory('SyncService', [
                     );
                 }, function errorCallback(response) {
                     $timeout(function () {
-                        syncPopup.close();
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Offline',
-                            template: 'Could not connect to the cloud'
+                        $timeout(function () {
+                            syncPopup.close();
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Offline',
+                                template: 'Could not connect to the cloud'
+                            });
                         });
                     });
                 });
