@@ -58,6 +58,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                         $rootScope.toBeUploadedCount++;
                         for (var i = 0; i < imgUri.length; i++) {
                             if (imgUri[i].base64String !== "") {
+                                imgUri.projectId = requestForm.projectId;
                                 requestList.push(imgUri[i]);
                             }
                         }
