@@ -70,11 +70,14 @@ angular.module($APP.name).controller('FormCtrl', [
             console.log('item', item);
             $scope.item = item;
             $scope.itemClone = angular.copy(item);
+
             $ionicModal.fromTemplateUrl('view/form/_picture_modal.html', {
                 scope: $scope
             }).then(function (modal) {
-                $scope.picModal = modal;
-                $scope.picModal.show();
+                $timeout(function () {
+                    $scope.picModal = modal;
+                    $scope.picModal.show();
+                });
             });
         };
         $scope.doShow = function () {
