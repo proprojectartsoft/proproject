@@ -135,7 +135,7 @@ angular.module($APP.name).controller('FormCtrl', [
                                             else {
                                                 $timeout(function () {
                                                     formUp.close();
-                                                    if (data.status === 400) {
+                                                    if (data && data.status === 400) {
                                                         var alertPopup2 = $ionicPopup.alert({
                                                             title: 'Submision failed.',
                                                             template: 'Incorrect data, try again'
