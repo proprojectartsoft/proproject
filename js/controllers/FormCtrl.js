@@ -94,6 +94,7 @@ angular.module($APP.name).controller('FormCtrl', [
             confirmPopup.then(function (res) {
                 if (res) {
                     $timeout(function () {
+                        $scope.picModal.remove();
                         var formUp = $ionicPopup.alert({
                             title: "Submitting",
                             template: "<center><ion-spinner icon='android'></ion-spinner></center>",
