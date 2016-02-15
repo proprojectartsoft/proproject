@@ -278,22 +278,14 @@ angular.module($APP.name).controller('FormCtrl', [
         });
 
         $scope.addPicture = function (index) {
-            var imgUp = $ionicPopup.alert({
-                title: "Uploading",
-                template: "<center><ion-spinner icon='android'></ion-spinner></center>",
-                content: "",
-                buttons: []
-            });
             window.imagePicker.getPictures(
                     function (results) {
                         $scope.convertToDataURLviaCanvas(results[0], function (base64Img) {
                             $scope.$apply(function () {
                                 $scope.item.base64String = base64Img.replace(/^data:image\/(png|jpg);base64,/, "");
-                                imgUp.close();
                             });
                         });
                     }, function (error) {
-                imgUp.close();
             }, {
                 maximumImagesCount: 1,
                 width: 800,
