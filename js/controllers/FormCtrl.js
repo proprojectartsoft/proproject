@@ -81,24 +81,7 @@ angular.module($APP.name).controller('FormCtrl', [
         $scope.doShow = function () {
             $scope.picModal.hide();
         };
-        $scope.takePicture = function (id) {
-            var options = {
-                quality: 60,
-                destinationType: Camera.DestinationType.DATA_URL,
-                sourceType: Camera.PictureSourceType.CAMERA,
-                allowEdit: false,
-                encodingType: Camera.EncodingType.JPEG,
-                popoverOptions: CameraPopoverOptions,
-                saveToPhotoAlbum: true,
-                correctOrientation: true
-            };
 
-            $cordovaCamera.getPicture(options).then(function (imageData) {
-                $scope.item.base64String = imageData;
-            }, function (err) {
-                // An error occured. Show a message to the user
-            });
-        };
 
         $scope.submit = function () {
             var confirmPopup = $ionicPopup.confirm({
@@ -277,13 +260,30 @@ angular.module($APP.name).controller('FormCtrl', [
             $scope.formData = FormUpdateService.getProducts();
         });
 
+        $scope.takePicture = function (id) {
+            var options = {
+                quality: 60,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                allowEdit: false,
+                encodingType: Camera.EncodingType.JPEG,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: true,
+                correctOrientation: true
+            };
+
+            $cordovaCamera.getPicture(options).then(function (imageData) {
+                $scope.item.base64String = imageData;
+            }, function (err) {
+                // An error occured. Show a message to the user
+            });
+        };
+
         $scope.addPicture = function (index) {
             window.imagePicker.getPictures(
                     function (results) {
                         $scope.convertToDataURLviaCanvas(results[0], function (base64Img) {
-                            $scope.$apply(function () {
-                                $scope.item.base64String = base64Img.replace(/^data:image\/(png|jpg);base64,/, "");
-                            });
+                            $scope.item.base64String = base64Img.replace(/^data:image\/(png|jpg);base64,/, "");
                         });
                     }, function (error) {
             }, {
