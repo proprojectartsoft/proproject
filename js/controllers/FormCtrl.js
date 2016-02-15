@@ -302,7 +302,7 @@ angular.module($APP.name).controller('FormCtrl', [
 
             $cordovaCamera.getPicture(options).then(function (imageUri) {
                 console.log('img', imageUri);
-                $scope.images.push(imageUri);
+                $scope.item.base64String = imageUri;
 
             }, function (err) {
                 // error
