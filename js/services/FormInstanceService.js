@@ -22,21 +22,14 @@ angular.module($APP.name).factory('FormInstanceService', [
             },
             create: function (data, imgUri) {
 
-//                var formUp = $ionicPopup.alert({
-//                    title: "Submitting",
-//                    template: "<center><ion-spinner icon='android'></ion-spinner></center>",
-//                    content: "",
-//                    buttons: []
-//                });
-
-
                 var requestForm = ConvertersService.designToInstance(data)
+
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     withCredentials: true
                 }).then(function successCallback(payload) {
 //                    formUp.close();
                     if (payload.data.message) {
-                        
+
                     }
                     else {
                         var list = ConvertersService.photoList(imgUri, payload.data.id);

@@ -144,28 +144,27 @@ angular.module($APP.name).controller('FormCtrl', [
                                                 }
                                             }
                                             else {
-                                                if (data.status === 400) {
-                                                    $timeout(function () {
-                                                        formUp.close();
+                                                $timeout(function () {
+                                                    formUp.close();
+                                                    if (data.status === 400) {
                                                         var alertPopup2 = $ionicPopup.alert({
                                                             title: 'Submision failed.',
                                                             template: 'Incorrect data, try again'
                                                         });
                                                         alertPopup2.then(function (res) {
                                                         });
-                                                    });
-                                                }
-                                                else {
-                                                    $timeout(function () {
-                                                        formUp.close();
+
+                                                    }
+                                                    else {
                                                         var alertPopup = $ionicPopup.alert({
                                                             title: 'Submision failed.',
                                                             template: 'You are offline. Submit forms by syncing next time you are online'
                                                         }).then(function (res) {
                                                             $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
                                                         });
-                                                    });
-                                                }
+
+                                                    }
+                                                });
                                             }
                                         }
                                     },
