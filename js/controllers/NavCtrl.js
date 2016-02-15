@@ -6,7 +6,8 @@ angular.module($APP.name).controller('NavCtrl', [
     '$ionicSideMenuDelegate',
     'CacheFactory',
     'SyncService',
-    function ($rootScope, $state, AuthService, $scope, $ionicSideMenuDelegate, CacheFactory, SyncService) {
+    '$timeout',
+    function ($rootScope, $state, AuthService, $scope, $ionicSideMenuDelegate, CacheFactory, SyncService, $timeout) {
         $scope.toggleLeft = function () {
             $ionicSideMenuDelegate.toggleLeft();
         };
@@ -116,8 +117,8 @@ angular.module($APP.name).controller('NavCtrl', [
         $scope.meTest = function () {
             AuthService.meTest();
         }
-        
-        AuthService.version().then(function(version){
+
+        AuthService.version().then(function (version) {
             settingsCache.put("version", version);
         });
 
@@ -127,7 +128,9 @@ angular.module($APP.name).controller('NavCtrl', [
         };
 
         $scope.sync = function () {
-            SyncService.sync();
+            $timeout(function () {
+                SyncService.sync();
+            });
         };
 
         $rootScope.$on('sync.todo', function () {

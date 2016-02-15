@@ -5,7 +5,8 @@ angular.module($APP.name).controller('LoginCtrl', [
     'CacheFactory',
     'SyncService',
     '$rootScope',
-    function ($scope, $state, AuthService, CacheFactory, SyncService, $rootScope) {
+    '$timeout',
+    function ($scope, $state, AuthService, CacheFactory, SyncService, $rootScope, $timeout) {
         $scope.user = [];
         $scope.user.username = "";
         $scope.user.password = "";
@@ -61,7 +62,9 @@ angular.module($APP.name).controller('LoginCtrl', [
                         });
                     }
                     reloadCache.put('reload', {'username': $scope.user.username, 'password': $scope.user.password});
-                    SyncService.sync();
+                    $timeout(function () {
+                        SyncService.sync();
+                    });
                     $state.go('app.categories', {'projectId': $rootScope.projectId});
                 }
             });

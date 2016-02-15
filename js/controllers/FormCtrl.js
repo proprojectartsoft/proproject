@@ -155,7 +155,7 @@ angular.module($APP.name).controller('FormCtrl', [
                                                         });
                                                     });
                                                 }
-                                                else {                                                    
+                                                else {
                                                     $timeout(function () {
                                                         formUp.close();
                                                         var alertPopup = $ionicPopup.alert({
