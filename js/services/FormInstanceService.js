@@ -28,7 +28,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                     withCredentials: true
                 }).then(function successCallback(payload) {
                     if (!payload.data.message) {
-                        var list = ConvertersService.photoList(imgUri, payload.data.id, payload.data.project_id);
+                        var list = ConvertersService.photoList(imgUri, payload.data.id, requestForm.project_id);
                         if (list.length !== 0) {
                             ImageService.create(list).then(function (x) {
                                 return x;
@@ -78,7 +78,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                     data: dataIn
                 }).then(function (response) {
                     if (pic) {
-                        var list = ConvertersService.photoList(pic, response.data.id, response.data.project_id);
+                        var list = ConvertersService.photoList(pic, response.data.id, dataIn.project_id);
                         ImageService.create(list).then(function (x) {
                             return x;
                         });
