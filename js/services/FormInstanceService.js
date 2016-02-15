@@ -28,7 +28,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                     withCredentials: true
                 }).then(function successCallback(payload) {
                     if (!payload.data.message) {
-                        var list = ConvertersService.photoList(imgUri, payload.data.id);
+                        var list = ConvertersService.photoList(imgUri, payload.data.id, payload.data.project_id);
                         if (list.length !== 0) {
                             ImageService.create(list).then(function (x) {
                                 return x;
@@ -71,13 +71,14 @@ angular.module($APP.name).factory('FormInstanceService', [
                 });
             },
             create_sync: function (dataIn, pic) {
+                console.log('create_sync')
                 return $http({
                     method: 'POST',
                     url: $APP.server + '/api/forminstance',
                     data: dataIn
                 }).then(function (response) {
                     if (pic) {
-                        var list = ConvertersService.photoList(pic, response.data.id);
+                        var list = ConvertersService.photoList(pic, response.data.id, response.data.project_id);
                         ImageService.create(list).then(function (x) {
                             return x;
                         });

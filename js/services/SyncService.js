@@ -51,6 +51,7 @@ angular.module($APP.name).factory('SyncService', [
                             if (formX) {
                                 upRequests.push(FormDesignService.checkpermission(formX.formDesignId).then(function (result) {
                                     if (result === true) {
+                                        console.log('create_sync in sync');
                                         FormInstanceService.create_sync(formX, picX);
                                     }
                                 }));
