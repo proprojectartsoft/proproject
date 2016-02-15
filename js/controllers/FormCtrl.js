@@ -135,18 +135,22 @@ angular.module($APP.name).controller('FormCtrl', [
                                         }
                                         else {
 
-                                            formUp.close();
-                                            $timeout(function () {
-                                                if (data && data.status === 400) {
+
+
+                                            if (data && data.status === 400) {
+                                                $timeout(function () {
+                                                    formUp.close();
                                                     var alertPopup2 = $ionicPopup.alert({
                                                         title: 'Submision failed.',
                                                         template: 'Incorrect data, try again'
                                                     });
                                                     alertPopup2.then(function (res) {
                                                     });
-
-                                                }
-                                                else {
+                                                });
+                                            }
+                                            else {
+                                                $timeout(function () {
+                                                    formUp.close();
                                                     var alertPopup = $ionicPopup.alert({
                                                         title: 'Submision failed.',
                                                         template: 'You are offline. Submit forms by syncing next time you are online'
@@ -155,9 +159,9 @@ angular.module($APP.name).controller('FormCtrl', [
                                                             $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
                                                         });
                                                     });
+                                                });
+                                            }
 
-                                                }
-                                            });
                                         }
                                     }
                                 });
