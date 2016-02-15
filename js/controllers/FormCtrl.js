@@ -18,8 +18,7 @@ angular.module($APP.name).controller('FormCtrl', [
     function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ConvertersService, $ionicModal, $cordovaCamera, $state, SyncService, $ionicSideMenuDelegate) {
 
         $ionicSideMenuDelegate.canDragContent(false);
-        console.log($rootScope)
-        console.log($scope)
+        $scope.itemLoading = false;
         var designsCache = CacheFactory.get('designsCache');
         if (!designsCache || designsCache.length === 0) {
             designsCache = CacheFactory('designsCache');
@@ -80,6 +79,7 @@ angular.module($APP.name).controller('FormCtrl', [
         };
         $scope.doShow = function () {
             $scope.picModal.hide();
+            $scope.picModal.remove();
         };
 
 
@@ -261,6 +261,7 @@ angular.module($APP.name).controller('FormCtrl', [
         });
 
         $scope.takePicture = function (id) {
+            $scope.itemLoading = true;
             var options = {
                 quality: 60,
                 destinationType: Camera.DestinationType.DATA_URL,
@@ -273,6 +274,7 @@ angular.module($APP.name).controller('FormCtrl', [
             };
 
             $cordovaCamera.getPicture(options).then(function (imageData) {
+                $scope.itemLoading = false;
                 $scope.item.base64String = imageData;
             }, function (err) {
                 // An error occured. Show a message to the user
@@ -291,17 +293,18 @@ angular.module($APP.name).controller('FormCtrl', [
 //                width: 800,
 //                quality: 10
 //            });
+            $scope.itemLoading = true;
             var options = {
                 maximumImagesCount: 1,
                 quality: 50,
-                destinationType: Camera.DestinationType.FILE_URI,
+                destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
                 correctOrientation: true,
-                allowEdit: false,
+                allowEdit: false
             };
 
             $cordovaCamera.getPicture(options).then(function (imageUri) {
-                console.log('img', imageUri);
+                $scope.itemLoading = false;
                 $scope.item.base64String = imageUri;
 
             }, function (err) {
