@@ -102,17 +102,6 @@ angular.module($APP.name).factory('FormInstanceService', [
                         $rootScope.toBeUploadedCount = sync.keys().length;
                         $rootScope.toBeUploadedCount++;
                         sync.put($rootScope.toBeUploadedCount, requestForm);
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Edit failed.',
-                            template: 'You are offline. Edit forms by syncing next time you are online'
-                        });
-                        $location.path("/app/category/" + $rootScope.projectId + '/' + $rootScope.categoryId);
-                    }
-                    else {
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Edit failed.',
-                            template: 'Incorrect data, try again'
-                        });
                     }
                 });
             },
