@@ -280,16 +280,32 @@ angular.module($APP.name).controller('FormCtrl', [
         };
 
         $scope.addPicture = function (index) {
-            window.imagePicker.getPictures(
-                    function (results) {
-                        $scope.convertToDataURLviaCanvas(results[0], function (base64Img) {
-                            $scope.item.base64String = base64Img.replace(/^data:image\/(png|jpg);base64,/, "");
-                        });
-                    }, function (error) {
-            }, {
+//            window.imagePicker.getPictures(
+//                    function (results) {
+//                        $scope.convertToDataURLviaCanvas(results[0], function (base64Img) {
+//                            $scope.item.base64String = base64Img.replace(/^data:image\/(png|jpg);base64,/, "");
+//                        });
+//                    }, function (error) {
+//            }, {
+//                maximumImagesCount: 1,
+//                width: 800,
+//                quality: 10
+//            });
+            var options = {
                 maximumImagesCount: 1,
-                width: 800,
-                quality: 10
+                quality: 50,
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                correctOrientation: true,
+                allowEdit: false,
+            };
+
+            $cordovaCamera.getPicture(options).then(function (imageUri) {
+                console.log('img', imageUri);
+                $scope.images.push(imageUri);
+
+            }, function (err) {
+                // error
             });
         };
         $scope.removePicture = function (index) {
