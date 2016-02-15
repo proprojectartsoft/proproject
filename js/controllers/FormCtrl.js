@@ -148,7 +148,9 @@ angular.module($APP.name).controller('FormCtrl', [
                                                             title: 'Submision failed.',
                                                             template: 'You are offline. Submit forms by syncing next time you are online'
                                                         }).then(function (res) {
-                                                            $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
+                                                            $timeout(function () {
+                                                                $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
+                                                            });
                                                         });
 
                                                     }
