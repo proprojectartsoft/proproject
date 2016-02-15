@@ -64,8 +64,8 @@ angular.module($APP.name).controller('LoginCtrl', [
                     reloadCache.put('reload', {'username': $scope.user.username, 'password': $scope.user.password});
                     $timeout(function () {
                         SyncService.sync();
-                    });
-                    $state.go('app.categories', {'projectId': $rootScope.projectId});
+                        $state.go('app.categories', {'projectId': $rootScope.projectId});
+                    });                    
                 }
             });
         };
