@@ -21,12 +21,7 @@ angular.module($APP.name).factory('SyncService', [
                 var photos = CacheFactory.get('photos');
                 var forms, pics, picX, formX;
 
-                var syncPopup = $ionicPopup.alert({
-                    title: "Syncing",
-                    template: "<center><ion-spinner icon='android'></ion-spinner></center>",
-                    content: "",
-                    buttons: []
-                });
+
                 function upload() {
                     if (!sync || sync.length === 0) {
                         sync = CacheFactory('sync');
@@ -106,85 +101,92 @@ angular.module($APP.name).factory('SyncService', [
                     });
                     $q.all(newListOfPromises).then(finalCallback);
                 }
-                return $http.get($APP.server + '/api/userversion/session').then(function (version) {
-                    var currentVersion = settingsCache.get("version");
-                    var doRequest;
-                    if (currentVersion !== version.data) {
-                        clear();
-                        doRequest = requests.concat(upRequests);
-                        console.log(doRequest);
-                    }
-                    else {
-                        upload();
-                        doRequest = upRequests;
-                        if (doRequest.length === 0) {
-                            syncPopup.close();
+                $timeout(function () {
+                    var syncPopup = $ionicPopup.alert({
+                        title: "Syncing",
+                        template: "<center><ion-spinner icon='android'></ion-spinner></center>",
+                        content: "",
+                        buttons: []
+                    });
+                    return $http.get($APP.server + '/api/userversion/session').then(function (version) {
+                        var currentVersion = settingsCache.get("version");
+                        var doRequest;
+                        if (currentVersion !== version.data) {
+                            clear();
+                            doRequest = requests.concat(upRequests);
+                            console.log(doRequest);
                         }
-                        console.log('OK', upRequests)
-                    }
-                    asyncCall(doRequest,
-                            function error(result) {
-                                console.log('Some error occurred, but we get going:', result);
-                            },
-                            function success(result) {
-                                var sw = false;
-                                if (currentVersion !== version.data) {
-                                    $rootScope.projects = result[0];
-                                    angular.forEach($rootScope.projects, function (proj) {
-                                        if (proj.id === $rootScope.projectId && proj.name === $rootScope.navTitle) {
-                                            sw = true;
-                                        }
-                                    });
-                                    if (!sw) {
-                                        $rootScope.projectId = result[0][0].id;
-                                        $rootScope.navTitle = result[0][0].name;
-                                    }
-                                    for (var i = 0; i < result[0].length; i++) {
-                                        projectsCache.put(result[0][i].id, result[0][i]);
-                                    }
-                                    for (var i = 0; i < result[1].length; i++) {
-                                        designsCache.put(result[1][i].id, result[1][i]);
-                                    }
-                                }
-                                currentVersion = version.data;
-
-                                if (sync) {
-                                    sync.removeAll();
-                                } else {
-                                    sync = CacheFactory('sync');
-                                    sync.setOptions({
-                                        storageMode: 'localStorage'
-                                    });
-                                    sync.removeAll();
-                                }
-
-                                if (photos) {
-                                    photos.removeAll();
-                                } else {
-                                    photos = CacheFactory('photos');
-                                    photos.setOptions({
-                                        storageMode: 'localStorage'
-                                    });
-                                    photos.removeAll();
-                                }
-
-                                settingsCache.put("version", currentVersion);
-
-                                $timeout(function () {
-                                    syncPopup.close();
-                                });
+                        else {
+                            upload();
+                            doRequest = upRequests;
+                            if (doRequest.length === 0) {
+                                syncPopup.close();
                             }
-                    );
-                }, function errorCallback(response) {
-                    $timeout(function () {
-                        syncPopup.close();
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Offline',
-                            template: 'Could not connect to the cloud'
+                            console.log('OK', upRequests)
+                        }
+                        asyncCall(doRequest,
+                                function error(result) {
+                                    console.log('Some error occurred, but we get going:', result);
+                                },
+                                function success(result) {
+                                    var sw = false;
+                                    if (currentVersion !== version.data) {
+                                        $rootScope.projects = result[0];
+                                        angular.forEach($rootScope.projects, function (proj) {
+                                            if (proj.id === $rootScope.projectId && proj.name === $rootScope.navTitle) {
+                                                sw = true;
+                                            }
+                                        });
+                                        if (!sw) {
+                                            $rootScope.projectId = result[0][0].id;
+                                            $rootScope.navTitle = result[0][0].name;
+                                        }
+                                        for (var i = 0; i < result[0].length; i++) {
+                                            projectsCache.put(result[0][i].id, result[0][i]);
+                                        }
+                                        for (var i = 0; i < result[1].length; i++) {
+                                            designsCache.put(result[1][i].id, result[1][i]);
+                                        }
+                                    }
+                                    currentVersion = version.data;
+
+                                    if (sync) {
+                                        sync.removeAll();
+                                    } else {
+                                        sync = CacheFactory('sync');
+                                        sync.setOptions({
+                                            storageMode: 'localStorage'
+                                        });
+                                        sync.removeAll();
+                                    }
+
+                                    if (photos) {
+                                        photos.removeAll();
+                                    } else {
+                                        photos = CacheFactory('photos');
+                                        photos.setOptions({
+                                            storageMode: 'localStorage'
+                                        });
+                                        photos.removeAll();
+                                    }
+
+                                    settingsCache.put("version", currentVersion);
+
+                                    $timeout(function () {
+                                        syncPopup.close();
+                                    });
+                                }
+                        );
+                    }, function errorCallback(response) {
+                        $timeout(function () {
+                            syncPopup.close();
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Offline',
+                                template: 'Could not connect to the cloud'
+                            });
                         });
                     });
-                });
-
+                })
             }
         };
     }
