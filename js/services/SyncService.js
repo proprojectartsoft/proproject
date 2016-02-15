@@ -47,14 +47,13 @@ angular.module($APP.name).factory('SyncService', [
                             if (pics.indexOf(formKey) !== -1) {
                                 console.log('sync.start.create_sync', formKey);
                                 picX = photos.get(formKey);
-                                console.log('sync.stop.create_sync', picX.title);
+                                console.log('sync.stop.create_sync', picX);
                             }
-                            $rootScope.formi = formKey;
                             if (formX) {
-                                upRequests.push(FormDesignService.checkpermission(formX.formDesignId).then(function (result) {
-                                    if (result === true) {
-                                        FormInstanceService.create_sync(formX, picX);
-                                    }
+                                var help1 = angular.copy(formX);
+                                var help2 = angular.copy(picX);
+                                upRequests.push(FormInstanceService.create_sync(help1, help2).then(function () {
+                                    console.log('help', help1, help2)
                                 }));
                             }
                         });
