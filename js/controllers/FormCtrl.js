@@ -274,8 +274,11 @@ angular.module($APP.name).controller('FormCtrl', [
             };
 
             $cordovaCamera.getPicture(options).then(function (imageData) {
-                $scope.itemLoading = false;
-                $scope.item.base64String = imageData;
+                $scope.itemLoading = true;
+                $timeout(function () {
+                    $scope.itemLoading = false;
+                    $scope.item.base64String = imageData;
+                });
             }, function (err) {
                 // An error occured. Show a message to the user
             });
@@ -293,7 +296,6 @@ angular.module($APP.name).controller('FormCtrl', [
 //                width: 800,
 //                quality: 10
 //            });
-            $scope.itemLoading = true;
             var options = {
                 maximumImagesCount: 1,
                 quality: 50,
@@ -304,8 +306,11 @@ angular.module($APP.name).controller('FormCtrl', [
             };
 
             $cordovaCamera.getPicture(options).then(function (imageUri) {
-                $scope.itemLoading = false;
-                $scope.item.base64String = imageUri;
+                $scope.itemLoading = true;
+                $timeout(function () {
+                    $scope.itemLoading = false;
+                    $scope.item.base64String = imageUri;
+                });
 
             }, function (err) {
                 // error
