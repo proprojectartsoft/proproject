@@ -124,8 +124,9 @@ angular.module($APP.name).controller('FormCtrl', [
                                                 if (!data.message && data.status !== 0) {
                                                     FormInstanceService.get($rootScope.formId).then(function (data) {
                                                         $rootScope.rootForm = data;
+                                                        formUp.close();
                                                         $timeout(function () {
-                                                            formUp.close();
+//                                                            formUp.close();
                                                             $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
                                                         });
                                                     });
@@ -157,17 +158,6 @@ angular.module($APP.name).controller('FormCtrl', [
                                                 });
                                             }
                                         }
-                                    },
-                                    function errorCallback(payload) {
-                                        $timeout(function () {
-                                            formUp.close();
-                                            var alertPopup = $ionicPopup.alert({
-                                                title: 'Submision failed.',
-                                                template: 'You are offline. Submit forms by syncing next time you are online'
-                                            }).then(function (res) {
-                                                $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
-                                            });
-                                        });
                                     });
                         }
                         catch (err) {

@@ -37,6 +37,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                     }
                     return payload.data;
                 }, function errorCallback(payload) {
+                    console.log(payload)
                     if (payload.status === 0 || payload.status === 502) {
                         var sync = CacheFactory.get('sync');
                         var requestList = [];
@@ -65,7 +66,9 @@ angular.module($APP.name).factory('FormInstanceService', [
                             photos.put($rootScope.toBeUploadedCount, requestList);
                         }
                     }
-                    return payload;
+                    $timeout(function () {
+                        return payload;
+                    })
                 });
             },
             create_sync: function (dataIn, pic) {
@@ -107,17 +110,10 @@ angular.module($APP.name).factory('FormInstanceService', [
             },
             save_as: function (data) {
                 var requestForm = ConvertersService.instanceToNew(data);
-//                var formUp = $ionicPopup.alert({
-//                    title: "Submitting",
-//                    template: "<center><ion-spinner icon='android'></ion-spinner></center>",
-//                    content: "",
-//                    buttons: []
-//                });
                 return $http.post($APP.server + '/api/forminstance', requestForm, {
                     withCredentials: true
                 }).then(function (payload) {
                     if (payload.data.message) {
-//                        formUp.close();
                         $timeout(function () {
                             var alertPopup3 = $ionicPopup.alert({
                                 title: 'Submision failed.',
@@ -131,6 +127,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                     return payload.data;
                 }, function (payload) {
 //                    formUp.close();
+                    console.log(payload)
                     if (payload.status === 0 || payload.status === 502) {
                         var sync = CacheFactory.get('sync');
                         if (!sync) {
