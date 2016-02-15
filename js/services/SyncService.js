@@ -41,22 +41,23 @@ angular.module($APP.name).factory('SyncService', [
                     pics = photos.keys();
                     console.log('w', forms)
                     if (forms) {
-                        for (var i = 0; i < forms.length; i++) {
+                        angular.forEach(forms, function (formKey) {
                             picX = false;
-                            formX = sync.get(forms[i]);
-                            if (pics.indexOf(forms[i]) !== -1) {
-                                picX = photos.get(forms[i]);
+                            formX = sync.get(formKey);
+                            if (pics.indexOf(formKey) !== -1) {
+                                console.log('sync.start.create_sync', formKey);
+                                picX = photos.get(formKey);
+                                console.log('sync.stop.create_sync', picX.title);
                             }
-                            $rootScope.formi = forms[i];
+                            $rootScope.formi = formKey;
                             if (formX) {
                                 upRequests.push(FormDesignService.checkpermission(formX.formDesignId).then(function (result) {
                                     if (result === true) {
-                                        console.log('create_sync in sync');
                                         FormInstanceService.create_sync(formX, picX);
                                     }
                                 }));
                             }
-                        }
+                        });
                     }
                 }
                 function clear() {
