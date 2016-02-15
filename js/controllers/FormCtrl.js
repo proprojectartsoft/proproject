@@ -93,78 +93,74 @@ angular.module($APP.name).controller('FormCtrl', [
             });
             confirmPopup.then(function (res) {
                 if (res) {
-                    $timeout(function () {
+                    if ($scope.picModal) {
                         $scope.picModal.remove();
-                        console.log($scope)
+                    }
+                    console.log($scope)
+                    $timeout(function () {
                         var formUp = $ionicPopup.alert({
                             title: "Submitting",
                             template: "<center><ion-spinner icon='android'></ion-spinner></center>",
                             content: "",
                             buttons: []
                         });
-                        $rootScope.$on('stopsubmit', function () {
-                            formUp.close();
-                        });
-                        try {
-                            FormInstanceService.create($scope.formData, $scope.imgURI).then(
-                                    function successCallback(data) {
-                                        if (data && data.data && data.data.message) {
-                                            $timeout(function () {
-                                                formUp.close();
-                                                var alertPopup3 = $ionicPopup.alert({
-                                                    title: 'Submision failed.',
-                                                    template: 'You have not permission to do this operation'
-                                                });
-                                                alertPopup3.then(function (res) {
-                                                    $rootScope.$broadcast('sync.todo');
-                                                });
+
+                        FormInstanceService.create($scope.formData, $scope.imgURI).then(
+                                function successCallback(data) {
+                                    if (data && data.data && data.data.message) {
+                                        formUp.close();
+                                        $timeout(function () {
+
+                                            var alertPopup3 = $ionicPopup.alert({
+                                                title: 'Submision failed.',
+                                                template: 'You have not permission to do this operation'
                                             });
+                                            alertPopup3.then(function (res) {
+                                                $rootScope.$broadcast('sync.todo');
+                                            });
+                                        });
+                                    }
+                                    else {
+                                        if (data && data.status !== 0 && data.status !== 502 && data.status !== 403 && data.status !== 400) {
+                                            $rootScope.formId = data.id;
+                                            if (!data.message && data.status !== 0) {
+                                                FormInstanceService.get($rootScope.formId).then(function (data) {
+                                                    $rootScope.rootForm = data;
+                                                    formUp.close();
+                                                    $timeout(function () {
+                                                        $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
+                                                    });
+                                                });
+                                            }
                                         }
                                         else {
-                                            if (data && data.status !== 0 && data.status !== 502 && data.status !== 403 && data.status !== 400) {
-                                                $rootScope.formId = data.id;
-                                                if (!data.message && data.status !== 0) {
-                                                    FormInstanceService.get($rootScope.formId).then(function (data) {
-                                                        $rootScope.rootForm = data;
-                                                        formUp.close();
+
+                                            formUp.close();
+                                            $timeout(function () {
+                                                if (data && data.status === 400) {
+                                                    var alertPopup2 = $ionicPopup.alert({
+                                                        title: 'Submision failed.',
+                                                        template: 'Incorrect data, try again'
+                                                    });
+                                                    alertPopup2.then(function (res) {
+                                                    });
+
+                                                }
+                                                else {
+                                                    var alertPopup = $ionicPopup.alert({
+                                                        title: 'Submision failed.',
+                                                        template: 'You are offline. Submit forms by syncing next time you are online'
+                                                    }).then(function (res) {
                                                         $timeout(function () {
-//                                                            formUp.close();
-                                                            $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
+                                                            $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
                                                         });
                                                     });
+
                                                 }
-                                            }
-                                            else {
-                                                $timeout(function () {
-                                                    formUp.close();
-                                                    if (data && data.status === 400) {
-                                                        var alertPopup2 = $ionicPopup.alert({
-                                                            title: 'Submision failed.',
-                                                            template: 'Incorrect data, try again'
-                                                        });
-                                                        alertPopup2.then(function (res) {
-                                                        });
-
-                                                    }
-                                                    else {
-                                                        var alertPopup = $ionicPopup.alert({
-                                                            title: 'Submision failed.',
-                                                            template: 'You are offline. Submit forms by syncing next time you are online'
-                                                        }).then(function (res) {
-                                                            $timeout(function () {
-                                                                $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
-                                                            });
-                                                        });
-
-                                                    }
-                                                });
-                                            }
+                                            });
                                         }
-                                    });
-                        }
-                        catch (err) {
-
-                        }
+                                    }
+                                });
                     });
                 }
 
