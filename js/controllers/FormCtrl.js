@@ -138,8 +138,10 @@ angular.module($APP.name).controller('FormCtrl', [
                                                 if (!data.message && data.status !== 0) {
                                                     FormInstanceService.get($rootScope.formId).then(function (data) {
                                                         $rootScope.rootForm = data;
-                                                        formUp.close();
-                                                        $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
+                                                        $timeout(function () {
+                                                            formUp.close();
+                                                            $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
+                                                        });
                                                     });
                                                 }
                                             }
