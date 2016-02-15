@@ -66,9 +66,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                             photos.put($rootScope.toBeUploadedCount, requestList);
                         }
                     }
-                    $timeout(function () {
-                        return payload;
-                    })
+                    return payload;
                 });
             },
             create_sync: function (dataIn, pic) {

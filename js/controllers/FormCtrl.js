@@ -95,6 +95,9 @@ angular.module($APP.name).controller('FormCtrl', [
                 if (res) {
                     if ($scope.picModal) {
                         $scope.picModal.remove();
+                        if ($scope.picModal) {
+                            delete $scope.picModal;
+                        }
                     }
                     console.log($scope)
                     $timeout(function () {
