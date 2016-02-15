@@ -108,9 +108,8 @@ angular.module($APP.name).controller('FormCtrl', [
                         FormInstanceService.create($scope.formData, $scope.imgURI).then(
                                 function successCallback(data) {
                                     if (data && data.data && data.data.message) {
-                                        formUp.close();
                                         $timeout(function () {
-
+                                            formUp.close();
                                             var alertPopup3 = $ionicPopup.alert({
                                                 title: 'Submision failed.',
                                                 template: 'You have not permission to do this operation'
@@ -127,16 +126,11 @@ angular.module($APP.name).controller('FormCtrl', [
                                                 FormInstanceService.get($rootScope.formId).then(function (data) {
                                                     $rootScope.rootForm = data;
                                                     formUp.close();
-                                                    $timeout(function () {
-                                                        $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
-                                                    });
+                                                    $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
                                                 });
                                             }
                                         }
                                         else {
-
-
-
                                             if (data && data.status === 400) {
                                                 $timeout(function () {
                                                     formUp.close();
@@ -155,9 +149,7 @@ angular.module($APP.name).controller('FormCtrl', [
                                                         title: 'Submision failed.',
                                                         template: 'You are offline. Submit forms by syncing next time you are online'
                                                     }).then(function (res) {
-                                                        $timeout(function () {
-                                                            $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
-                                                        });
+                                                        $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
                                                     });
                                                 });
                                             }
