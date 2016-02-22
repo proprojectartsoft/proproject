@@ -11,7 +11,7 @@ angular.module($APP.name).factory('SyncService', [
     function ($q, CacheFactory, $ionicPopup, FormInstanceService, FormDesignService, ProjectService, $rootScope, $http, $timeout) {
 
         return {
-            sync: function () {
+            sync: function () {                
                 var requests = [];
                 var upRequests = [];
                 var projectsCache = CacheFactory.get('projectsCache');

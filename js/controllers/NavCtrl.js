@@ -129,7 +129,12 @@ angular.module($APP.name).controller('NavCtrl', [
 
         $scope.sync = function () {
             $timeout(function () {
-                SyncService.sync();
+                $http.get($APP.server + '/api/me', {withCredentials: true}).success(function (user) {
+                    console.log(user)
+                }).error(function(data){
+                    console.log(data)
+                });
+                
             });
         };
 
