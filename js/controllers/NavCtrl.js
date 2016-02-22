@@ -130,11 +130,11 @@ angular.module($APP.name).controller('NavCtrl', [
 
         $scope.sync = function () {
             $timeout(function () {
-                $http.get($APP.server + '/api/me', {withCredentials: true}).success(function (user) {
+                $http.get($APP.server + '/api/me', {withCredentials: true}).then(function (user) {
                     console.log(user)
-                }).error(function(data){
-                    console.log(data)
-                });
+                }, function errorCallback(response) {
+                        console.log(response.status)
+                    });
                 
             });
         };
