@@ -7,7 +7,8 @@ angular.module($APP.name).controller('NavCtrl', [
     'CacheFactory',
     'SyncService',
     '$timeout',
-    function ($rootScope, $state, AuthService, $scope, $ionicSideMenuDelegate, CacheFactory, SyncService, $timeout) {
+    '$http',
+    function ($rootScope, $state, AuthService, $scope, $ionicSideMenuDelegate, CacheFactory, SyncService, $timeout, $http) {
         $scope.toggleLeft = function () {
             $ionicSideMenuDelegate.toggleLeft();
         };
