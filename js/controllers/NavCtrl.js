@@ -131,11 +131,16 @@ angular.module($APP.name).controller('NavCtrl', [
         $scope.sync = function () {
             $timeout(function () {
                 $http.get($APP.server + '/api/me', {withCredentials: true}).then(function (user) {
-                    console.log(user)
+                    SyncService.sync();
                 }, function errorCallback(response) {
-                        console.log(response.status)
-                    });
-                
+                    console.log(response.status)
+                    if (response.status === 403) {
+                        AuthService.autoLogFix().then(function (result) {
+                            SyncService.sync();
+                        });
+                    }
+                });
+
             });
         };
 
