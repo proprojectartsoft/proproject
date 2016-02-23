@@ -23,15 +23,34 @@
                             <edit data="field"></edit>
                         </div>
 
-                    </div>
-                    <div class="padding">
-                        <button type="submit" ng-click="submit(formData)" ng-disabled="" value="Save" class="button button-block button-calm">Submit</button>
-                    </div>
-                    <div class="padding" style="margin-top:-20px">
-                        <button type="submit" ng-click="saveAsNew()" ng-disabled="" value="Save" class="button button-block button-calm">Save as new</button>
-                    </div>
+                    </div>                   
                 </form>
-
+                <div id="image-header" ng-click="toggleGroup(fieldset, 'image-header')" ng-class="{active: isGroupShown(group)}" class="item-stable item fs all-field-header" style="width:100%; background-color: #333 !important">                            
+                    <span style="margin-left:23px">Attach pictures</span>
+                    <span  style="float:right;width:50px;text-align:right; color:#fff !important; font-size:23px; margin-right: 5px" class="icon ion-android-attach all-chevron"></span>                                                            
+                </div>
+                <ion-item ng-show="isGroupShown(fieldset)" >
+                    <div class="row" ng-repeat="picrow in pictures">
+                        <div class="col" ng-repeat="pic in picrow">
+                            <div class="img-box-container">
+                                <div class="img-box" ng-click="test(pic)">
+                                    <button ng-click="delSpot(pic.id)">x</button>
+                                    <img ng-show="pic.base64String !== ''" data-ng-src ="data:image/png;base64,{{pic.base64String}}">
+                                    <img ng-show="pic.base64String === ''" ng-src="img/ic.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: calc(100% + 10px); margin-left:-5px">
+                        <button ng-show="imgURI.length !== 9" class="button button-block button-dark" ng-click="addSpot()"><i class="ion-plus"></i><i class="ion-image" style="font-size:19px; padding-left: 4px"></i></button>
+                    </div>
+                </ion-item>
+                <div class="padding">
+                    <button type="submit" ng-click="submit(formData)" ng-disabled="" value="Save" class="button button-block button-calm">Submit</button>
+                </div>
+                <div class="padding" style="margin-top:-20px">
+                    <button type="submit" ng-click="saveAsNew()" ng-disabled="" value="Save" class="button button-block button-calm">Save as new</button>
+                </div>
             </div>
         </div>
     </ion-content>

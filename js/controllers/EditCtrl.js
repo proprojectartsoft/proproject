@@ -8,14 +8,144 @@ angular.module($APP.name).controller('EditCtrl', [
     '$ionicSideMenuDelegate',
     '$ionicScrollDelegate',
     '$ionicPopup',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, $ionicSideMenuDelegate, $ionicScrollDelegate, $ionicPopup) {
+    '$ionicModal',
+    '$cordovaCamera',
+    'ConvertersService',
+    'ImageService',
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, $ionicSideMenuDelegate, $ionicScrollDelegate, $ionicPopup, $ionicModal, $cordovaCamera, ConvertersService, ImageService) {
         $ionicSideMenuDelegate.canDragContent(false);
         $scope.formData = angular.copy($rootScope.rootForm);
+        $scope.imgURI = [
+            {
+                "id": 0,
+                "base64String": "",
+                "comment": "",
+                "tags": "",
+                "title": " ",
+                "projectId": 0,
+                "formInstanceId": 0
+            }
+        ];
+        $scope.trim = function () {
+            $scope.pictures = [];
+            var i, j, temparray, chunk = 3;
+            for (i = 0, j = $scope.imgURI.length; i < j; i += chunk) {
+                temparray = $scope.imgURI.slice(i, i + chunk);
+                $scope.pictures.push(temparray);
+            }
+        };
+        $scope.trim();
+        $scope.addSpot = function () {
+            if ($scope.imgURI.length < 9) {
+                $scope.imgURI.push({"id": $scope.imgCounter, "base64String": "", "comment": "", "tags": "", "title": " ", "projectId": 0, "formInstanceId": 0});
+                $scope.imgCounter++;
+                $scope.trim();
+            }
+        };
+        $scope.delSpot = function (id) {
+            for (var i = 0; i < $scope.imgURI.length; i++) {
+                if ($scope.imgURI[i].id === id) {
+                    $scope.imgURI.splice(i, 1);
+                    $scope.trim();
+                    break;
+                }
+            }
+        };
+
+        $scope.test = function (item) {
+            $scope.item = item;
+            $ionicModal.fromTemplateUrl('view/form/_picture_modal.html', {
+                scope: $scope
+            }).then(function (modal) {
+                $timeout(function () {
+                    $scope.picModal = modal;
+                    $scope.picModal.show();
+                });
+            });
+        };
+        $scope.doShow = function () {
+            $scope.picModal.hide();
+            $scope.picModal.remove();
+        };
+        $scope.takePicture = function (id) {
+            $scope.itemLoading = true;
+            var options = {
+                quality: 60,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                allowEdit: false,
+                encodingType: Camera.EncodingType.JPEG,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: true,
+                correctOrientation: true
+            };
+
+            $cordovaCamera.getPicture(options).then(function (imageData) {
+                $scope.itemLoading = true;
+                $timeout(function () {
+                    $scope.itemLoading = false;
+                    $scope.item.base64String = imageData;
+                });
+            }, function (err) {
+                // An error occured. Show a message to the user
+            });
+        };
+
+        $scope.addPicture = function (index) {
+            var options = {
+                maximumImagesCount: 1,
+                quality: 50,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                correctOrientation: true,
+                allowEdit: false
+            };
+
+            $cordovaCamera.getPicture(options).then(function (imageUri) {
+                $scope.itemLoading = true;
+                $timeout(function () {
+                    $scope.itemLoading = false;
+                    $scope.item.base64String = imageUri;
+                });
+
+            }, function (err) {
+                // error
+            });
+        };
+        $scope.removePicture = function (index) {
+            if ($scope.pictures.length !== 1) {
+                for (var i = index; i < $scope.pictures.length - 1; i++) {
+                    $scope.pictures[i].comment = angular.copy($scope.pictures[i + 1].comment);
+                    $scope.pictures[i].base64String = angular.copy($scope.pictures[i + 1].base64String);
+                }
+                $scope.pictures.splice($scope.pictures.length - 1, 1)
+            } else {
+                $scope.pictures[0].base64String = "";
+                $scope.pictures[0].comment = "";
+            }
+        };
+
+        $scope.convertToDataURLviaCanvas = function (url, callback) {
+            var img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.onload = function () {
+                var canvas = document.createElement('CANVAS');
+                var ctx = canvas.getContext('2d');
+                var dataURL;
+                canvas.height = this.height;
+                canvas.width = this.width;
+                ctx.drawImage(this, 0, 0);
+                dataURL = canvas.toDataURL('image/jpg');
+                callback(dataURL);
+                canvas = null;
+            };
+            img.src = url;
+        };
         FormInstanceService.get($rootScope.formId).then(function (data) {
             $rootScope.formData = data;
             $scope.formData = data;
         });
-        
+
         $scope.submit = function (help) {
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Edit form',
@@ -26,7 +156,13 @@ angular.module($APP.name).controller('EditCtrl', [
                     FormInstanceService.update($rootScope.formId, $scope.formData).then(function (data) {
                         if (data) {
                             $rootScope.formId = data;
-                            $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
+                            var list = ConvertersService.photoList($scope.imgURI, $scope.formData.id, $scope.formData.project_id);
+                            if (list.length !== 0) {
+                                ImageService.create(list).then(function (x) {
+                                    $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
+                                });
+                            }
+
                         }
                     });
                 }
@@ -43,7 +179,12 @@ angular.module($APP.name).controller('EditCtrl', [
                         if (data) {
                             $rootScope.formId = data.id;
                             FormInstanceService.get($rootScope.formId).then(function (data) {
-                                $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
+                                var list = ConvertersService.photoList($scope.imgURI, $scope.formData.id, $scope.formData.project_id);
+                                if (list.length !== 0) {
+                                    ImageService.create(list).then(function (x) {
+                                        $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
+                                    });
+                                }
                             });
                         }
                     });
@@ -85,7 +226,7 @@ angular.module($APP.name).controller('EditCtrl', [
         $scope.repeatGroup = function (x) {
             var aux = {};
             console.log(x);
-            angular.copy(x, aux);            
+            angular.copy(x, aux);
             aux.repeatable = true;
             aux.id = 0;
             for (var i = 0; i < aux.field_instances.length; i++) {
@@ -98,8 +239,8 @@ angular.module($APP.name).controller('EditCtrl', [
                     }
                 }
                 for (var j = 0; j < aux.field_instances[i].field_values.length; j++) {
-                    aux.field_instances[i].field_values[j].name =  x.field_instances[i].field_values[j].name;
-                    aux.field_instances[i].field_values[j].value =  x.field_instances[i].field_values[j].value;
+                    aux.field_instances[i].field_values[j].name = x.field_instances[i].field_values[j].name;
+                    aux.field_instances[i].field_values[j].value = x.field_instances[i].field_values[j].value;
                     aux.field_instances[i].field_values[j].id = 0;
                     aux.field_instances[i].field_values[j].field_instance_id = 0;
                 }
