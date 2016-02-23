@@ -153,17 +153,32 @@ angular.module($APP.name).controller('EditCtrl', [
             });
             confirmPopup.then(function (res) {
                 if (res) {
-                    FormInstanceService.update($rootScope.formId, $scope.formData).then(function (data) {
-                        if (data) {
-                            $rootScope.formId = data;
-                            var list = ConvertersService.photoList($scope.imgURI, $scope.formData.id, $scope.formData.project_id);
-                            if (list.length !== 0) {
-                                ImageService.create(list).then(function (x) {
-                                    $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
+                    $timeout(function () {
+                        var formUp = $ionicPopup.alert({
+                            title: "Submitting",
+                            template: "<center><ion-spinner icon='android'></ion-spinner></center>",
+                            content: "",
+                            buttons: []
+                        });
+                        FormInstanceService.update($rootScope.formId, $scope.formData).then(function (data) {
+                            if (data && data.status !== 0 && data.status !== 502 && data.status !== 403 && data.status !== 400) {
+                                $rootScope.formId = data;
+                                var list = ConvertersService.photoList($scope.imgURI, $scope.formData.id, $scope.formData.project_id);
+                                if (list.length !== 0) {
+                                    ImageService.create(list).then(function (x) {
+                                        $timeout(function () {
+                                            formUp.close();
+                                            $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
+                                        });
+                                    });
+                                }
+                            }
+                            else {
+                                $timeout(function () {
+                                    formUp.close();
                                 });
                             }
-
-                        }
+                        });
                     });
                 }
             });
@@ -175,18 +190,34 @@ angular.module($APP.name).controller('EditCtrl', [
             });
             confirmPopup.then(function (res) {
                 if (res) {
-                    FormInstanceService.save_as($scope.formData).then(function (data) {
-                        if (data) {
-                            $rootScope.formId = data.id;
-                            FormInstanceService.get($rootScope.formId).then(function (data) {
-                                var list = ConvertersService.photoList($scope.imgURI, $scope.formData.id, $scope.formData.project_id);
-                                if (list.length !== 0) {
-                                    ImageService.create(list).then(function (x) {
-                                        $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
-                                    });
-                                }
-                            });
-                        }
+                    $timeout(function () {
+                        var formUp = $ionicPopup.alert({
+                            title: "Submitting",
+                            template: "<center><ion-spinner icon='android'></ion-spinner></center>",
+                            content: "",
+                            buttons: []
+                        });
+                        FormInstanceService.save_as($scope.formData).then(function (data) {
+                            if (data && data.status !== 0 && data.status !== 502 && data.status !== 403 && data.status !== 400) {
+                                $rootScope.formId = data.id;
+                                FormInstanceService.get($rootScope.formId).then(function (data) {
+                                    var list = ConvertersService.photoList($scope.imgURI, $scope.formData.id, $scope.formData.project_id);
+                                    if (list.length !== 0) {
+                                        ImageService.create(list).then(function (x) {
+                                            $timeout(function () {
+                                                formUp.close();
+                                                $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
+                                            });
+                                        });
+                                    }
+                                });
+                            }
+                            else {
+                                $timeout(function () {
+                                    formUp.close();
+                                });
+                            }
+                        });
                     });
                 }
             });
