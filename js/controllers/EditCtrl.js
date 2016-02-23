@@ -12,8 +12,12 @@ angular.module($APP.name).controller('EditCtrl', [
     '$cordovaCamera',
     'ConvertersService',
     'ImageService',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, $ionicSideMenuDelegate, $ionicScrollDelegate, $ionicPopup, $ionicModal, $cordovaCamera, ConvertersService, ImageService) {
-        $ionicSideMenuDelegate.canDragContent(false);
+    '$ionicHistory',
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, $ionicSideMenuDelegate, $ionicScrollDelegate, $ionicPopup, $ionicModal, $cordovaCamera, ConvertersService, ImageService, $ionicHistory) {
+        $scope.$on('$ionicView.enter', function () {
+            $ionicHistory.clearHistory();
+            $ionicSideMenuDelegate.canDragContent(false);
+        });
         $scope.formData = angular.copy($rootScope.rootForm);
         $scope.imgURI = [
             {

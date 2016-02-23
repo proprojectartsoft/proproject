@@ -7,9 +7,15 @@ angular.module($APP.name).controller('RegisterCtrl', [
     '$location',
     'FormInstanceService',
     '$ionicSideMenuDelegate',
-    function ($scope, $rootScope, $stateParams, RegisterService, $stateParams, $location, FormInstanceService, $ionicSideMenuDelegate) {
+    '$ionicHistory',
+    function ($scope, $rootScope, $stateParams, RegisterService, $stateParams, $location, FormInstanceService, $ionicSideMenuDelegate, $ionicHistory) {
         $rootScope.categoryId = $stateParams.categoryId;
-        $ionicSideMenuDelegate.canDragContent(false);
+        
+        $scope.$on('$ionicView.enter', function () {
+            $ionicHistory.clearHistory();
+            $ionicSideMenuDelegate.canDragContent(false);
+        });
+        
         $rootScope.slideHeader = false;
         $rootScope.slideHeaderPrevious = 0;
         $rootScope.slideHeaderHelper = false;

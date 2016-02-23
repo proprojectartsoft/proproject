@@ -9,8 +9,14 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
     'AuthService',
     '$ionicPopup',
     '$ionicSideMenuDelegate',
-    function ($scope, $state, FormInstanceService, CacheFactory, $rootScope, $location, $stateParams, AuthService, $ionicPopup, $ionicSideMenuDelegate) {
-        $ionicSideMenuDelegate.canDragContent(false);
+    '$ionicHistory',
+    function ($scope, $state, FormInstanceService, CacheFactory, $rootScope, $location, $stateParams, AuthService, $ionicPopup, $ionicSideMenuDelegate, $ionicHistory) {
+        
+        $scope.$on('$ionicView.enter', function () {
+            $ionicHistory.clearHistory();
+            $ionicSideMenuDelegate.canDragContent(false);
+        });
+        
         $scope.isLoaded = false;
         $rootScope.slideHeader = false;
         $rootScope.slideHeaderPrevious = 0;

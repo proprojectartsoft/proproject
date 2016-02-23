@@ -15,8 +15,12 @@ angular.module($APP.name).controller('FormCtrl', [
     '$state',
     'SyncService',
     '$ionicSideMenuDelegate',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ConvertersService, $ionicModal, $cordovaCamera, $state, SyncService, $ionicSideMenuDelegate) {
-
+    '$ionicHistory',
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ConvertersService, $ionicModal, $cordovaCamera, $state, SyncService, $ionicSideMenuDelegate, $ionicHistory) {
+        $scope.$on('$ionicView.enter', function () {
+            $ionicHistory.clearHistory();
+            $ionicSideMenuDelegate.canDragContent(false);
+        });
         $ionicSideMenuDelegate.canDragContent(false);
         $scope.itemLoading = false;
         var designsCache = CacheFactory.get('designsCache');

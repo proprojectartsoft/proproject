@@ -5,8 +5,13 @@ angular.module($APP.name).controller('FormInstanceCtrl', [
     '$location',
     'FormInstanceService',
     '$ionicSideMenuDelegate',
-    function ($scope, $rootScope, $stateParams, $location, FormInstanceService, $ionicSideMenuDelegate) {
-        $ionicSideMenuDelegate.canDragContent(false);
+    '$ionicHistory',
+    function ($scope, $rootScope, $stateParams, $location, FormInstanceService, $ionicSideMenuDelegate, $ionicHistory) {
+        $scope.$on('$ionicView.enter', function () {
+            $ionicHistory.clearHistory();
+            $ionicSideMenuDelegate.canDragContent(false);
+        });
+        
         $scope.isLoaded = false;
         $scope.hasData = false;
         $scope.formData = $rootScope.rootForm;

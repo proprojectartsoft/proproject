@@ -7,12 +7,15 @@ angular.module($APP.name).controller('FormsCtrl', [
     'AuthService',
     '$state',
     '$ionicPopup',
-    'SyncService',
+    '$ionicHistory',
     '$anchorScroll',
     '$ionicSideMenuDelegate',
-    function ($scope, $stateParams, FormDesignService, $rootScope, CacheFactory, AuthService, $state, $ionicPopup, SyncService, $anchorScroll, $ionicSideMenuDelegate) {
+    function ($scope, $stateParams, FormDesignService, $rootScope, CacheFactory, AuthService, $state, $ionicPopup, $ionicHistory, $anchorScroll, $ionicSideMenuDelegate) {
 
-        $ionicSideMenuDelegate.canDragContent(false);
+        $scope.$on('$ionicView.enter', function () {
+            $ionicHistory.clearHistory();
+            $ionicSideMenuDelegate.canDragContent(false);
+        });
 
         $scope.isLoaded = false;
         $scope.hasData = '';

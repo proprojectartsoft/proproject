@@ -9,9 +9,15 @@ angular.module($APP.name).controller('RegistersCtrl', [
     '$state',
     '$ionicSideMenuDelegate',
     '$timeout',
-    function ($scope, $rootScope, $stateParams, RegisterService, CacheFactory, AuthService, $ionicPopup, $state, $ionicSideMenuDelegate, $timeout) {
+    '$ionicHistory',
+    function ($scope, $rootScope, $stateParams, RegisterService, CacheFactory, AuthService, $ionicPopup, $state, $ionicSideMenuDelegate, $timeout, $ionicHistory) {
         $scope.isLoaded = false;
-        $ionicSideMenuDelegate.canDragContent(false);
+        
+        $scope.$on('$ionicView.enter', function () {
+            $ionicHistory.clearHistory();
+            $ionicSideMenuDelegate.canDragContent(false);
+        });
+        
         $scope.hasData = '';
         $rootScope.slideHeader = false;
         $rootScope.slideHeaderPrevious = 0;

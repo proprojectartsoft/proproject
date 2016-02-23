@@ -5,8 +5,12 @@ angular.module($APP.name).controller('CategoriesCtrl', [
     '$scope',
     '$ionicPopup',
     '$ionicSideMenuDelegate',
-    function (AuthService, CacheFactory, $state, $scope, $ionicPopup, $ionicSideMenuDelegate) {
-        $ionicSideMenuDelegate.canDragContent(false);
+    '$ionicHistory',
+    function (AuthService, CacheFactory, $state, $scope, $ionicPopup, $ionicSideMenuDelegate, $ionicHistory) {
+        $scope.$on('$ionicView.enter', function () {
+            $ionicHistory.clearHistory();
+            $ionicSideMenuDelegate.canDragContent(false);
+        });
         AuthService.me().then(function (user) {
             if (user && user.active === false) {
                 var alertPopup = $ionicPopup.alert({
