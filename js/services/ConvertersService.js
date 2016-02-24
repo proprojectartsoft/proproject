@@ -15,7 +15,7 @@ angular.module($APP.name).service('ConvertersService', [
                 }
             }
             if (field.type === 'date') {
-                if (field.value && field.value !== 'NaN-NaN-NaN') {
+                if (field.value && field.value != 'Invalid Date') {
                     var x = new Date(field.value);
                     var dd = x.getDate();
                     var MM = x.getMonth() + 1;
@@ -33,7 +33,7 @@ angular.module($APP.name).service('ConvertersService', [
                     field_values = [{"id": 0, "name": '', "value": '', "position": field.position, "field_instance_id": 0}];
                 }
             }
-            if (field.type === 'time') {
+            if (field.type === 'time' && field.value != 'Invalid Date') {
                 if (field.value) {
                     var x = new Date(field.value);
                     var hh = x.getHours();
@@ -109,7 +109,7 @@ angular.module($APP.name).service('ConvertersService', [
         var instanceToInstanceValuesFormat = function (field) {
             var field_values, field_helper;
             if (field.type === 'date') {
-                if (field.field_values[0].value && field.field_values[0].value !== 'NaN-NaN-NaN') {
+                if (field.field_values[0].value && field.field_values[0].value != 'Invalid Date') {
                     var dd = field.field_values[0].value.getDate();
                     var MM = field.field_values[0].value.getMonth() + 1;
                     var yyyy = field.field_values[0].value.getFullYear();
@@ -129,7 +129,7 @@ angular.module($APP.name).service('ConvertersService', [
                 }
                 field_values = field.field_values;
             }
-            if (field.type === 'time') {
+            if (field.type === 'time' && field.field_values[0].value != 'Invalid Date') {
                 if (field.field_values[0].value) {
                     var hh = field.field_values[0].value.getHours();
                     var mm = field.field_values[0].value.getMinutes();
