@@ -179,12 +179,14 @@ angular.module($APP.name).controller('EditCtrl', [
                                 else {
                                     $timeout(function () {
                                         formUp.close();
+                                        $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
                                     });
                                 }
                             }
                             else {
                                 $timeout(function () {
                                     formUp.close();
+                                    $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
                                 });
                             }
                         });
@@ -222,6 +224,7 @@ angular.module($APP.name).controller('EditCtrl', [
                                     else {
                                         $timeout(function () {
                                             formUp.close();
+                                            $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
                                         });
                                     }
                                 });
@@ -229,6 +232,7 @@ angular.module($APP.name).controller('EditCtrl', [
                             else {
                                 $timeout(function () {
                                     formUp.close();
+                                    $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
                                 });
                             }
                         });

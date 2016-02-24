@@ -15,7 +15,7 @@ angular.module($APP.name).service('ConvertersService', [
                 }
             }
             if (field.type === 'date') {
-                if (field.value) {
+                if (field.value && field.value !== 'NaN-NaN-NaN') {
                     var x = new Date(field.value);
                     var dd = x.getDate();
                     var MM = x.getMonth() + 1;
@@ -30,7 +30,7 @@ angular.module($APP.name).service('ConvertersService', [
                     field_values = [{"id": 0, "name": x, "value": x, "position": field.position, "field_instance_id": 0}];
                 }
                 else {
-                    field_values = [{"id": 0, "name": null, "value": '', "position": field.position, "field_instance_id": 0}];
+                    field_values = [{"id": 0, "name": '', "value": '', "position": field.position, "field_instance_id": 0}];
                 }
             }
             if (field.type === 'time') {
@@ -109,7 +109,7 @@ angular.module($APP.name).service('ConvertersService', [
         var instanceToInstanceValuesFormat = function (field) {
             var field_values, field_helper;
             if (field.type === 'date') {
-                if (field.field_values[0].value) {
+                if (field.field_values[0].value && field.field_values[0].value !== 'NaN-NaN-NaN') {
                     var dd = field.field_values[0].value.getDate();
                     var MM = field.field_values[0].value.getMonth() + 1;
                     var yyyy = field.field_values[0].value.getFullYear();
@@ -124,8 +124,8 @@ angular.module($APP.name).service('ConvertersService', [
                     field.field_values[0].value = x;
                 }
                 else {
-                    field.field_values[0].name = '0';
-                    field.field_values[0].value = '0';
+                    field.field_values[0].name = '';
+                    field.field_values[0].value = '';
                 }
                 field_values = field.field_values;
             }
@@ -144,8 +144,8 @@ angular.module($APP.name).service('ConvertersService', [
                     field.field_values[0].value = x;
                 }
                 else {
-                    field.field_values[0].name = '0';
-                    field.field_values[0].value = '0';
+                    field.field_values[0].name = '';
+                    field.field_values[0].value = '';
                 }
                 field_values = field.field_values;
             }
