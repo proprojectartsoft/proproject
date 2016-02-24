@@ -176,6 +176,11 @@ angular.module($APP.name).controller('EditCtrl', [
                                         });
                                     });
                                 }
+                                else {
+                                    $timeout(function () {
+                                        formUp.close();
+                                    });
+                                }
                             }
                             else {
                                 $timeout(function () {
@@ -212,6 +217,11 @@ angular.module($APP.name).controller('EditCtrl', [
                                                 formUp.close();
                                                 $location.path("/app/view/" + $rootScope.projectId + "/form/" + $rootScope.formId);
                                             });
+                                        });
+                                    }
+                                    else {
+                                        $timeout(function () {
+                                            formUp.close();
                                         });
                                     }
                                 });
