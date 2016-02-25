@@ -8,8 +8,7 @@
                 <div class="item">
                     <div class="img-box" style="width: 200px; height: 200px">
                         <img ng-show="item.base64String !== ''" data-ng-src ="data:image/png;base64,{{item.base64String}}">
-                        <img ng-show="item.base64String === '' && !itemLoading" ng-src="img/ic.png">
-                        <img ng-show="item.base64String === '' && itemLoading" ng-src="img/loading.gif">
+                        <img ng-show="item.base64String === ''" ng-src="img/ic.png">
                     </div>
                 </div>
                 <label class="item">

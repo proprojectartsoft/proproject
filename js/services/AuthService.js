@@ -304,6 +304,8 @@ angular.module($APP.name).factory('AuthService', [
             },
             logout: function () {
                 CacheFactory.destroy('reloadCache');
+                CacheFactory.destroy('designsCache');
+                $rootScope.navTitle = '';
                 return $http.post($APP.server + '/pub/logout', {}).success(function () {
 
                     changeUser({

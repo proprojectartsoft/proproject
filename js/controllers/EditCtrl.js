@@ -72,7 +72,6 @@ angular.module($APP.name).controller('EditCtrl', [
             $scope.picModal.remove();
         };
         $scope.takePicture = function (id) {
-            $scope.itemLoading = true;
             var options = {
                 quality: 60,
                 destinationType: Camera.DestinationType.DATA_URL,
@@ -85,9 +84,7 @@ angular.module($APP.name).controller('EditCtrl', [
             };
 
             $cordovaCamera.getPicture(options).then(function (imageData) {
-                $scope.itemLoading = true;
                 $timeout(function () {
-                    $scope.itemLoading = false;
                     $scope.item.base64String = imageData;
                 });
             }, function (err) {
@@ -106,9 +103,7 @@ angular.module($APP.name).controller('EditCtrl', [
             };
 
             $cordovaCamera.getPicture(options).then(function (imageUri) {
-                $scope.itemLoading = true;
                 $timeout(function () {
-                    $scope.itemLoading = false;
                     $scope.item.base64String = imageUri;
                 });
 

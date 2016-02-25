@@ -22,7 +22,7 @@ angular.module($APP.name).controller('FormCtrl', [
             $ionicSideMenuDelegate.canDragContent(false);
         });
         $ionicSideMenuDelegate.canDragContent(false);
-        $scope.itemLoading = false;
+
         var designsCache = CacheFactory.get('designsCache');
         if (!designsCache || designsCache.length === 0) {
             designsCache = CacheFactory('designsCache');
@@ -260,7 +260,6 @@ angular.module($APP.name).controller('FormCtrl', [
         });
 
         $scope.takePicture = function (id) {
-            $scope.itemLoading = true;
             var options = {
                 quality: 60,
                 destinationType: Camera.DestinationType.DATA_URL,
@@ -273,9 +272,7 @@ angular.module($APP.name).controller('FormCtrl', [
             };
 
             $cordovaCamera.getPicture(options).then(function (imageData) {
-                $scope.itemLoading = true;
                 $timeout(function () {
-                    $scope.itemLoading = false;
                     $scope.item.base64String = imageData;
                 });
             }, function (err) {
@@ -305,9 +302,7 @@ angular.module($APP.name).controller('FormCtrl', [
             };
 
             $cordovaCamera.getPicture(options).then(function (imageUri) {
-                $scope.itemLoading = true;
                 $timeout(function () {
-                    $scope.itemLoading = false;
                     $scope.item.base64String = imageUri;
                 });
 

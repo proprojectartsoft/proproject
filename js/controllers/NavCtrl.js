@@ -12,6 +12,38 @@ angular.module($APP.name).controller('NavCtrl', [
         $scope.toggleLeft = function () {
             $ionicSideMenuDelegate.toggleLeft();
         };
+
+        var projects = CacheFactory.get('projects');
+        if (!projects || projects.length === 0) {
+            projects = CacheFactory('projects');
+            projects.setOptions({
+                storageMode: 'localStorage'
+            });
+        }
+        var id = projects.get('projectId');
+        var name = projects.get('navTitle');
+        var sw = false;
+        if (id && name) {
+            angular.forEach($rootScope.projects, function (proj) {
+                if (proj.id === id && proj.name === name) {
+                    sw = true;
+                }
+            });
+            if (sw === true) {
+                $rootScope.navTitle = name;
+                $rootScope.projectId = id;
+            }
+            else {
+                $rootScope.navTitle = $rootScope.projects[0].name;
+                $rootScope.projectId = $rootScope.projects[0].id;
+                projects.put('navTitle', $rootScope.projects[0].name);
+                projects.put('projectId', $rootScope.projects[0].id);
+            }
+
+        }
+
+
+
         var settingsCache = CacheFactory.get('settings');
         if (!settingsCache) {
             settingsCache = CacheFactory('settings');
@@ -65,6 +97,14 @@ angular.module($APP.name).controller('NavCtrl', [
             var settingsCache = CacheFactory.get('settings');
             if (settingsCache) {
                 settingsCache.destroy();
+            }
+            var projects = CacheFactory.get('projects');
+            if (projects) {
+                projects.destroy();
+            }
+            var photos = CacheFactory.get('photos');
+            if (photos) {
+                photos.destroy();
             }
 
             AuthService.logout(function () {
@@ -126,6 +166,8 @@ angular.module($APP.name).controller('NavCtrl', [
         $scope.updateTitle = function (project) {
             $rootScope.navTitle = project.name;
             $rootScope.projectId = project.id;
+            projects.put('navTitle', project.name);
+            projects.put('projectId', project.id);
         };
 
         $scope.sync = function () {
