@@ -11,7 +11,7 @@ angular.module($APP.name).factory('SyncService', [
     function ($q, CacheFactory, $ionicPopup, FormInstanceService, FormDesignService, ProjectService, $rootScope, $http, $timeout) {
 
         return {
-            sync: function () {                
+            sync: function () {
                 var requests = [];
                 var upRequests = [];
                 var projectsCache = CacheFactory.get('projectsCache');
@@ -137,15 +137,21 @@ angular.module($APP.name).factory('SyncService', [
                                             sw = true;
                                         }
                                     });
-                                    if (!sw) {
-                                        $rootScope.projectId = result[0][0].id;
-                                        $rootScope.navTitle = result[0][0].name;
+                                    if (result[0].length > 0) {
+                                        if (!sw) {
+                                            $rootScope.projectId = result[0][0].id;
+                                            $rootScope.navTitle = result[0][0].name;
+                                        }
+                                        for (var i = 0; i < result[0].length; i++) {
+                                            projectsCache.put(result[0][i].id, result[0][i]);
+                                        }
+                                        for (var i = 0; i < result[1].length; i++) {
+                                            designsCache.put(result[1][i].id, result[1][i]);
+                                        }
                                     }
-                                    for (var i = 0; i < result[0].length; i++) {
-                                        projectsCache.put(result[0][i].id, result[0][i]);
-                                    }
-                                    for (var i = 0; i < result[1].length; i++) {
-                                        designsCache.put(result[1][i].id, result[1][i]);
+                                    else {
+                                        $rootScope.projectId = 0;
+                                        $rootScope.navTitle = 'No projects';
                                     }
                                 }
                                 currentVersion = version.data;
