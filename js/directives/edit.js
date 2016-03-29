@@ -33,7 +33,7 @@ angular.module($APP.name).directive('edit', [
 //                        $scope.modal.hash = $scope.hash;
 //                        FieldUpdateService.addProduct($scope.modalHelper);
                         $rootScope.$broadcast('updateScopeFromDirective');
-                        $scope.modal.show();                        
+                        $scope.modal.show();
                     });
                 };
 
@@ -71,19 +71,27 @@ angular.module($APP.name).directive('edit', [
                         var aux = '';
                         if ($scope.data.field_values[0].value !== 0) {
                             aux = $scope.data.field_values[0].value.substr(0, 4);
-                            var fix = $scope.data.field_values[0].value.substr(3, 2) + '.' + $scope.data.field_values[0].value.substr(0, 2) + '.' + $scope.data.field_values[0].value.substr(6, 4);
-                            var fix2 = $scope.data.field_values[0].value.substr(3, 2) + ' ' + $scope.data.field_values[0].value.substr(0, 2) + ' ' + $scope.data.field_values[0].value.substr(6, 4);
+                            var array = [];                            
+                            array.push($scope.data.field_values[0].value.substr(3, 2));
+                            array.push($scope.data.field_values[0].value.substr(0, 2));
+                            array.push($scope.data.field_values[0].value.substr(6, 4));
+//                            var fix = $scope.data.field_values[0].value.substr(3, 2) + '.' + $scope.data.field_values[0].value.substr(0, 2) + '.' + $scope.data.field_values[0].value.substr(6, 4);
+//                            var fix2 = $scope.data.field_values[0].value.substr(3, 2) + ' ' + $scope.data.field_values[0].value.substr(0, 2) + ' ' + $scope.data.field_values[0].value.substr(6, 4);
                         }
-                        if ($scope.data.field_values[0].value !== '0' && $scope.data.field_values[0].value !== 0 && aux !== '1969') {
-                            fix = new Date(fix);
-                            //DON'T CHANGE                           
-                            if (fix == 'Invalid data') {
-                                fix = new Date(fix2);
-                            }
-                            $scope.data.field_values[0].value = fix;
+                        if ($scope.data.field_values[0].value !== '0' && $scope.data.field_values[0].value !== 0 && aux !== '1969' && $scope.data.field_values[0].value !== '') {
+                            console.log($scope.data.field_values[0].value)
+                            console.log(array[2], array[0], array[1])
+                            var xfix = new Date(array[2], array[0], array[1]);
+//                            //DON'T CHANGE                           
+//                            if (xfix == 'Invalid data') {
+//                                xfix = new Date(fix2);
+//                            }
+                            $scope.data.field_values[0].value = xfix;
+//                            console.log(array)
+//                            console.log($scope.data.field_values[0].value)
                         }
                         else {
-                            $scope.data.field_values[0].value = new Date(null);
+                            $scope.data.field_values[0].value = '';
                         }
                     }
 
@@ -92,7 +100,8 @@ angular.module($APP.name).directive('edit', [
                 if ($scope.data.type === "time") {
                     if ($scope.data.field_values[0] && $scope.data.field_values[0].value !== '0' && $scope.data.field_values[0].value !== 0 && $scope.data.field_values[0].value !== "") {
 //                        $scope.data.field_values[0].value = new Date("01 " + $scope.data.field_values[0].value)
-                        $scope.data.field_values[0].value = new Date("Mon, 25 Dec 1995 " + $scope.data.field_values[0].value)
+                        $scope.data.field_values[0].value = new Date("Mon, 25 Dec 1995 " + $scope.data.field_values[0].value);
+                        console.log($scope.data.field_values[0].value)
                     }
                 }
                 if ($scope.data.type === "radio" && $scope.data.field_values.length > 0) {
