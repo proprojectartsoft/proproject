@@ -28,7 +28,6 @@ angular.module($APP.name).controller('LoginCtrl', [
             });
         }
         var aux = reloadCache.get('reload');
-        console.log('aux')
         if (aux) {
             AuthService.isLoggedInCache();
         }
@@ -41,14 +40,14 @@ angular.module($APP.name).controller('LoginCtrl', [
 
 
         $scope.login = function () {
-            var aux = AuthService.login({
+            AuthService.login({
                 username: $scope.user.username,
                 password: $scope.user.password
             }).then(function (response) {
                 if (response) {
                     var rememberCache = CacheFactory.get('rememberCache');
                     if (rememberCache) {
-                        if ($scope.user.rememberMe) {
+                        if ($scope.user.rememberMe === true) {
                             rememberCache.put('remember', {'username': $scope.user.username, 'password': $scope.user.password});
                         } else {
                             rememberCache.destroy();

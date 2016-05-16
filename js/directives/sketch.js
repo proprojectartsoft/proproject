@@ -30,7 +30,6 @@ angular.module($APP.name).directive('scrollWatch', function ($rootScope, $window
             }
             $rootScope.slideHeaderPrevious = e.detail.scrollTop;
             $rootScope.$apply();
-
         });
         scope.$on('$destroy', function () {
             $rootScope.slideHeaderHelper = false;
