@@ -96,6 +96,10 @@ angular.module($APP.name).controller('FormsCtrl', [
                 $rootScope.formDesigns.push(aux);
             }
         });
+        $scope.isLoaded = true;
+        if ($rootScope.formDesigns.length === 0) {
+            $scope.hasData = 'no data';
+        }
 
 
         $scope.categoryName = $rootScope.categories[$stateParams.categoryId - 1].name;

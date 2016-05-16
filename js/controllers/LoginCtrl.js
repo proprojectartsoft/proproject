@@ -3,10 +3,10 @@ angular.module($APP.name).controller('LoginCtrl', [
     '$state',
     'AuthService',
     'CacheFactory',
-    'SyncService',
     '$rootScope',
     '$timeout',
-    function ($scope, $state, AuthService, CacheFactory, SyncService, $rootScope, $timeout) {
+    'SyncService',
+    function ($scope, $state, AuthService, CacheFactory, $rootScope, $timeout, SyncService) {
         $scope.user = [];
         $scope.user.username = "";
         $scope.user.password = "";
@@ -20,17 +20,7 @@ angular.module($APP.name).controller('LoginCtrl', [
                 storageMode: 'localStorage'
             });
         }
-        var reloadCache = CacheFactory.get('reloadCache');
-        if (!reloadCache) {
-            reloadCache = CacheFactory('reloadCache');
-            reloadCache.setOptions({
-                storageMode: 'localStorage'
-            });
-        }
-        var aux = reloadCache.get('reload');
-        if (aux) {
-            AuthService.isLoggedInCache();
-        }
+        
         $scope.hasRemember = rememberCache.get('remember');
         if ($scope.hasRemember) {
             $scope.user.username = $scope.hasRemember.username;
@@ -47,7 +37,7 @@ angular.module($APP.name).controller('LoginCtrl', [
                 if (response) {
                     var rememberCache = CacheFactory.get('rememberCache');
                     if (rememberCache) {
-                        if ($scope.user.rememberMe === true) {
+                        if ($scope.user.rememberMe) {
                             rememberCache.put('remember', {'username': $scope.user.username, 'password': $scope.user.password});
                         } else {
                             rememberCache.destroy();
@@ -64,7 +54,7 @@ angular.module($APP.name).controller('LoginCtrl', [
                     $timeout(function () {
                         SyncService.sync();
                         $state.go('app.categories', {'projectId': $rootScope.projectId});
-                    });                    
+                    });
                 }
             });
         };

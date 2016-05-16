@@ -1,6 +1,15 @@
 <ion-modal-view>
-    <ion-header-bar>
-        <h1 class="title">New photo</h1>
+    <ion-header-bar class="row-no-padding img-sub-header-bar">
+        <div class="item item-button-left subHeader-form-bar" >
+            <!--<a ng-click="back()"-->
+               <!--href="#/app/category/{{projectId}}/{{formData.category_id}}">-->
+                <!--<div class="back-arrow ion-ios-arrow-left"></div>-->
+                <!--<div class="header-prj-text">{{formData.category}}</div>-->
+            <!--</a>-->
+            <div class="save-img-btn" ng-click="doShow()">
+                Save
+            </div>
+        </div>
     </ion-header-bar>
     <ion-content class="has-tabs">
         <form>
@@ -11,16 +20,16 @@
                         <img ng-show="item.base64String === ''" ng-src="img/ic.png">
                     </div>
                 </div>
-                <label class="item">
+                <label class="item img-title">
                     <span class="input-label">Title</span>
-                    <input style="width: 100%" type="text" ng-model="item.title">
+                    <input class="" style="width: 100%" type="text" ng-model="item.title" placeholder="insert here">
                 </label>
-                <label class="item">
+                <label class="item img-tag">
                     <span class="input-label">Tags</span>
                     <input style="width: 100%" type="text" ng-model="item.tags">
                 </label>
-                <label class="item ">
-                    <span class="input-label">Comments</span>
+                <label class="item img-description">
+                    <span class="input-label">Description</span>
                     <textarea style="width: 100%; height:100px" type="text" ng-model="item.comment"></textarea>
                 </label>
             </div>
@@ -32,9 +41,6 @@
         </a>
         <a class="tab-item">
             <i class="icon ion-images" ng-click="addPicture()"></i>
-        </a>
-        <a class="tab-item" ng-click="doShow()">
-            <i class="icon ion-android-done"></i>
         </a>
     </div>
 </ion-modal-view>

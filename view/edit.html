@@ -1,55 +1,93 @@
 <ion-view title="Form" id="form" cache-view="false">
-    <ion-content>
-        <div class="content" >
-            <div  class="list" >                       
-                <a class="item item-button-left test-item" ng-click="back()" href="#/app/view/{{projectId}}/{{formData.category_id}}">
-                    Form: <span class="all-header-details">{{formData.name}}</span>
-                    <button class="button button-clear  button-calm" >
-                        <i class="icon ion-chevron-left"></i>
-                    </button>
+    <ion-content class="blue-bgd">
+        <div class="content">
+            <div class="list">
+                <a class="item item-button-left subHeader-form-bar" ng-click="back()"
+                   href="#/app/view/{{projectId}}/{{formData.category_id}}">
+                    <div class="back-arrow ion-ios-arrow-left"></div>
+                    <div class="header-prj-text">{{formData.category}}</div>
+
                 </a>
-                <form>
-                    <div ng-repeat="fieldset in formData.field_group_instances track by $index" fs data="fieldset">
-                        <a ng-click="repeatGroup(fieldset)" class="help" ng-show="fieldset.repeatable">                                                            
-                            <span class="icon ion-plus all-chevron"></span>                                                            
+                <div class="formTitle">
+                    <div class="header-prj-text"> Form: {{formData.name}}</div>
+                    <div class="blue-label">{{formData.id}}</div>
+                </div>
+                <form class="form-container-bgd">
+                    <div ng-repeat="fieldset in formData.field_group_instances track by $index" fs
+                         data="fieldset" style="position: relative; margin-bottom:5px">
+                        <a ng-click="repeatGroup(fieldset)" class="help"
+                           ng-show="fieldset.repeatable">
+                            <span class="icon ion-plus all-chevron"></span>
                         </a>
-                        <div id="{{formData.id}}:{{$index}}" ng-click="toggleGroup(fieldset, formData.id + ':' + $index)" ng-class="{active: isGroupShown(group)}" class="item-stable item fs all-field-header" style="width:100%">
-                            <span style="margin-left:23px">{{fieldset.name}}</span>                                                     
-                            <span style="float:right;width:50px;text-align:right" class="icon ion-chevron-down all-chevron"></span>                                                            
-                            <span class="all-field-description" style="margin-left:23px">{{fieldset.guidance}}</span>
+
+                        <div id="{{formData.id}}:{{$index}}"
+                             ng-click="toggleGroup(fieldset, formData.id + ':' + $index)"
+                             ng-class="{active: isGroupShown(group),isOpen:isGroupShown(fieldset)}"
+                             class="item-stable item fs all-field-header" style="width:100%">
+                            <span class="fieldSet-name">{{fieldset.name}}</span>
+                            <div class="ion-ios-arrow-down choose-arrow"></div>
+                            <span class="all-field-description">{{fieldset.guidance}}</span>
                         </div>
-                        <div ng-repeat="field in fieldset.field_instances" style="position: relative" ng-show="isGroupShown(fieldset)">
-                            <a class="all-field-repeat" ng-click="repeatField(fieldset, field)" ng-show="field.repeatable"><span class="icon ion-plus"  style="color:#fff"></span> </a>
+                        <div ng-class="{'blue-dropArrow':shownGroup}"></div>
+                        <div class="formContent"
+                             ng-repeat="field in fieldset.field_instances"
+                             style="position: relative" ng-show="isGroupShown(fieldset)">
+                            <a class="all-field-repeat" ng-click="repeatField(fieldset, field)"
+                               ng-show="field.repeatable"><span class="icon ion-plus"
+                                                             style="color:#fff"></span> </a>
                             <edit data="field"></edit>
                         </div>
 
-                    </div>                   
+                    </div>
                 </form>
-                <div id="image-header" ng-click="toggleGroup(fieldset, 'image-header')" ng-class="{active: isGroupShown(group)}" class="item-stable item fs all-field-header" style="width:100%; background-color: #333 !important">                            
-                    <span style="margin-left:23px">Attach pictures</span>
-                    <span  style="float:right;width:50px;text-align:right; color:#fff !important; font-size:23px; margin-right: 5px" class="icon ion-android-attach all-chevron"></span>                                                            
+                <div class="form-container-bgd">
+                    <div id="image-header" class="item-stable item fs all-field-header">
+                        <span class="add-pic-text">Add pictures</span>
+                        <img class="add-pic-icon mr-0" src="img/new/cameraRoll.svg">
+                        <img class="add-pic-icon" src="img/new/takePicture.svg">
+                        <img class="add-pic-icon" src="img/new/gallery.svg">
+                    </div>
                 </div>
-                <ion-item ng-show="isGroupShown(fieldset)" >
-                    <div class="row" ng-repeat="picrow in pictures">
-                        <div class="col" ng-repeat="pic in picrow">
-                            <div class="img-box-container">
-                                <div class="img-box" ng-click="test(pic)">
-                                    <button ng-click="delSpot(pic.id)">x</button>
-                                    <img ng-show="pic.base64String !== ''" data-ng-src ="data:image/png;base64,{{pic.base64String}}">
-                                    <img ng-show="pic.base64String === ''" ng-src="img/ic.png">
+                <!--                <div class="form-container-bgd">
+                                    <div id="image-header" ng-click="toggleGroup(fieldset, 'image-header')"
+                                         ng-class="{active: isGroupShown(group)}"
+                                         class="item-stable item fs all-field-header">
+                                        <span class="add-pic-text">Add pictures</span>
+                                        <img class="add-pic-icon" src="img/new/cameraRoll.svg">
+                                        <img class="add-pic-icon" src="img/new/takePicture.svg">
+                                        <img class="add-pic-icon" src="img/new/gallery.svg">
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="width: calc(100% + 10px); margin-left:-5px">
-                        <button ng-show="imgURI.length !== 9" class="button button-block button-dark" ng-click="addSpot()"><i class="ion-plus"></i><i class="ion-image" style="font-size:19px; padding-left: 4px"></i></button>
-                    </div>
-                </ion-item>
+                                <ion-item ng-show="isGroupShown(fieldset)">
+                                    <div class="row" ng-repeat="picrow in pictures">
+                                        <div class="col" ng-repeat="pic in picrow">
+                                            <div class="img-box-container">
+                                                <div class="img-box" ng-click="test(pic)">
+                                                    <button ng-click="delSpot(pic.id)">x</button>
+                                                    <img ng-show="pic.base64String !== ''"
+                                                         data-ng-src="data:image/png;base64,{{pic.base64String}}">
+                                                    <img ng-show="pic.base64String === ''" ng-src="img/ic.png">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="width: calc(100% + 10px); margin-left:-5px">
+                                        <button ng-show="imgURI.length !== 9"
+                                                class="button button-block button-dark" ng-click="addSpot()"><i
+                                                class="ion-plus"></i><i class="ion-image"
+                                                style="font-size:19px; padding-left: 4px"></i>
+                                        </button>
+                                    </div>
+                                </ion-item>-->
                 <div class="padding">
-                    <button type="submit" ng-click="submit(formData)" ng-disabled="" value="Save" class="button button-block button-calm">Submit</button>
+                    <button type="submit" ng-click="submit(formData)" ng-disabled="" value="Save"
+                            class="button button-block button-calm">Submit
+                    </button>
                 </div>
                 <div class="padding" style="margin-top:-20px">
-                    <button type="submit" ng-click="saveAsNew()" ng-disabled="" value="Save" class="button button-block button-calm">Save as new</button>
+                    <button type="submit" ng-click="saveAsNew()" ng-disabled="" value="Save"
+                            class="button button-block button-calm">Save as new
+                    </button>
                 </div>
             </div>
         </div>

@@ -1,26 +1,26 @@
 <ion-view title="Registers" class="all-view-bg" autoscroll='true' cache-view="false" ng-class="{'bar-hide': slideHeader, 'bar-helper':slideHeaderHelper}">
-    <ion-header-bar delegate-handle="small" class="bar-subheader item-button-left test-item" style=" overflow: hidden; white-space: nowrap; text-overflow: ellipsis;" ui-sref="app.categories({projectId:projectId})">
-        {{categoryName}} - registers
-        <button class="button button-clear  button-calm" >
-            <i class="icon ion-chevron-left all-chevron"></i>
-        </button>
+    <ion-header-bar class="bar-subheader item-button-left test-item" ui-sref="app.categories({projectId:projectId})">
+        <span class="back-arrow ion-ios-arrow-left"></span>
+        <span class="header-prj-text">{{categoryName}}  - Registers</span>
     </ion-header-bar>
     <ion-content scroll-watch>
         <div class="content" >
             <div  class="list all-header-tabs">                       
-                <div class="all-spinner" ng-show="hasData && isLoaded" style="margin-top:50%">
-                    <span class="all-ion-text" style="font-size: 15vw">{{hasData}}</span>
+                <div class="all-spinner" ng-if="hasData && isLoaded" style="margin-top:50%">
+                    <span class="all-ion-text" style="font-size: 15vw; color:#4A6780">{{hasData}}</span>
                 </div>
                 <ion-refresher on-refresh="refresh()" pulling-text="Pull to refresh..." refreshing-text="Refreshing!" spinner="android"></ion-refresher>
                 <div class="list all-itemlist">
-                    <label style ="display: none" class="item item-input">
+                    <label style="display: none" class="item item-input">
                         <i class="icon ion-search placeholder-icon"></i>
                         <input type="text" placeholder="Search">
                     </label>
-                    <a class="item" ng-repeat="reg in registers" ui-sref="app.register({projectId:projectId, code:reg.code, categoryId: categoryId})" style="display:table; border:none; width:100%; border-bottom:2px solid #AAA">
-                        <span class="reg form-item pp-whitespace" style="display: table-cell; width:30%;vertical-align: middle">{{reg.code}}</span>
-                        <span class="reg" style="display: table-cell;padding-left:5px;vertical-align: middle; width:60%"><span class="  pp-whitespace"> {{reg.name}}</span></span>
-                        <span class="badge badge-calm" style="vertical-align: middle">{{reg.completed}}</span>
+
+                    <a class="item" ng-repeat="reg in registers| orderBy:'-created_on'"
+                       ui-sref="app.register({projectId:projectId, code:reg.code, categoryId: categoryId})">
+                        <div class="form-name ng-binding">{{::reg.name}}</div>
+                        <div class="form-code ng-binding">{{::reg.code}}</div>
+                        <div class="badge badge-calm ng-binding">{{::reg.completed}}</div>
                     </a>
                 </div>
             </div> 
@@ -28,13 +28,13 @@
     </ion-content>
     <div class="tabs tabs-calm tabs-icon-only">
         <a class="tab-item" ui-sref="app.forms({projectId:projectId, categoryId:categoryId})">
-            <i class="icon ion-ios-compose-outline"></i>
+            <img src="img/new/all forms.svg">
+        </a>
+        <a class="tab-item" ui-sref="app.completed({projectId:projectId, categoryId:categoryId})" ui-sref-opts="{reload: true}">
+            <img src="img/new/completed forms.svg">
         </a>
         <a class="tab-item">
-            <i class="icon ion-ios-box"></i>
-        </a>
-        <a class="tab-item" ui-sref="app.completed({projectId:projectId, categoryId:categoryId})">
-            <i class="icon ion-ios-eye-outline"></i>
-        </a>
+            <img src="img/new/registers.svg">
+        </a>                 
     </div>
 </ion-view>

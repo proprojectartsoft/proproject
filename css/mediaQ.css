@@ -1,0 +1,23 @@
+@media all and (min-width: 480px) and (max-width: 769px) {
+    .login-form {
+        width: 60%!important;
+        float: right;
+        padding-top: 30px;
+    }
+
+    .login-container,
+    .keyboard-open .login-container {
+        padding-top: 250px;
+    }
+
+}
+@media all and (min-width: 320px){
+    .category-row .pp-icon {
+        padding: 10px;
+    }
+}
+@media all and (max-width: 320px){
+    .category-content-abs{
+        padding-top: 8%;
+    }
+}

@@ -1,53 +1,214 @@
 <ion-view title="Form" id="form" cache-view="false">
-    <ion-content>
-        <div class="content" >
-            <div  class="list" >                       
-                <a class="item item-button-left test-item" ng-click="back()" href="#/app/category/{{projectId}}/{{formData.category_id}}">
-                    Design: <span class="all-header-details">{{formData.name}}</span>
-                    <button class="button button-clear  button-calm" >
-                        <i class="icon ion-chevron-left"></i>
-                    </button>
+    <ion-content class="blue-bgd" ng-class="{'grey-bgd':filter.state !== 'form' && !filter.substate}">
+        <div class="content">
+            <div class="list" ng-if="filter.state === 'form'">
+                <a class="item item-button-left subHeader-form-bar" ng-click="back()"
+                   href="#/app/category/{{projectId}}/{{formData.category_id}}">
+                    <div class="back-arrow ion-ios-arrow-left"></div>
+                    <div class="header-prj-text">{{formData.category}}</div>
                 </a>
-                <form>
-                    <div ng-repeat="fieldset in formData.field_group_designs track by $index" fs data="fieldset" style="position: relative;">
-                        <a ng-click="repeatGroup(fieldset)" class="help" ng-show="fieldset.repeatable">                                                            
-                            <span class="icon ion-plus all-chevron"></span>                                                            
+                <div class="formTitle">
+                    <div class="header-prj-text"> Design: {{formData.name}}</div>
+                    <div class="blue-label">{{formData.id}}</div>
+                </div>
+                <form class="form-container-bgd">
+                    <div ng-repeat="fieldset in formData.field_group_designs track by $index" fs
+                         data="fieldset" style="position: relative; margin-bottom:5px">
+                        <a ng-click="repeatGroup(fieldset)" class="help"
+                           ng-show="fieldset.repeatable">
+                            <span class="icon ion-plus all-chevron"></span>
                         </a>
-                        <div id="{{formData.id}}:{{$index}}" ng-click="toggleGroup(fieldset, formData.id + ':' + $index)" ng-class="{active: isGroupShown(group)}" class="item-stable item fs all-field-header" style="width:100%">                            
-                            <span style="margin-left:23px">{{fieldset.name}}</span>
-                            <span  style="float:right;width:50px;text-align:right" class="icon ion-chevron-down all-chevron"></span>                                                            
-                            <span class="all-field-description" style="margin-left:25px;">{{fieldset.guidance}}</span>
+                        <div id="{{formData.id}}:{{$index}}"
+                             ng-click="toggleGroup(fieldset, formData.id + ':' + $index)"
+                             ng-class="{active: isGroupShown(group),isOpen:isGroupShown(fieldset)}"
+                             class="item-stable item fs all-field-header" style="width:100%">
+                            <div class="fieldSet-name">{{fieldset.name}}</div>
+                            <div class="ion-ios-arrow-down choose-arrow"></div>
+                            <span class="all-field-description">{{fieldset.guidance}}</span>
                         </div>
-                        <div ng-repeat="field in fieldset.field_designs" style="position: relative" ng-show="isGroupShown(fieldset)">
-                            <a class="all-field-repeat" ng-click="repeatField(fieldset, field)" ng-show="field.repeatable"><span class="icon ion-plus" style="color:#fff"></span> </a>
-                            <field style="width:50%" data="field"></field>
+                        <div ng-class="{'blue-dropArrow':shownGroup}"></div>
+                        <div class="formContent"
+                             ng-repeat="field in fieldset.field_designs"
+                             ng-show="isGroupShown(fieldset)">
+                            <a class="all-field-repeat" ng-click="repeatField(fieldset, field)"
+                               ng-show="field.repeatable"><span class="icon ion-plus"
+                                                             style="color:#fff"></span> </a>
+                            <field data="field"></field>
                         </div>
 
-                    </div>                    
+                    </div>
                 </form>
-                <div id="image-header" ng-click="toggleGroup(fieldset, 'image-header')" ng-class="{active: isGroupShown(group)}" class="item-stable item fs all-field-header" style="width:100%; background-color: #333 !important">                            
-                    <span style="margin-left:23px">Attach pictures</span>
-                    <span  style="float:right;width:50px;text-align:right; color:#fff !important; font-size:23px; margin-right: 5px" class="icon ion-android-attach all-chevron"></span>                                                            
+                <div class="form-container-bgd" ng-if="formData.resource_field_design">
+                    <div class="item-stable item fs all-field-header">
+                        <span class="add-pic-text">Resource field</span>    
+                        <button ng-click="filter.state = 'resource'">Open</button>
+                    </div>
                 </div>
-                <ion-item ng-show="isGroupShown(fieldset)" >
-                    <div class="row" ng-repeat="picrow in pictures">
-                        <div class="col" ng-repeat="pic in picrow">
-                            <div class="img-box-container">
-                                <div class="img-box" ng-click="test(pic)">
-                                    <button ng-click="delSpot(pic.id)">x</button>
-                                    <img ng-show="pic.base64String !== ''" data-ng-src ="data:image/png;base64,{{pic.base64String}}">
-                                    <img ng-show="pic.base64String === ''" ng-src="img/ic.png">
+                <div class="form-container-bgd" ng-if="formData.scheduling_field_design">
+                    <div class="item-stable item fs all-field-header">
+                        <span class="add-pic-text">Scheduling field</span>    
+                        <button ng-click="filter.state = 'scheduling'">Open</button>
+                    </div>
+                </div>
+                <div class="form-container-bgd" ng-if="formData.pay_item_field_design">
+                    <div class="item-stable item fs all-field-header">
+                        <span class="add-pic-text">Pay-item field</span>    
+                        <button ng-click="filter.state = 'payitem'">Open</button>
+                    </div>
+                </div>
+                <div class="form-container-bgd" ng-if="formData.staff_field_design">
+                    <div class="item-stable item fs all-field-header">
+                        <span class="add-pic-text">Staff field</span>    
+                        <button ng-click="filter.state = 'staff'">Open</button>
+                    </div>
+                </div>
+                <div class="form-container-bgd">
+                    <div id="image-header" class="item-stable item fs all-field-header">
+                        <span class="add-pic-text">Add pictures</span>
+                        <img class="add-pic-icon mr-0" src="img/new/cameraRoll.svg">
+                        <img class="add-pic-icon" src="img/new/takePicture.svg">
+                        <img class="add-pic-icon" src="img/new/gallery.svg">
+                    </div>
+                </div>
+                <!--                <div class="form-container-bgd">
+                                    <div id="image-header" ng-click="toggleGroup(fieldset, 'image-header')"
+                                         ng-class="{active: isGroupShown(group)}"
+                                         class="item-stable item fs all-field-header">
+                                        <span class="add-pic-text">Add pictures</span>
+                                        <img class="add-pic-icon mr-0" src="img/new/cameraRoll.svg">
+                                        <img class="add-pic-icon" src="img/new/takePicture.svg">
+                                        <img class="add-pic-icon" src="img/new/gallery.svg">
+                                    </div>
                                 </div>
+                                <ion-item ng-show="isGroupShown(fieldset)" class="images-container">
+                                    <div class="row" ng-repeat="picrow in pictures">
+                                        <div class="col" ng-repeat="pic in picrow">
+                                            <div class="img-box-container">
+                                                <div class="img-box" ng-click="test(pic)">
+                                                    <button ng-click="delSpot(pic.id)">x</button>
+                                                    <img ng-show="pic.base64String !== ''"
+                                                         data-ng-src="data:image/png;base64,{{pic.base64String}}">
+                                                    <img ng-show="pic.base64String === ''" ng-src="img/ic.png">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="width: calc(100% + 10px); margin-left:-5px">
+                                        <button ng-show="imgURI.length !== 9"
+                                                class="button button-block button-calm" ng-click="addSpot()"><i
+                                                class="ion-plus"></i><i class="ion-image"
+                                                style="font-size:19px; padding-left: 4px"></i>
+                                        </button>
+                                    </div>
+                                </ion-item>-->
+                <div class="padding">
+                    <button type="submit" ng-click="submit(formData)"
+                            ng-disabled="formData.permission < 2" value="Save"
+                            class="button button-block button-calm">Submit
+                    </button>
+                </div>
+            </div>
+            <div class="list" ng-if="filter.state === 'resource' && !filter.substate">
+                <a class="item item-button-left subHeader-form-bar" ng-click="filter.state = 'form'">
+                    <div class="back-arrow ion-ios-arrow-left"></div>
+                    <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
+                        <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle">Done</span></div>
+                </a>
+                <form class="form-new-fields">
+                    <div class="item" ng-repeat="resource in resourceField.resources" ng-click="filter.substate = resource">
+                        <span ng-if="!resource.name">Resource {{$index + 1}}</span>
+                        <span ng-if="resource.name">{{resource.name}}</span>
+                    </div>    
+                    <div class="item item-total" ng-if="resourceField.financial_option">
+                        Total
+                        <div>
+                            {{resourceField.total_cost}}
+                        </div>
+
+                    </div> 
+                </form>
+                <button class="btn-add" ng-click="addResource()">   
+                    <i class="ion-ios-plus-empty"></i>
+                </button>
+            </div>
+            <div class="list" ng-if="filter.state === 'resource' && filter.substate">
+                <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = null">
+                    <div class="back-arrow ion-ios-arrow-left"></div>
+                    <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
+                        <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle">Save</span></div>
+                </a>
+                <div class="formTitle">
+                    <div class="header-prj-text"> Design: {{formData.name}}</div>
+                    <div class="blue-label">{{formData.id}}</div>
+                </div>
+                <form class="form-container-bgd">
+                    <div style="position: relative; margin-bottom:5px">
+                        <div class="item-stable item fs all-field-header isOpen" style="width:100%">
+                            <div class="fieldSet-name" ng-if="filter.substate.name">{{filter.substate.name}}</div>
+                            <div class="fieldSet-name" ng-if="!filter.substate.name">Resource field</div>
+                        </div>
+                        <div class="blue-dropArrow"></div>
+                        <div class="formContent">
+                            <div class="calm-border" ng-if="resourceField.date_option">
+                                <label class="item item-input item-stacked-label calm-border">
+                                    <div class="inputLabel" style="padding-top: 10px;">
+                                        <span class="all-name">Date</span>
+                                    </div>
+                                    <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.current_day">
+                                </label>
+                            </div>
+                            <div class="calm-border">
+                                <label class="item item-input item-stacked-label calm-border">
+                                    <div class="inputLabel" style="padding-top: 10px;">
+                                        <span class="all-name">Name</span>
+                                    </div>                                    
+                                    <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.name" list="resource_list" ionic-autocomplete params="{item: resource_list, onSelect: onSelect}">
+                                </label>
+                            </div>
+                            <div class="calm-border">
+                                <label class="item item-input item-stacked-label calm-border">
+                                    <div class="inputLabel" style="padding-top: 10px;">
+                                        <span class="all-name">Product ref</span>
+                                    </div>
+                                    <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.product_ref">
+                                </label>
+                            </div>                                                        
+                            <div class="calm-border">
+                                <label class="item item-input item-stacked-label calm-border">
+                                    <div class="inputLabel" style="padding-top: 10px;">
+                                        <span class="all-name">Unit</span>
+                                    </div>
+                                    <select class="form-select" ng-options="option as option.name for option in unit_list track by option.id" ng-model="filter.substate.unit_obj" ng-init="filter.substate.unit_obj = unit_list[0]"></select>
+                                </label>
+                            </div>
+                            <div class="calm-border">
+                                <label class="item item-input item-stacked-label calm-border">
+                                    <div class="inputLabel" style="padding-top: 10px;">
+                                        <span class="all-name">Resource type</span>
+                                    </div>
+                                    <select class="form-select" ng-options="option as option.name for option in resource_type_list track by option.id" ng-model="filter.substate.resource_type_obj" ng-init="filter.substate.resource_type_obj = resource_type_list[0]"></select>
+                                </label>
+                            </div>
+                            <div class="calm-border">
+                                <label class="item item-input item-stacked-label calm-border">
+                                    <div class="inputLabel" style="padding-top: 10px;">
+                                        <span class="all-name">Quantity</span>
+                                    </div>
+                                    <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" type="number" ng-model="filter.substate.quantity">
+                                </label>
+                            </div>
+                            <div class="calm-border" ng-if="resourceField.financial_option">
+                                <label class="item item-input item-stacked-label calm-border">
+                                    <div class="inputLabel" style="padding-top: 10px;">
+                                        <span class="all-name">Direct cost</span>
+                                    </div>
+                                    <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" type="number" ng-model="filter.substate.direct_cost">
+                                </label>
                             </div>
                         </div>
+
                     </div>
-                    <div style="width: calc(100% + 10px); margin-left:-5px">
-                        <button ng-show="imgURI.length !== 9" class="button button-block button-dark" ng-click="addSpot()"><i class="ion-plus"></i><i class="ion-image" style="font-size:19px; padding-left: 4px"></i></button>
-                    </div>
-                </ion-item>
-                <div class="padding">
-                    <button type="submit" ng-click="submit(formData)" ng-disabled="formData.permission < 2" value="Save" class="button button-block button-calm">Submit</button>
-                </div>
+                </form>                
             </div>
         </div>
     </ion-content>

@@ -5,12 +5,15 @@ angular.module($APP.name).controller('NavCtrl', [
     '$scope',
     '$ionicSideMenuDelegate',
     'CacheFactory',
-    'SyncService',
     '$timeout',
     '$http',
-    function ($rootScope, $state, AuthService, $scope, $ionicSideMenuDelegate, CacheFactory, SyncService, $timeout, $http) {
-        $scope.toggleLeft = function () {
+    'SyncService',
+    function ($rootScope, $state, AuthService, $scope, $ionicSideMenuDelegate, CacheFactory, $timeout, $http, SyncService) {
+        $scope.toggleLeft = function ($event) {
             $ionicSideMenuDelegate.toggleLeft();
+            $($event.target)
+                    .toggleClass("ion-navicon")
+                    .toggleClass("ion-android-arrow-back");
         };
 
         var projects = CacheFactory.get('projects');
@@ -20,9 +23,11 @@ angular.module($APP.name).controller('NavCtrl', [
                 storageMode: 'localStorage'
             });
         }
+
         var id = projects.get('projectId');
         var name = projects.get('navTitle');
         var sw = false;
+
         if (id && name) {
             angular.forEach($rootScope.projects, function (proj) {
                 if (proj.id === id && proj.name === name) {
@@ -32,8 +37,7 @@ angular.module($APP.name).controller('NavCtrl', [
             if (sw === true) {
                 $rootScope.navTitle = name;
                 $rootScope.projectId = id;
-            }
-            else {
+            } else {
                 $rootScope.navTitle = $rootScope.projects[0].name;
                 $rootScope.projectId = $rootScope.projects[0].id;
                 projects.put('navTitle', $rootScope.projects[0].name);
@@ -51,7 +55,6 @@ angular.module($APP.name).controller('NavCtrl', [
                 storageMode: 'localStorage'
             });
         }
-        $scope.user = settingsCache.get("user");
 
         $rootScope.categories = [
             {"id": 1, "name": "Health and Safety", "description": "Health and safety category", "image_url": "healthsafety"},
@@ -61,6 +64,14 @@ angular.module($APP.name).controller('NavCtrl', [
             {"id": 5, "name": "Environmental", "description": "Environmental category", "image_url": "environmental"},
             {"id": 6, "name": "Financial", "description": "Financial category", "image_url": "financial"}
         ];
+        $scope.isDisconnect = {checked: false};
+
+        $scope.pushIsDisconnectChange = function () {
+            if ($scope.isDisconnect.checked) {
+                $scope.logout();
+            }
+        };
+
 
         $scope.logout = function () {
             var projectsCache = CacheFactory.get('projectsCache');
@@ -107,57 +118,12 @@ angular.module($APP.name).controller('NavCtrl', [
                 photos.destroy();
             }
 
-            AuthService.logout(function () {
+            AuthService.logout().success(function () {
                 $state.go('login');
-            }, function () {
             });
 
         };
-        $rootScope.getOut = function () {
-            var projectsCache = CacheFactory.get('projectsCache');
-            if (projectsCache) {
-                projectsCache.destroy();
-            }
-            var designsCache = CacheFactory.get('designsCache');
-            if (designsCache) {
-                designsCache.destroy();
-            }
-            var instanceCache = CacheFactory.get('instanceCache');
-            if (instanceCache) {
-                instanceCache.destroy();
-            }
-            var registersCache = CacheFactory.get('registersCache');
-            if (registersCache) {
-                registersCache.destroy();
-            }
-            var registerCache = CacheFactory.get('registerCache');
-            if (registerCache) {
-                registerCache.destroy();
-            }
 
-            var reloadCache = CacheFactory.get('reloadCache');
-            if (reloadCache) {
-                reloadCache.destroy();
-            }
-
-            var syncCache = CacheFactory.get('sync');
-            if (syncCache) {
-                syncCache.destroy();
-            }
-
-            var settingsCache = CacheFactory.get('settings');
-            if (settingsCache) {
-                settingsCache.destroy();
-            }
-
-            AuthService.logout(function () {
-                $state.go('login');
-            }, function () {
-            });
-        };
-        $scope.meTest = function () {
-            AuthService.meTest();
-        }
 
         AuthService.version().then(function (version) {
             settingsCache.put("version", version);

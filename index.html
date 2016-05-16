@@ -4,11 +4,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
         <title>Pro Project</title>
-
+        <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
         <link rel="icon" type="image/x-icon" href="./favicon.ico"> 
         <link href="lib/ionic/css/ionic.css" rel="stylesheet">
         <link href="lib/icon-custom/style.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
+        <link href="css/menu.css" rel="stylesheet">
+        <link href="css/category.css" rel="stylesheet">
+        <link href="css/mediaQ.css" rel="stylesheet">
 
         <!-- ionic/angularjs js -->
         <script src="lib/ionic/js/ionic.bundle.js"></script>
@@ -27,19 +31,17 @@
         <script src="js/controllers/AppCtrl.js"></script>
         <script src="js/controllers/NavCtrl.js"></script>
         <script src="js/controllers/LoginCtrl.js"></script>        
-        <script src="js/controllers/AboutCtrl.js"></script>
         <script src="js/controllers/CategoriesCtrl.js"></script>
         <script src="js/controllers/FormsCtrl.js"></script>
-        <script src="js/controllers/FormCtrl.js"></script>
-        <script src="js/controllers/EditCtrl.js"></script>
-        <script src="js/controllers/FormCompletedCtrl.js"></script>
-        <script src="js/controllers/FormInstanceCtrl.js"></script>
-        <script src="js/controllers/RegistersCtrl.js"></script>
-        <script src="js/controllers/RegisterCtrl.js"></script>
-        <script src="js/controllers/ForgotPasswordCtrl.js"></script>
+        <script src="js/controllers/FormCtrl.js"></script>        
+        <script src="js/controllers/FormCompletedCtrl.js"></script> 
+        <script src="js/controllers/EditCtrl.js"></script>       
+        <script src="js/controllers/FormInstanceCtrl.js"></script>       
+        <script src="js/controllers/RegisterCtrl.js"></script> 
+        <script src="js/controllers/RegistersCtrl.js"></script> 
+        <script src="js/controllers/MyAccountCtrl.js"></script> 
+        <script src="js/controllers/SharedCtrl.js"></script> 
 
-        <!--controllers - modal-->
-        <script src="js/controllers/LoadingCtrl.js"></script>
 
         <!--directives-->
         <script src="js/directives/form.js"></script>
@@ -52,23 +54,22 @@
         <script src="js/directives/sketchErase.js"></script>
         <script src="js/directives/viewField.js"></script>
 
-        <!--services-->
-        <script src="js/services/InstanceService.js"></script>
-        <script src="js/services/NetworkStatusService.js"></script>
-        <script src="js/services/ReloadMeService.js"></script>
-        <script src="js/services/SyncService.js"></script>
-        <script src="js/services/AuthService.js"></script>
-        <script src="js/services/RegisterService.js"></script>
-        <script src="js/services/FormDesignService.js"></script>
-        <script src="js/services/FormInstanceService.js"></script>
-        <script src="js/services/ProjectService.js"></script>
-        <script src="js/services/UserService.js"></script>
-        <script src="js/services/FieldUpdateService.js"></script>
-        <script src="js/services/FormUpdateService.js"></script>
-        <script src="js/services/ImageService.js"></script>
-        <script src="js/services/ConvertersService.js"></script>
 
+        <!--services-->       
+        <script src="js/services/AuthService.js"></script>       
+        <script src="js/services/SyncService.js"></script>       
+        <script src="js/services/ConvertersService.js"></script>       
+        <script src="js/services/ProjectService.js"></script>   
+        <script src="js/services/FormInstanceService.js"></script>   
+        <script src="js/services/FormDesignService.js"></script>   
+        <script src="js/services/RegisterService.js"></script> 
+        <script src="js/services/ImageService.js"></script>   
+        <script src="js/services/FormUpdateService.js"></script>
+        <script src="js/services/FieldUpdateService.js"></script>
+        <script src="js/services/ResourceService.js"></script>
+        
         <!-- cordova script (this will be a 404 during development) -->
+
         <script src="lib/ng-cordova.min.js"></script> 
         <script src="cordova.js"></script>
     </head>

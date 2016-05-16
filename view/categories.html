@@ -1,34 +1,40 @@
 <ion-view title="{{navTitle}}" hide-back-button="true" cache-view="false">
-    <ion-content class="has-header" style="background-color: #ECEBEB; padding-top:10vw;" ng-class="{fixDisplay: androidOk !== true}">
-        <div class="row" >
-            <a class="col pp-icon" href="#/app/category/{{projectId}}/{{categories[0].id}}" ui-sref="app.forms({projectId:projectId, categoryId:categories[0].id})">
-                <div class="category-item"><span class="category-icon icon-{{categories[0].id}}"></span></div>
-                <h2>{{categories[0].name}}</h2>
-            </a>
-            <a class="col pp-icon" href="#/app/category/{{projectId}}/{{categories[0].id}}"ui-sref="app.forms({projectId:projectId, categoryId:categories[1].id})">
-                <div class="category-item"><span class="category-icon icon-{{categories[1].id}}"></span></div>
-                <h2>{{categories[1].name}}</h2>
-            </a>
-        </div>
-        <div class="row" style="margin-top: 5vw">
-            <a class="col pp-icon" href="#/app/category/{{projectId}}/{{categories[2].id}}" ui-sref="app.forms({projectId:projectId, categoryId:categories[2].id})">
-                <div class="category-item"><span class="category-icon icon-{{categories[2].id}}"></span></div>
-                <h2>{{categories[2].name}}</h2>
-            </a>
-            <a class="col pp-icon" href="#/app/category/{{projectId}}/{{categories[3].id}}" ui-sref="app.forms({projectId:projectId, categoryId:categories[3].id})">
-                <div class="category-item"><span class="category-icon icon-{{categories[3].id}}"></span></div>
-                <h2>{{categories[3].name}}</h2>
-            </a>
-        </div>
-        <div class="row" style="margin-top: 5vw">
-            <a class="col pp-icon" href="#/app/category/{{projectId}}/{{categories[4].id}}" ui-sref="app.forms({projectId:projectId, categoryId:categories[4].id})">
-                <div class="category-item"><span class="category-icon icon-{{categories[4].id}}"></span></div>
-                <h2>{{categories[4].name}}</h2>
-            </a>
-            <a class="col pp-icon" href="#/app/category/{{projectId}}/{{categories[5].id}}" ui-sref="app.forms({projectId:projectId, categoryId:categories[5].id})">
-                <div class="category-item"><span class="category-icon icon-{{categories[5].id}}"></span></div>
-                <h2>{{categories[5].name}}</h2>
-            </a>
-        </div>
-    </ion-content>
+	<ion-content class="has-header blue-bgd category-container"
+	             ng-class="{fixDisplay: androidOk !== true,showPrjIsOn:showProjects}">
+		<header ng-class="{'all-projects': showProjects}" class="choose-prj-bar"
+		        ng-click="showProjects = !showProjects">
+			<div class="prj-bar-txt">Change project
+				<div class="ion-ios-arrow-down choose-arrow"></div>
+			</div>
+			<div class="invShowPrj" ng-class="{'showPrj':showProjects}" ng-show="showProjects">
+				<div class="prj-item prj-item-default">
+					<span class="defaultPrj-name">{{navTitle}}</span>
+					<br>
+					<span class="defaultPrj-id">ID:{{projectId}}</span>
+					<img class="default-check-img" src="img/new/check.svg">
+				</div>
+				<ion-item ng-repeat="project in projects"
+				          class="prj-item"
+				          href="#/app/categories/{{project.id}}"
+				          ng-click="updateTitle(project)">
+					<div class="prj-name">{{project.name}}</div>
+					<div class="prj-id">ID: {{project.id}}</div>
+					<div class="make-default">Make default</div>
+				</ion-item>
+			</div>
+
+		</header>
+		<div class="category-content-abs">
+			<div class="category-row" ng-repeat="category in categories"
+			     ng-class="{'setInvisible':showProjects}">
+				<a class="col pp-icon" href="#/app/category/{{projectId}}/{{category.id}}"
+				   ui-sref="app.forms({projectId:projectId, categoryId:category.id})">
+					<div class="center-category">
+						<img ng-src="img/new/{{category.id}}.png">
+						<h2>{{category.name}}</h2>
+					</div>
+				</a>
+			</div>
+		</div>
+	</ion-content>
 </ion-view>

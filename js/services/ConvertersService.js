@@ -216,6 +216,7 @@ angular.module($APP.name).service('ConvertersService', [
                     "hash": null,
                     "pdf": design.pdf,
                     "project_id": parseInt($stateParams.projectId),
+                    "resource_field_id": design.resource_field_id,
                     "customer_id": design.customer_id,
                     "category": design.category,
                     "category_id": design.category_id,

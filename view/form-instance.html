@@ -1,24 +1,37 @@
-<ion-view title="Form Instance" id="form-instance" cache-view="false" ng-class="{'bar-hide': slideHeader, 'bar-helper':slideHeaderHelper}">
+<ion-view title="Form Instance" id="form-instance" cache-view="false"
+          ng-class="{'bar-hide': slideHeader, 'bar-helper':slideHeaderHelper}">
     <ion-header-bar class="bar-subheader item-button-left test-item" ng-click="back()">
-        <span style="max-width: calc(100% - 30px);overflow: hidden;white-space: nowrap;display: block;text-overflow: ellipsis;">
-            Completed: <span class="all-header-details">{{formData.name}}</span>
-        </span>
-        <button class="button button-clear  button-calm" >
-            <i class="icon ion-chevron-left all-chevron"></i>
-        </button>
+        <div class="back-arrow ion-ios-arrow-left"></div>
+        <div class="header-prj-text">{{formData.category}}</div>
     </ion-header-bar>
-    <ion-content scroll-watch>
-        <div class="content" >
-            <div  class="list" >      
-                <div ng-repeat="fieldset in formData.field_group_instances" fs data="fieldset">
-                    <a id="a{{fieldset.$$hashKey}}" class="item-stable item all-field-header fs" >                            
-                        <span>{{fieldset.name}}</span>
-                        <span class="all-field-description">{{fieldset.guidance}}</span>                            
-                    </a>
-                    <view-field class="item-accordion" data="field" ng-repeat="field in fieldset.field_instances"></view-field>
-                </div>                
-                <div class="padding">
-                    <button class="button button-block button-calm" ng-disabled="formData.permission < 2" ng-click="edit()">Edit</button>
+
+    <ion-content scroll-watch class="blue-bgd">
+        <div class="content">
+            <div class="list">
+                <div class="formTitle">
+                    <div class="header-prj-text"> Completed: {{formData.name}}</div>
+                    <div class="blue-label">{{formData.id}}</div>
+                </div>
+                <div class="form-container-bgd">
+                    <div ng-repeat="fieldset in formData.field_group_instances" fs data="fieldset" style="margin-bottom: 5px">
+                        <a id="a{{fieldset.$$hashKey}}"
+                           class="item-stable item all-field-header fs view-item-blue">
+                            <div class="fieldSet-name">
+                                {{fieldset.name}}
+                                <!--<div class="blue-label label-right">{{fieldset.id}}</div>-->
+                            </div>
+
+                            <span class="all-field-description">{{fieldset.guidance}}</span>
+                        </a>
+                        <div class="blue-dropArrow"></div>
+                        <view-field class="item-accordion" data="field"
+                                    ng-repeat="field in fieldset.field_instances"></view-field>
+                    </div>
+                    <div style="    padding: 5px;">
+                        <button class="button button-block button-calm"
+                                ng-disabled="formData.permission < 2" ng-click="edit()">Edit
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

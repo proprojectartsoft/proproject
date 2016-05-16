@@ -1,41 +1,68 @@
-<ion-side-menus cache-view="false" drag-content="false">
+<ion-side-menus cache-view="false" drag-content="false" class="custom-menu">
     <ion-side-menu-content>
         <ion-header-bar class="bar-calm">
             <div class="buttons">
-                <button class="button icon button-clear ion-navicon" ng-click="toggleLeft()"></button>
+                <button class="button icon button-clear ion-navicon"
+                        ng-click="toggleLeft($event)"></button>
             </div>
             <h1 class="title">{{navTitle}}</h1>
         </ion-header-bar>
         <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
     </ion-side-menu-content>
-    <ion-side-menu side="left" class="dark" drag-content="toggledrag">  
+    <ion-side-menu side="left" class="dark" drag-content="toggledrag">
         <header class="bar bar-header bar-dark">
-            <h1 class="title">Choose project</h1>
         </header>
-        <ion-content class="has-header dark-bg" >    
-            <ion-list>
-                <ion-item nav-clear menu-close ng-repeat="project in projects" class="dark-bg dark-border" href="#/app/categories/{{project.id}}" ng-click="updateTitle(project)">
-                    {{project.name}}
-                </ion-item>
-            </ion-list>
+        <ion-content class="has-header dark-bg">
+            <ion-item nav-clear menu-close class="dark-bg dark-border" style="color:#fff">
+                <div class="user-circle-img">
+                    <img src="img/new/user_default.svg">
+                </div>
+                <div class="menu-name">{{currentUser.role_title}}</div>
+                <div class="menu-email">{{currentUser.username}}</div>
+            </ion-item>
+            <ion-item nav-clear menu-close ng-click="logout()" class="dark-bg menu-item p-10-15"
+                      style="color:#fff; border-top: none;">
+                <div class="item item-toggle menu-disconnect">
+                    <!--<ion-toggle ng-model="isDisconnect.checked"-->
+                    <!--ng-change="pushIsDisconnectChange()">-->
+                    <!--Disconnect-->
+                    <!--</ion-toggle>-->
+                    <button class="button button-block button-calm" >Logout</button>
+                </div>
+            </ion-item>
+            <!--<ion-list>-->
+            <!--<ion-item nav-clear menu-close ng-repeat="project in projects"-->
+            <!--class="dark-bg dark-border menu-item" href="#/app/categories/{{project.id}}"-->
+            <!--ng-click="updateTitle(project)">-->
+            <!--{{project.name}}-->
+            <!--</ion-item>-->
+            <!--</ion-list>-->
 
-            <ion-item nav-clear menu-close href="#/app/about" class="dark-bg dark-border">
-                <i class="icon ion-ios7-information-outline"></i>
-                About
+            <ion-item nav-clear menu-close ng-click="sync()" class="dark-bg dark-border menu-item p-10-15"
+                      style="color:#fff">
+                <img src="img/new/synchronize.svg">
+                <span>Synchronize</span>
             </ion-item>
-            <ion-item nav-clear menu-close ng-click="sync()" class="dark-bg dark-border" style="color:#fff">
-                <i class="icon ion-hammer"></i>
-                Sync
+            <ion-item nav-clear menu-close ui-sref="app.myaccount" class="dark-bg dark-border menu-item p-10-15"
+                      style="color:#fff">
+                <img src="img/new/user.svg">
+                <span>My Account</span>
             </ion-item>
-            <ion-item nav-clear menu-close  class="dark-bg dark-border" style="color:#fff">
-                <i class="icon ion-person"></i>
-                {{user.username}}
-            </ion-item>
-            <ion-item nav-clear menu-close href="#/login" class="dark-bg dark-border" ng-click="logout();">
-                <i class="icon ion-person"></i>
-                Logout
-            </ion-item>
+            <ion-item nav-clear menu-close ui-sref="app.shared" class="dark-bg dark-border menu-item p-10-15"
+                      style="color:#fff">
+                <img src="img/new/sharedDocs.svg">
+                <span>My shared docs</span>
 
+            </ion-item>
+            <ion-item nav-clear menu-close ui-sref="app.about" class="dark-bg dark-border menu-item p-10-15">
+                <img src="img/new/about.svg">
+                <span>About</span>
+            </ion-item>
+            <ion-item nav-clear menu-close href="" onclick="navigator.app.loadUrl('http://app.preprod.proproject.io/', { openExternal:true });"
+                      class="dark-bg dark-border menu-item project-web-link">
+                <img src="img/new/onWeb.svg">
+                <span>Project on web</span>
+            </ion-item>
         </ion-content>
     </ion-side-menu>
 
