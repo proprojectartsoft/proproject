@@ -12,8 +12,7 @@ $APP.shareUrl = 'https://app.proproject.co.uk/form/';
 
 angular.module($APP.name, [
     'ionic',
-    'ionic-datepicker',
-    'ionic-timepicker',
+    'ion-datetime-picker',
     'angularMoment',
     'angular-cache',
     'ngCordova'
@@ -21,14 +20,14 @@ angular.module($APP.name, [
 angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, $window) {
 
     $ionicPlatform.ready(function () {
-        if (window.cordova && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        }
-
-        if (window.StatusBar) {
-            StatusBar.styleDefault();
-            StatusBar.overlaysWebView(false);
-        }
+//        if (window.cordova && window.cordova.plugins.Keyboard) {
+//            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+//        }
+//
+//        if (window.StatusBar) {
+//            StatusBar.styleDefault();
+//            StatusBar.overlaysWebView(false);
+//        }
         var sync = CacheFactory.get('sync');
         if (!sync) {
             sync = CacheFactory('sync');

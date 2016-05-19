@@ -286,6 +286,33 @@
     border: none;
     background-color: #1EBCF3;
     box-shadow: 0 5px 15px rgba(0,0,0,0.25), 0 3px 12px rgba(0,0,0,0.22);
+    z-index:99;
+}
+.btn-add-resource{
+    position: fixed;
+    bottom: 90px;
+    right: 10px;
+    border: none;
+    background-color: #1EBCF3;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25), 0 3px 12px rgba(0,0,0,0.22);
+    height: 40px;
+    padding: 0px 10px;
+    color: #fff;
+    font-size: 18px;
+    z-index:99;
+}
+.btn-add-subtask{
+    position: fixed;
+    bottom: 140px;
+    right: 10px;
+    border: none;
+    background-color: #1EBCF3;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25), 0 3px 12px rgba(0,0,0,0.22);
+    height: 40px;
+    padding: 0px 10px;
+    color: #fff;
+    font-size: 18px;
+    z-index:99;
 }
 .btn-add i{
     font-size: 55px;
@@ -299,4 +326,9 @@ input[type='text'], input[type='number'],input[type='email']{
     height: auto !important;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
+}
+
+.ion-datetime-picker .time .item-input input {
+    height:100% !important;
+    padding: 0 5px !important;
 }

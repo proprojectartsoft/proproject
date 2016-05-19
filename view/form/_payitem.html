@@ -1,0 +1,354 @@
+<div class="list" ng-if="!filter.substate && !filter.substateStk && !filter.substateRes && !filter.substateStkRes">
+    <a class="item item-button-left subHeader-form-bar" ng-click="filter.state = 'form';
+        filter.actionBtnShow = false">
+        <div class="back-arrow ion-ios-arrow-left"></div>
+        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
+            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle">Done</span></div>
+    </a>
+    <form class="form-new-fields">
+        <div class="item" ng-repeat="payitem in payitemField.pay_items" ng-click="filter.substate = payitem">
+            <span ng-if="!payitem.description">Pay-item {{$index + 1}}</span>
+            <span ng-if="payitem.description">{{payitem.description}}</span>
+        </div>    
+        <div class="item item-total">
+            Total
+            <div>
+                {{resourceField.total_cost}}
+            </div>
+        </div> 
+    </form>
+</div>
+<div class="list" ng-if="filter.substate && !filter.substateStk && !filter.substateRes && !filter.substateStkRes">
+    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = null">
+        <div class="back-arrow ion-ios-arrow-left"></div>
+        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
+            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle">Save</span></div>
+    </a>
+    <div class="formTitle">
+        <div class="header-prj-text"> Design: {{formData.name}}</div>
+        <div class="blue-label">{{formData.id}}</div>
+    </div>
+    <form class="form-container-bgd">
+        <div style="position: relative; margin-bottom:5px">
+            <div class="item-stable item fs all-field-header isOpen" style="width:100%">
+                <div class="fieldSet-name" ng-if="filter.substate.name">{{filter.substate.name}}</div>
+                <div class="fieldSet-name" ng-if="!filter.substate.name">Pay-item field</div>
+            </div>
+            <div class="blue-dropArrow"></div>
+            <div class="formContent">               
+                <div class="calm-border">
+                    <label class="item item-input item-stacked-label calm-border">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Description</span>
+                        </div>                                    
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.description" >
+                    </label>
+                </div>
+                <div class="calm-border">
+                    <label class="item item-input item-stacked-label calm-border">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Reference</span>
+                        </div>
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.reference">
+                    </label>
+                </div>                                                        
+                <div class="calm-border">
+                    <label class="item item-input item-stacked-label calm-border">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Unit</span>
+                        </div>
+                        <select class="form-select" ng-options="option as option.name for option in unit_list track by option.id" ng-model="filter.substate.unit_obj" ng-init="filter.substate.unit_obj = unit_list[0]"></select>
+                    </label>
+                </div>
+                <div class="calm-border">
+                    <label class="item item-input item-stacked-label calm-border">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Quantity</span>
+                        </div>
+                        <input type="number" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.quantity">
+                    </label>
+                </div> 
+                <div class="form-new-fields"  style="margin-top:10px;">
+                    <div class="item" ng-repeat="stk in filter.substate.subtasks" ng-click="filter.substateStk = stk" ng-if="filter.substate.subtasks.length !== 0">
+                        <span ng-if="!stk.description">Subtask {{$index + 1}}</span>
+                        <span ng-if="stk.description">{{stk.description}}</span>
+                    </div>    
+                    <div class="item" ng-repeat="res in filter.substate.resources" ng-click="filter.actionBtnShow = false;
+                            filter.substateRes = res;" ng-if="filter.substate.resource.length !== 0">
+                        <span ng-if="!res.name">Resource {{$index + 1}}</span>
+                        <span ng-if="res.name">{{res.name}}</span>
+                    </div>    
+                    <div class="item item-total" ng-if="filter.substate.resources.length !== 0 || filter.substate.subtasks.length !== 0">
+                        Total
+                        <div>
+                            {{resourceField.total_cost}}
+                        </div>
+                    </div> 
+                </div>
+            </div>                   
+        </div>
+    </form>                
+</div>
+<div class="list" ng-if="filter.substate && filter.substateStk && !filter.substateRes && !filter.substateStkRes">
+    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substateStk = null">
+        <div class="back-arrow ion-ios-arrow-left"></div>
+        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
+            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle">Save</span></div>
+    </a>
+    <div class="formTitle">
+        <div class="header-prj-text"> Design: {{formData.name}}</div>
+        <div class="blue-label">{{formData.id}}</div>
+    </div>
+    <form class="form-container-bgd">
+        <div style="position: relative; margin-bottom:5px">
+            <div class="item-stable item fs all-field-header isOpen" style="width:100%">
+                <div class="fieldSet-name" ng-if="filter.substate.name">{{filter.substate.name}}</div>
+                <div class="fieldSet-name" ng-if="!filter.substate.name">Pay-item field: Subtask</div>
+            </div>
+            <div class="blue-dropArrow"></div>
+            <div class="formContent">               
+                <div class="calm-border">
+                    <label class="item item-input item-stacked-label calm-border">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Description</span>
+                        </div>                                    
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.description" >
+                    </label>
+                </div>                
+                <div class="form-new-fields" ng-if="filter.substateStk.resources.length !== 0" style="margin-top:10px;">
+                    <div class="item" ng-repeat="stkres in filter.substateStk.resources" ng-click="filter.substateStkRes = stkres;
+                            filter.actionBtnShow = false">
+                        <span ng-if="!stkres.name">Resource {{$index + 1}}</span>
+                        <span ng-if="stkres.name">{{stkres.name}}</span>
+                    </div>    
+                    <div class="item item-total">
+                        Total
+                        <div>
+                            {{resourceField.total_cost}}
+                        </div>
+                    </div> 
+                </div>
+            </div>                   
+        </div>
+    </form>                
+</div>
+<div class="list" ng-if="filter.substate && filter.substateStk && !filter.substateRes && filter.substateStkRes">
+    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substateStkRes = null;
+        filter.actionBtnShow = true">
+        <div class="back-arrow ion-ios-arrow-left"></div>
+        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
+            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle">Save</span></div>
+    </a>
+    <div class="formTitle">
+        <div class="header-prj-text"> Design: {{formData.name}}</div>
+        <div class="blue-label">{{formData.id}}</div>
+    </div>
+    <form class="form-container-bgd">
+        <div style="position: relative; margin-bottom:5px">
+            <div class="item-stable item fs all-field-header isOpen" style="width:100%">
+                <div class="fieldSet-name" ng-if="filter.substate.name">{{filter.substate.name}}</div>
+                <div class="fieldSet-name" ng-if="!filter.substate.name">Pay-item field: Subtask: Resource</div>
+            </div>
+            <div class="blue-dropArrow"></div>
+            <div class="formContent">               
+                <div class="calm-border">
+                    <div class="calm-border">
+                        <label class="item item-input item-stacked-label calm-border">
+                            <div class="inputLabel" style="padding-top: 10px;">
+                                <span class="all-name">Name</span>
+                            </div>                                    
+                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.name" >
+                        </label>
+                        <label class="item item-input item-stacked-label calm-border">
+                            <div class="inputLabel" style="padding-top: 10px;">
+                                <span class="all-name">Product ref</span>
+                            </div>                                    
+                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.product_ref" >
+                        </label>
+                        <label class="item item-input item-stacked-label calm-border">
+                            <div class="inputLabel" style="padding-top: 10px;">
+                                <span class="all-name">Resource type</span>
+                            </div>
+                            <select class="form-select" ng-options="option as option.name for option in resource_type_list track by option.id" ng-model="filter.substateStkRes.resource_type_obj" ng-init="filter.substateStkRes.resource_type_obj = resource_type_list[0]"></select>
+                        </label>
+                        <label class="item item-input item-stacked-label calm-border">
+                            <div class="inputLabel" style="padding-top: 10px;">
+                                <span class="all-name">Unit</span>
+                            </div>
+                            <select class="form-select" ng-options="option as option.name for option in unit_list track by option.id" ng-model="filter.substateStkRes.unit_obj" ng-init="filter.substateStkRes.unit_obj = unit_list[0]"></select>
+                        </label>
+
+                        <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateStkRes.calculation && (!filter.substateStkRes.unit_obj || filter.substateStkRes.unit_obj.name === '' || filter.substateStkRes.unit_obj.name === 'm' || filter.substateStkRes.unit_obj.name === 'm2' || filter.substateStkRes.unit_obj.name === 'm3'
+                                        || filter.substateStkRes.unit_obj.name === 'ft' || filter.substateStkRes.unit_obj.name === 'ft2' || filter.substateStkRes.unit_obj.name === 'ft3' || filter.substateStkRes.unit_obj.name === 'T')">
+                            <div class="inputLabel" style="padding-top: 10px;">
+                                <span class="all-name">Length</span>
+                            </div>
+                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.length" type="number">
+                        </label>
+                        <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateStkRes.calculation && (!filter.substateStkRes.unit_obj || filter.substateStkRes.unit_obj.name === '' || filter.substateStkRes.unit_obj.name === 'm2' || filter.substateStkRes.unit_obj.name === 'm3'
+                                        || filter.substateStkRes.unit_obj.name === 'ft2' || filter.substateStkRes.unit_obj.name === 'ft3' || filter.substateStkRes.unit_obj.name === 'T')">
+                            <div class="inputLabel" style="padding-top: 10px;">
+                                <span class="all-name">Width</span>
+                            </div>
+                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.width" type="number">
+                        </label>
+                        <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateStkRes.calculation && (!filter.substateStkRes.unit_obj || filter.substateStkRes.unit_obj.name === '' || filter.substateStkRes.unit_obj.name === 'm3'
+                                        || filter.substateStkRes.unit_obj.name === 'ft3' || filter.substateStkRes.unit_obj.name === 'T')">
+                            <div class="inputLabel" style="padding-top: 10px;">
+                                <span class="all-name">Depth</span>
+                            </div>
+                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.depth" type="number">
+                        </label>
+                        <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateStkRes.calculation && (!filter.substateStkRes.unit_obj || filter.substateStkRes.unit_obj.name === '' || filter.substateStkRes.unit_obj.name === 'Days')">
+                            <div class="inputLabel" style="padding-top: 10px;">
+                                <span class="all-name">Days</span>
+                            </div>
+                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.days" type="number">
+                        </label>
+                        <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateStkRes.calculation && (!filter.substateStkRes.unit_obj || filter.substateStkRes.unit_obj.name === '' || filter.substateStkRes.unit_obj.name === 'Days')">
+                            <div class="inputLabel" style="padding-top: 10px;">
+                                <span class="all-name">Number of</span>
+                            </div>
+                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.number_of" type="number">
+                        </label>
+                        <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateStkRes.calculation && (!filter.substateStkRes.unit_obj || filter.substateStkRes.unit_obj.name === '' || filter.substateStkRes.unit_obj.name === 'T')">
+                            <div class="inputLabel" style="padding-top: 10px;">
+                                <span class="all-name">T/m3</span>
+                            </div>
+                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.tm3" type="number">
+                        </label>
+                        <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateStkRes.calculation && (!filter.substateStkRes.unit_obj || filter.substateStkRes.unit_obj.name === '' || filter.substateStkRes.unit_obj.name === 'm' || filter.substateStkRes.unit_obj.name === 'm2' || filter.substateStkRes.unit_obj.name === 'm3'
+                                        || filter.substateStkRes.unit_obj.name === 'ft' || filter.substateStkRes.unit_obj.name === 'ft2' || filter.substateStkRes.unit_obj.name === 'ft3' || filter.substateStkRes.unit_obj.name === 'T')">
+                            <div class="inputLabel" style="padding-top: 10px;">
+                                <span class="all-name">Wastage</span>
+                            </div>
+                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.wastage"type="number" >
+                        </label>
+
+                        <label class="item item-input item-stacked-label calm-border">
+                            <div class="inputLabel" style="padding-top: 10px;">
+                                <span class="all-name">Quantity</span>
+                            </div>
+                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" type="number" ng-model="filter.substateStkRes.quantity">
+                        </label>
+                        <label class="item item-input item-stacked-label calm-border">
+                            <div class="inputLabel" style="padding-top: 10px;">
+                                <span class="all-name">Direct cost</span>
+                            </div>
+                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" type="number" ng-model="filter.substateStkRes.direct_cost">
+                        </label>
+                    </div>  
+                </div>                             
+            </div>                   
+        </div>
+    </form>                
+</div>
+<div class="list" ng-if="filter.substate && !filter.substateStk && filter.substateRes && !filter.substateStkRes">
+    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substateRes = null;
+        filter.actionBtnShow = true">
+        <div class="back-arrow ion-ios-arrow-left"></div>
+        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
+            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle">Save</span></div>
+    </a>
+    <div class="formTitle">
+        <div class="header-prj-text"> Design: {{formData.name}}</div>
+        <div class="blue-label">{{formData.id}}</div>
+    </div>
+    <form class="form-container-bgd">
+        <div style="position: relative; margin-bottom:5px">
+            <div class="item-stable item fs all-field-header isOpen" style="width:100%">
+                <div class="fieldSet-name" ng-if="filter.substate.name">{{filter.substate.name}}</div>
+                <div class="fieldSet-name" ng-if="!filter.substate.name">Pay-item field: Resource</div>
+            </div>
+            <div class="blue-dropArrow"></div>
+            <div class="formContent">               
+                <div class="calm-border">
+                    <label class="item item-input item-stacked-label calm-border">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Name</span>
+                        </div>                                    
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.name" >
+                    </label>
+                    <label class="item item-input item-stacked-label calm-border">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Product ref</span>
+                        </div>                                    
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.product_ref" >
+                    </label>
+                    <label class="item item-input item-stacked-label calm-border">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Resource type</span>
+                        </div>
+                        <select class="form-select" ng-options="option as option.name for option in resource_type_list track by option.id" ng-model="filter.substateRes.resource_type_obj" ng-init="filter.substateRes.resource_type_obj = resource_type_list[0]"></select>
+                    </label>
+                    <label class="item item-input item-stacked-label calm-border">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Unit</span>
+                        </div>
+                        <select class="form-select" ng-options="option as option.name for option in unit_list track by option.id" ng-model="filter.substateRes.unit_obj" ng-init="filter.substateRes.unit_obj = unit_list[0]"></select>
+                    </label>
+
+                    <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateRes.calculation && (!filter.substateRes.unit_obj || filter.substateRes.unit_obj.name === '' || filter.substateRes.unit_obj.name === 'm' || filter.substateRes.unit_obj.name === 'm2' || filter.substateRes.unit_obj.name === 'm3'
+                                    || filter.substateRes.unit_obj.name === 'ft' || filter.substateRes.unit_obj.name === 'ft2' || filter.substateRes.unit_obj.name === 'ft3' || filter.substateRes.unit_obj.name === 'T')">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Length</span>
+                        </div>
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.length" type="number">
+                    </label>
+                    <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateRes.calculation && (!filter.substateRes.unit_obj || filter.substateRes.unit_obj.name === '' || filter.substateRes.unit_obj.name === 'm2' || filter.substateRes.unit_obj.name === 'm3'
+                                    || filter.substateRes.unit_obj.name === 'ft2' || filter.substateRes.unit_obj.name === 'ft3' || filter.substateRes.unit_obj.name === 'T')">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Width</span>
+                        </div>
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.width" type="number">
+                    </label>
+                    <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateRes.calculation && (!filter.substateRes.unit_obj || filter.substateRes.unit_obj.name === '' || filter.substateRes.unit_obj.name === 'm3'
+                                    || filter.substateRes.unit_obj.name === 'ft3' || filter.substateRes.unit_obj.name === 'T')">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Depth</span>
+                        </div>
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.depth" type="number">
+                    </label>
+                    <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateRes.calculation && (!filter.substateRes.unit_obj || filter.substateRes.unit_obj.name === '' || filter.substateRes.unit_obj.name === 'Days')">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Days</span>
+                        </div>
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.days" type="number">
+                    </label>
+                    <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateRes.calculation && (!filter.substateRes.unit_obj || filter.substateRes.unit_obj.name === '' || filter.substateRes.unit_obj.name === 'Days')">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Number of</span>
+                        </div>
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.number_of" type="number">
+                    </label>
+                    <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateRes.calculation && (!filter.substateRes.unit_obj || filter.substateRes.unit_obj.name === '' || filter.substateRes.unit_obj.name === 'T')">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">T/m3</span>
+                        </div>
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.tm3" type="number">
+                    </label>
+                    <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateRes.calculation && (!filter.substateRes.unit_obj || filter.substateRes.unit_obj.name === '' || filter.substateRes.unit_obj.name === 'm' || filter.substateRes.unit_obj.name === 'm2' || filter.substateRes.unit_obj.name === 'm3'
+                                    || filter.substateRes.unit_obj.name === 'ft' || filter.substateRes.unit_obj.name === 'ft2' || filter.substateRes.unit_obj.name === 'ft3' || filter.substateRes.unit_obj.name === 'T')">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Wastage</span>
+                        </div>
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.wastage"type="number" >
+                    </label>
+
+                    <label class="item item-input item-stacked-label calm-border">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Quantity</span>
+                        </div>
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" type="number" ng-model="filter.substateRes.quantity">
+                    </label>
+                    <label class="item item-input item-stacked-label calm-border">
+                        <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Direct cost</span>
+                        </div>
+                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" type="number" ng-model="filter.substateRes.direct_cost">
+                    </label>
+                </div>                             
+            </div>                   
+        </div>
+    </form>                
+</div>

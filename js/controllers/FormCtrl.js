@@ -3,7 +3,7 @@ angular.module($APP.name).controller('FormCtrl', [
     'FormInstanceService',
     '$timeout',
     'FormUpdateService',
-    '$location',
+    'StaffService',
     '$rootScope',
     'CacheFactory',
     '$ionicScrollDelegate',
@@ -17,7 +17,9 @@ angular.module($APP.name).controller('FormCtrl', [
     '$ionicSideMenuDelegate',
     '$ionicHistory',
     'ResourceService',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ConvertersService, $ionicModal, $cordovaCamera, $state, SyncService, $ionicSideMenuDelegate, $ionicHistory, ResourceService) {
+    'PayitemService',
+    'SchedulingService',
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, StaffService, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ConvertersService, $ionicModal, $cordovaCamera, $state, SyncService, $ionicSideMenuDelegate, $ionicHistory, ResourceService, PayitemService, SchedulingService) {
         $scope.$on('$ionicView.enter', function () {
             $ionicHistory.clearHistory();
             $ionicSideMenuDelegate.canDragContent(false);
@@ -33,7 +35,8 @@ angular.module($APP.name).controller('FormCtrl', [
         }
 
         $scope.filter = {
-            state: 'form'
+            state: 'form',
+            actionBtn: false
         };
         $scope.items = [
             {display: 'Hello'},
@@ -97,6 +100,97 @@ angular.module($APP.name).controller('FormCtrl', [
             };
             $scope.filter.substate = $scope.resourceField.resources[0];
         }
+        if ($scope.formData.pay_item_field_design) {
+            $scope.payitemField = {
+                "id": 0,
+                'register_nominated': $scope.formData.pay_item_field_design.register_nominated,
+                'display_subtask': $scope.formData.pay_item_field_design.display_subtask,
+                'display_resources': $scope.formData.pay_item_field_design.display_resources,
+                "pay_items": [
+                    {
+                        "description": "", "reference": "", "unit": "", "quantity": "", "open": true,
+                        "child": true,
+                        "subtasks": [], "resources": [
+                        ]
+                    }
+                ]
+            };
+            $scope.filter.substate = $scope.payitemField.pay_items[0];
+        }
+        if ($scope.formData.scheduling_field_design) {
+            $scope.payitemField = {
+                "id": 0,
+                'display_subtask': $scope.formData.scheduling_field_design.true,
+                "pay_items": [
+                    {
+                        "description": "", "reference": "", "unit": "", "quantity": "", "open": true,
+                        "child": true,
+                        "subtasks": [], "resources": [
+                        ]
+                    }
+                ]
+            };
+            $scope.filter.substate = $scope.payitemField.pay_items[0];
+        }
+        if ($scope.formData.staff_field_design) {
+            $scope.staffField = {
+                'id': 0,
+                'withTimes': $scope.formData.staff_field_design.withTimes,
+                'resources': [{
+                        name: "",
+                        customerId: 0,
+                        employer_name: "",
+                        staff_role: "",
+                        product_ref: "",
+                        unit_name: "",
+                        direct_cost: 0.0,
+                        resource_type_name: "",
+                        resource_margin: 0,
+                        telephone_number: "",
+                        email: "",
+                        safety_card_number: "",
+                        expiry_date: "",
+                        staff: true,
+                        current_day: "",
+                        start_time: "",
+                        break_time: "",
+                        finish_time: "",
+                        total_time: "",
+                        comment: "",
+                        open: true,
+                        vat: 0.0
+                    }
+                ]
+            };
+            $scope.filter.substate = $scope.staffField.resources[0];
+        }
+        $scope.actionBtnPayitem = function () {
+            if ($scope.filter.state === 'payitem' || $scope.filter.state === 'scheduling') {
+                if ($scope.filter.substate && !$scope.filter.substateStk) {
+                    if ($scope.filter.substate.resources.length === 0 && $scope.filter.substate.subtasks.length === 0) {
+                        $scope.filter.actionBtn = !$scope.filter.actionBtn;
+                    } else {
+                        if ($scope.filter.substate.resources.length !== 0 && $scope.filter.substate.subtasks.length === 0) {
+                            $scope.addResourcePi();
+                        } else {
+                            $scope.addSubtask();
+                        }
+                    }
+                } else {
+                    if ($scope.filter.substateStk) {
+                        $scope.addResourceInSubtask();
+                    } else {
+                        $scope.addPayitem();
+                    }
+                }
+            }
+            if ($scope.filter.state === 'resource') {
+                $scope.addResource();
+            }
+            if ($scope.filter.state === 'staff') {
+                $scope.addStaff();
+            }
+        };
         $scope.addResource = function () {
             $scope.resourceField.resources.push({
                 "id": 0,
@@ -121,15 +215,136 @@ angular.module($APP.name).controller('FormCtrl', [
                 "open": true
             });
             $scope.filter.substate = $scope.resourceField.resources[$scope.resourceField.resources.length - 1];
+        };
+        $scope.addStaff = function () {
+            if ($scope.staffField) {
+                $scope.staffField.resources.push({
+                    name: "",
+                    customerId: 0,
+                    employer_name: "",
+                    staff_role: "",
+                    product_ref: "",
+                    unit_name: "",
+                    direct_cost: 0.0,
+                    resource_type_name: "",
+                    resource_margin: 0,
+                    telephone_number: "",
+                    email: "",
+                    safety_card_number: "",
+                    expiry_date: "",
+                    staff: true,
+                    current_day: "",
+                    start_time: "",
+                    break_time: "",
+                    finish_time: "",
+                    total_time: "",
+                    comment: "",
+                    vat: 0.0
+                })
+                $scope.filter.substate = $scope.staffField.resources[ $scope.staffField.resources.length - 1];
+            }
         }
+        $scope.addPayitem = function () {
+            $scope.payitemField.pay_items.push({
+                "description": "",
+                "reference": "",
+                "unit": "",
+                "quantity": "",
+                "subtasks": [],
+                "resources": []
+            })
+            $scope.filter.substate = $scope.payitemField.pay_items[$scope.payitemField.pay_items.length - 1]
+        }
+        $scope.addSubtask = function () {
+            if ($scope.filter.substate && $scope.filter.substate.resources.length === 0) {
+                $scope.filter.substate.subtasks.push({
+                    "description": "",
+                    "resources": [{
+                            "open": false,
+                            "resource_id": 0,
+                            "position": 0,
+                            "name": "",
+                            "product_ref": "",
+                            "unit_id": 0,
+                            "unit_name": "",
+                            "resource_type_id": 0,
+                            "resource_type_name": "",
+                            "direct_cost": 0,
+                            "quantity": 0,
+                            "resource_margin": 0,
+                            "current_day": "",
+                            "stage_id": 0,
+                            "stage_name": "",
+                            "calculation": true,
+                            "vat": 0
+                        }
+                    ]
+                });
+                $scope.filter.substateStk = $scope.filter.substate.subtasks[$scope.filter.substate.subtasks.length - 1]
+            }
+        }
+        $scope.addResourcePi = function () {
+            if ($scope.filter.substate && $scope.filter.substate.subtasks.length === 0) {
+                $scope.filter.substate.resources.push({
+                    "open": false,
+                    "resource_id": 0,
+                    "position": 0,
+                    "name": "",
+                    "product_ref": "",
+                    "unit_id": 0,
+                    "unit_name": "",
+                    "resource_type_id": 0,
+                    "resource_type_name": "",
+                    "direct_cost": 0,
+                    "quantity": 0,
+                    "resource_margin": 0,
+                    "current_day": "",
+                    "stage_id": 0,
+                    "stage_name": "",
+                    "calculation": true,
+                    "vat": 0
+                });
+                $scope.filter.substateRes = $scope.filter.substate.resources[$scope.filter.substate.resources.length - 1]
+            }
+        }
+        $scope.addResourceInSubtask = function () {
+            if ($scope.filter.substateStk) {
+                $scope.filter.substateStk.resources.push({
+                    "open": false,
+                    "resource_id": 0,
+                    "position": 0,
+                    "name": "",
+                    "product_ref": "",
+                    "unit_id": 0,
+                    "unit_name": "",
+                    "resource_type_id": 0,
+                    "resource_type_name": "",
+                    "direct_cost": 0,
+                    "quantity": 0,
+                    "resource_margin": 0,
+                    "current_day": "",
+                    "stage_id": 0,
+                    "stage_name": "",
+                    "vat": 0,
+                    "calculation": true,
+                });
+                $scope.filter.substateStkRes = $scope.filter.substateStk.resources[$scope.filter.substateStk.resources.length - 1];
+            }
+        }
+
         $scope.$watch('filter.substate', function (newValue, oldValue) {
-            if (newValue === null) {
+            if (newValue === null && $scope.filter.state === 'resource') {
                 $scope.resourceField.total_cost = 0;
                 angular.forEach($scope.resourceField.resources, function (res) {
                     $scope.resourceField.total_cost += res.quantity * res.direct_cost;
                 });
             }
         });
+
+
+
+
+
 
 
 
@@ -187,176 +402,6 @@ angular.module($APP.name).controller('FormCtrl', [
             $scope.picModal.remove();
         };
 
-
-        $scope.submit = function () {
-            var confirmPopup = $ionicPopup.confirm({
-                title: 'New form',
-                template: 'Are you sure you want to submit the data?'
-            });
-            confirmPopup.then(function (res) {
-                if (res) {
-                    if ($scope.picModal) {
-                        $scope.picModal.remove();
-                        if ($scope.picModal) {
-                            delete $scope.picModal;
-                        }
-                    }
-                    console.log($scope)
-                    $timeout(function () {
-                        var formUp = $ionicPopup.alert({
-                            title: "Submitting",
-                            template: "<center><ion-spinner icon='android'></ion-spinner></center>",
-                            content: "",
-                            buttons: []
-                        });
-                        if ($scope.formData.resource_field_design) {
-                            angular.forEach($scope.resourceField.resources, function (item) {
-                                if (item.unit_obj) {
-                                    item.unit_id = item.unit_obj.id;
-                                    item.unit_name = item.unit_obj.name;
-                                }
-                                if (item.res_type_obj) {
-                                    item.resource_type_id = item.res_type_obj.id;
-                                    item.resource_type_name = item.res_type_obj.name;
-                                }
-                                if (item.stage_obj) {
-                                    item.stage_id = item.stage_obj.id;
-                                    item.stage_name = item.stage_obj.name;
-                                }
-                                if (item.absenteeism_obj) {
-                                    item.abseteeism_reason_name = item.absenteeism_obj.reason;
-                                }
-                                if (item.current_day_obj) {
-//                                            var date = new Date(item.current_day_obj);
-//                                            item.current_day = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
-                                    item.current_day = item.current_day_obj;
-                                }
-                            });
-                            ResourceService.add_field($scope.resourceField).then(function (x) {
-                                $scope.formData.resource_field_id = x.id;
-                                FormInstanceService.create($scope.formData, $scope.imgURI).then(
-                                        function successCallback(data) {
-                                            if (data && data.data && data.data.message) {
-                                                $timeout(function () {
-                                                    formUp.close();
-                                                    $timeout(function () {
-                                                        var alertPopup3 = $ionicPopup.alert({
-                                                            title: 'Submision failed.',
-                                                            template: 'You have not permission to do this operation'
-                                                        });
-                                                        alertPopup3.then(function (res) {
-                                                            $rootScope.$broadcast('sync.todo');
-                                                        });
-                                                    });
-                                                });
-                                            }
-                                            else {
-                                                if (data && data.status !== 0 && data.status !== 502 && data.status !== 403 && data.status !== 400) {
-                                                    $rootScope.formId = data.id;
-                                                    if (!data.message && data.status !== 0) {
-                                                        FormInstanceService.get($rootScope.formId).then(function (data) {
-                                                            $rootScope.rootForm = data;
-                                                            formUp.close();
-                                                            $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
-                                                        });
-                                                    }
-                                                }
-                                                else {
-                                                    if (data && data.status === 400) {
-                                                        $timeout(function () {
-                                                            formUp.close();
-                                                            $timeout(function () {
-                                                                var alertPopup2 = $ionicPopup.alert({
-                                                                    title: 'Submision failed.',
-                                                                    template: 'Incorrect data, try again'
-                                                                });
-                                                                alertPopup2.then(function (res) {
-                                                                });
-                                                            });
-                                                        });
-                                                    }
-                                                    else {
-                                                        $timeout(function () {
-                                                            formUp.close();
-                                                            $timeout(function () {
-                                                                var alertPopup = $ionicPopup.alert({
-                                                                    title: 'Submision failed.',
-                                                                    template: 'You are offline. Submit forms by syncing next time you are online'
-                                                                }).then(function (res) {
-                                                                    $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
-                                                                });
-                                                            });
-                                                        });
-                                                    }
-
-                                                }
-                                            }
-                                        });
-                            });
-                        }
-                        FormInstanceService.create($scope.formData, $scope.imgURI).then(
-                                function successCallback(data) {
-                                    if (data && data.data && data.data.message) {
-                                        $timeout(function () {
-                                            formUp.close();
-                                            $timeout(function () {
-                                                var alertPopup3 = $ionicPopup.alert({
-                                                    title: 'Submision failed.',
-                                                    template: 'You have not permission to do this operation'
-                                                });
-                                                alertPopup3.then(function (res) {
-                                                    $rootScope.$broadcast('sync.todo');
-                                                });
-                                            });
-                                        });
-                                    }
-                                    else {
-                                        if (data && data.status !== 0 && data.status !== 502 && data.status !== 403 && data.status !== 400) {
-                                            $rootScope.formId = data.id;
-                                            if (!data.message && data.status !== 0) {
-                                                FormInstanceService.get($rootScope.formId).then(function (data) {
-                                                    $rootScope.rootForm = data;
-                                                    formUp.close();
-                                                    $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
-                                                });
-                                            }
-                                        }
-                                        else {
-                                            if (data && data.status === 400) {
-                                                $timeout(function () {
-                                                    formUp.close();
-                                                    $timeout(function () {
-                                                        var alertPopup2 = $ionicPopup.alert({
-                                                            title: 'Submision failed.',
-                                                            template: 'Incorrect data, try again'
-                                                        });
-                                                        alertPopup2.then(function (res) {
-                                                        });
-                                                    });
-                                                });
-                                            }
-                                            else {
-                                                $timeout(function () {
-                                                    formUp.close();
-                                                    $timeout(function () {
-                                                        var alertPopup = $ionicPopup.alert({
-                                                            title: 'Submision failed.',
-                                                            template: 'You are offline. Submit forms by syncing next time you are online'
-                                                        }).then(function (res) {
-                                                            $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
-                                                        });
-                                                    });
-                                                });
-                                            }
-
-                                        }
-                                    }
-                                });
-                    });
-                }
-
-            });
-        };
 
 
 
@@ -526,5 +571,278 @@ angular.module($APP.name).controller('FormCtrl', [
             };
             img.src = url;
         };
+
+
+        $scope.actionBtnCalculation = function () {
+            if ($scope.filter.substateRes) {
+                $scope.filter.substateRes.calculation = !$scope.filter.substateRes.calculation;
+            }
+            if ($scope.filter.substateStkRes) {
+                $scope.filter.substateStkRes.calculation = !$scope.filter.substateStkRes.calculation;
+            }
+        }
+
+        $scope.submit = function () {
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'New form',
+                template: 'Are you sure you want to submit the data?'
+            });
+            confirmPopup.then(function (res) {
+                if (res) {
+                    if ($scope.picModal) {
+                        $scope.picModal.remove();
+                        if ($scope.picModal) {
+                            delete $scope.picModal;
+                        }
+                    }
+                    console.log($scope)
+                    $timeout(function () {
+                        if ($scope.formData.resource_field_design) {
+                            angular.forEach($scope.resourceField.resources, function (item) {
+                                if (item.unit_obj) {
+                                    item.unit_id = item.unit_obj.id;
+                                    item.unit_name = item.unit_obj.name;
+                                }
+                                if (item.res_type_obj) {
+                                    item.resource_type_id = item.res_type_obj.id;
+                                    item.resource_type_name = item.res_type_obj.name;
+                                }
+                                if (item.stage_obj) {
+                                    item.stage_id = item.stage_obj.id;
+                                    item.stage_name = item.stage_obj.name;
+                                }
+                                if (item.absenteeism_obj) {
+                                    item.abseteeism_reason_name = item.absenteeism_obj.reason;
+                                }
+                                if (item.current_day_obj) {
+//                                            var date = new Date(item.current_day_obj);
+//                                            item.current_day = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+                                    item.current_day = item.current_day_obj;
+                                }
+                            });
+                            ResourceService.add_field($scope.resourceField).then(function (x) {
+                                $scope.formData.resource_field_id = x.id;
+                                $scope.fastSave($scope.formData, $scope.imgURI);
+                            });
+                        }
+                        if ($scope.formData.pay_item_field_design) {
+                            $scope.payitemField.display_subtasks = $scope.formData.pay_item_field_design.display_subtasks;
+                            $scope.payitemField.display_resources = $scope.formData.pay_item_field_design.display_resources;
+                            $scope.payitemField.register_nominated = $scope.formData.pay_item_field_design.register_nominated;
+                            angular.forEach($scope.payitemField.pay_items, function (item) {
+                                angular.forEach(item.resources, function (res) {
+                                    if (res.unit_obj) {
+                                        res.unit_id = res.unit_obj.id;
+                                        res.unit_name = res.unit_obj.name;
+                                    }
+                                    if (res.res_type_obj) {
+                                        res.resource_type_id = res.res_type_obj.id;
+                                        res.resource_type_name = res.res_type_obj.name;
+                                    }
+                                    if (res.absenteeism_obj) {
+                                        res.abseteeism_reason_name = res.absenteeism_obj.reason;
+                                    }
+                                    if (res.current_day_obj) {
+//                                                var date = new Date(res.current_day_obj);
+//                                                res.current_day = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+                                        res.current_day = res.current_day_obj;
+                                    }
+                                    if (res.expiry_date_obj) {
+                                        var date = new Date(res.expiry_date_obj);
+                                        res.expiry_date = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+                                    }
+                                });
+                                angular.forEach(item.subtasks, function (subtask) {
+                                    angular.forEach(subtask.resources, function (res) {
+                                        if (res.unit_obj) {
+                                            res.unit_id = res.unit_obj.id;
+                                            res.unit_name = res.unit_obj.name;
+                                        }
+                                        if (res.res_type_obj) {
+                                            res.resource_type_id = res.res_type_obj.id;
+                                            res.resource_type_name = res.res_type_obj.name;
+                                        }
+                                        if (res.absenteeism_obj) {
+                                            res.abseteeism_reason_name = res.absenteeism_obj.reason;
+                                        }
+                                        if (res.current_day_obj) {
+//                                                    var date = new Date(res.current_day_obj);
+//                                                    res.current_day = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+                                            res.current_day = res.current_day_obj;
+                                        }
+                                        if (res.expiry_date_obj) {
+                                            var date = new Date(res.expiry_date_obj);
+                                            res.expiry_date = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+                                        }
+                                    });
+                                });
+                            });
+                            PayitemService.add_field($scope.payitemField).then(function (x) {
+                                $scope.formData.pay_item_field_id = x.id;
+                                $scope.fastSave($scope.formData, $scope.imgURI);
+                            });
+                        }
+                        if ($scope.formData.scheduling_field_design) {
+                            $scope.payitemField.display_subtasks = $scope.formData.scheduling_field_design.display_subtasks;
+                            $scope.payitemField.display_resources = $scope.formData.scheduling_field_design.display_resources;
+                            $scope.payitemField.register_nominated = $scope.formData.scheduling_field_design.register_nominated;
+                            angular.forEach($scope.payitemField.pay_items, function (item) {
+                                angular.forEach(item.resources, function (res) {
+                                    if (res.unit_obj) {
+                                        res.unit_id = res.unit_obj.id;
+                                        res.unit_name = res.unit_obj.name;
+                                    }
+                                    if (res.res_type_obj) {
+                                        res.resource_type_id = res.res_type_obj.id;
+                                        res.resource_type_name = res.res_type_obj.name;
+                                    }
+                                    if (res.absenteeism_obj) {
+                                        res.abseteeism_reason_name = res.absenteeism_obj.reason;
+                                    }
+                                    if (res.current_day_obj) {
+//                                                var date = new Date(res.current_day_obj);
+//                                                res.current_day = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+                                        res.current_day = res.current_day_obj;
+                                    }
+                                    if (res.expiry_date_obj) {
+                                        var date = new Date(res.expiry_date_obj);
+                                        res.expiry_date = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+                                    }
+                                });
+                                angular.forEach(item.subtasks, function (subtask) {
+                                    angular.forEach(subtask.resources, function (res) {
+                                        if (res.unit_obj) {
+                                            res.unit_id = res.unit_obj.id;
+                                            res.unit_name = res.unit_obj.name;
+                                        }
+                                        if (res.res_type_obj) {
+                                            res.resource_type_id = res.res_type_obj.id;
+                                            res.resource_type_name = res.res_type_obj.name;
+                                        }
+                                        if (res.absenteeism_obj) {
+                                            res.abseteeism_reason_name = res.absenteeism_obj.reason;
+                                        }
+                                        if (res.current_day_obj) {
+//                                    item.current_day = item.current_day_obj.getDate() + '-' + (item.current_day_obj.getMonth() + 1) + '-' + item.current_day_obj.getFullYear();
+                                            res.current_day = res.current_day_obj.getTime();
+                                        }
+                                        if (res.expiry_date_obj) {
+                                            var date = new Date(res.expiry_date_obj);
+                                            res.expiry_date = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+                                        }
+                                    });
+                                });
+                            });
+                            SchedulingService.add_field($scope.payitemField).then(function (x) {
+                                $scope.formData.scheduling_field_id = x.id;
+                                $scope.fastSave($scope.formData, $scope.imgURI);
+                            });
+                        }
+                        if ($scope.formData.staff_field_design) {
+                            angular.forEach($scope.staffField.resources, function (item) {
+                                if (item.res_type_obj) {
+                                    item.resource_type_id = item.res_type_obj.id;
+                                    item.resource_type_name = item.res_type_obj.name;
+                                }
+                                if (item.absenteeism_obj) {
+                                    item.abseteeism_reason_name = item.absenteeism_obj.reason;
+                                    item.absenteeism_obj.reason;
+                                }
+                                if (item.current_day_obj) {
+//                                    item.current_day = item.current_day_obj.getDate() + '-' + (item.current_day_obj.getMonth() + 1) + '-' + item.current_day_obj.getFullYear();
+                                    item.current_day = item.current_day_obj.getTime();
+                                }
+                                if (item.expiry_date_obj) {
+//                                    item.expiry_date = item.expiry_date_obj.getDate() + '-' + (item.expiry_date_obj.getMonth() + 1) + '-' + item.expiry_date_obj.getFullYear();
+                                    item.expiry_date = item.expiry_date_obj.getFullYear() + '-' + (item.expiry_date_obj.getMonth() + 1) + '-' + item.expiry_date_obj.getDate();
+                                }
+                                if (item.start_time_obj) {
+                                    item.start_time = item.start_time_obj.getHours() + ':' + item.start_time_obj.getMinutes();
+                                }
+                                if (item.break_time_obj) {
+                                    item.break_time = item.break_time_obj.getHours() + ':' + item.break_time_obj.getMinutes();
+                                }
+                                if (item.finish_time_obj) {
+                                    item.finish_time = item.finish_time_obj.getHours() + ':' + item.finish_time_obj.getMinutes();
+                                }
+                            });
+                            console.log($scope.staffField)
+//                            StaffService.add_field($scope.staffField).then(function (x) {
+//                                $scope.formData.staff_field_id = x.id;
+//                                $scope.fastSave($scope.formData, $scope.imgURI);
+//                            });
+                        }
+                        if (!$scope.formData.resource_field_design && !$scope.formData.scheduling_field_design && !$scope.formData.pay_item_field_design && !$scope.formData.staff_field_design) {
+                            $scope.fastSave($scope.formData, $scope.imgURI);
+                        }
+                    });
+                }
+
+            });
+        };
+
+        $scope.fastSave = function (datax, img) {
+            var formUp = $ionicPopup.alert({
+                title: "Submitting",
+                template: "<center><ion-spinner icon='android'></ion-spinner></center>",
+                content: "",
+                buttons: []
+            });
+            FormInstanceService.create(datax, img).then(
+                    function successCallback(data) {
+                        if (data && data.data && data.data.message) {
+                            $timeout(function () {
+                                formUp.close();
+                                $timeout(function () {
+                                    var alertPopup3 = $ionicPopup.alert({
+                                        title: 'Submision failed.',
+                                        template: 'You have not permission to do this operation'
+                                    });
+                                    alertPopup3.then(function (res) {
+                                        $rootScope.$broadcast('sync.todo');
+                                    });
+                                });
+                            });
+                        } else {
+                            if (data && data.status !== 0 && data.status !== 502 && data.status !== 403 && data.status !== 400) {
+                                $rootScope.formId = data.id;
+                                if (!data.message && data.status !== 0) {
+                                    FormInstanceService.get($rootScope.formId).then(function (data) {
+                                        $rootScope.rootForm = data;
+                                        formUp.close();
+                                        $state.go('app.formInstance', {'projectId': $rootScope.projectId, 'type': 'form', 'formId': data.id});
+                                    });
+                                }
+                            } else {
+                                if (data && data.status === 400) {
+                                    $timeout(function () {
+                                        formUp.close();
+                                        $timeout(function () {
+                                            var alertPopup2 = $ionicPopup.alert({
+                                                title: 'Submision failed.',
+                                                template: 'Incorrect data, try again'
+                                            });
+                                            alertPopup2.then(function (res) {
+                                            });
+                                        });
+                                    });
+                                } else {
+                                    $timeout(function () {
+                                        formUp.close();
+                                        $timeout(function () {
+                                            var alertPopup = $ionicPopup.alert({
+                                                title: 'Submision failed.',
+                                                template: 'You are offline. Submit forms by syncing next time you are online'
+                                            }).then(function (res) {
+                                                $state.go('app.forms', {'projectId': $rootScope.projectId, 'categoryId': $scope.formData.category_id});
+                                            });
+                                        });
+                                    });
+                                }
+
+                            }
+                        }
+                    });
+        }
     }
 ]);
