@@ -104,7 +104,16 @@ textarea {
     background-color: #444;
     color: #fff;
 }
-
+.all-field-header .item-content{
+    background-color: #11C1F3!important;
+    border-color: #11C1F3!important;
+    border-radius: 5px!important;
+    position: relative;
+    color: #fff!important;
+    z-index: 9001;
+    width: 100%;
+    padding: 10px 10px!important;
+}
 .all-field-header {
     background-color: #11C1F3!important;
     border-color: #11C1F3!important;
@@ -465,10 +474,10 @@ textarea {
 .all-field-repeat {
     position: absolute;
     z-index: 10;
-    left: 5px;
-    top: 15px;
-    padding: 6px 10px;
-    background-color: #245985;
+    right: -1px;
+    top: 1px;
+    padding: 8px 11px 6px;
+    background-color: #11C1F3;
 }
 
 .help {
@@ -696,4 +705,22 @@ ion-refresher{
 }
 .inputLabel.checkbox-container {
     padding-bottom: 0px!important;
+}
+
+.white-placeholder{
+    ::-webkit-input-placeholder {
+        color: #fff;
+    }
+
+    :-moz-placeholder { /* Firefox 18- */
+        color: #fff;  
+    }
+
+    ::-moz-placeholder {  /* Firefox 19+ */
+        color: #fff;  
+    }
+
+    :-ms-input-placeholder {  
+        color: #fff;  
+    }
 }

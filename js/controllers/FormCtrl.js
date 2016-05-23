@@ -9,7 +9,7 @@ angular.module($APP.name).controller('FormCtrl', [
     '$ionicScrollDelegate',
     '$ionicPopup',
     '$stateParams',
-    'ConvertersService',
+    '$ionicListDelegate',
     '$ionicModal',
     '$cordovaCamera',
     '$state',
@@ -19,7 +19,7 @@ angular.module($APP.name).controller('FormCtrl', [
     'ResourceService',
     'PayitemService',
     'SchedulingService',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, StaffService, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, ConvertersService, $ionicModal, $cordovaCamera, $state, SyncService, $ionicSideMenuDelegate, $ionicHistory, ResourceService, PayitemService, SchedulingService) {
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, StaffService, $rootScope, CacheFactory, $ionicScrollDelegate, $ionicPopup, $stateParams, $ionicListDelegate, $ionicModal, $cordovaCamera, $state, SyncService, $ionicSideMenuDelegate, $ionicHistory, ResourceService, PayitemService, SchedulingService) {
         $scope.$on('$ionicView.enter', function () {
             $ionicHistory.clearHistory();
             $ionicSideMenuDelegate.canDragContent(false);
@@ -36,7 +36,8 @@ angular.module($APP.name).controller('FormCtrl', [
 
         $scope.filter = {
             state: 'form',
-            actionBtn: false
+            actionBtn: false,
+            edit: true
         };
         $scope.items = [
             {display: 'Hello'},
@@ -368,7 +369,6 @@ angular.module($APP.name).controller('FormCtrl', [
                 $scope.pictures.push(temparray);
             }
         };
-        $scope.trim();
         $scope.addSpot = function () {
             if ($scope.imgURI.length < 9) {
                 $scope.imgURI.push({"id": $scope.imgCounter, "base64String": "", "comment": "", "tags": "", "title": " ", "projectId": 0, "formInstanceId": 0});
@@ -430,6 +430,7 @@ angular.module($APP.name).controller('FormCtrl', [
             angular.copy(x, aux);
             aux.repeatable = true;
             aux.id = 0;
+            $ionicListDelegate.closeOptionButtons();
             for (var i = 0; i < aux.field_designs.length; i++) {
                 aux.field_designs[i].field_group_design_id = 0;
                 aux.field_designs[i].id = 0;
@@ -491,7 +492,13 @@ angular.module($APP.name).controller('FormCtrl', [
             $scope.formData = FormUpdateService.getProducts();
         });
 
-        $scope.takePicture = function (id) {
+        $scope.goPicture = function () {
+            $scope.trim();
+            $scope.filter.state = 'photos';
+            $scope.filter.substate = 'gallery'
+        }
+
+        $scope.takePicture = function () {
             var options = {
                 quality: 60,
                 destinationType: Camera.DestinationType.DATA_URL,
@@ -505,7 +512,18 @@ angular.module($APP.name).controller('FormCtrl', [
 
             $cordovaCamera.getPicture(options).then(function (imageData) {
                 $timeout(function () {
-                    $scope.item.base64String = imageData;
+                    $scope.imgURI.push({
+                        "id": 0,
+                        "base64String": imageData,
+                        "comment": "",
+                        "tags": "",
+                        "title": " ",
+                        "projectId": 0,
+                        "formInstanceId": 0
+                    })
+                    $scope.filter.picture = $scope.imgURI[$scope.imgURI.length - 1];
+                    $scope.filter.state = 'form';
+                    $scope.filter.substate = null;
                 });
             }, function (err) {
                 // An error occured. Show a message to the user
@@ -535,7 +553,18 @@ angular.module($APP.name).controller('FormCtrl', [
 
             $cordovaCamera.getPicture(options).then(function (imageUri) {
                 $timeout(function () {
-                    $scope.item.base64String = imageUri;
+                    $scope.imgURI.push({
+                        "id": 0,
+                        "base64String": imageData,
+                        "comment": "",
+                        "tags": "",
+                        "title": " ",
+                        "projectId": 0,
+                        "formInstanceId": 0
+                    })
+                    $scope.filter.picture = $scope.imgURI[$scope.imgURI.length - 1];
+                    filter.state = 'form';
+                    filter.substate = null;
                 });
 
             }, function (err) {
@@ -581,6 +610,23 @@ angular.module($APP.name).controller('FormCtrl', [
                 $scope.filter.substateStkRes.calculation = !$scope.filter.substateStkRes.calculation;
             }
         }
+        $scope.deleteElement = function (parent, data) {
+            var i = parent.indexOf(data);
+            if (data.subtasks) {
+                if (parent.length === 1) {
+                    parent.splice(i, 1);
+                    $scope.addPayitem();
+                } else {
+                    parent.splice(i, 1);
+                }
+            } else {
+                if (i !== -1) {
+                    parent.splice(i, 1);
+                }
+            }
+        }
+
+
 
         $scope.submit = function () {
             var confirmPopup = $ionicPopup.confirm({
@@ -630,6 +676,10 @@ angular.module($APP.name).controller('FormCtrl', [
                             $scope.payitemField.display_resources = $scope.formData.pay_item_field_design.display_resources;
                             $scope.payitemField.register_nominated = $scope.formData.pay_item_field_design.register_nominated;
                             angular.forEach($scope.payitemField.pay_items, function (item) {
+                                if (item.unit_obj) {
+                                    item.unit = item.unit_obj.name;
+                                    item.unit_id = item.unit_obj.id;
+                                }
                                 angular.forEach(item.resources, function (res) {
                                     if (res.unit_obj) {
                                         res.unit_id = res.unit_obj.id;
@@ -687,6 +737,10 @@ angular.module($APP.name).controller('FormCtrl', [
                             $scope.payitemField.display_resources = $scope.formData.scheduling_field_design.display_resources;
                             $scope.payitemField.register_nominated = $scope.formData.scheduling_field_design.register_nominated;
                             angular.forEach($scope.payitemField.pay_items, function (item) {
+                                if (item.unit_obj) {
+                                    item.unit = item.unit_obj.name;
+                                    item.unit_id = item.unit_obj.id;
+                                }
                                 angular.forEach(item.resources, function (res) {
                                     if (res.unit_obj) {
                                         res.unit_id = res.unit_obj.id;
@@ -767,10 +821,10 @@ angular.module($APP.name).controller('FormCtrl', [
                                 }
                             });
                             console.log($scope.staffField)
-//                            StaffService.add_field($scope.staffField).then(function (x) {
-//                                $scope.formData.staff_field_id = x.id;
-//                                $scope.fastSave($scope.formData, $scope.imgURI);
-//                            });
+                            StaffService.add_field($scope.staffField).then(function (x) {
+                                $scope.formData.staff_field_id = x.id;
+                                $scope.fastSave($scope.formData, $scope.imgURI);
+                            });
                         }
                         if (!$scope.formData.resource_field_design && !$scope.formData.scheduling_field_design && !$scope.formData.pay_item_field_design && !$scope.formData.staff_field_design) {
                             $scope.fastSave($scope.formData, $scope.imgURI);

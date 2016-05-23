@@ -1,16 +1,23 @@
+
 <ion-view title="Form Instance" id="form-instance" cache-view="false"
           ng-class="{'bar-hide': slideHeader, 'bar-helper':slideHeaderHelper}">
-    <ion-header-bar class="bar-subheader item-button-left test-item" ng-click="back()">
-        <div class="back-arrow ion-ios-arrow-left"></div>
-        <div class="header-prj-text">{{formData.category}}</div>
-    </ion-header-bar>
+    <!--    <ion-header-bar class="bar-subheader item-button-left test-item" ng-click="back()">
+            <div class="back-arrow ion-ios-arrow-left"></div>
+            <div class="header-prj-text">{{formData.category}}</div>
+        </ion-header-bar>-->
+
 
     <ion-content scroll-watch class="blue-bgd">
         <div class="content">
-            <div class="list">
+
+            <div class="list" ng-if="filter.state === 'form'">
+                <a class="item item-button-left subHeader-form-bar" ng-click="back()">
+                    <div class="back-arrow ion-ios-arrow-left"></div>
+                    <div class="header-prj-text">{{formData.category}}</div>
+                </a>
                 <div class="formTitle">
                     <div class="header-prj-text"> Completed: {{formData.name}}</div>
-                    <div class="blue-label">{{formData.id}}</div>
+                    <div class="blue-label">{{formData.code}}</div>
                 </div>
                 <div class="form-container-bgd">
                     <div ng-repeat="fieldset in formData.field_group_instances" fs data="fieldset" style="margin-bottom: 5px">
@@ -27,6 +34,22 @@
                         <view-field class="item-accordion" data="field"
                                     ng-repeat="field in fieldset.field_instances"></view-field>
                     </div>
+                    <div class="item-stable item fs all-field-header" ng-if="formData.resource_field_id" ng-click="filter.state = 'resource'">
+                        <span class="add-pic-text">Resource field</span>    
+                        <button >Open</button>
+                    </div>
+                    <div class="item-stable item fs all-field-header" ng-if="formData.scheduling_field_id">
+                        <span class="add-pic-text">Scheduling field</span>    
+                        <button ng-click="filter.state = 'scheduling'">Open</button>
+                    </div>
+                    <div class="item-stable item fs all-field-header" ng-if="formData.pay_item_field_id">
+                        <span class="add-pic-text">Pay-item field</span>    
+                        <button ng-click="filter.state = 'payitem'">Open</button>
+                    </div>
+                    <div class="item-stable item fs all-field-header" ng-if="formData.staff_field_id">
+                        <span class="add-pic-text">Staff field</span>    
+                        <button ng-click="filter.state = 'staff'">Open</button>
+                    </div>
                     <div style="    padding: 5px;">
                         <button class="button button-block button-calm"
                                 ng-disabled="formData.permission < 2" ng-click="edit()">Edit
@@ -34,6 +57,11 @@
                     </div>
                 </div>
             </div>
+            <div class="list" ng-if="filter.state === 'resource'" ng-include="'view/form/_resource.html'"></div>
+            <div class="list" ng-if="filter.state === 'staff'" ng-include="'view/form/_staff.html'"></div>
+            <div class="list" ng-if="filter.state === 'scheduling'" ng-include="'view/form/_scheduling.html'"></div>
+            <div class="list" ng-if="filter.state === 'payitem'" ng-include="'view/form/_payitem.html'"></div>
+            <div class="list" ng-if="filter.state === 'gallery'" ng-include="'view/form/_gallery.html'"></div>
         </div>
     </ion-content>
 </ion-view>

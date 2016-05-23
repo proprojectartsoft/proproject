@@ -18,6 +18,8 @@ angular.module($APP.name).factory('SyncService', [
                 var projectsCache = CacheFactory.get('projectsCache');
                 var designsCache = CacheFactory.get('designsCache');
                 var resourcesCache = CacheFactory.get('resourcesCache');
+                var staffCache = CacheFactory.get('staffCache');
+                var restypesCache = CacheFactory.get('restypesCache');
                 var settingsCache = CacheFactory.get('settings');
                 var sync = CacheFactory.get('sync');
                 var photos = CacheFactory.get('photos');
@@ -84,7 +86,7 @@ angular.module($APP.name).factory('SyncService', [
                         });
                         projectsCache.removeAll();
                     }
-                    
+
                     if (designsCache) {
                         designsCache.removeAll();
                     } else {
@@ -94,7 +96,7 @@ angular.module($APP.name).factory('SyncService', [
                         });
                         designsCache.removeAll();
                     }
-                    
+
                     if (resourcesCache) {
                         resourcesCache.removeAll();
                     } else {

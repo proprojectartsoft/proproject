@@ -1,0 +1,51 @@
+<div class="list" ng-if="filter.substate === 'gallery'">
+    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = null;
+        filter.state = 'form'">
+        <div class="back-arrow ion-ios-arrow-left"></div>
+        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
+            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Photo Gallery</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" >Back</span></div>
+    </a>
+    <div ng-if="imgURI.length === 1 && !imgURI[0].base64String" style="text-align: center; padding-top:30vw">
+        <span class="all-ion-text" style="line-height: 15vw;font-size: 15vw; color:#4A6780">No images assigned</span>
+    </div>
+    <div ng-if="imgURI.length !== 1 || imgURI[0].base64String">
+        <div class="row" ng-repeat="picrow in pictures">
+            <div class="col" ng-repeat="pic in picrow">
+                <div class="img-box-container">
+                    <div class="img-box" ng-click="filter.substate = 'pic'; filter.picture = pic">
+                        <button ng-click="delSpot(pic.id)">x</button>
+                        <img ng-show="pic.base64String !== ''"
+                             data-ng-src="data:image/png;base64,{{pic.base64String}}">
+                        <img ng-show="pic.base64String === ''" ng-src="img/ic.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="list" ng-if="filter.substate === 'pic'">
+    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = 'gallery'">
+        <div class="back-arrow ion-ios-arrow-left"></div>
+        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
+            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Photo Gallery</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" >Done</span></div>
+    </a>
+    <!--<div ng-if="imgURI.length !== 1 || imgURI[0].base64String">-->
+    <div style="padding-bottom: 80px">
+        <img ng-show="filter.picture.base64String !== ''" data-ng-src ="data:image/png;base64,{{filter.picture.base64String}}" style="width:100%">
+        <div class="list" style="background-color:#fff;">
+            <label class="item item-input item-stacked-label white-placeholder" style="background-color: #11C1F3">
+                <span class="input-label" style="padding:10px 15px 0px ;">Title</span>
+                <input type="text" style="background-color: #11C1F3; color:#fff;" ng-model="filter.picture.title">
+            </label>
+            <label class="item item-input item-stacked-label" style="border-bottom: 1px solid #efefef">
+                <span class="input-label" style="color: #121d21 ; padding:10px 15px 0px ;" ng-model="filter.picture.tags">Tags</span>
+                <textarea ng-auto-expand></textarea>
+            </label>
+            <hr>
+            <label class="item item-input item-stacked-label" style="border-bottom: 1px solid #aaa">
+                <span class="input-label" style="color: #121d21; padding:10px 15px 0px ;" ng-model="filter.picture.comment">Comments</span>
+                <textarea ng-auto-expand></textarea>
+            </label>
+        </div>
+    </div>
+</div>
