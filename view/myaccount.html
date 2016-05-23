@@ -4,6 +4,32 @@
         <span class="header-prj-text">My account</span>
     </ion-header-bar>
     <ion-content class=" has-header padding">
-        <span class="all-ion-text" style="font-size: 15vw; color:#4A6780; text-align: center; padding-top:50vw; display:block;">My account</span>    
+        <ion-item nav-clear menu-close class="dark-bg" style="color:#fff; border: none">
+            <div class="user-circle-img" style="width:150px;height:150px">
+                <img src="img/new/user_default.svg" style="width: 100%; margin-left: 0px">
+            </div>
+            <div class="menu-name" style="font-size: 18px;"> {{currentUser.role_title}}</div>
+            <div class="menu-name" style="font-size: 18px;">Customer: {{profileHeader.customerName}}</div>
+            <div class="menu-email" style="font-size: 18px;"> {{currentUser.username}}</div>
+        </ion-item> 
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">First Name</span>
+            <input type="text" placeholder="-" ng-model="profileHeader.first_name">
+        </label>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Last Name</span>
+            <input type="text" placeholder="-" ng-model="profileHeader.last_name">
+        </label>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Job Title</span>
+            <input type="text" placeholder="-" ng-model="profileHeader.job_title">
+        </label>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Phone</span>
+            <input type="text" placeholder="-" ng-model="profileHeader.phone">
+        </label>
+        <button type="submit" ng-click="saveChanges()"
+                class="button button-block button-calm">Save changes
+        </button>
     </ion-content>
 </ion-view>

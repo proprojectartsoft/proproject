@@ -221,26 +221,21 @@ angular.module($APP.name).controller('EditCtrl', [
             $ionicSideMenuDelegate.canDragContent(false);
         });
         $scope.formData = angular.copy($rootScope.rootForm);
-        $scope.imgURI = [
-            {
-                "id": 0,
-                "base64String": "",
-                "comment": "",
-                "tags": "",
-                "title": " ",
-                "projectId": 0,
-                "formInstanceId": 0
-            }
-        ];
+        $scope.goPicture = function () {
+            $scope.trim();
+            $scope.filter.state = 'photos';
+            $scope.filter.substate = 'gallery'
+        }
         $scope.trim = function () {
             $scope.pictures = [];
             var i, j, temparray, chunk = 3;
-            for (i = 0, j = $scope.imgURI.length; i < j; i += chunk) {
-                temparray = $scope.imgURI.slice(i, i + chunk);
-                $scope.pictures.push(temparray);
+            if ($scope.imgURI) {
+                for (i = 0, j = $scope.imgURI.length; i < j; i += chunk) {
+                    temparray = $scope.imgURI.slice(i, i + chunk);
+                    $scope.pictures.push(temparray);
+                }
             }
         };
-        $scope.trim();
         $scope.addSpot = function () {
             if ($scope.imgURI.length < 9) {
                 $scope.imgURI.push({"id": $scope.imgCounter, "base64String": "", "comment": "", "tags": "", "title": " ", "projectId": 0, "formInstanceId": 0});
@@ -287,7 +282,18 @@ angular.module($APP.name).controller('EditCtrl', [
 
             $cordovaCamera.getPicture(options).then(function (imageData) {
                 $timeout(function () {
-                    $scope.item.base64String = imageData;
+                    $scope.imgURI.push({
+                        "id": 0,
+                        "base64String": imageData,
+                        "comment": "",
+                        "tags": "",
+                        "title": " ",
+                        "projectId": 0,
+                        "formInstanceId": 0
+                    })
+                    $scope.filter.picture = $scope.imgURI[$scope.imgURI.length - 1];
+                    $scope.filter.state = 'form';
+                    $scope.filter.substate = null;
                 });
             }, function (err) {
                 // An error occured. Show a message to the user
@@ -306,7 +312,18 @@ angular.module($APP.name).controller('EditCtrl', [
 
             $cordovaCamera.getPicture(options).then(function (imageUri) {
                 $timeout(function () {
-                    $scope.item.base64String = imageUri;
+                    $scope.imgURI.push({
+                        "id": 0,
+                        "base64String": imageData,
+                        "comment": "",
+                        "tags": "",
+                        "title": " ",
+                        "projectId": 0,
+                        "formInstanceId": 0
+                    })
+                    $scope.filter.picture = $scope.imgURI[$scope.imgURI.length - 1];
+                    filter.state = 'form';
+                    filter.substate = null;
                 });
 
             }, function (err) {

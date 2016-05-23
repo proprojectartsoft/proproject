@@ -724,3 +724,7 @@ ion-refresher{
         color: #fff;  
     }
 }
+.item-remove-padding .item-content{    
+    padding: 5px 10px; 
+    height:100%;
+}

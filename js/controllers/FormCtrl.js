@@ -349,24 +349,15 @@ angular.module($APP.name).controller('FormCtrl', [
 
 
 
-        $scope.imgCounter = 1;
-        $scope.imgURI = [
-            {
-                "id": 0,
-                "base64String": "",
-                "comment": "",
-                "tags": "",
-                "title": " ",
-                "projectId": 0,
-                "formInstanceId": 0
-            }
-        ];
+        $scope.imgCounter = 0;
         $scope.trim = function () {
             $scope.pictures = [];
             var i, j, temparray, chunk = 3;
-            for (i = 0, j = $scope.imgURI.length; i < j; i += chunk) {
-                temparray = $scope.imgURI.slice(i, i + chunk);
-                $scope.pictures.push(temparray);
+            if ($scope.imgURI) {
+                for (i = 0, j = $scope.imgURI.length; i < j; i += chunk) {
+                    temparray = $scope.imgURI.slice(i, i + chunk);
+                    $scope.pictures.push(temparray);
+                }
             }
         };
         $scope.addSpot = function () {

@@ -15,16 +15,20 @@
                 <ion-refresher on-refresh="refresh()" pulling-text="Pull to refresh..."
                                refreshing-text="Refreshing!" spinner="android"></ion-refresher>
                 <div class="list">
-                    <label style="display: none" class="item item-input">
-                        <i class="icon ion-search placeholder-icon"></i>
-                        <input type="text" placeholder="Search">
-                    </label>
-
-                    <a class="item" ng-repeat="form in formInstances| orderBy:'-created_on'"
-                       ng-click="change(form.id)">
-                        <div class="form-name ng-binding">{{::form.name}}</div>
-                        <div class="form-code ng-binding">{{::getFullCode(form)}}</div>
-                    </a>
+                    <ion-list show-delete="data.showDelete">
+                        <ion-item ng-repeat="form in formInstances| orderBy:'-created_on'" item="resource" class="item-remove-padding" style=" padding: 0px;" ng-click="change(form.id)">
+                            <div class="form-name ng-binding">{{::form.name}}</div>
+                            <div class="form-code ng-binding">{{::getFullCode(form)}}</div>
+                            <ion-option-button class="button-assertive" style="background-color: #1EBDF4" ng-click="shareThis(form)">
+                                Share
+                            </ion-option-button>                
+                        </ion-item>
+                    </ion-list>
+                    <!--                    <a class="item" ng-repeat="form in formInstances| orderBy:'-created_on'"
+                                           ng-click="change(form.id)">
+                                            <div class="form-name ng-binding">{{::form.name}}</div>
+                                            <div class="form-code ng-binding">{{::getFullCode(form)}}</div>
+                                        </a>-->
                 </div>
             </div>
         </div>

@@ -140,6 +140,19 @@ angular.module($APP.name).config([
                         }
                     }
                 })
+                .state('app.sharedform', {
+                    url: "/sharedform/:id/:formId",
+                    params: {
+                        id: null,
+                        formId: null
+                    },
+                    views: {
+                        'menuContent': {
+                            templateUrl: "view/sharedform.html",
+                            controller: 'SharedFormCtrl'
+                        }
+                    }
+                })
                 .state('app.about', {
                     url: "/about",
                     views: {

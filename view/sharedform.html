@@ -1,40 +1,30 @@
-
-<ion-view title="Form Instance" id="form-instance" cache-view="false"
-          ng-class="{'bar-hide': slideHeader, 'bar-helper':slideHeaderHelper}">
-    <!--    <ion-header-bar class="bar-subheader item-button-left test-item" ng-click="back()">
-            <div class="back-arrow ion-ios-arrow-left"></div>
-            <div class="header-prj-text">{{formData.category}}</div>
-        </ion-header-bar>-->
-
-
-    <ion-content scroll-watch class="blue-bgd">
+<ion-view title="Form" id="form" cache-view="false">
+    <ion-content class="blue-bgd">
         <div class="content">
-
             <div class="list" ng-if="filter.state === 'form'">
-                <a class="item item-button-left subHeader-form-bar" ng-click="back()">
+                <a class="item item-button-left subHeader-form-bar" ui-sref="app.shared">
                     <div class="back-arrow ion-ios-arrow-left"></div>
-                    <div class="header-prj-text">{{formData.category}}</div>
+                    <div class="header-prj-text">Shared library</div>
                 </a>
-                <div class="formTitle">
-                    <div class="header-prj-text"> Completed: {{formData.name}}</div>
+                <div class="formTitle clearfix" style="float:none; display: inline-block">
+                    <div class="header-prj-text"> Design: {{formData.name}}</div>
                     <div class="blue-label">{{formData.code}}</div>
                 </div>
-                <i class="ion-android-share-alt" style="float: right;color: #fff;font-size: 30px;margin-top: 10px;margin-right: 10px;" ng-click="shareThis(formData)"></i>
-                <div class="form-container-bgd">
+                <i class="ion-android-chat" style="float: right;color: #fff;font-size: 30px;margin-top: 10px;margin-right: 10px;" ng-click="filter.state = 'comments'" ng-if="filter.state !== 'comments'"></i>
+                <form class="form-container-bgd">
                     <div ng-repeat="fieldset in formData.field_group_instances" fs data="fieldset" style="margin-bottom: 5px">
                         <a id="a{{fieldset.$$hashKey}}"
                            class="item-stable item all-field-header fs view-item-blue">
                             <div class="fieldSet-name">
                                 {{fieldset.name}}
-                                <!--<div class="blue-label label-right">{{fieldset.id}}</div>-->
                             </div>
-
                             <span class="all-field-description">{{fieldset.guidance}}</span>
                         </a>
                         <div class="blue-dropArrow"></div>
-                        <view-field class="item-accordion" data="field"
-                                    ng-repeat="field in fieldset.field_instances"></view-field>
+                        <view-field class="item-accordion" data="field" ng-repeat="field in fieldset.field_instances"></view-field>
                     </div>
+                </form>
+                <div class="form-container-bgd">
                     <div class="item-stable item fs all-field-header" ng-if="formData.resource_field_id" ng-click="filter.state = 'resource'">
                         <span class="add-pic-text">Resource field</span>    
                         <button >Open</button>
@@ -58,11 +48,33 @@
                     </div>
                 </div>
             </div>
+            <div ng-if="filter.state === 'comments'">
+                <a class="item item-button-left subHeader-form-bar" ui-sref="app.shared">
+                    <div class="back-arrow ion-ios-arrow-left"></div>
+                    <div class="header-prj-text">Shared form</div>
+                </a>
+                <div class="formTitle clearfix" style="float:none; display: inline-block">
+                    <div class="header-prj-text"> Design: {{formData.name}}</div>
+                    <div class="blue-label">{{formData.code}}</div>
+                </div>
+                <div class="list padding">
+                    <div class="item" ng-repeat="comm in commentList">
+                        <h5 style="font-size: 17px;color: #1EBDF4;">{{comm.user_name}}</h5>
+                        <span style="display: block">{{comm.comment}}</span>
+                        <small style="    font-size: 12px;color: #aaa;">{{comm.date| date:'EEE, dd MMM yyyy hh:mm a'}}</small>
+                    </div>
+                    <div class="item">
+                        <textarea ng-model="filter.comment"></textarea>                        
+                    </div>
+                    <button class="button button-block button-calm" ng-click="sendComment()">Send</button>
+                </div>
+            </div>
             <div class="list" ng-if="filter.state === 'resource'" ng-include="'view/form/_resource.html'"></div>
             <div class="list" ng-if="filter.state === 'staff'" ng-include="'view/form/_staff.html'"></div>
-            <div class="list" ng-if="filter.state === 'scheduling'" ng-include="'view/form/_scheduling.html'"></div>
             <div class="list" ng-if="filter.state === 'payitem'" ng-include="'view/form/_payitem.html'"></div>
-            <div class="list" ng-if="filter.state === 'gallery'" ng-include="'view/form/_gallery.html'"></div>
+            <div class="list" ng-if="filter.state === 'scheduling'" ng-include="'view/form/_scheduling.html'"></div>
+            <div class="list" ng-if="filter.state === 'photos'" ng-include="'view/form/_photos.html'"></div>
+
         </div>
     </ion-content>
 </ion-view>

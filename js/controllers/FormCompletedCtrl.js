@@ -10,13 +10,47 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
     '$ionicPopup',
     '$ionicSideMenuDelegate',
     '$ionicHistory',
-    function ($scope, $state, FormInstanceService, CacheFactory, $rootScope, $location, $stateParams, AuthService, $ionicPopup, $ionicSideMenuDelegate, $ionicHistory) {
-        
+    '$ionicListDelegate',
+    'ShareService',
+    function ($scope, $state, FormInstanceService, CacheFactory, $rootScope, $location, $stateParams, AuthService, $ionicPopup, $ionicSideMenuDelegate, $ionicHistory, $ionicListDelegate, ShareService) {
+
         $scope.$on('$ionicView.enter', function () {
             $ionicHistory.clearHistory();
             $ionicSideMenuDelegate.canDragContent(false);
         });
-        
+
+        $scope.filter = {};
+        $scope.shareThis = function (predicate) {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<input type="email" ng-model="filter.email">',
+                title: 'Share form',
+                subTitle: 'Please insert an email address',
+                scope: $scope,
+                buttons: [
+                    {text: 'Cancel'},
+                    {
+                        text: '<b>Save</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+                            if ($scope.filter.email) {
+                                $ionicListDelegate.closeOptionButtons();
+                                ShareService.form.create(predicate.id, $scope.filter.email).then(function (response) {
+                                });
+                            }
+                        }
+                    }
+                ]
+            });
+//            myPopup.then(function (res) {
+//                if (res) {
+//                    console.log('You are sure');
+//                } else {
+//                    console.log('You are not sure');
+//                }
+//            });
+        };
+
         $scope.isLoaded = false;
         $rootScope.slideHeader = false;
         $rootScope.slideHeaderPrevious = 0;
@@ -25,8 +59,7 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
         $scope.getFullCode = function (row) {
             if (row.revision !== '0') {
                 return row.code + '-' + row.form_number + '-Rev' + row.revision;
-            }
-            else {
+            } else {
                 return row.code + '-' + row.form_number;
             }
         };
@@ -94,8 +127,7 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
                 if (data.length === 0) {
                     $scope.hasData = 'no data';
                 }
-            }
-            else {
+            } else {
                 $scope.hasData = 'no data';
             }
         });

@@ -1,11 +1,21 @@
 angular.module($APP.name).controller('MyAccountCtrl', [
     '$rootScope',
     '$scope',
-    'CacheFactory',
     'AuthService',
-    '$state',
-    function ($rootScope, $scope, CacheFactory, AuthService, $state) {
- 
+    'UserService',
+    function ($rootScope, $scope, AuthService, UserService) {
+        AuthService.me().then(function (me) {
+            if (me !== 'error') {
+                $rootScope.role_id = me.role.id;
+                $rootScope.accessed = me.accessed;
+                UserService.get(me.id).then(function (result) {
+                    $scope.profileHeader = result;
+                })
+            }
+        });
+        $scope.saveChanges = function () {
+            UserService.update($scope.profileHeader)
+        }
     }
 ]);
 

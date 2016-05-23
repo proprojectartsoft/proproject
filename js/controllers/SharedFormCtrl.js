@@ -1,37 +1,45 @@
-angular.module($APP.name).controller('FormInstanceCtrl', [
-    '$scope',
+angular.module($APP.name).controller('SharedFormCtrl', [
     '$rootScope',
-    '$stateParams',
-    '$location',
+    '$scope',
     'FormInstanceService',
-    '$ionicSideMenuDelegate',
-    '$ionicHistory',
+    'ShareService',
     'ResourceService',
     'StaffService',
     'SchedulingService',
     'PayitemService',
-    '$ionicPopup',
-    'ShareService',
-    function ($scope, $rootScope, $stateParams, $location, FormInstanceService, $ionicSideMenuDelegate, $ionicHistory, ResourceService, StaffService, SchedulingService, PayitemService, $ionicPopup, ShareService) {
-        $scope.$on('$ionicView.enter', function () {
-            $ionicHistory.clearHistory();
-            $ionicSideMenuDelegate.canDragContent(false);
-        });
+    '$stateParams',
+    function ($rootScope, $scope, FormInstanceService, ShareService, ResourceService, StaffService, SchedulingService, PayitemService, $stateParams) {
 
         $scope.filter = {
             state: 'form',
-            edit: false
+            edit: false,
+            shared: true
+
         }
 
-        $scope.isLoaded = false;
-        $scope.hasData = false;
-        $scope.formData = $rootScope.rootForm;
-        $rootScope.slideHeader = false;
-        $rootScope.slideHeaderPrevious = 0;
-        $rootScope.slideHeaderHelper = false;
+        ShareService.comment.list($stateParams.formId).then(function (result) {
+            $scope.commentList = result;
+        })
+        $scope.back = function () {
+            delete $scope.formData;
+        }
+        $scope.sendComment = function () {
+            var aux = {
+                "id": 0,
+                "shared_form_id": $stateParams.id,
+                "user_id": 0,
+                "comment": $scope.filter.comment
+            }
+            console.log(aux)
+            ShareService.comment.create(aux).then(function (result) {
+                $scope.filter.comment = '';
+                ShareService.comment.list($stateParams.formId).then(function (result) {
+                    $scope.commentList = result;
+                })
+            })
+        }
 
-        FormInstanceService.get($rootScope.formId).then(function (data) {
-            $rootScope.formData = data;
+        FormInstanceService.get($stateParams.formId).then(function (data) {
             $scope.formData = data;
             if (data.resource_field_id) {
                 ResourceService.get_field(data.resource_field_id).then(function (res) {
@@ -283,45 +291,9 @@ angular.module($APP.name).controller('FormInstanceCtrl', [
                     $rootScope.payitemField = $scope.payitemField;
                 });
             }
-        });
-
-        if ($scope.formData.length !== 0) {
-            $scope.hasData = true;
-        }
-        $scope.back = function () {
-            if ($stateParams.type === "register") {
-                $location.path("/app/register/" + $rootScope.projectId + "/" + $scope.formData.category_id + "/" + $scope.formData.code);
-            }
-            if ($stateParams.type === "form") {
-                $location.path("/app/view/" + $rootScope.projectId + "/" + $scope.formData.category_id);
-            }
-        };
-        $scope.edit = function () {
-            $location.path("/app/edit/" + $rootScope.projectId + "/" + $scope.formData.id);
-        };
-
-        $scope.shareThis = function (predicate) {
-            // An elaborate, custom popup
-            var myPopup = $ionicPopup.show({
-                template: '<input type="email" ng-model="filter.email">',
-                title: 'Share form',
-                subTitle: 'Please insert an email address',
-                scope: $scope,
-                buttons: [
-                    {text: 'Cancel'},
-                    {
-                        text: '<b>Save</b>',
-                        type: 'button-positive',
-                        onTap: function (e) {
-                            if ($scope.filter.email) {
-                                ShareService.form.create(predicate.id, $scope.filter.email).then(function (response) {
-                                });
-                            }
-                        }
-                    }
-                ]
-            });
-        };
-
+        })
     }
 ]);
+
+
+

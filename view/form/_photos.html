@@ -12,11 +12,10 @@
         <div class="row" ng-repeat="picrow in pictures">
             <div class="col" ng-repeat="pic in picrow">
                 <div class="img-box-container">
-                    <div class="img-box" ng-click="filter.substate = 'pic'; filter.picture = pic">
+                    <div class="img-box" ng-click="filter.substate = 'pic'; filter.picture = pic" style="background-color: #fff">
                         <button ng-click="delSpot(pic.id)">x</button>
-                        <img ng-show="pic.base64String !== ''"
-                             data-ng-src="data:image/png;base64,{{pic.base64String}}">
-                        <img ng-show="pic.base64String === ''" ng-src="img/ic.png">
+                        <img ng-if="pic.base64String !== ''" data-ng-src="data:image/png;base64,{{pic.base64String}}" style="margin-left:auto; margin-right: auto;">
+                        <img ng-if="pic.base64String === ''" ng-src="img/ic.png">
                     </div>
                 </div>
             </div>

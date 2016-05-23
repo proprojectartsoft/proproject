@@ -1,9 +1,31 @@
 <ion-view title="About" class="all-view-bg" hide-back-button="true" id="about" cache-view="false">
-     <ion-header-bar class="bar-subheader item-button-left test-item" ui-sref="app.categories({projectId:projectId})">
+    <ion-header-bar class="bar-subheader item-button-left test-item" ui-sref="app.categories({projectId:projectId})">
         <span class="back-arrow ion-ios-arrow-left"></span>
         <span class="header-prj-text">Shared library</span>
     </ion-header-bar>
     <ion-content class=" has-header padding">
-        <span class="all-ion-text" style="font-size: 15vw; color:#4A6780; text-align: center; padding-top:50vw; display:block;">Shared library</span>          
+        <!--<span class="all-ion-text" style="font-size: 15vw; color:#4A6780; text-align: center; padding-top:50vw; display:block;">Shared library</span>-->                
+        <div ng-repeat="reg in sharedListData| orderBy:'-date_completed'">
+            <div class="all-field-header isOpen" style="margin-bottom:0px !important">
+                <span>{{num - $index}})&nbsp;{{reg['date_completed']| date:'EEE, dd MMM yyyy hh:mm a'}}</span>
+            </div>
+            <div class="item item item-input item-stacked-label calm-border" style="color: #31475A;padding: 10px !important;width: calc(100% - 2px);margin-left: 1px;background-color: #fff;margin-bottom: 5px">
+                <div class="register-value">
+                    <div><strong>Form name</strong></div>
+                    <span >{{reg.form_name}}</span>
+                </div>
+                <div class="register-value">
+                    <div><strong>Shared to</strong></div>
+                    <span >{{reg.user_name}}</span>
+                </div>
+                <div class="register-value">
+                    <div><strong>Shared by</strong></div>
+                    <span >{{reg.share_by_user_name}}</span>
+                </div>
+                <div class="register-value">
+                    <a ui-sref="app.sharedform({formId:reg.form_instance_id, id:reg.id})" class="button button-block button-calm" style="    margin-bottom: 0px;border-color: #11C1F3">View Form</a>
+                </div>
+            </div>
+        </div>
     </ion-content>
 </ion-view>

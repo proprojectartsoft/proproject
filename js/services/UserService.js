@@ -5,29 +5,41 @@ angular.module($APP.name).service('UserService', [
     function ($http, $rootScope, $location) {
         return {
             update: function (dataIn) {
-                $http({
+                return $http({
                     method: 'PUT',
-                    url: '/api/user',
+                    url: $APP.server + '/api/user',
                     data: dataIn
-                }).success(function (response) {
-                    $rootScope.$broadcast('reloadTableEvent');
-                }).error(function (response) {
+                }).then(function (response) {
+                    return response;
+                });
+            },
+            update_free: function (dataIn) {
+                return $http({
+                    method: 'PUT',
+                    url: $APP.server + '/api/user/share',
+                    data: dataIn
+                }).then(function (response) {
+                    return response;
                 });
             },
             create: function (dataIn) {
-                $http({
+                dataIn.active = true;
+                return $http({
                     method: 'POST',
-                    url: '/api/user',
+                    url: $APP.server + '/api/user',
                     data: dataIn
-                }).success(function (response) {
-                    $rootScope.$broadcast('reloadTableEvent');
-                }).error(function (response) {
+                }).then(function (response) {
+//                    if (response == -1) {
+//                        SweetAlert.swal("Error!", "User already exist.", "error");
+//                    }
+                    return response.data;
                 });
             },
             signUp: function (dataIn) {
-                $http({
+                console.log(dataIn)
+                return $http({
                     method: 'POST',
-                    url: '/pub/signup',
+                    url: $APP.server + '/pub/signup',
                     data: dataIn
                 }).success(function (response) {
                     $location.path('/login.html');
@@ -35,11 +47,28 @@ angular.module($APP.name).service('UserService', [
                 });
             },
             list: function () {
-                return $http.get('/api/user')
-                        .then(
-                                function (payload) {
-                                    return payload.data;
-                                });
+                return $http.get($APP.server + '/api/user').then(
+                        function (payload) {
+                            return payload.data;
+                        });
+            },
+            get: function (id) {
+                return $http.get($APP.server + '/api/user', {
+                    params: {id: id},
+                }).then(
+                        function (payload) {
+                            return payload.data;
+                        }
+                );
+            },
+            list_customer: function (customer_id) {
+                return $http.get($APP.server + '/api/user/company', {
+                    params: {customer_id: customer_id},
+                }).then(
+                        function (payload) {
+                            return payload.data;
+                        }
+                );
             }
         };
     }
