@@ -39,6 +39,9 @@ input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
 
+.keyboard-open #login .scroll{
+    height: calc(100% + 200px);
+}
 #login .scroll {
     height: 100%;
 }
