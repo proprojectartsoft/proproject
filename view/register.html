@@ -1,13 +1,13 @@
 <ion-view title="Register" id="register" class="all-view-bg" cache-view="false" ng-class="{'bar-hide': slideHeader, 'bar-helper':slideHeaderHelper}">
-<!--    <ion-header-bar class="bar-subheader item-button-left test-item" ui-sref="app.categories({projectId:projectId})">
-        Records: <span class="all-header-details">{{formName}}</span>
-        <button class="button button-clear  button-calm" >
-            <i class="icon ion-chevron-left all-chevron"></i>
-        </button>
-    </ion-header-bar>-->
+    <!--    <ion-header-bar class="bar-subheader item-button-left test-item" ui-sref="app.categories({projectId:projectId})">
+            Records: <span class="all-header-details">{{formName}}</span>
+            <button class="button button-clear  button-calm" >
+                <i class="icon ion-chevron-left all-chevron"></i>
+            </button>
+        </ion-header-bar>-->
     <ion-header-bar class="bar-subheader item-button-left test-item" ui-sref="app.registers({projectId:projectId, categoryId:categoryId})">
         <span class="back-arrow ion-ios-arrow-left"></span>
-        <span class="header-prj-text"> Records: {{data.code}} {{data.name}}</span>
+        <span class="header-prj-text" style="    white-space: nowrap;max-width: calc(100% - 40px);overflow: hidden;text-overflow: ellipsis;"> Records: {{data.code}} {{data.name}}</span>
     </ion-header-bar>
     <ion-content scroll-watch>
         <div class="content" >

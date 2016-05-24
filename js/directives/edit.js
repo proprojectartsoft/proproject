@@ -36,15 +36,16 @@ angular.module($APP.name).directive('edit', [
                         $scope.modal.show();
                     });
                 };
-
+                
                 if ($scope.data.type === "select") {
                     if ($scope.data.field_values[0]) {
                         for (var i = 0; i < $scope.data.field_values.length; i++) {
                             if ($scope.data.field_values[i] && $scope.data.field_values[i].value === 'true') {
-                                $scope.data.value = $scope.data.field_values[i].name;
+                                $scope.data.value = $scope.data.field_values[i];
                             }
                         }
                     }
+                    console.log($scope.data.value)
                 }
                 if ($scope.data.type === "number" && $scope.data.field_values[0]) {
                     $scope.data.field_values[0].value = parseInt($scope.data.field_values[0].value);

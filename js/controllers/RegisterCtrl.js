@@ -32,7 +32,7 @@ angular.module($APP.name).controller('RegisterCtrl', [
         };
 
         $scope.refresh = function () {
-            RegisterService.get($rootScope.formName, $stateParams.projectId).then(function (data) {
+            RegisterService.get($stateParams.code, $stateParams.projectId).then(function (data) {
                 $scope.listHelp = [];
                 $scope.data = data;
                 $scope.num = $scope.data.records.values.length;

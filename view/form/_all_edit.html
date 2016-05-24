@@ -81,23 +81,6 @@
     </label>
 </div>
 
-<!--select-->
-<!--<label class="item item-input item-select item-stacked-label calm-border all-padding-topbot"
-       ng-class="{required: data.required, 'has-error': data.errors.length}"
-       ng-if="data.type == 'select'">
-    <div class="inputLabel">
-        <span class="all-name" ng-class="{'all-req' : data.required }">
-            {{data.name}}
-        </span>
-        <span class="all-description">{{data.guidance}}</span>
-    </div>
-        <select input id="{{hash}}" ng-model="data.field_values[0].value" ng-init="data.value = data.default_value"  ng-options="option.value as option.name for option in data.option_instances">
-            </select>
-    <select id="{{hash}}" ng-model="data.value">
-        <option ng-repeat="option in data.field_values" ng-value="option.name">{{option.name}}
-        </option>
-    </select>
-</label>-->
 <label class="item item-input item-stacked-label calm-border"
        ng-class="{required: data.required, 'has-error': data.errors.length}"
        ng-if="data.type == 'select'">
@@ -108,9 +91,8 @@
         </span>
         <span class="all-description">{{data.guidance}}<br>Please select</span>
     </div>
-    <select class="form-select" input id="{{hash}}" ng-model="data.value">
-        <option ng-repeat="option in data.field_values" ng-value="option.name">{{option.name}}
-        </option>
+
+    <select class="form-select" input id="{{hash}}" ng-options="option as option.name for option in data.field_values track by option.id" ng-model="data.value">
     </select>
 </label>
 
@@ -140,9 +122,9 @@
     <label class="item item-checkbox all-padding-leftright" ng-repeat="box in data.field_values">
         <span >{{box.name}}</span>
         <span class="checkbox all-checkbox" style="width: 35px">
-           <input ng-if="box.value === true" input id="{{hash}}" ng-model="box.value"
+            <input ng-if="box.value === true" input id="{{hash}}" ng-model="box.value"
                    type="checkbox" name="{{data.name}}" checked ng-required="data.required">
-           <input ng-if="box.value !== true" input id="{{hash}}" ng-model="box.value"
+            <input ng-if="box.value !== true" input id="{{hash}}" ng-model="box.value"
                    type="checkbox" name="{{data.name}}" ng-required="data.required">
         </span>
     </label>
@@ -171,9 +153,12 @@
         <span class="all-name" ng-class="{'all-req' : data.required }">{{data.name}}</span>
         <span class="all-description">{{data.guidance}}</span>
     </div>
-    <input input id="{{hash}}" type="date" name="{{data.name}}"
-           ng-model="data.field_values[0].value" value="{{data.default_value}}"
-           placeholder="{{data.placeholder}}" ng-required="data.required">
+    <!--    <input input id="{{hash}}" type="date" name="{{data.name}}"
+               ng-model="data.field_values[0].value" value="{{data.default_value}}"
+               placeholder="{{data.placeholder}}" ng-required="data.required">-->
+    <div ng-required="data.required" ion-datetime-picker date ng-model="data.field_values[0].value" style="padding-left: 15px;padding-right: 15px;border-top-left-radius: 0px;border-top-right-radius: 0px;overflow: hidden;height: 46px;padding-top: 12px;font-size: 14px;color: #000;background-color: #fff;">
+        {{data.field_values[0].value| date: "dd-MM-yyyy"}}
+    </div>
 </div>
 
 <!--time-->
@@ -184,7 +169,10 @@
         <span class="all-name" ng-class="{'all-req' : data.required }">{{data.name}}</span>
         <span class="all-description">{{data.guidance}}</span>
     </div>
-    <input input id="{{hash}}" type="time" name="{{data.name}}"
-           ng-model="data.field_values[0].value" value="{{data.default_value}}"
-           placeholder="{{data.placeholder}}" ng-required="data.required">
+    <!--    <input input id="{{hash}}" type="time" name="{{data.name}}"
+               ng-model="data.field_values[0].value" value="{{data.default_value}}"
+               placeholder="{{data.placeholder}}" ng-required="data.required">-->
+    <div ng-required="data.required" ion-datetime-picker time ng-model="data.field_values[0].value" style="padding-left: 15px;padding-right: 15px;border-top-left-radius: 0px;border-top-right-radius: 0px;overflow: hidden;height: 46px;padding-top: 12px;font-size: 14px;color: #000;background-color: #fff;">
+        {{data.field_values[0].value| date: "H:mm"}}
+    </div>
 </div>

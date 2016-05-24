@@ -300,6 +300,14 @@ angular.module($APP.name).controller('FormInstanceCtrl', [
             $location.path("/app/edit/" + $rootScope.projectId + "/" + $scope.formData.id);
         };
 
+        $scope.getFullCode = function (row) {
+            if (row.revision !== '0') {
+                return row.code + '-' + row.form_number + '-Rev' + row.revision;
+            } else {
+                return row.code + '-' + row.form_number;
+            }
+        };
+
         $scope.shareThis = function (predicate) {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({

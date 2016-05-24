@@ -17,7 +17,7 @@
                 </a>
                 <div class="formTitle">
                     <div class="header-prj-text"> Completed: {{formData.name}}</div>
-                    <div class="blue-label">{{formData.code}}</div>
+                    <div class="blue-label">{{::getFullCode(formData)}}</div>
                 </div>
                 <i class="ion-android-share-alt" style="float: right;color: #fff;font-size: 30px;margin-top: 10px;margin-right: 10px;" ng-click="shareThis(formData)"></i>
                 <div class="form-container-bgd">
