@@ -284,6 +284,7 @@ angular.module($APP.name).controller('EditCtrl', [
             $scope.picModal.hide();
             $scope.picModal.remove();
         };
+        $scope.imgURI = [];
         $scope.takePicture = function (id) {
             var options = {
                 quality: 60,

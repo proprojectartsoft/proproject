@@ -9,27 +9,27 @@ angular.module($APP.name).factory('AuthService', [
         var settingsCache = CacheFactory.get('settings');
         return {
             init: function () {
-                $http.get($APP.server + '/api/me', {withCredentials: true}).success(function (user) {
-                    $rootScope.online = true;
-                    $rootScope.currentUser = {
-                        id: user.id,
-                        username: user.username,
-                        role_id: user.role.id,
-                        role_title: user.role.title,
-                        active: user.active
-                    };
+                var reloadCache = CacheFactory.get('reloadCache');
+                if (!reloadCache) {
+                    reloadCache = CacheFactory('reloadCache');
+                    reloadCache.setOptions({
+                        storageMode: 'localStorage'
+                    });
+                }
+                var user = reloadCache.get("reload");
+                if (user) {
                     $state.go("app.categories");
-                }).error(function (data, status, headers, config) {
-                    if (status === 403) {
-                        var reloadCache = CacheFactory.get('reloadCache');
-                        if (!reloadCache) {
-                            reloadCache = CacheFactory('reloadCache');
-                            reloadCache.setOptions({
-                                storageMode: 'localStorage'
-                            });
-                        }
-                        var user = reloadCache.get("reload");
-                        if (user) {
+                    $http.get($APP.server + '/api/me', {withCredentials: true}).success(function (user) {
+                        $rootScope.online = true;
+                        $rootScope.currentUser = {
+                            id: user.id,
+                            username: user.username,
+                            role_id: user.role.id,
+                            role_title: user.role.title,
+                            active: user.active
+                        };
+                    }).error(function (data, status, headers, config) {
+                        if (status === 403) {
                             $http({
                                 method: 'POST',
                                 url: $APP.server + '/pub/login',
@@ -43,7 +43,6 @@ angular.module($APP.name).factory('AuthService', [
                                 },
                                 data: user
                             }).then(function (user) {
-
                                 console.log(user)
                                 if (!user.role) {
                                     user = user.data.data;
@@ -91,14 +90,12 @@ angular.module($APP.name).factory('AuthService', [
                                     }
                                 }
                             });
-                        } else {
-                            $location.path('/login');
+                            $rootScope.online = true;
+                        } else if (status === 502) {
+                            $rootScope.online = false;
                         }
-                        $rootScope.online = true;
-                    } else if (status === 502) {
-                        $rootScope.online = false;
-                    }
-                });
+                    });
+                }
             },
             login: function (user) {
                 return $http({

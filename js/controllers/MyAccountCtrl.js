@@ -4,6 +4,7 @@ angular.module($APP.name).controller('MyAccountCtrl', [
     'AuthService',
     'UserService',
     function ($rootScope, $scope, AuthService, UserService) {
+        $scope.server = $APP.server;
         AuthService.me().then(function (me) {
             if (me !== 'error') {
                 $rootScope.role_id = me.role.id;
