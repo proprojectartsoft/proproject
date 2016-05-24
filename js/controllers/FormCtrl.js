@@ -347,7 +347,7 @@ angular.module($APP.name).controller('FormCtrl', [
 
 
 
-
+       
 
         $scope.imgCounter = 0;
         $scope.trim = function () {
@@ -484,9 +484,18 @@ angular.module($APP.name).controller('FormCtrl', [
         });
 
         $scope.goPicture = function () {
-            $scope.trim();
+//            $scope.trim();
             $scope.filter.state = 'photos';
             $scope.filter.substate = 'gallery'
+        }
+        
+         $scope.testPicture = function (item) {
+//            $scope.trim();
+            $scope.filter.substate = 'pic';
+            console.log(item)
+            $scope.filter.picture = item;
+            console.log($scope.imgURI)
+//            console.log($scope.imgURI[item], $scope.filter.picture)
         }
 
         $scope.takePicture = function () {

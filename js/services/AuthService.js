@@ -18,6 +18,7 @@ angular.module($APP.name).factory('AuthService', [
                         role_title: user.role.title,
                         active: user.active
                     };
+                    $state.go("app.categories");
                 }).error(function (data, status, headers, config) {
                     if (status === 403) {
                         var reloadCache = CacheFactory.get('reloadCache');

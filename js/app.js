@@ -17,17 +17,18 @@ angular.module($APP.name, [
     'angular-cache',
     'ngCordova'
 ]);
-angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, $window) {
+angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthService) {
 
     $ionicPlatform.ready(function () {
-//        if (window.cordova && window.cordova.plugins.Keyboard) {
-//            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-//        }
-//
-//        if (window.StatusBar) {
-//            StatusBar.styleDefault();
-//            StatusBar.overlaysWebView(false);
-//        }
+        if (window.cordova && window.cordova.plugins.Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        }
+
+        if (window.StatusBar) {
+            StatusBar.styleDefault();
+            StatusBar.overlaysWebView(false);
+        }
+
         var sync = CacheFactory.get('sync');
         if (!sync) {
             sync = CacheFactory('sync');
@@ -36,6 +37,8 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, $window) {
             storageMode: 'localStorage'
         });
 
+        AuthService.init();
+        console.log('x')
     });
 
 });

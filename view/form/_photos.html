@@ -1,28 +1,42 @@
-<div class="list" ng-if="filter.substate === 'gallery'">
+<div class="list" ng-show="filter.substate === 'gallery'">
     <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = null;
-        filter.state = 'form'">
+                filter.state = 'form'">
         <div class="back-arrow ion-ios-arrow-left"></div>
         <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
             <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Photo Gallery</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" >Back</span></div>
     </a>
-    <div ng-if="imgURI.length === 0  || !imgURI" style="text-align: center; padding-top:30vw">
+    <div ng-if="imgURI.length === 0 || !imgURI" style="text-align: center; padding-top:30vw">
         <span class="all-ion-text" style="line-height: 15vw;font-size: 15vw; color:#4A6780">No images assigned</span>
     </div>
     <div ng-if="imgURI.length !== 1 || imgURI[0].base64String">
-        <div class="row" ng-repeat="picrow in pictures">
-            <div class="col" ng-repeat="pic in picrow">
-                <div class="img-box-container">
-                    <div class="img-box" ng-click="filter.substate = 'pic'; filter.picture = pic" style="background-color: #fff">
-                        <button ng-click="delSpot(pic.id)">x</button>
-                        <img ng-if="pic.base64String !== ''" data-ng-src="data:image/png;base64,{{pic.base64String}}" style="margin-left:auto; margin-right: auto;">
-                        <img ng-if="pic.base64String === ''" ng-src="img/ic.png">
+        <!--        <div class="row" ng-repeat="picrow in pictures">
+                    <div class="col" ng-repeat="pic in picrow">
+                        <div class="img-box-container">
+                            <div class="img-box" ng-click="filter.substate = 'pic'; filter.picture = pic" style="background-color: #fff">
+                                <button ng-click="delSpot(pic.id)">x</button>
+                                <img ng-if="pic.base64String !== ''" data-ng-src="data:image/png;base64,{{pic.base64String}}" style="margin-left:auto; margin-right: auto;">
+                                <img ng-if="pic.base64String === ''" ng-src="img/ic.png">
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </div>-->
+        <div class="row" ng-repeat="pic in imgURI" ng-if="$index % 4 === 0">
+            <div class="col col-25" ng-if="$index < imgURI.length" style="    max-height: 24vw;overflow: hidden;" ng-click="testPicture(imgURI[$index]); ">
+                <img data-ng-src="data:image/png;base64,{{imgURI[$index].base64String}}" width="100%" />
+            </div>
+            <div class="col col-25" ng-if="$index + 1 < imgURI.length" style="    max-height: 24vw;overflow: hidden;" ng-click="testPicture(imgURI[$index + 1]);">
+                <img data-ng-src="data:image/png;base64,{{imgURI[$index + 1].base64String}}" width="100%" />
+            </div>
+            <div class="col col-25" ng-if="$index + 2 < imgURI.length" style="    max-height: 24vw;overflow: hidden;" ng-click="testPicture(imgURI[$index + 2]); ">
+                <img data-ng-src="data:image/png;base64,{{imgURI[$index + 2].base64String}}" width="100%" />
+            </div>
+            <div class="col col-25" ng-if="$index + 3 < imgURI.length" style="    max-height: 24vw;overflow: hidden;" ng-click="testPicture(imgURI[$index + 3]); ">
+                <img data-ng-src="data:image/png;base64,{{imgURI[$index + 3].base64String}}" width="100%" />
             </div>
         </div>
     </div>
 </div>
-<div class="list" ng-if="filter.substate === 'pic'">
+<div class="list" ng-show="filter.substate === 'pic'">
     <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = 'gallery'">
         <div class="back-arrow ion-ios-arrow-left"></div>
         <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>

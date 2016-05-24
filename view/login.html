@@ -1,35 +1,35 @@
 <ion-view title="Login" id="login" cache-view="false">
-	<ion-content>
-		<div class="login-container">
-			<div class="welcome-container">
-				<div class="welcome-big">Welcome</div>
-				<div class="welcome-small">to</div>
-				<div class="welcome-logo">
-					<img src="img/new/logo.svg">
-				</div>
-			</div>
-			<form class="login-form" ng-submit="login()" role="form" name="loginForm" novalidate="">
-				<div class="input-container">
-					<input type="email" ng-model="user.username" required="required">
-					<label class="label-bar">Username</label>
-				</div>
-				<div class="input-container">
-					<input type="password" ng-model="user.password" required="required">
-					<label class="label-bar">Password</label>
-				</div>
-				<div class="input-container">
-					<button class="button button-full button-calm" type="submit"
-					        ng-disabled="loginForm.$invalid">
-						Login
-					</button>
-					<div class="remember-container">
-						<ion-checkbox ng-model="user.rememberMe">Remember me</ion-checkbox>
-					</div>
-				</div>
-			</form>
-			<div class="login-footer" ui-sref="forgotpassword">
-				Forgot password?
-			</div>
-		</div>
-	</ion-content>
+    <ion-content>
+        <div class="login-container">
+            <div class="welcome-container">
+                <div class="welcome-big">Welcome</div>
+                <div class="welcome-small">to</div>
+                <div class="welcome-logo">
+                    <img src="img/new/logo.svg">
+                </div>
+            </div>
+            <form class="login-form" ng-submit="login()" role="form" name="loginForm" novalidate="">
+                <div class="input-container">
+                    <input type="email" ng-model="user.username" required="required">
+                    <label class="label-bar">Username</label>
+                </div>
+                <div class="input-container">
+                    <input type="password" ng-model="user.password" required="required">
+                    <label class="label-bar">Password</label>
+                </div>
+                <div class="input-container">
+                    <button class="button button-full button-calm" type="submit"
+                            ng-disabled="loginForm.$invalid">
+                        Login
+                    </button>
+                    <div class="remember-container">
+                        <ion-checkbox ng-model="user.rememberMe">Remember me</ion-checkbox>
+                    </div>
+                </div>
+            </form>
+            <div class="login-footer" ui-sref="forgotpassword">
+                Forgot password?
+            </div>
+        </div>
+    </ion-content>
 </ion-view>

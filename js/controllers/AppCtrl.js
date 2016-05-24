@@ -4,8 +4,7 @@ angular.module($APP.name).controller('AppCtrl', [
     'CacheFactory',
     'AuthService',
     '$state',
-    function ($rootScope, $scope, CacheFactory, AuthService, $state) {
-        AuthService.init();
+    function ($rootScope, $scope, CacheFactory, AuthService, $state) {        
 //        ==========================================================================
         var getAndroidVersion = function (ua) {
             ua = (ua || navigator.userAgent).toLowerCase();
