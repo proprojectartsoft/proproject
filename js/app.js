@@ -21,7 +21,6 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
 
     AuthService.init();
     $ionicPlatform.ready(function () {
-        AuthService.init();
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         }

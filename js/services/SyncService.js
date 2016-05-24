@@ -143,6 +143,9 @@ angular.module($APP.name).factory('SyncService', [
                         }
                         console.log('OK', upRequests)
                     }
+                    if (doRequest.length === 0 && upRequests === 0) {
+                        syncPopup.close();
+                    }
                     asyncCall(doRequest,
                             function error(result) {
                                 console.log('Some error occurred, but we get going:', result);
