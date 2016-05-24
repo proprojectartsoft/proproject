@@ -563,8 +563,8 @@ angular.module($APP.name).controller('FormCtrl', [
                         "formInstanceId": 0
                     })
                     $scope.filter.picture = $scope.imgURI[$scope.imgURI.length - 1];
-                    filter.state = 'form';
-                    filter.substate = null;
+                    $scope.filter.state = 'form';
+                    $scope.filter.substate = null;
                 });
 
             }, function (err) {

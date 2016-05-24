@@ -19,7 +19,9 @@ angular.module($APP.name, [
 ]);
 angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthService) {
 
+    AuthService.init();
     $ionicPlatform.ready(function () {
+        AuthService.init();
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         }
@@ -37,8 +39,8 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
             storageMode: 'localStorage'
         });
 
-        AuthService.init();
-        console.log('x')
+//        AuthService.init();
+//        console.log('x')
     });
 
 });
