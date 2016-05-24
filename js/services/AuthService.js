@@ -9,27 +9,27 @@ angular.module($APP.name).factory('AuthService', [
         var settingsCache = CacheFactory.get('settings');
         return {
             init: function () {
-                var reloadCache = CacheFactory.get('reloadCache');
-                if (!reloadCache) {
-                    reloadCache = CacheFactory('reloadCache');
-                    reloadCache.setOptions({
-                        storageMode: 'localStorage'
-                    });
-                }
-                var user = reloadCache.get("reload");
-                if (user) {
+                $http.get($APP.server + '/api/me', {withCredentials: true}).success(function (user) {
+                    $rootScope.online = true;
+                    $rootScope.currentUser = {
+                        id: user.id,
+                        username: user.username,
+                        role_id: user.role.id,
+                        role_title: user.role.title,
+                        active: user.active
+                    };
                     $state.go("app.categories");
-                    $http.get($APP.server + '/api/me', {withCredentials: true}).success(function (user) {
-                        $rootScope.online = true;
-                        $rootScope.currentUser = {
-                            id: user.id,
-                            username: user.username,
-                            role_id: user.role.id,
-                            role_title: user.role.title,
-                            active: user.active
-                        };
-                    }).error(function (data, status, headers, config) {
-                        if (status === 403) {
+                }).error(function (data, status, headers, config) {
+                    if (status === 403) {
+                        var reloadCache = CacheFactory.get('reloadCache');
+                        if (!reloadCache) {
+                            reloadCache = CacheFactory('reloadCache');
+                            reloadCache.setOptions({
+                                storageMode: 'localStorage'
+                            });
+                        }
+                        var user = reloadCache.get("reload");
+                        if (user) {
                             $http({
                                 method: 'POST',
                                 url: $APP.server + '/pub/login',
@@ -43,6 +43,7 @@ angular.module($APP.name).factory('AuthService', [
                                 },
                                 data: user
                             }).then(function (user) {
+
                                 console.log(user)
                                 if (!user.role) {
                                     user = user.data.data;
@@ -90,12 +91,14 @@ angular.module($APP.name).factory('AuthService', [
                                     }
                                 }
                             });
-                            $rootScope.online = true;
-                        } else if (status === 502) {
-                            $rootScope.online = false;
+                        } else {
+                            $state.go("login");
                         }
-                    });
-                }
+                        $rootScope.online = true;
+                    } else if (status === 502) {
+                        $rootScope.online = false;
+                    }
+                });
             },
             login: function (user) {
                 return $http({
