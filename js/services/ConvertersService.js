@@ -456,13 +456,14 @@ angular.module($APP.name).service('ConvertersService', [
             photoList: function (photos, id, project) {
                 var list = photos;
                 var requestList = [];
-                console.log(id)
-                for (var i = 0; i < list.length; i++) {
-                    if (list[i].base64String !== "") {
-                        list[i].id = 0;
-                        list[i].formInstanceId = id;
-                        list[i].projectId = project;
-                        requestList.push(list[i]);
+                if (list) {
+                    for (var i = 0; i < list.length; i++) {
+                        if (list[i].base64String !== "") {
+                            list[i].id = 0;
+                            list[i].formInstanceId = id;
+                            list[i].projectId = project;
+                            requestList.push(list[i]);
+                        }
                     }
                 }
                 console.log(requestList)
