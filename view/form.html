@@ -1,5 +1,5 @@
 <ion-view title="Form" id="form" cache-view="false">
-    <ion-content class="blue-bgd" ng-class="{'grey-bgd':filter.state !== 'form' && !filter.substate}">
+    <ion-content class="blue-bgd" ng-class="{'grey-bgd':filter.state !== 'form' && !filter.substate}" delegate-handle="mainScroll">
         <div class="content">
             <div class="list" ng-if="filter.state === 'form'">
                 <a class="item item-button-left subHeader-form-bar" ng-click="back()"
@@ -45,25 +45,25 @@
                 <div class="form-container-bgd" ng-if="formData.resource_field_design">
                     <div class="item-stable item fs all-field-header">
                         <span class="add-pic-text">Resource field</span>    
-                        <button ng-click="filter.state = 'resource'">Open</button>
+                        <button ng-click="filter.state = 'resource';goToTop()">Open</button>
                     </div>
                 </div>
                 <div class="form-container-bgd" ng-if="formData.scheduling_field_design">
                     <div class="item-stable item fs all-field-header">
                         <span class="add-pic-text">Scheduling field</span>    
-                        <button ng-click="filter.state = 'scheduling'">Open</button>
+                        <button ng-click="filter.state = 'scheduling';goToTop()">Open</button>
                     </div>
                 </div>
                 <div class="form-container-bgd" ng-if="formData.pay_item_field_design">
                     <div class="item-stable item fs all-field-header">
                         <span class="add-pic-text">Pay-item field</span>    
-                        <button ng-click="filter.state = 'payitem'">Open</button>
+                        <button ng-click="filter.state = 'payitem';goToTop()">Open</button>
                     </div>
                 </div>
                 <div class="form-container-bgd" ng-if="formData.staff_field_design">
                     <div class="item-stable item fs all-field-header">
                         <span class="add-pic-text">Staff field</span>    
-                        <button ng-click="filter.state = 'staff'">Open</button>
+                        <button ng-click="filter.state = 'staff';goToTop()">Open</button>
                     </div>
                 </div>
                 <div class="form-container-bgd">

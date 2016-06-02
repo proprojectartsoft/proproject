@@ -232,6 +232,9 @@ angular.module($APP.name).controller('EditCtrl', [
 //            $scope.trim();
             $scope.filter.state = 'photos';
             $scope.filter.substate = 'gallery'
+            $timeout(function () { // we need little delay
+                $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+            });
         }
 
         $scope.testPicture = function (item) {
@@ -1006,5 +1009,11 @@ angular.module($APP.name).controller('EditCtrl', [
         $scope.$on('moduleSaveChanges', function () {
             $scope.formData = FormUpdateService.getProducts();
         });
+
+        $scope.goToTop = function () {
+            $timeout(function () { // we need little delay
+                $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+            });
+        }
     }
 ]);

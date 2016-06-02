@@ -1,6 +1,7 @@
 <div class="list" ng-if="!filter.substate && !filter.substateStk && !filter.substateRes && !filter.substateStkRes">
     <a class="item item-button-left subHeader-form-bar" ng-click="filter.state = 'form';
-        filter.actionBtnShow = false">
+        filter.actionBtnShow = false;
+        goToTop()">
         <div class="back-arrow ion-ios-arrow-left"></div>
         <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
             <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle">Done</span></div>
@@ -12,7 +13,8 @@
                 </div>    -->
 
         <ion-list show-delete="data.showDelete">
-            <ion-item ng-repeat="payitem in payitemField.pay_items" item="resource" class="item-remove-animate" ng-click="filter.substate = payitem">
+            <ion-item ng-repeat="payitem in payitemField.pay_items" item="resource" class="item-remove-animate" ng-click="filter.substate = payitem;
+                    goToTop()">
                 <span ng-if="!payitem.description">Pay-item {{$index + 1}}</span>
                 <span ng-if="payitem.description">{{payitem.description}}</span>
                 <ion-option-button class="button-assertive" ng-click="deleteElement(payitemField.pay_items, payitem)" ng-if="filter.edit">
@@ -30,7 +32,8 @@
 </div>
 <!--=======================================pay-item edit===================================================================-->
 <div class="list" ng-if="filter.substate && !filter.substateStk && !filter.substateRes && !filter.substateStkRes">
-    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = null">
+    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = null;
+        goToTop()">
         <div class="back-arrow ion-ios-arrow-left"></div>
         <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
             <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="filter.edit">Save</span><span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="!filter.edit">Back</span></div>
@@ -80,10 +83,10 @@
                     </label>
                 </div> 
                 <div class="form-new-fields"  style="margin-top:10px;">
-<!--                    <div class="item" ng-repeat="stk in filter.substate.subtasks" ng-click="filter.substateStk = stk" ng-if="filter.substate.subtasks.length !== 0">
-                        <span ng-if="!stk.description">Subtask {{$index + 1}}</span>
-                        <span ng-if="stk.description">{{stk.description}}</span>
-                    </div>    -->
+                    <!--                    <div class="item" ng-repeat="stk in filter.substate.subtasks" ng-click="filter.substateStk = stk" ng-if="filter.substate.subtasks.length !== 0">
+                                            <span ng-if="!stk.description">Subtask {{$index + 1}}</span>
+                                            <span ng-if="stk.description">{{stk.description}}</span>
+                                        </div>    -->
 
                     <!--                    <div class="item" ng-repeat="res in filter.substate.resources" ng-click="filter.actionBtnShow = false;
                                                 filter.substateRes = res;" ng-if="filter.substate.resource.length !== 0">
@@ -91,7 +94,8 @@
                                             <span ng-if="res.name">{{res.name}}</span>
                                         </div>  -->
                     <ion-list show-delete="data.showDelete" ng-if="filter.substate.subtasks.length !== 0">
-                        <ion-item ng-repeat="stk in filter.substate.subtasks" item="stk" class="item-remove-animate" ng-click="filter.substateStk = stk">
+                        <ion-item ng-repeat="stk in filter.substate.subtasks" item="stk" class="item-remove-animate" ng-click="filter.substateStk = stk;
+                                goToTop()">
                             <span ng-if="!stk.description">Subtask {{$index + 1}}</span>
                             <span ng-if="stk.description">{{stk.description}}</span>
                             <ion-option-button class="button-assertive" ng-click="deleteElement(filter.substate.subtasks, stk)" ng-if="filter.edit">
@@ -100,7 +104,9 @@
                         </ion-item>
                     </ion-list>
                     <ion-list show-delete="data.showDelete" ng-if="filter.substate.resources.length !== 0">
-                        <ion-item ng-repeat="res in filter.substate.resources" item="resource" class="item-remove-animate" ng-click="filter.actionBtnShow = false;filter.substateRes = res;">
+                        <ion-item ng-repeat="res in filter.substate.resources" item="resource" class="item-remove-animate" ng-click="filter.actionBtnShow = false;
+                                filter.substateRes = res;
+                                goToTop()">
                             <span ng-if="!res.name">Resource {{$index + 1}}</span>
                             <span ng-if="res.name">{{res.name}}</span>
                             <ion-option-button class="button-assertive" ng-click="deleteElement(filter.substate.resources, res)" ng-if="filter.edit">
@@ -122,7 +128,7 @@
 </div>
 <!--=================================================subtasks=============================================================-->
 <div class="list" ng-if="filter.substate && filter.substateStk && !filter.substateRes && !filter.substateStkRes">
-    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substateStk = null">
+    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substateStk = null;goToTop()">
         <div class="back-arrow ion-ios-arrow-left"></div>
         <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
             <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="filter.edit">Save</span><span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="!filter.edit">Back</span></div>
@@ -155,7 +161,8 @@
                                         </div>    -->
 
                     <ion-list show-delete="data.showDelete">
-                        <ion-item ng-repeat="stkres in filter.substateStk.resources" item="stkres" class="item-remove-animate" ng-click="filter.substateStkRes = stkres; filter.actionBtnShow = false">
+                        <ion-item ng-repeat="stkres in filter.substateStk.resources" item="stkres" class="item-remove-animate" ng-click="filter.substateStkRes = stkres;
+                                filter.actionBtnShow = false;goToTop()">
                             <span ng-if="!stkres.name">Resource {{$index + 1}}</span>
                             <span ng-if="stkres.name">{{stkres.name}}</span>
                             <ion-option-button class="button-assertive" ng-click="deleteElement(filter.substateStk.resources, stkres)" ng-if="filter.edit">
@@ -176,7 +183,7 @@
 </div>
 <div class="list" ng-if="filter.substate && filter.substateStk && !filter.substateRes && filter.substateStkRes">
     <a class="item item-button-left subHeader-form-bar" ng-click="filter.substateStkRes = null;
-        filter.actionBtnShow = true">
+        filter.actionBtnShow = true;goToTop()">
         <div class="back-arrow ion-ios-arrow-left"></div>
         <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
             <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="filter.edit">Save</span><span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="!filter.edit">Back</span></div>
@@ -287,7 +294,7 @@
 </div>
 <div class="list" ng-if="filter.substate && !filter.substateStk && filter.substateRes && !filter.substateStkRes">
     <a class="item item-button-left subHeader-form-bar" ng-click="filter.substateRes = null;
-        filter.actionBtnShow = true">
+        filter.actionBtnShow = true;goToTop()">
         <div class="back-arrow ion-ios-arrow-left"></div>
         <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
             <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span><span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="filter.edit">Save</span><span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="!filter.edit">Back</span></div>

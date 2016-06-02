@@ -37,7 +37,7 @@
     </div>
 </div>
 <div class="list" ng-show="filter.substate === 'pic'">
-    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = 'gallery'">
+    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = 'gallery';goToTop()">
         <div class="back-arrow ion-ios-arrow-left"></div>
         <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
             <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Photo Gallery</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" >Done</span></div>

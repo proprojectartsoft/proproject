@@ -12,7 +12,8 @@ angular.module($APP.name).controller('FormInstanceCtrl', [
     'PayitemService',
     '$ionicPopup',
     'ShareService',
-    function ($scope, $rootScope, $stateParams, $location, FormInstanceService, $ionicSideMenuDelegate, $ionicHistory, ResourceService, StaffService, SchedulingService, PayitemService, $ionicPopup, ShareService) {
+    '$ionicScrollDelegate',
+    function ($scope, $rootScope, $stateParams, $location, FormInstanceService, $ionicSideMenuDelegate, $ionicHistory, ResourceService, StaffService, SchedulingService, PayitemService, $ionicPopup, ShareService, $ionicScrollDelegate) {
         $scope.$on('$ionicView.enter', function () {
             $ionicHistory.clearHistory();
             $ionicSideMenuDelegate.canDragContent(false);
@@ -285,8 +286,10 @@ angular.module($APP.name).controller('FormInstanceCtrl', [
             }
         });
 
-        if ($scope.formData.length !== 0) {
-            $scope.hasData = true;
+        if ($scope.formData) {
+            if ($scope.formData.length !== 0) {
+                $scope.hasData = true;
+            }
         }
         $scope.back = function () {
             if ($stateParams.type === "register") {
@@ -330,6 +333,12 @@ angular.module($APP.name).controller('FormInstanceCtrl', [
                 ]
             });
         };
+
+        $scope.goToTop = function () {
+            $timeout(function () { // we need little delay
+                $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+            });
+        }
 
     }
 ]);

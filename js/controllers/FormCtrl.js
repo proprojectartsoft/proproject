@@ -484,6 +484,9 @@ angular.module($APP.name).controller('FormCtrl', [
 //            $scope.trim();
             $scope.filter.state = 'photos';
             $scope.filter.substate = 'gallery'
+            $timeout(function () { // we need little delay
+                $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+            });
         }
 
         $scope.testPicture = function (item) {
@@ -498,7 +501,7 @@ angular.module($APP.name).controller('FormCtrl', [
         $scope.imgURI = [];
         $scope.takePicture = function () {
             var options = {
-                quality: 10,
+                quality: 20,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.CAMERA,
                 allowEdit: false,
@@ -542,7 +545,7 @@ angular.module($APP.name).controller('FormCtrl', [
 //            });
             var options = {
                 maximumImagesCount: 1,
-                quality: 10,
+                quality: 20,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
                 correctOrientation: true,
@@ -896,5 +899,7 @@ angular.module($APP.name).controller('FormCtrl', [
                         }
                     });
         }
+
+
     }
 ]);
