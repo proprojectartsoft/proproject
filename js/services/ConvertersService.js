@@ -143,7 +143,8 @@ angular.module($APP.name).service('ConvertersService', [
             if (field.type === 'select') {
                 field_values = [];
                 angular.forEach(field.field_values, function (option_value) {
-                    if (option_value.name === field.value) {
+                    console.log(option_value, field)
+                    if (option_value.name === field.value.name) {
                         option_value.value = true;
                     } else {
                         option_value.value = false;

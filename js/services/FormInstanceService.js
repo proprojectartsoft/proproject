@@ -87,8 +87,6 @@ angular.module($APP.name).factory('FormInstanceService', [
             },
             update: function (id, data) {
                 var requestForm = ConvertersService.instanceToUpdate(data);
-                console.log(data)
-                console.log(requestForm)
                 return $http.put($APP.server + '/api/forminstance', requestForm, {
                     params: {'id': id}
                 }).then(function (payload) {

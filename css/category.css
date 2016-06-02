@@ -332,3 +332,11 @@ input[type='text'], input[type='number'],input[type='email']{
     height:100% !important;
     padding: 0 5px !important;
 }
+
+.popup-head{
+    background-color: #31475a;
+}
+.popup-buttons .button.button-positive{
+    border-color: #1d2b38;
+    background-color: #31475a;
+}
