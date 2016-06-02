@@ -158,6 +158,14 @@
                 <div class="calm-border">
                     <label class="item item-input item-stacked-label calm-border">
                         <div class="inputLabel" style="padding-top: 10px;">
+                            <span class="all-name">Comments</span>
+                        </div>
+                        <textarea  ng-auto-expand style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.comment" ng-disabled="!filter.edit"></textarea>
+                    </label>
+                </div>  
+                <div class="calm-border" ng-if="staffField.withTimes">
+                    <label class="item item-input item-stacked-label calm-border">
+                        <div class="inputLabel" style="padding-top: 10px;">
                             <span class="all-name">Direct cost</span>
                         </div>
                         <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" type="number" ng-model="filter.substate.direct_cost" ng-disabled="!filter.edit" >

@@ -498,7 +498,7 @@ angular.module($APP.name).controller('FormCtrl', [
         $scope.imgURI = [];
         $scope.takePicture = function () {
             var options = {
-                quality: 60,
+                quality: 10,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.CAMERA,
                 allowEdit: false,
@@ -542,14 +542,14 @@ angular.module($APP.name).controller('FormCtrl', [
 //            });
             var options = {
                 maximumImagesCount: 1,
-                quality: 50,
+                quality: 10,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
                 correctOrientation: true,
                 allowEdit: false
             };
 
-            $cordovaCamera.getPicture(options).then(function (imageUri) {
+            $cordovaCamera.getPicture(options).then(function (imageData) {
                 $timeout(function () {
                     $scope.imgURI.push({
                         "id": 0,

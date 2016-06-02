@@ -7,7 +7,6 @@
 	border: 4px #1EBDF4 solid;
 	overflow: hidden;
 	margin: 0 auto;
-	margin-bottom: 10px;
 }
 .user-circle-img img {
 	width: 90px;
@@ -22,7 +21,6 @@
 	font-weight: 300;
 	color: #fff;
 	text-align: center;
-	margin-bottom: 5px;
 }
 .menu-email{
 	color: #1EBDF4;

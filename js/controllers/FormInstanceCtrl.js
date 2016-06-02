@@ -318,7 +318,7 @@ angular.module($APP.name).controller('FormInstanceCtrl', [
                 buttons: [
                     {text: 'Cancel'},
                     {
-                        text: '<b>Save</b>',
+                        text: '<b>Send request</b>',
                         type: 'button-positive',
                         onTap: function (e) {
                             if ($scope.filter.email) {

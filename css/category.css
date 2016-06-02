@@ -220,6 +220,7 @@
     width: 100%;
     padding: 15px;
     border: none;
+    background-color: #fff;
 }
 .insert-sig{
     width: 100%;
@@ -339,4 +340,11 @@ input[type='text'], input[type='number'],input[type='email']{
 .popup-buttons .button.button-positive{
     border-color: #1d2b38;
     background-color: #31475a;
+}
+
+.bar-header{
+    .bar .buttons{
+        display: inline-block;
+        width: 30px;
+    }
 }
