@@ -18,7 +18,7 @@ angular.module($APP.name).factory('SyncService', [
                 var projectsCache = CacheFactory.get('projectsCache');
                 var designsCache = CacheFactory.get('designsCache');
                 var resourcesCache = CacheFactory.get('resourcesCache');
-                var staffCache = CacheFactory.get('staffCache');
+                var unitCache = CacheFactory.get('unitCache');
                 var restypesCache = CacheFactory.get('restypesCache');
                 var settingsCache = CacheFactory.get('settings');
                 var sync = CacheFactory.get('sync');
@@ -106,6 +106,16 @@ angular.module($APP.name).factory('SyncService', [
                         });
                         resourcesCache.removeAll();
                     }
+
+                    if (unitCache) {
+                        unitCache.removeAll();
+                    } else {
+                        unitCache = CacheFactory('unitCache');
+                        unitCache.setOptions({
+                            storageMode: 'localStorage'
+                        });
+                        unitCache.removeAll();
+                    }
                     upload();
                 }
                 function asyncCall(listOfPromises, onErrorCallback, finalCallback) {
@@ -132,7 +142,7 @@ angular.module($APP.name).factory('SyncService', [
                     var doRequest;
                     if (currentVersion !== version.data) {
                         clear();
-                        requests = [ProjectService.list_current(true), FormDesignService.list_mobile(), ResourceService.list_manager()];
+                        requests = [ProjectService.list_current(true), FormDesignService.list_mobile(), ResourceService.list_unit()];
                         doRequest = requests.concat(upRequests);
                         console.log(doRequest);
                     } else {
@@ -160,13 +170,25 @@ angular.module($APP.name).factory('SyncService', [
                                         }
                                     });
                                     if (result[0].length > 0) {
+//                                        var projectsAux = [], settingsAux = {};
                                         if (!sw) {
                                             $rootScope.projectId = result[0][0].id;
                                             $rootScope.navTitle = result[0][0].name;
                                         }
                                         for (var i = 0; i < result[0].length; i++) {
+//                                            projectsAux.push({id: result[0][i].id, proj: result[0][i]})
                                             projectsCache.put(result[0][i].id, result[0][i]);
                                         }
+//                                        for (var i = 0; i < projectsAux.length; i++) {
+//                                            ProjectService.settings(projectsAux[i].id).then(function (result) {
+//                                                projectsAux[i].settings = [];
+//                                                angular.forEach(result, function (sett) {
+//                                                    projectsAux[i].settings.push({id: sett.id, name: sett.name, value: sett.value})
+//                                                });
+//                                                projectsCache.put(projectsAux[i].id, projectsAux[i]);
+//                                            })
+//
+//                                        }
                                         if (result[1]) {
                                             for (var i = 0; i < result[1].length; i++) {
                                                 designsCache.put(result[1][i].id, result[1][i]);
@@ -174,9 +196,16 @@ angular.module($APP.name).factory('SyncService', [
                                         }
                                         if (result[2]) {
                                             for (var i = 0; i < result[2].length; i++) {
-                                                resourcesCache.put(result[2][i].id, result[2][i]);
+                                                unitCache.put(result[2][i].id, result[2][i]);
+                                                $rootScope.unit_list.push(result[2][i])
                                             }
                                         }
+//                                        if (result[2]) {
+//                                            for (var i = 0; i < result[2].length; i++) {
+//                                                resourcesCache.put(result[2][i].id, result[2][i]);
+//                                                $rootScope.unit_list.push(result[2][i])
+//                                            }
+//                                        }
                                     } else {
                                         $rootScope.projectId = 0;
                                         $rootScope.navTitle = 'No projects';
