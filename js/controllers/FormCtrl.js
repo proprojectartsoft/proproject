@@ -70,6 +70,7 @@ angular.module($APP.name).controller('FormCtrl', [
         };
 
         $scope.formData = designsCache.get($stateParams.formId);
+        console.log($scope.formData)
         $scope.shownGroup = $scope.formData.field_group_designs[0];
         if ($scope.formData.resource_field_design) {
             $scope.resourceField = {

@@ -105,11 +105,15 @@ angular.module($APP.name).controller('FormsCtrl', [
         $scope.categoryName = $rootScope.categories[$stateParams.categoryId - 1].name;
 
         $scope.refresh = function () {
-            FormDesignService.list($stateParams.categoryId).then(function (data) {
+            FormDesignService.list_mobile($stateParams.categoryId).then(function (data) {
                 if (data) {
-                    $rootScope.formDesigns = data;
                     if (data.length === 0) {
                         $scope.hasData = 'no data';
+                    } else {
+                        for (var i = 0; i < data.length; i++) {
+                            designsCache.put(data[i].id, data[i]);
+                        }
+                        $rootScope.formDesigns = data;
                     }
                 }
                 $scope.$broadcast('scroll.refreshComplete');
