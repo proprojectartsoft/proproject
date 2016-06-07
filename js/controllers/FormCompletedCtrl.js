@@ -26,9 +26,37 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
                 if (contact.emails) {
                     $scope.filter.email = contact.emails[0].value
                     $timeout(function () {
-                        $scope.shareThis(id)
+                        var myPopup = $ionicPopup.show({
+                            template: '<input type="email" ng-model="filter.email">',
+                            title: 'Share form',
+                            subTitle: 'Please insert an email address',
+                            scope: $scope,
+                            buttons: [
+                                {text: '<i class="ion-person-add"></i>',
+                                    onTap: function (e) {
+                                        $scope.importContact(id);
+                                    }
+                                },
+                                {text: 'Cancel',
+                                    onTap: function (e) {
+                                        $ionicListDelegate.closeOptionButtons();
+                                    }
+                                },
+                                {
+                                    text: 'Send',
+                                    type: 'button-positive',
+                                    onTap: function (e) {
+                                        if ($scope.filter.email) {
+                                            $ionicListDelegate.closeOptionButtons();
+                                            ShareService.form.create(id, $scope.filter.email).then(function (response) {
+                                            });
+                                        }
+                                    }
+                                }
+                            ]
+                        });
                     });
-                    
+
                 }
             }, function (err) {
             });
@@ -46,7 +74,11 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
                             $scope.importContact(predicate.id);
                         }
                     },
-                    {text: 'Cancel'},
+                    {text: 'Cancel',
+                        onTap: function (e) {
+                            $ionicListDelegate.closeOptionButtons();
+                        }
+                    },
                     {
                         text: 'Send',
                         type: 'button-positive',
