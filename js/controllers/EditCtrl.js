@@ -302,6 +302,10 @@ angular.module($APP.name).controller('EditCtrl', [
 
             $cordovaCamera.getPicture(options).then(function (imageData) {
                 $timeout(function () {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Form gallery',
+                        template: 'Photo added. Check form gallery for more options.'
+                    });
                     $scope.imgURI.push({
                         "id": 0,
                         "base64String": imageData,
@@ -330,8 +334,12 @@ angular.module($APP.name).controller('EditCtrl', [
                 allowEdit: false
             };
 
-            $cordovaCamera.getPicture(options).then(function (imageUri) {
+            $cordovaCamera.getPicture(options).then(function (imageData) {
                 $timeout(function () {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Form gallery',
+                        template: 'Photo added. Check form gallery for more options.'
+                    });
                     $scope.imgURI.push({
                         "id": 0,
                         "base64String": imageData,
@@ -342,8 +350,8 @@ angular.module($APP.name).controller('EditCtrl', [
                         "formInstanceId": 0
                     })
                     $scope.filter.picture = $scope.imgURI[$scope.imgURI.length - 1];
-                    filter.state = 'form';
-                    filter.substate = null;
+                    $scope.filter.state = 'form';
+                    $scope.filter.substate = null;
                 });
 
             }, function (err) {

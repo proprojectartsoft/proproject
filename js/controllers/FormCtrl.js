@@ -514,6 +514,10 @@ angular.module($APP.name).controller('FormCtrl', [
 
             $cordovaCamera.getPicture(options).then(function (imageData) {
                 $timeout(function () {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Form gallery',
+                        template: 'Photo added. Check form gallery for more options.'
+                    });
                     $scope.imgURI.push({
                         "id": 0,
                         "base64String": imageData,
@@ -555,6 +559,11 @@ angular.module($APP.name).controller('FormCtrl', [
 
             $cordovaCamera.getPicture(options).then(function (imageData) {
                 $timeout(function () {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Form gallery',
+                        template: 'Photo added. Check form gallery for more options.'
+                    });
+
                     $scope.imgURI.push({
                         "id": 0,
                         "base64String": imageData,
@@ -576,7 +585,7 @@ angular.module($APP.name).controller('FormCtrl', [
         $scope.removePicture = function (index) {
             if ($scope.imgURI.length !== 0) {
                 $scope.imgURI.splice(index, 1);
-            } 
+            }
         };
 
         $scope.convertToDataURLviaCanvas = function (url, callback) {
