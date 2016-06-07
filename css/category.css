@@ -58,15 +58,9 @@
 }
 
 .category-content-abs {
-    position: absolute;
-    float: left;
-    top: 0px;
-    bottom: 0;
-    left: 0;
-    right: 0;
     margin: auto;
     width: 100%;
-    padding-top: 17%;
+    padding-top: 10%;
 }
 
 .category-container .scroll {
@@ -351,4 +345,9 @@ input[type='text'], input[type='number'],input[type='email']{
 .popup-buttons .ion-person-add{
     color: #444;
     font-size: 22px;
+}
+
+input[type='text']:focus,input[type='email']:focus,input[type='number']:focus, textarea:focus, select:focus{
+    border-left: 3px solid #ef473a;
+    padding-left: 12px !important;
 }

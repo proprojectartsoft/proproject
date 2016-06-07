@@ -1,11 +1,18 @@
 <ion-side-menus cache-view="false" drag-content="false" class="custom-menu">
     <ion-side-menu-content>
-        <ion-header-bar class="bar-calm">
+<!--        <ion-header-bar class="bar-calm">
             <div class="buttons">
                 <button class="button icon button-clear ion-navicon"
                         ng-click="toggleLeft($event)"></button>
             </div>
             <h1 class="title">{{navTitle}}</h1>
+        </ion-header-bar>-->
+
+
+
+        <ion-header-bar class="bar bar-header bar-calm">
+            <button class="button button-icon icon ion-navicon" ng-click="toggleLeft($event)"></button>
+            <div class="h1 title">{{navTitle}}</div>
         </ion-header-bar>
         <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
     </ion-side-menu-content>

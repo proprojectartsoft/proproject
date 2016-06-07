@@ -156,8 +156,9 @@
     <!--    <input input id="{{hash}}" type="date" name="{{data.name}}"
                ng-model="data.field_values[0].value" value="{{data.default_value}}"
                placeholder="{{data.placeholder}}" ng-required="data.required">-->
-    <div ng-required="data.required" ion-datetime-picker date ng-model="data.field_values[0].value" style="padding-left: 15px;padding-right: 15px;border-top-left-radius: 0px;border-top-right-radius: 0px;overflow: hidden;height: 46px;padding-top: 12px;font-size: 14px;color: #000;background-color: #fff;">
-        {{data.field_values[0].value| date: "dd-MM-yyyy"}}
+    <div ng-required="data.required" ion-datetime-picker date ng-model="data.field_values[0].value" style="border-top-left-radius: 0px;border-top-right-radius: 0px;overflow: hidden;height: 46px;font-size: 14px;color: #000;background-color: #fff;">
+        <!--{{data.field_values[0].value| date: "dd-MM-yyyy"}}-->
+        <input date='dd-MM-yyyy' ng-model="data.field_values[0].value" style='padding: 15px;'>
     </div>
 </div>
 
@@ -172,7 +173,8 @@
     <!--    <input input id="{{hash}}" type="time" name="{{data.name}}"
                ng-model="data.field_values[0].value" value="{{data.default_value}}"
                placeholder="{{data.placeholder}}" ng-required="data.required">-->
-    <div ng-required="data.required" ion-datetime-picker time ng-model="data.field_values[0].value" style="padding-left: 15px;padding-right: 15px;border-top-left-radius: 0px;border-top-right-radius: 0px;overflow: hidden;height: 46px;padding-top: 12px;font-size: 14px;color: #000;background-color: #fff;">
-        {{data.field_values[0].value| date: "H:mm"}}
+    <div ng-required="data.required" ion-datetime-picker time ng-model="data.field_values[0].value" style="border-top-left-radius: 0px;border-top-right-radius: 0px;overflow: hidden;height: 46px;font-size: 14px;color: #000;background-color: #fff;">
+        <!--{{data.field_values[0].value| date: "H:mm"}}-->
+        <input date='HH:mm' ng-model="data.field_values[0].value" style='padding: 15px;'>
     </div>
 </div>

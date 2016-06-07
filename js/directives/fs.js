@@ -104,3 +104,29 @@ angular.module($APP.name).factory('SecuredPopups', [
         };
     }
 ])
+angular.module($APP.name).directive('date', function ($filter) {
+    return {
+        require: 'ngModel',
+        link: function (scope, elm, attrs, ctrl) {
+            var dateFormat = attrs.date;
+            ctrl.$parsers.push(function (viewValue)
+            {
+                //convert string input into moment data model
+                var pDate = Date.parse(viewValue);
+                if (isNaN(pDate) === false) {
+                    return new Date(pDate);
+                }
+                return undefined;
+
+            });
+            ctrl.$formatters.push(function (modelValue)
+            {
+                var pDate = Date.parse(modelValue);
+                if (isNaN(pDate) === false) {
+                    return $filter('date')(new Date(pDate), dateFormat);
+                }
+                return undefined;
+            });
+        }
+    };
+})
