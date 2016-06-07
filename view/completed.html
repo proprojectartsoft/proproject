@@ -15,7 +15,7 @@
                 <ion-refresher on-refresh="refresh()" pulling-text="Pull to refresh..."
                                refreshing-text="Refreshing!" spinner="android"></ion-refresher>
                 <div class="list">
-                    <ion-list show-delete="data.showDelete">
+                    <ion-list   show-delete="data.showDelete" delegate-handle="complete_list">
                         <ion-item ng-repeat="form in formInstances| orderBy:'-created_on'" item="resource" class="item-remove-padding" style=" padding: 0px;" ng-click="change(form.id)">
                             <div class="form-name ng-binding">{{::form.name}}</div>
                             <div class="form-code ng-binding">{{::getFullCode(form)}}</div>
