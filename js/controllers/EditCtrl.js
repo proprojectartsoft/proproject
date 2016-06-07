@@ -351,15 +351,8 @@ angular.module($APP.name).controller('EditCtrl', [
             });
         };
         $scope.removePicture = function (index) {
-            if ($scope.pictures.length !== 1) {
-                for (var i = index; i < $scope.pictures.length - 1; i++) {
-                    $scope.pictures[i].comment = angular.copy($scope.pictures[i + 1].comment);
-                    $scope.pictures[i].base64String = angular.copy($scope.pictures[i + 1].base64String);
-                }
-                $scope.pictures.splice($scope.pictures.length - 1, 1)
-            } else {
-                $scope.pictures[0].base64String = "";
-                $scope.pictures[0].comment = "";
+            if ($scope.imgURI.length !== 0) {
+                $scope.imgURI.splice(index, 1);
             }
         };
 

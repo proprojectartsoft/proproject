@@ -1,6 +1,6 @@
 <div class="list" ng-show="filter.substate === 'gallery'">
     <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = null;
-                filter.state = 'form'">
+        filter.state = 'form'">
         <div class="back-arrow ion-ios-arrow-left"></div>
         <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
             <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Photo Gallery</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" >Back</span></div>
@@ -21,23 +21,35 @@
                     </div>
                 </div>-->
         <div class="row" ng-repeat="pic in imgURI" ng-if="$index % 4 === 0">
-            <div class="col col-25" ng-if="$index < imgURI.length" style="    max-height: 24vw;overflow: hidden;" ng-click="testPicture(imgURI[$index]); ">
-                <img data-ng-src="data:image/png;base64,{{imgURI[$index].base64String}}" width="100%" />
+            <div class="col col-25" ng-if="$index < imgURI.length"  ng-click="testPicture(imgURI[$index]); ">
+                <div style="    max-height: 24vw;overflow: hidden;">
+                    <img data-ng-src="data:image/png;base64,{{imgURI[$index].base64String}}" width="100%;-ms-transform: scale(0.3,0.3);-webkit-transform: scale(0.3,0.3); transform: scale(0.3,0.3);" />
+                </div>
+                <button class="assertive-bg" ng-click='removePicture()'>Remove</button>
             </div>
-            <div class="col col-25" ng-if="$index + 1 < imgURI.length" style="    max-height: 24vw;overflow: hidden;" ng-click="testPicture(imgURI[$index + 1]);">
-                <img data-ng-src="data:image/png;base64,{{imgURI[$index + 1].base64String}}" width="100%" />
+            <div class="col col-25" ng-if="$index + 1 < imgURI.length"  ng-click="testPicture(imgURI[$index + 1]);">
+                <div style="    max-height: 24vw;overflow: hidden;">
+                    <img data-ng-src="data:image/png;base64,{{imgURI[$index + 1].base64String}}" width="100%;-ms-transform: scale(0.3,0.3);-webkit-transform: scale(0.3,0.3); transform: scale(0.3,0.3);" />
+                </div>
+                <button class="assertive-bg" ng-click='removePicture()'>Remove</button>
             </div>
-            <div class="col col-25" ng-if="$index + 2 < imgURI.length" style="    max-height: 24vw;overflow: hidden;" ng-click="testPicture(imgURI[$index + 2]); ">
-                <img data-ng-src="data:image/png;base64,{{imgURI[$index + 2].base64String}}" width="100%" />
+            <div class="col col-25" ng-if="$index + 2 < imgURI.length"  ng-click="testPicture(imgURI[$index + 2]); ">
+                <div style="    max-height: 24vw;overflow: hidden;">
+                    <img data-ng-src="data:image/png;base64,{{imgURI[$index + 2].base64String}}" width="100%;-ms-transform: scale(0.3,0.3);-webkit-transform: scale(0.3,0.3); transform: scale(0.3,0.3);" />
+                </div>
+                <button class="assertive-bg" ng-click='removePicture()'>Remove</button>
             </div>
-            <div class="col col-25" ng-if="$index + 3 < imgURI.length" style="    max-height: 24vw;overflow: hidden;" ng-click="testPicture(imgURI[$index + 3]); ">
-                <img data-ng-src="data:image/png;base64,{{imgURI[$index + 3].base64String}}" width="100%" />
+            <div class="col col-25" ng-if="$index + 3 < imgURI.length" ng-click="testPicture(imgURI[$index + 3]); ">
+                <div style="    max-height: 24vw;overflow: hidden;">
+                    <img data-ng-src="data:image/png;base64,{{imgURI[$index + 3].base64String}}" width="100%;-ms-transform: scale(0.3,0.3);-webkit-transform: scale(0.3,0.3); transform: scale(0.3,0.3);" />
+                </div>
+                <button class="assertive-bg" ng-click='removePicture()'>Remove</button>
             </div>
         </div>
     </div>
 </div>
 <div class="list" ng-show="filter.substate === 'pic'">
-    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = 'gallery';goToTop()">
+    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = 'gallery'; goToTop()">
         <div class="back-arrow ion-ios-arrow-left"></div>
         <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
             <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Photo Gallery</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" >Done</span></div>
