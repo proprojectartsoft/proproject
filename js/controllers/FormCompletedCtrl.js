@@ -20,6 +20,14 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
         });
 
         $scope.filter = {};
+        $scope.importContact = function () {
+            navigator.contacts.pickContact(function (contact) {
+                if (contact.emails) {
+                    $scope.filter.email = contact.emails[0].value
+                }
+            }, function (err) {
+            });
+        }
         $scope.shareThis = function (predicate) {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -28,9 +36,14 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
                 subTitle: 'Please insert an email address',
                 scope: $scope,
                 buttons: [
+                    {text: '<i class="ion-person-add"></i>',
+                        onTap: function (e) {
+                            $scope.importContact();
+                        }
+                    },
                     {text: 'Cancel'},
                     {
-                        text: '<b>Send request</b>',
+                        text: 'Send',
                         type: 'button-positive',
                         onTap: function (e) {
                             if ($scope.filter.email) {

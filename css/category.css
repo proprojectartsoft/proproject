@@ -335,11 +335,11 @@ input[type='text'], input[type='number'],input[type='email']{
 }
 
 .popup-head{
-    background-color: #31475a;
+    background-color: #1EBDF4;
 }
 .popup-buttons .button.button-positive{
-    border-color: #1d2b38;
-    background-color: #31475a;
+    border-color: #1EBDF4;
+    background-color: #1EBDF4;
 }
 
 .bar-header{
@@ -347,4 +347,8 @@ input[type='text'], input[type='number'],input[type='email']{
         display: inline-block;
         width: 30px;
     }
+}
+.popup-buttons .ion-person-add{
+    color: #444;
+    font-size: 22px;
 }

@@ -21,8 +21,9 @@ angular.module($APP.name).factory('FormDesignService', [
                         }, function (err) {
                 });
             },
-            list_mobile: function () {
+            list_mobile: function (categoryId) {
                 return $http.get($APP.server + '/api/formdesign/mobilelist', {
+                    params: {categoryId: categoryId}
                 }).then(
                         function (payload) {
                             return payload.data;
@@ -36,7 +37,7 @@ angular.module($APP.name).factory('FormDesignService', [
                         function (payload) {
                             return payload.data;
                         }, function (err) {
-                }, function(result){
+                }, function (result) {
                     console.log('sadsadkbasndkasn')
                 });
             }
