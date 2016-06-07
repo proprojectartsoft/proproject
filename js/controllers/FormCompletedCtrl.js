@@ -12,7 +12,8 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
     '$ionicHistory',
     '$ionicListDelegate',
     'ShareService',
-    function ($scope, $state, FormInstanceService, CacheFactory, $rootScope, $location, $stateParams, AuthService, $ionicPopup, $ionicSideMenuDelegate, $ionicHistory, $ionicListDelegate, ShareService) {
+    '$timeout',
+    function ($scope, $state, FormInstanceService, CacheFactory, $rootScope, $location, $stateParams, AuthService, $ionicPopup, $ionicSideMenuDelegate, $ionicHistory, $ionicListDelegate, ShareService, $timeout) {
 
         $scope.$on('$ionicView.enter', function () {
             $ionicHistory.clearHistory();
@@ -20,10 +21,14 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
         });
 
         $scope.filter = {};
-        $scope.importContact = function () {
+        $scope.importContact = function (id) {
             navigator.contacts.pickContact(function (contact) {
                 if (contact.emails) {
                     $scope.filter.email = contact.emails[0].value
+                    $timeout(function () {
+                        $scope.shareThis(id)
+                    });
+                    
                 }
             }, function (err) {
             });
@@ -38,7 +43,7 @@ angular.module($APP.name).controller('FormCompletedCtrl', [
                 buttons: [
                     {text: '<i class="ion-person-add"></i>',
                         onTap: function (e) {
-                            $scope.importContact();
+                            $scope.importContact(predicate.id);
                         }
                     },
                     {text: 'Cancel'},
