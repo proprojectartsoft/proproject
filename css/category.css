@@ -355,7 +355,7 @@ input[type='text']:focus,input[type='email']:focus,input[type='number']:focus, t
     background-color: rgba(0, 0, 0, 0.5);
 }
 .customPopup{
-    top: 10px !important;
+    top: 60px !important;
     left: 15px !important;
     width: calc(100% - 30px);
     height: calc(100% - 40px);

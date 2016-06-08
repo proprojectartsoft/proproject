@@ -105,7 +105,8 @@ angular.module($APP.name).controller('FormCtrl', [
             actionBtn: false,
             edit: true,
             popup_title: 'Resource filter',
-            popup_list: []
+            popup_list: [],
+            searchText: ''
         };
         $scope.items = [
             {display: 'Hello'},

@@ -9,12 +9,12 @@
     <div class="bar bar-subheader item-input-inset">
         <label class="item-input-wrapper">
             <i class="icon ion-search placeholder-icon"></i>
-            <input type="text" placeholder= 'SEARCH' ng-model='searchText'>
+            <input type="text" placeholder= 'SEARCH' ng-model='filter.searchText'>
         </label>
     </div>
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="item in filter.popup_list| filter:searchText" ng-if='filter.popup_list.length !== 0' ng-click="selectPopover(item)">
+            <ion-item ng-repeat="item in filter.popup_list| filter:filter.searchText" ng-if='filter.popup_list.length !== 0' ng-click="selectPopover(item)">
                 {{item.name}}
             </ion-item>
             <ion-item ng-if='filter.popup_list.length === 0'>
