@@ -1,0 +1,25 @@
+<ion-popover-view class="customPopup">
+
+
+    <ion-header-bar class="bar bar-header barHeaderCustom">
+        <h1 class="title">{{filter.popup_title}}</h1>
+        <button class="button button-icon icon ion-android-close" style=" padding-right: 0px;" ng-click="closePopover()"></button>
+    </ion-header-bar>
+
+    <div class="bar bar-subheader item-input-inset">
+        <label class="item-input-wrapper">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" placeholder= 'SEARCH' ng-model='searchText'>
+        </label>
+    </div>
+    <ion-content>
+        <ion-list>
+            <ion-item ng-repeat="item in filter.popup_list| filter:searchText" ng-if='filter.popup_list.length !== 0' ng-click="selectPopover(item)">
+                {{item.name}}
+            </ion-item>
+            <ion-item ng-if='filter.popup_list.length === 0'>
+                No items in list.
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-popover-view>

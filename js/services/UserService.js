@@ -69,6 +69,13 @@ angular.module($APP.name).service('UserService', [
                             return payload.data;
                         }
                 );
+            },
+            cust_settings: function (id) {
+                return $http.get($APP.server + '/api/companysettings', {
+                    params: {customer_id: id}
+                }).then(function (payload) {
+                    return payload.data;
+                });
             }
         };
     }

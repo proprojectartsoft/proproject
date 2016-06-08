@@ -9,7 +9,8 @@ angular.module($APP.name).factory('SyncService', [
     '$http',
     '$timeout',
     'ResourceService',
-    function ($q, CacheFactory, $ionicPopup, FormInstanceService, FormDesignService, ProjectService, $rootScope, $http, $timeout, ResourceService) {
+    'UserService',
+    function ($q, CacheFactory, $ionicPopup, FormInstanceService, FormDesignService, ProjectService, $rootScope, $http, $timeout, ResourceService, UserService) {
 
         return {
             sync: function () {
@@ -19,6 +20,7 @@ angular.module($APP.name).factory('SyncService', [
                 var designsCache = CacheFactory.get('designsCache');
                 var resourcesCache = CacheFactory.get('resourcesCache');
                 var unitCache = CacheFactory.get('unitCache');
+                var custSettCache = CacheFactory.get('custSettCache');
                 var restypesCache = CacheFactory.get('restypesCache');
                 var settingsCache = CacheFactory.get('settings');
                 var sync = CacheFactory.get('sync');
@@ -116,6 +118,15 @@ angular.module($APP.name).factory('SyncService', [
                         });
                         unitCache.removeAll();
                     }
+                    if (custSettCache) {
+                        custSettCache.removeAll();
+                    } else {
+                        custSettCache = CacheFactory('custSettCache');
+                        custSettCache.setOptions({
+                            storageMode: 'localStorage'
+                        });
+                        custSettCache.removeAll();
+                    }
                     upload();
                 }
                 function asyncCall(listOfPromises, onErrorCallback, finalCallback) {
@@ -142,7 +153,7 @@ angular.module($APP.name).factory('SyncService', [
                     var doRequest;
                     if (currentVersion !== version.data) {
                         clear();
-                        requests = [ProjectService.list_current(true), FormDesignService.list_mobile(), ResourceService.list_unit()];
+                        requests = [ProjectService.list_current(true), FormDesignService.list_mobile(), ResourceService.list_unit(), UserService.cust_settings()];
                         doRequest = requests.concat(upRequests);
                         console.log(doRequest);
                     } else {
@@ -169,6 +180,19 @@ angular.module($APP.name).factory('SyncService', [
                                             sw = true;
                                         }
                                     });
+//                                    CustomerService.list_settings().then(function (result) {
+//                                        var custSettingsCache = CacheFactory.get('custSettingsCache');
+//                                        if (!custSettingsCache || custSettingsCache.length === 0) {
+//                                            custSettingsCache = CacheFactory('custSettingsCache');
+//                                            custSettingsCache.setOptions({
+//                                                storageMode: 'localStorage'
+//                                            });
+//                                        }
+//                                        $scope.customerSettings = {};
+//                                        angular.forEach(result, function (sett) {
+//                                            $scope.customerSettings[sett.name] = sett.value;
+//                                        });
+//                                    })
                                     if (result[0].length > 0) {
 //                                        var projectsAux = [], settingsAux = {};
                                         if (!sw) {
@@ -199,6 +223,14 @@ angular.module($APP.name).factory('SyncService', [
                                                 unitCache.put(result[2][i].id, result[2][i]);
                                                 $rootScope.unit_list.push(result[2][i])
                                             }
+                                        }
+                                        if (result[3]) {
+                                            for (var i = 0; i < result[3].length; i++) {
+                                                custSettCache.put(result[3][i].name, result[3][i]);
+//                                                $rootScope.custSett.push({name: result[3][i].name, value: result[3][i].value});
+                                                $rootScope.custSett[result[3][i].name] = result[3][i].value;
+                                            }
+                                            console.log($rootScope.custSett);
                                         }
 //                                        if (result[2]) {
 //                                            for (var i = 0; i < result[2].length; i++) {

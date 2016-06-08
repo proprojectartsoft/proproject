@@ -33,6 +33,7 @@ angular.module($APP.name).controller('AppCtrl', [
         $rootScope.projects = [];
         $rootScope.resource_list = [];
         $rootScope.unit_list = [];
+        $rootScope.custSett = [];
         $rootScope.$watch('projectsCache.keys()', function (newValue, oldValue) {
             angular.forEach(projectsCache.keys(), function (key) {
                 $rootScope.projects.push(projectsCache.get(key));
@@ -44,7 +45,6 @@ angular.module($APP.name).controller('AppCtrl', [
         });
 
         $rootScope.resource_type_list = [{"id": 1, "name": "Labour"}, {"id": 2, "name": "Material"}, {"id": 3, "name": "Plant"}, {"id": 5, "name": "Management"}, {"id": 4, "name": "Subcontractor"}, {"id": 300, "name": "Operative"}];
-//        $rootScope.unit_list = [{"id": 1, "type": "imperial", "name": "Ea."}, {"id": 2, "type": "imperial", "name": "Days"}, {"id": 3, "type": "imperial", "name": "ft"}, {"id": 4, "type": "imperial", "name": "ft2"}, {"id": 5, "type": "imperial", "name": "ft3"}, {"id": 6, "type": "imperial", "name": "T"}, {"id": 7, "type": "imperial", "name": "Provisional Sum"}, {"id": 8, "type": "imperial", "name": "Gallons"}, {"id": 9, "type": "metric", "name": "Ea."}, {"id": 10, "type": "metric", "name": "Days"}, {"id": 11, "type": "metric", "name": "m"}, {"id": 12, "type": "metric", "name": "m2"}, {"id": 13, "type": "metric", "name": "m3"}, {"id": 14, "type": "metric", "name": "T"}, {"id": 15, "type": "metric", "name": "Provisional Sum"}, {"id": 16, "type": "metric", "name": "Litres"}, {"id": 17, "type": "imperial", "name": "hr"}, {"id": 18, "type": "metric", "name": "hr"}, {"id": 19, "type": "imperial", "name": "No."}, {"id": 20, "type": "metric", "name": "No."}];
         $rootScope.abs_list = [{"id": 1, "reason": "Annual Leave"}, {"id": 2, "reason": "Inclement Weather"}, {"id": 3, "reason": "Job not ready"}, {"id": 4, "reason": "Material Unavailable"}, {"id": 5, "reason": "No show"}, {"id": 6, "reason": "On other site"}, {"id": 7, "reason": "Public Holiday"}, {"id": 8, "reason": "Sick Leave"}, {"id": 9, "reason": "Training"}, {"id": 10, "reason": "Unfavourable site conditions"}];
 
         var resourcesCache = CacheFactory.get('resourcesCache');
@@ -69,26 +69,12 @@ angular.module($APP.name).controller('AppCtrl', [
         }
         angular.forEach(unitCache.keys(), function (key) {
             aux = unitCache.get(key);
-            console.log(aux)
             $rootScope.unit_list.push(aux);
         });
 
 
-        function onSuccess(contacts) {
-            alert('Found ' + contacts.length + ' contacts.');
-        }
-        ;
 
-        function onError(contactError) {
-            alert('onError!');
-        }
-        ;
-
-        // find all contacts with 'Bob' in any name field
-        // var options = new ContactFindOptions();
-        // options.multiple = true;
-        // var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
-        // navigator.contacts.find(fields, onSuccess, onError, options);
+       
 
     }
 ]);
