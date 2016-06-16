@@ -5,7 +5,6 @@ angular.module($APP.name).controller('AppCtrl', [
     'AuthService',
     '$state',
     function ($rootScope, $scope, CacheFactory, AuthService, $state) {
-//        ==========================================================================
         var getAndroidVersion = function (ua) {
             ua = (ua || navigator.userAgent).toLowerCase();
             var match = ua.match(/android\s([0-9\.]*)/);
@@ -34,6 +33,7 @@ angular.module($APP.name).controller('AppCtrl', [
         $rootScope.resource_list = [];
         $rootScope.unit_list = [];
         $rootScope.custSett = [];
+
         $rootScope.$watch('projectsCache.keys()', function (newValue, oldValue) {
             angular.forEach(projectsCache.keys(), function (key) {
                 $rootScope.projects.push(projectsCache.get(key));
@@ -72,9 +72,18 @@ angular.module($APP.name).controller('AppCtrl', [
             $rootScope.unit_list.push(aux);
         });
 
-
-
-       
+        var custSettCache = CacheFactory.get('custSettCache');
+        if (!custSettCache || custSettCache.length === 0) {
+            custSettCache = CacheFactory('custSettCache');
+            custSettCache.setOptions({
+                storageMode: 'localStorage'
+            });
+        }
+        angular.forEach(custSettCache.keys(), function (key) {
+            aux = custSettCache.get(key);
+            $rootScope.custSett[aux.name] = aux.value;
+        });
+        console.log($rootScope.custSett)
 
     }
 ]);

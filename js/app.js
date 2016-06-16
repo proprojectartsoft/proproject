@@ -37,9 +37,6 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
         sync.setOptions({
             storageMode: 'localStorage'
         });
-
-//        AuthService.init();
-//        console.log('x')
     });
 
 });

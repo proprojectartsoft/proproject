@@ -92,6 +92,10 @@ angular.module($APP.name).factory('AuthService', [
                                 }
                             });
                         } else {
+                            var settingsCache = CacheFactory.get('settings');
+                            if (settingsCache) {
+                                settingsCache.destroy();
+                            }
                             $state.go("login");
                         }
                         $rootScope.online = true;

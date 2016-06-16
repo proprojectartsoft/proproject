@@ -227,10 +227,8 @@ angular.module($APP.name).factory('SyncService', [
                                         if (result[3]) {
                                             for (var i = 0; i < result[3].length; i++) {
                                                 custSettCache.put(result[3][i].name, result[3][i]);
-//                                                $rootScope.custSett.push({name: result[3][i].name, value: result[3][i].value});
                                                 $rootScope.custSett[result[3][i].name] = result[3][i].value;
                                             }
-                                            console.log($rootScope.custSett);
                                         }
 //                                        if (result[2]) {
 //                                            for (var i = 0; i < result[2].length; i++) {

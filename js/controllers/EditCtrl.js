@@ -21,7 +21,48 @@ angular.module($APP.name).controller('EditCtrl', [
 
         $scope.filter = {
             edit: true,
-            state: 'form'
+            state: 'form',
+            popup_title: 'Resource filter',
+            popup_list: [],
+            searchText: ''
+        }
+        $scope.filter.vat = $rootScope.custSett.vat;
+        $scope.filter.currency = $rootScope.custSett.currency;
+        $scope.filter.margin = $rootScope.custSett.margin;
+        $scope.filter.start = $rootScope.custSett.start;
+        $scope.filter.break = $rootScope.custSett.break;
+        $scope.filter.finish = $rootScope.custSett.finish;
+        $scope.doTotal = function (type, parent) {
+            parent.total_cost = 0;
+            if (type === 'resource') {
+                angular.forEach(parent.resources, function (res) {
+                    parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
+                });
+            }
+            if (type === 'piresource') {
+                console.log('piresource', parent)
+                angular.forEach(parent.resources, function (res) {
+                    parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
+                    console.log(parent.total_cost, res.quantity, res.direct_cost)
+
+                });
+            }
+            if (type === 'pisubresource') {
+                angular.forEach(parent.resources, function (res) {
+                    parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
+                });
+            }
+            if (type === 'pisubtask') {
+                console.log(parent)
+                angular.forEach(parent.subtasks, function (stk) {
+                    parent.total_cost = parent.total_cost + stk.total_cost;
+                });
+            }
+            if (type === 'pi') {
+                angular.forEach(parent.pay_items, function (pi) {
+                    parent.total_cost = parent.total_cost + pi.total_cost;
+                });
+            }
         }
         $scope.actionBtnPayitem = function () {
             if ($scope.filter.state === 'payitem' || $scope.filter.state === 'scheduling') {
@@ -50,6 +91,60 @@ angular.module($APP.name).controller('EditCtrl', [
                 $scope.addStaff();
             }
         };
+        $scope.openPopover = function ($event, predicate) {
+            $scope.filter.popup_predicate = predicate;
+            if (predicate.staff) {
+                $scope.filter.popup_list = $rootScope.staff_list;
+            }
+            else {
+                $scope.filter.popup_list = $rootScope.resource_list;
+            }
+            $scope.popover.show($event);
+        };
+        $scope.selectPopover = function (item) {
+            $scope.filter.popup_predicate.name = item.name;
+            console.log($scope.filter.popup_predicate)
+            if (!$scope.filter.popup_predicate.staff) {
+                //resource
+                $scope.filter.popup_predicate.name = item.name;
+                $scope.filter.popup_predicate.product_ref = item.product_ref;
+                $scope.filter.popup_predicate.direct_cost = item.direct_cost;
+                angular.forEach($rootScope.resource_type_list, function (restyp) {
+                    console.log(restyp.id, item.resource_type_id)
+                    if (restyp.name === item.resource_type_name) {
+                        $scope.filter.popup_predicate.res_type_obj = restyp;
+                        $scope.filter.popup_predicate.resource_type_id = restyp.id;
+                        $scope.filter.popup_predicate.resource_type_name = restyp.name;
+                    }
+                });
+                angular.forEach($rootScope.unit_list, function (unt) {
+                    if (unt.name === item.unit_name) {
+                        $scope.filter.popup_predicate.unit_obj = unt;
+                        $scope.filter.popup_predicate.unit_id = unt.id;
+                        $scope.filter.popup_predicate.unit_name = unt.name;
+                    }
+                });
+            }
+            else {
+                //staff
+                $scope.filter.popup_predicate.name = item.name;
+                $scope.filter.popup_predicate.employer_name = item.employee_name;
+                $scope.filter.popup_predicate.staff_role = item.role;
+                $scope.filter.popup_predicate.direct_cost = item.direct_cost;
+                angular.forEach($rootScope.resource_type_list, function (restyp) {
+                    console.log(restyp.id, item.resource_type_id)
+                    if (restyp.name === item.resource_type_name) {
+                        $scope.filter.popup_predicate.res_type_obj = restyp;
+                        $scope.filter.popup_predicate.resource_type_id = restyp.id;
+                        $scope.filter.popup_predicate.resource_type_name = restyp.name;
+                    }
+                });
+            }
+            $scope.popover.hide();
+        }
+        $scope.closePopover = function () {
+            $scope.popover.hide();
+        }
         $scope.addResource = function () {
             $scope.resourceField.resources.push({
                 "id": 0,
@@ -100,13 +195,13 @@ angular.module($APP.name).controller('EditCtrl', [
                     expiry_date: "",
                     staff: true,
                     current_day: "",
-                    start_time: "",
-                    break_time: "",
-                    finish_time: "",
+                    start_time: $scope.filter.start,
+                    break_time: $scope.filter.break,
+                    finish_time: $scope.filter.finish,
                     total_time: "",
                     comment: "",
                     vat: 0.0
-                })
+                })          
                 $scope.filter.substate = $scope.staffField.resources[ $scope.staffField.resources.length - 1];
             }
         }

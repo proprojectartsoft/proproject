@@ -37,6 +37,41 @@ angular.module($APP.name).controller('FormCtrl', [
             console.log($scope.popover)
         });
 
+
+        $scope.doTotal = function (type, parent) {
+            parent.total_cost = 0;
+            if (type === 'resource') {
+                angular.forEach(parent.resources, function (res) {
+                    parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
+                });
+            }
+            if (type === 'piresource') {
+                console.log('piresource', parent)
+                angular.forEach(parent.resources, function (res) {
+                    parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
+                    console.log(parent.total_cost, res.quantity, res.direct_cost)
+
+                });
+            }
+            if (type === 'pisubresource') {
+                angular.forEach(parent.resources, function (res) {
+                    parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
+                });
+            }
+            if (type === 'pisubtask') {
+                console.log(parent)
+                angular.forEach(parent.subtasks, function (stk) {
+                    parent.total_cost = parent.total_cost + stk.total_cost;
+                });
+            }
+            if (type === 'pi') {
+                angular.forEach(parent.pay_items, function (pi) {
+                    parent.total_cost = parent.total_cost + pi.total_cost;
+                });
+            }
+        }
+
+
         $scope.openPopover = function ($event, predicate) {
             $scope.filter.popup_predicate = predicate;
             if (predicate.staff) {
@@ -241,6 +276,8 @@ angular.module($APP.name).controller('FormCtrl', [
             console.log($scope.staffField)
             $scope.filter.substate = $scope.staffField.resources[0];
         }
+
+
         $scope.actionBtnPayitem = function () {
             if ($scope.filter.state === 'payitem' || $scope.filter.state === 'scheduling') {
                 if ($scope.filter.substate && !$scope.filter.substateStk) {
@@ -408,15 +445,6 @@ angular.module($APP.name).controller('FormCtrl', [
                 $scope.filter.substateStkRes = $scope.filter.substateStk.resources[$scope.filter.substateStk.resources.length - 1];
             }
         }
-
-        $scope.$watch('filter.substate', function (newValue, oldValue) {
-            if (newValue === null && $scope.filter.state === 'resource') {
-                $scope.resourceField.total_cost = 0;
-                angular.forEach($scope.resourceField.resources, function (res) {
-                    $scope.resourceField.total_cost += res.quantity * res.direct_cost;
-                });
-            }
-        });
 
 
 

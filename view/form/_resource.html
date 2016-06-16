@@ -23,6 +23,10 @@
             Total
             <div>
                 {{resourceField.total_cost}}
+                <i ng-if="custSett">
+                    <i ng-if="custSett.currency === 'pound'">£</i><i ng-if="custSett.currency === 'dolar'">$</i><i ng-if="custSett.currency === 'euro'">€</i>
+                </i>
+
             </div>
 
         </div> 
@@ -31,6 +35,7 @@
 <div class="list" ng-if="filter.substate">
     <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = null;
         filter.actionBtnShow = true;
+        doTotal('resource', resourceField);
         goToTop()">
         <div class="back-arrow ion-ios-arrow-left"></div>
         <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
