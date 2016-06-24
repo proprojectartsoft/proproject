@@ -28,96 +28,139 @@ angular.module($APP.name).controller('FormCtrl', [
         $ionicSideMenuDelegate.canDragContent(false);
 
 
-        $rootScope.resource_list = [{"id": 706, "name": "Bolt15", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 802, "name": "Jim Gray", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": null, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 702, "name": "Bolt", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 704, "name": "Bolt11", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 705, "name": "Bolt12", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 707, "name": "Bolt16", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 800, "name": "Anthony Hanna8", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": null, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 804, "name": "Jim Gray3", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": 20.0, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 600, "name": "Joiner", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O105", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 601, "name": "Concrete 21/21/121", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "C221", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 13, "unit_name": "m3", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 2.11, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 350, "name": "Stabilised sand", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": null, "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 13, "unit_name": "m3", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 80.0, "resource_margin": null, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 355, "name": "Plywood 6mm 607x2440mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T103", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 8.7, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 356, "name": "Plywood 6mm 606x1220mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T101", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 5.82, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 357, "name": "Plywood 6mm 607x1829mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T102", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 7.98, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 358, "name": "Plywood 6mm 1220x2440mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T104", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 15.18, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 359, "name": "Plywood 9mm 1220x2440mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 19.5, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 360, "name": "Plywood 9mm 607x1220mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T105", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 8.1, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 361, "name": "Plywood 9mm 607x1829mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T106", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 11.82, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 400, "name": "Ciment Truck", "employer": null, "role": null, "email": null, "vat": null, "staff": false, "product_ref": null, "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 6, "unit_name": "T", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 0.0, "resource_margin": null, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 401, "name": "Sand Truck", "employer": null, "role": null, "email": null, "vat": null, "staff": false, "product_ref": null, "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 6, "unit_name": "T", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 0.0, "resource_margin": null, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 501, "name": "Nail guns", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "CSV03", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 6, "unit_name": "T", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 20.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 502, "name": "Nail", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "CSV05", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 6, "unit_name": "T", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 20.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 558, "name": "Shutter Joiner", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O105", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 559, "name": "Concrete 20/20/120", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "C221", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 13, "unit_name": "m3", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 2.11, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 566, "name": "Plugs", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "Misc", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 11, "unit_name": "m", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 100.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 708, "name": "Drywall", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "A-102", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 801, "name": "Anthony Hanna9", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": null, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 803, "name": "Jim Gray2", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": 20.0, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 850, "name": "Anthony Hanna10", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": null, "stage_id": null, "stage_name": null, "customer_id": 2700}]
-        $rootScope.staff_list = [{"id": 802, "name": "Jim Gray", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 0.0}, {"id": 800, "name": "Anthony Hanna8", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 0.0}, {"id": 804, "name": "Jim Gray3", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 20.0}, {"id": 801, "name": "Anthony Hanna9", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 0.0}, {"id": 803, "name": "Jim Gray2", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 20.0}, {"id": 850, "name": "Anthony Hanna10", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 0.0}];
+//        $rootScope.resource_list = [{"id": 706, "name": "Bolt15", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 802, "name": "Jim Gray", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": null, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 702, "name": "Bolt", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 704, "name": "Bolt11", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 705, "name": "Bolt12", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 707, "name": "Bolt16", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 800, "name": "Anthony Hanna8", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": null, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 804, "name": "Jim Gray3", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": 20.0, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 600, "name": "Joiner", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O105", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 601, "name": "Concrete 21/21/121", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "C221", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 13, "unit_name": "m3", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 2.11, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 350, "name": "Stabilised sand", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": null, "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 13, "unit_name": "m3", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 80.0, "resource_margin": null, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 355, "name": "Plywood 6mm 607x2440mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T103", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 8.7, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 356, "name": "Plywood 6mm 606x1220mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T101", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 5.82, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 357, "name": "Plywood 6mm 607x1829mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T102", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 7.98, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 358, "name": "Plywood 6mm 1220x2440mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T104", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 15.18, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 359, "name": "Plywood 9mm 1220x2440mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 19.5, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 360, "name": "Plywood 9mm 607x1220mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T105", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 8.1, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 361, "name": "Plywood 9mm 607x1829mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T106", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 11.82, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 400, "name": "Ciment Truck", "employer": null, "role": null, "email": null, "vat": null, "staff": false, "product_ref": null, "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 6, "unit_name": "T", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 0.0, "resource_margin": null, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 401, "name": "Sand Truck", "employer": null, "role": null, "email": null, "vat": null, "staff": false, "product_ref": null, "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 6, "unit_name": "T", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 0.0, "resource_margin": null, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 501, "name": "Nail guns", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "CSV03", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 6, "unit_name": "T", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 20.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 502, "name": "Nail", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "CSV05", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 6, "unit_name": "T", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 20.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 558, "name": "Shutter Joiner", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O105", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 559, "name": "Concrete 20/20/120", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "C221", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 13, "unit_name": "m3", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 2.11, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 566, "name": "Plugs", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "Misc", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 11, "unit_name": "m", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 100.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 708, "name": "Drywall", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "A-102", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 801, "name": "Anthony Hanna9", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": null, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 803, "name": "Jim Gray2", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": 20.0, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 850, "name": "Anthony Hanna10", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": null, "stage_id": null, "stage_name": null, "customer_id": 2700}]
+//        $rootScope.staff_list = [{"id": 802, "name": "Jim Gray", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 0.0}, {"id": 800, "name": "Anthony Hanna8", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 0.0}, {"id": 804, "name": "Jim Gray3", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 20.0}, {"id": 801, "name": "Anthony Hanna9", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 0.0}, {"id": 803, "name": "Jim Gray2", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 20.0}, {"id": 850, "name": "Anthony Hanna10", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 0.0}];
         $ionicPopover.fromTemplateUrl('view/search.html', {
             scope: $scope
         }).then(function (popover) {
             $scope.popover = popover;
-            console.log($scope.popover)
         });
-
 
         $scope.doTotal = function (type, parent) {
             parent.total_cost = 0;
             if (type === 'resource') {
                 angular.forEach(parent.resources, function (res) {
+                    if (isNaN(res.quantity)) {
+                        res.total_cost = 0;
+                    }
+                    if (isNaN(res.direct_cost)) {
+                        res.total_cost = 0;
+                    }
                     parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
                 });
             }
             if (type === 'piresource') {
                 console.log('piresource', parent)
                 angular.forEach(parent.resources, function (res) {
+                    if (isNaN(res.quantity)) {
+                        res.total_cost = 0;
+                    }
+                    if (isNaN(res.direct_cost)) {
+                        res.total_cost = 0;
+                    }
                     parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
-                    console.log(parent.total_cost, res.quantity, res.direct_cost)
-
                 });
             }
             if (type === 'pisubresource') {
                 angular.forEach(parent.resources, function (res) {
+                    if (isNaN(res.quantity)) {
+                        res.total_cost = 0;
+                    }
+                    if (isNaN(res.direct_cost)) {
+                        res.total_cost = 0;
+                    }
                     parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
                 });
             }
             if (type === 'pisubtask') {
                 console.log(parent)
                 angular.forEach(parent.subtasks, function (stk) {
+                    if (isNaN(stk.total_cost)) {
+                        stk.total_cost = 0;
+                    }
                     parent.total_cost = parent.total_cost + stk.total_cost;
                 });
             }
             if (type === 'pi') {
                 angular.forEach(parent.pay_items, function (pi) {
+                    if (isNaN(pi.total_cost)) {
+                        pi.total_cost = 0;
+                    }
                     parent.total_cost = parent.total_cost + pi.total_cost;
                 });
             }
         }
 
 
-        $scope.openPopover = function ($event, predicate) {
+        $scope.openPopover = function ($event, predicate, test) {
             $scope.filter.popup_predicate = predicate;
-            if (predicate.staff) {
-                $scope.filter.popup_list = $rootScope.staff_list;
+            if (test !== 'pi') {
+                $scope.filter.pi = false;
+                if (predicate.staff) {
+                    $scope.filter.popup_list = $rootScope.staff_list;
+                }
+                else {
+                    $scope.filter.popup_list = $rootScope.resource_list;
+                }
             }
             else {
-                $scope.filter.popup_list = $rootScope.resource_list;
+                $scope.filter.pi = true;
+                PayitemService.list_payitems($stateParams.projectId).then(function (data) {
+                    $rootScope.payitem_list = data;
+                    $scope.filter.popup_list = $rootScope.payitem_list;
+                });
+
             }
             $scope.popover.show($event);
         };
         $scope.selectPopover = function (item) {
-            $scope.filter.popup_predicate.name = item.name;
-            console.log($scope.filter.popup_predicate)
-            if (!$scope.filter.popup_predicate.staff) {
-                //resource
+            if (!$scope.filter.pi) {
                 $scope.filter.popup_predicate.name = item.name;
-                $scope.filter.popup_predicate.product_ref = item.product_ref;
-                $scope.filter.popup_predicate.direct_cost = item.direct_cost;
-                angular.forEach($rootScope.resource_type_list, function (restyp) {
-                    console.log(restyp.id, item.resource_type_id)
-                    if (restyp.name === item.resource_type_name) {
-                        $scope.filter.popup_predicate.res_type_obj = restyp;
-                        $scope.filter.popup_predicate.resource_type_id = restyp.id;
-                        $scope.filter.popup_predicate.resource_type_name = restyp.name;
-                    }
-                });
+                if (!$scope.filter.popup_predicate.staff) {
+                    //resource
+                    $scope.filter.popup_predicate.name = item.name;
+                    $scope.filter.popup_predicate.product_ref = item.product_ref;
+                    $scope.filter.popup_predicate.direct_cost = item.direct_cost;
+                    angular.forEach($rootScope.resource_type_list, function (restyp) {
+                        console.log(restyp.id, item.resource_type_id)
+                        if (restyp.name === item.resource_type_name) {
+                            $scope.filter.popup_predicate.res_type_obj = restyp;
+                            $scope.filter.popup_predicate.resource_type_id = restyp.id;
+                            $scope.filter.popup_predicate.resource_type_name = restyp.name;
+                        }
+                    });
+                    angular.forEach($rootScope.unit_list, function (unt) {
+                        if (unt.name === item.unit_name) {
+                            $scope.filter.popup_predicate.unit_obj = unt;
+                            $scope.filter.popup_predicate.unit_id = unt.id;
+                            $scope.filter.popup_predicate.unit_name = unt.name;
+                        }
+                    });
+                }
+                else {
+                    //staff
+                    $scope.filter.popup_predicate.name = item.name;
+                    $scope.filter.popup_predicate.employer_name = item.employee_name;
+                    $scope.filter.popup_predicate.staff_role = item.role;
+                    $scope.filter.popup_predicate.direct_cost = item.direct_cost;
+                    angular.forEach($rootScope.resource_type_list, function (restyp) {
+                        console.log(restyp.id, item.resource_type_id)
+                        if (restyp.name === item.resource_type_name) {
+                            $scope.filter.popup_predicate.res_type_obj = restyp;
+                            $scope.filter.popup_predicate.resource_type_id = restyp.id;
+                            $scope.filter.popup_predicate.resource_type_name = restyp.name;
+                        }
+                    });
+                }
+            }
+            else {
+                $scope.filter.popup_predicate.description = item.description;
+                $scope.filter.popup_predicate.reference = item.reference;
                 angular.forEach($rootScope.unit_list, function (unt) {
                     if (unt.name === item.unit_name) {
                         $scope.filter.popup_predicate.unit_obj = unt;
                         $scope.filter.popup_predicate.unit_id = unt.id;
                         $scope.filter.popup_predicate.unit_name = unt.name;
-                    }
-                });
-            }
-            else {
-                //staff
-                $scope.filter.popup_predicate.name = item.name;
-                $scope.filter.popup_predicate.employer_name = item.employee_name;
-                $scope.filter.popup_predicate.staff_role = item.role;
-                $scope.filter.popup_predicate.direct_cost = item.direct_cost;
-                angular.forEach($rootScope.resource_type_list, function (restyp) {
-                    console.log(restyp.id, item.resource_type_id)
-                    if (restyp.name === item.resource_type_name) {
-                        $scope.filter.popup_predicate.res_type_obj = restyp;
-                        $scope.filter.popup_predicate.resource_type_id = restyp.id;
-                        $scope.filter.popup_predicate.resource_type_name = restyp.name;
                     }
                 });
             }
@@ -305,6 +348,9 @@ angular.module($APP.name).controller('FormCtrl', [
                 $scope.addStaff();
             }
         };
+        PayitemService.list_payitems($stateParams.projectId).then(function (result) {
+            $scope.popup_list = result;
+        })
         $scope.addResource = function () {
             $scope.resourceField.resources.push({
                 "id": 0,

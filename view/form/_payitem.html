@@ -62,14 +62,31 @@
                         <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.description" ng-disabled="!filter.edit">
                     </label>
                 </div>
-                <div class="calm-border">
-                    <label class="item item-input item-stacked-label calm-border">
-                        <div class="inputLabel" style="padding-top: 10px;">
-                            <span class="all-name">Reference</span>
-                        </div>
+                <!--<div class="calm-border">-->
+                <!--                    <label class="item item-input item-stacked-label calm-border">
+                                        <div class="inputLabel" style="padding-top: 10px;">
+                                            <span class="all-name">Reference</span>
+                                        </div>
+                                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.reference" ng-disabled="!filter.edit">
+                                        <div style="position: relative">
+                                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.reference" ng-disabled="!filter.edit">
+                                            <span ng-if="filter.edit" class="ion ion-android-search" ng-click="openPopover($event, filter.substate);
+                                                $event.stopPropagation();" style="position: absolute;top: 0px;right: 0px;font-size: 25px;color: red; padding: 10px 5px 10px 15px;"></span>
+                                        </div>
+                                    </label>-->
+
+                <!--</div>-->                                                        
+                <div class="item item-input item-stacked-label calm-border">
+                    <div class="inputLabel" style="padding-top: 10px;">
+                        <span class="all-name">Reference</span>
+                    </div>         
+                    <div style="position: relative">
                         <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.reference" ng-disabled="!filter.edit">
-                    </label>
-                </div>                                                        
+                        <span ng-if="filter.edit" class="ion ion-android-search" ng-click="openPopover($event, filter.substate, 'pi');
+                            $event.stopPropagation();" style="position: absolute;top: 0px;right: 0px;font-size: 25px;color: #31475a; padding: 10px 5px 10px 15px;"></span>
+                    </div>
+                    <!--<input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.name" ng-disabled="!filter.edit">-->
+                </div>
                 <div class="calm-border">
                     <label class="item item-input item-stacked-label calm-border">
                         <div class="inputLabel" style="padding-top: 10px;">

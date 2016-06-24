@@ -17,7 +17,8 @@ angular.module($APP.name).controller('EditCtrl', [
     'StaffService',
     'SchedulingService',
     'PayitemService',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, $ionicSideMenuDelegate, $ionicScrollDelegate, $ionicPopup, $ionicModal, $cordovaCamera, ConvertersService, ImageService, $ionicHistory, ResourceService, StaffService, SchedulingService, PayitemService) {
+    '$ionicPopover',
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, $ionicSideMenuDelegate, $ionicScrollDelegate, $ionicPopup, $ionicModal, $cordovaCamera, ConvertersService, ImageService, $ionicHistory, ResourceService, StaffService, SchedulingService, PayitemService, $ionicPopover) {
 
         $scope.filter = {
             edit: true,
@@ -26,6 +27,13 @@ angular.module($APP.name).controller('EditCtrl', [
             popup_list: [],
             searchText: ''
         }
+
+        $ionicPopover.fromTemplateUrl('view/search.html', {
+            scope: $scope
+        }).then(function (popover) {
+            $scope.popover = popover;
+        });
+
         $scope.filter.vat = $rootScope.custSett.vat;
         $scope.filter.currency = $rootScope.custSett.currency;
         $scope.filter.margin = $rootScope.custSett.margin;
@@ -91,52 +99,76 @@ angular.module($APP.name).controller('EditCtrl', [
                 $scope.addStaff();
             }
         };
-        $scope.openPopover = function ($event, predicate) {
+        $scope.openPopover = function ($event, predicate, test) {
             $scope.filter.popup_predicate = predicate;
-            if (predicate.staff) {
-                $scope.filter.popup_list = $rootScope.staff_list;
+            if (test !== 'pi') {
+                $scope.filter.pi = false;
+                if (predicate.staff) {
+                    $scope.filter.popup_list = $rootScope.staff_list;
+                }
+                else {
+                    $scope.filter.popup_list = $rootScope.resource_list;
+                }
             }
             else {
-                $scope.filter.popup_list = $rootScope.resource_list;
+                $scope.filter.pi = true;
+                PayitemService.list_payitems($scope.formData.projectId).then(function (data) {
+                    $rootScope.payitem_list = data;
+                    $scope.filter.popup_list = $rootScope.payitem_list;
+                });
+
             }
             $scope.popover.show($event);
         };
         $scope.selectPopover = function (item) {
-            $scope.filter.popup_predicate.name = item.name;
-            console.log($scope.filter.popup_predicate)
-            if (!$scope.filter.popup_predicate.staff) {
-                //resource
+            if (!$scope.filter.pi) {
                 $scope.filter.popup_predicate.name = item.name;
-                $scope.filter.popup_predicate.product_ref = item.product_ref;
-                $scope.filter.popup_predicate.direct_cost = item.direct_cost;
-                angular.forEach($rootScope.resource_type_list, function (restyp) {
-                    console.log(restyp.id, item.resource_type_id)
-                    if (restyp.name === item.resource_type_name) {
-                        $scope.filter.popup_predicate.res_type_obj = restyp;
-                        $scope.filter.popup_predicate.resource_type_id = restyp.id;
-                        $scope.filter.popup_predicate.resource_type_name = restyp.name;
-                    }
-                });
+                console.log($scope.filter.popup_predicate)
+                if (!$scope.filter.popup_predicate.staff) {
+                    //resource
+                    $scope.filter.popup_predicate.name = item.name;
+                    $scope.filter.popup_predicate.product_ref = item.product_ref;
+                    $scope.filter.popup_predicate.direct_cost = item.direct_cost;
+                    angular.forEach($rootScope.resource_type_list, function (restyp) {
+                        console.log(restyp.id, item.resource_type_id)
+                        if (restyp.name === item.resource_type_name) {
+                            $scope.filter.popup_predicate.res_type_obj = restyp;
+                            $scope.filter.popup_predicate.resource_type_id = restyp.id;
+                            $scope.filter.popup_predicate.resource_type_name = restyp.name;
+                        }
+                    });
+                    angular.forEach($rootScope.unit_list, function (unt) {
+                        if (unt.name === item.unit_name) {
+                            $scope.filter.popup_predicate.unit_obj = unt;
+                            $scope.filter.popup_predicate.unit_id = unt.id;
+                            $scope.filter.popup_predicate.unit_name = unt.name;
+                        }
+                    });
+                }
+                else {
+                    //staff
+                    $scope.filter.popup_predicate.name = item.name;
+                    $scope.filter.popup_predicate.employer_name = item.employee_name;
+                    $scope.filter.popup_predicate.staff_role = item.role;
+                    $scope.filter.popup_predicate.direct_cost = item.direct_cost;
+                    angular.forEach($rootScope.resource_type_list, function (restyp) {
+                        console.log(restyp.id, item.resource_type_id)
+                        if (restyp.name === item.resource_type_name) {
+                            $scope.filter.popup_predicate.res_type_obj = restyp;
+                            $scope.filter.popup_predicate.resource_type_id = restyp.id;
+                            $scope.filter.popup_predicate.resource_type_name = restyp.name;
+                        }
+                    });
+                }
+            }
+            else {
+                $scope.filter.popup_predicate.description = item.description;
+                $scope.filter.popup_predicate.reference = item.reference;
                 angular.forEach($rootScope.unit_list, function (unt) {
                     if (unt.name === item.unit_name) {
                         $scope.filter.popup_predicate.unit_obj = unt;
                         $scope.filter.popup_predicate.unit_id = unt.id;
                         $scope.filter.popup_predicate.unit_name = unt.name;
-                    }
-                });
-            }
-            else {
-                //staff
-                $scope.filter.popup_predicate.name = item.name;
-                $scope.filter.popup_predicate.employer_name = item.employee_name;
-                $scope.filter.popup_predicate.staff_role = item.role;
-                $scope.filter.popup_predicate.direct_cost = item.direct_cost;
-                angular.forEach($rootScope.resource_type_list, function (restyp) {
-                    console.log(restyp.id, item.resource_type_id)
-                    if (restyp.name === item.resource_type_name) {
-                        $scope.filter.popup_predicate.res_type_obj = restyp;
-                        $scope.filter.popup_predicate.resource_type_id = restyp.id;
-                        $scope.filter.popup_predicate.resource_type_name = restyp.name;
                     }
                 });
             }
@@ -201,7 +233,7 @@ angular.module($APP.name).controller('EditCtrl', [
                     total_time: "",
                     comment: "",
                     vat: 0.0
-                })          
+                })
                 $scope.filter.substate = $scope.staffField.resources[ $scope.staffField.resources.length - 1];
             }
         }

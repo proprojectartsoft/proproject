@@ -10,7 +10,8 @@ angular.module($APP.name).factory('SyncService', [
     '$timeout',
     'ResourceService',
     'UserService',
-    function ($q, CacheFactory, $ionicPopup, FormInstanceService, FormDesignService, ProjectService, $rootScope, $http, $timeout, ResourceService, UserService) {
+    'PayitemService',
+    function ($q, CacheFactory, $ionicPopup, FormInstanceService, FormDesignService, ProjectService, $rootScope, $http, $timeout, ResourceService, UserService, PayitemService) {
 
         return {
             sync: function () {
@@ -19,9 +20,10 @@ angular.module($APP.name).factory('SyncService', [
                 var projectsCache = CacheFactory.get('projectsCache');
                 var designsCache = CacheFactory.get('designsCache');
                 var resourcesCache = CacheFactory.get('resourcesCache');
+                var staffCache = CacheFactory.get('staffCache');
                 var unitCache = CacheFactory.get('unitCache');
                 var custSettCache = CacheFactory.get('custSettCache');
-                var restypesCache = CacheFactory.get('restypesCache');
+                var payitemsCache = CacheFactory.get('payitemsCache');
                 var settingsCache = CacheFactory.get('settings');
                 var sync = CacheFactory.get('sync');
                 var photos = CacheFactory.get('photos');
@@ -109,6 +111,26 @@ angular.module($APP.name).factory('SyncService', [
                         resourcesCache.removeAll();
                     }
 
+                    if (staffCache) {
+                        staffCache.removeAll();
+                    } else {
+                        staffCache = CacheFactory('staffCache');
+                        staffCache.setOptions({
+                            storageMode: 'localStorage'
+                        });
+                        staffCache.removeAll();
+                    }
+
+                    if (payitemsCache) {
+                        payitemsCache.removeAll();
+                    } else {
+                        payitemsCache = CacheFactory('payitemsCache');
+                        payitemsCache.setOptions({
+                            storageMode: 'localStorage'
+                        });
+                        payitemsCache.removeAll();
+                    }
+
                     if (unitCache) {
                         unitCache.removeAll();
                     } else {
@@ -153,7 +175,7 @@ angular.module($APP.name).factory('SyncService', [
                     var doRequest;
                     if (currentVersion !== version.data) {
                         clear();
-                        requests = [ProjectService.list_current(true), FormDesignService.list_mobile(), ResourceService.list_unit(), UserService.cust_settings()];
+                        requests = [ProjectService.list_current(true), FormDesignService.list_mobile(), ResourceService.list_unit(), UserService.cust_settings(), ResourceService.list_manager(), ResourceService.list_staff()];
                         doRequest = requests.concat(upRequests);
                         console.log(doRequest);
                     } else {
@@ -202,6 +224,12 @@ angular.module($APP.name).factory('SyncService', [
                                         for (var i = 0; i < result[0].length; i++) {
 //                                            projectsAux.push({id: result[0][i].id, proj: result[0][i]})
                                             projectsCache.put(result[0][i].id, result[0][i]);
+
+                                            angular.forEach(result[0], function (proj) {
+                                                PayitemService.list_payitems(proj.id).then(function (list) {
+                                                    payitemsCache.put(proj.id, list);
+                                                })
+                                            });
                                         }
 //                                        for (var i = 0; i < projectsAux.length; i++) {
 //                                            ProjectService.settings(projectsAux[i].id).then(function (result) {
@@ -230,12 +258,18 @@ angular.module($APP.name).factory('SyncService', [
                                                 $rootScope.custSett[result[3][i].name] = result[3][i].value;
                                             }
                                         }
-//                                        if (result[2]) {
-//                                            for (var i = 0; i < result[2].length; i++) {
-//                                                resourcesCache.put(result[2][i].id, result[2][i]);
-//                                                $rootScope.unit_list.push(result[2][i])
-//                                            }
-//                                        }
+                                        if (result[4]) {
+                                            for (var i = 0; i < result[4].length; i++) {
+                                                resourcesCache.put(result[4][i].id, result[4][i]);
+                                                $rootScope.unit_list.push(result[4][i])
+                                            }
+                                        }
+                                        if (result[5]) {
+                                            for (var i = 0; i < result[5].length; i++) {
+                                                staffCache.put(result[5][i].id, result[4][i]);
+                                                $rootScope.unit_list.push(result[5][i])
+                                            }
+                                        }
                                     } else {
                                         $rootScope.projectId = 0;
                                         $rootScope.navTitle = 'No projects';

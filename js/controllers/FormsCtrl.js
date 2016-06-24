@@ -75,7 +75,6 @@ angular.module($APP.name).controller('FormsCtrl', [
                     });
                     $state.go('login');
                 });
-
             }
         }, function errorCallback(error) {
             console.log(error, error.status);

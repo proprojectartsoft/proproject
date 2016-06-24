@@ -8,7 +8,7 @@
     <input class="form-input-white" input id="{{hash}}" type="text" name="{{data.name}}"
            ng-model="data.value" value="{{data.default}}"
            placeholder="{{data.placeholder|| 'input here'}}"
-           ng-required="data.required">
+           ng-required="data.required"><strong></strong>
 </label>
 
 <!--text area-->
@@ -22,7 +22,7 @@
     </div>
     <textarea ng-auto-expand id="{{hash}}" type="text"
               ng-model="data.value" placeholder="{{data.placeholder|| 'insert here'}}"
-              ng-required="data.required">{{data.value}}</textarea>
+              ng-required="data.required">{{data.value}}</textarea><strong></strong>
 </label>
 
 <!--password-->
@@ -36,7 +36,7 @@
     </div>
     <input input id="{{hash}}" type="password" name="{{data.name}}"
            ng-model="data.value" value="{{data.value}}" placeholder="{{data.placeholder}}"
-           ng-required="data.required"/>
+           ng-required="data.required"/><strong></strong>
 </label>
 
 <!--select-->
@@ -53,7 +53,7 @@
     <select class="form-select" input id="{{hash}}" ng-model="data.value"
             ng-init="data.value = data.default_value"
             ng-options="option.value as option.name for option in data.option_designs">
-    </select>
+    </select><strong></strong>
 </label>
 
 <!--email-->
@@ -67,7 +67,7 @@
     </div>
     <input input id="{{hash}}" type="email" name="{{data.name}}"
            ng-model="data.value" value="{{data.default}}" placeholder="{{data.placeholder|| 'insert here'}}"
-           ng-required="data.required">
+           ng-required="data.required"><strong></strong>
 </label>
 
 <!--number-->
@@ -81,7 +81,7 @@
     </div>
     <input input id="{{hash}}" type="number" name="{{data.name}}"
            ng-model="data.value" value="{{data.default_value}}" placeholder="{{data.placeholder|| 'insert here'}}"
-           ng-required="data.required">
+           ng-required="data.required"><strong></strong>
 </label>
 
 
@@ -163,7 +163,7 @@
                ng-required="data.required">-->
 
     <div ng-required="data.required" ion-datetime-picker date ng-model="data.value" style="border-top-left-radius: 0px;border-top-right-radius: 0px;overflow: hidden;height: 46px;font-size: 14px;color: #000;background-color: #fff;">
-        <input date='dd-MM-yyyy' ng-model="data.value" style='padding: 15px;'>
+        <input type="text" date='dd-MM-yyyy' ng-model="data.value" style='padding: 15px;'><strong></strong>
     </div>
 
 
@@ -184,7 +184,7 @@
 
     <div ng-required="data.required" ion-datetime-picker time ng-model="data.value" style="border-top-left-radius: 0px;border-top-right-radius: 0px;overflow: hidden;height: 46px;font-size: 14px;color: #000;background-color: #fff;">
         <!--        {{data.value| date: "H:mm"}}-->
-        <input date='HH:mm' ng-model="data.value" style='padding: 15px;'>
+        <input type="text" date='HH:mm' ng-model="data.value" style='padding: 15px;'><strong></strong>
     </div>
 
 </div>

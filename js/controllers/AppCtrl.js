@@ -55,6 +55,7 @@ angular.module($APP.name).controller('AppCtrl', [
             });
         }
         var aux;
+        console.log(resourcesCache.keys())
         angular.forEach(resourcesCache.keys(), function (key) {
             aux = resourcesCache.get(key);
             $rootScope.resource_list.push(aux);

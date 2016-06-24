@@ -1,6 +1,4 @@
 <ion-popover-view class="customPopup">
-
-
     <ion-header-bar class="bar bar-header barHeaderCustom">
         <h1 class="title">{{filter.popup_title}}</h1>
         <button class="button button-icon icon ion-android-close" style=" padding-right: 0px;" ng-click="closePopover()"></button>
@@ -15,7 +13,8 @@
     <ion-content>
         <ion-list>
             <ion-item ng-repeat="item in filter.popup_list| filter:filter.searchText" ng-if='filter.popup_list.length !== 0' ng-click="selectPopover(item)">
-                {{item.name}}
+                <span ng-if="!filter.pi">{{item.name}}</span>
+                <span ng-if="filter.pi">{{item.reference}}</span>
             </ion-item>
             <ion-item ng-if='filter.popup_list.length === 0'>
                 No items in list.

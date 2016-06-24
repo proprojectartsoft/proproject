@@ -346,11 +346,27 @@ input[type='text'], input[type='number'],input[type='email']{
     color: #444;
     font-size: 22px;
 }
+form{
+    position: relative;
+}
+input[type='email']:focus + strong::before{
 
-input[type='text']:focus,input[type='email']:focus,input[type='number']:focus, textarea:focus, select:focus{
+}
+
+input[type='text']:focus + strong::after, input[type='email']:focus + strong::after,input[type='password']:focus + strong::after, input[type='number']:focus + strong::after, textarea:focus:focus + strong::after, select:focus + strong::after{
+    content: '';
+    width: calc(100% - 20px);
+    height: 1px;
+    background-color: #11c1f3;
+    position: absolute;
+    margin-top: -10px;
+    margin-left: 10px;
+}
+
+/*input[type='text']:focus ,input[type='email']:focus,input[type='number']:focus, textarea:focus, select:focus{
     border-left: 3px solid #ef473a;
     padding-left: 12px !important;
-}
+}*/
 .popover-backdrop.active {
     background-color: rgba(0, 0, 0, 0.5);
 }
