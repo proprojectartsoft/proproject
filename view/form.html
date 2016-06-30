@@ -1,12 +1,11 @@
 <ion-view title="Form" id="form" cache-view="false">
+    <ion-header-bar align-title="left" class="bar-subheader item item-button-left subHeader-form-bar"  ng-click="backHelper()">
+        <div class="back-arrow ion-ios-arrow-left"></div>
+        <div class="header-prj-text"><span ng-if="filter.state === 'form' ">{{formData.category}} - </span>{{titleShow}}</div>
+    </ion-header-bar>
     <ion-content class="blue-bgd" ng-class="{'grey-bgd':filter.state !== 'form' && !filter.substate}" delegate-handle="mainScroll">
         <div class="content">
             <div class="list" ng-if="filter.state === 'form'">
-                <a class="item item-button-left subHeader-form-bar" ng-click="back()"
-                   href="#/app/category/{{projectId}}/{{formData.category_id}}">
-                    <div class="back-arrow ion-ios-arrow-left"></div>
-                    <div class="header-prj-text">{{formData.category}}</div>
-                </a>
                 <div class="formTitle clearfix" style="float:none">
                     <div class="header-prj-text"> Design: {{formData.name}}</div>
                     <div class="blue-label">{{formData.code}}</div>
@@ -45,25 +44,25 @@
                 <div class="form-container-bgd" ng-if="formData.resource_field_design">
                     <div class="item-stable item fs all-field-header">
                         <span class="add-pic-text">Resource field</span>    
-                        <button ng-click="filter.state = 'resource';goToTop()">Open</button>
+                        <button ng-click="goState('resource')">Open</button>
                     </div>
                 </div>
                 <div class="form-container-bgd" ng-if="formData.scheduling_field_design">
                     <div class="item-stable item fs all-field-header">
                         <span class="add-pic-text">Scheduling field</span>    
-                        <button ng-click="filter.state = 'scheduling';goToTop()">Open</button>
+                        <button  ng-click="goState('scheduling')">Open</button>
                     </div>
                 </div>
                 <div class="form-container-bgd" ng-if="formData.pay_item_field_design">
                     <div class="item-stable item fs all-field-header">
                         <span class="add-pic-text">Pay-item field</span>    
-                        <button ng-click="filter.state = 'payitem';goToTop()">Open</button>
+                        <button ng-click="goState('payitem')">Open</button>
                     </div>
                 </div>
                 <div class="form-container-bgd" ng-if="formData.staff_field_design">
                     <div class="item-stable item fs all-field-header">
                         <span class="add-pic-text">Staff field</span>    
-                        <button ng-click="filter.state = 'staff';goToTop()">Open</button>
+                        <button ng-click="goState('staff')">Open</button>
                     </div>
                 </div>
                 <div class="form-container-bgd">
@@ -74,37 +73,6 @@
                         <img ng-click="goPicture()" class="add-pic-icon" src="img/new/gallery.svg">
                     </div>
                 </div>
-                <!--                <div class="form-container-bgd">
-                                    <div id="image-header" ng-click="toggleGroup(fieldset, 'image-header')"
-                                         ng-class="{active: isGroupShown(group)}"
-                                         class="item-stable item fs all-field-header">
-                                        <span class="add-pic-text">Add pictures</span>
-                                        <img class="add-pic-icon mr-0" src="img/new/cameraRoll.svg">
-                                        <img class="add-pic-icon" src="img/new/takePicture.svg">
-                                        <img class="add-pic-icon" src="img/new/gallery.svg">
-                                    </div>
-                                </div>
-                                <ion-item ng-show="isGroupShown(fieldset)" class="images-container">
-                                    <div class="row" ng-repeat="picrow in pictures">
-                                        <div class="col" ng-repeat="pic in picrow">
-                                            <div class="img-box-container">
-                                                <div class="img-box" ng-click="test(pic)">
-                                                    <button ng-click="delSpot(pic.id)">x</button>
-                                                    <img ng-show="pic.base64String !== ''"
-                                                         data-ng-src="data:image/png;base64,{{pic.base64String}}">
-                                                    <img ng-show="pic.base64String === ''" ng-src="img/ic.png">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div style="width: calc(100% + 10px); margin-left:-5px">
-                                        <button ng-show="imgURI.length !== 9"
-                                                class="button button-block button-calm" ng-click="addSpot()"><i
-                                                class="ion-plus"></i><i class="ion-image"
-                                                style="font-size:19px; padding-left: 4px"></i>
-                                        </button>
-                                    </div>
-                                </ion-item>-->
                 <div class="padding">
                     <button type="submit" ng-click="submit(formData)"
                             ng-disabled="formData.permission < 2" value="Save"
@@ -119,7 +87,7 @@
             <div class="list" ng-if="filter.state === 'photos'" ng-include="'view/form/_photos.html'"></div>
         </div>
     </ion-content>
-    <div ng-if="!filter.substateRes && !filter.substateStkRes && filter.state !== 'form' && filter.state !== 'staff' && filter.state !== 'resource' && filter.state!== 'photos' || (!filter.substate && filter.state === 'staff') || (!filter.substate && filter.state === 'resource')" >
+    <div ng-if="!filter.substateRes && !filter.substateStkRes && filter.state !== 'form' && filter.state !== 'staff' && filter.state !== 'resource' && filter.state !== 'photos' || (!filter.substate && filter.state === 'staff') || (!filter.substate && filter.state === 'resource')" >
         <button class="btn-add-resource" ng-click="addResourcePi()" ng-if="filter.actionBtn && filter.substate.subtasks.length === 0 && filter.substate.resources.length === 0">   
             Add resource
         </button>

@@ -27,9 +27,455 @@ angular.module($APP.name).controller('FormCtrl', [
         });
         $ionicSideMenuDelegate.canDragContent(false);
 
+        $scope.linkAux = 'forms';
 
-//        $rootScope.resource_list = [{"id": 706, "name": "Bolt15", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 802, "name": "Jim Gray", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": null, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 702, "name": "Bolt", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 704, "name": "Bolt11", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 705, "name": "Bolt12", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 707, "name": "Bolt16", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 800, "name": "Anthony Hanna8", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": null, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 804, "name": "Jim Gray3", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": 20.0, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 600, "name": "Joiner", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O105", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 601, "name": "Concrete 21/21/121", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "C221", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 13, "unit_name": "m3", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 2.11, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 350, "name": "Stabilised sand", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": null, "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 13, "unit_name": "m3", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 80.0, "resource_margin": null, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 355, "name": "Plywood 6mm 607x2440mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T103", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 8.7, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 356, "name": "Plywood 6mm 606x1220mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T101", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 5.82, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 357, "name": "Plywood 6mm 607x1829mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T102", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 7.98, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 358, "name": "Plywood 6mm 1220x2440mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T104", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 15.18, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 359, "name": "Plywood 9mm 1220x2440mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T107", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 19.5, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 360, "name": "Plywood 9mm 607x1220mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T105", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 8.1, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 361, "name": "Plywood 9mm 607x1829mm", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "T106", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 19, "unit_name": "No", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 11.82, "resource_margin": null, "stage_id": 8, "stage_name": "Carpentry", "customer_id": 2700}, {"id": 400, "name": "Ciment Truck", "employer": null, "role": null, "email": null, "vat": null, "staff": false, "product_ref": null, "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 6, "unit_name": "T", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 0.0, "resource_margin": null, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 401, "name": "Sand Truck", "employer": null, "role": null, "email": null, "vat": null, "staff": false, "product_ref": null, "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 6, "unit_name": "T", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 0.0, "resource_margin": null, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 501, "name": "Nail guns", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "CSV03", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 6, "unit_name": "T", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 20.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 502, "name": "Nail", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "CSV05", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 6, "unit_name": "T", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 20.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 558, "name": "Shutter Joiner", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "O105", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 559, "name": "Concrete 20/20/120", "employer": null, "role": null, "email": null, "vat": 20.0, "staff": false, "product_ref": "C221", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 13, "unit_name": "m3", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 2.11, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 566, "name": "Plugs", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "Misc", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 11, "unit_name": "m", "resource_type_id": 2, "resource_type_name": "Material", "direct_cost": 100.0, "resource_margin": 100.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 708, "name": "Drywall", "employer": null, "role": null, "email": null, "vat": 30.0, "staff": false, "product_ref": "A-102", "telephone_number": null, "safety_card_number": null, "expiry_date": null, "unit_id": 17, "unit_name": "hr", "resource_type_id": 350, "resource_type_name": "Operative", "direct_cost": 100.0, "resource_margin": 2.0, "stage_id": 4, "stage_name": "Concrete", "customer_id": 2700}, {"id": 801, "name": "Anthony Hanna9", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": null, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 803, "name": "Jim Gray2", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": 20.0, "stage_id": null, "stage_name": null, "customer_id": 2700}, {"id": 850, "name": "Anthony Hanna10", "employer": null, "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "staff": true, "product_ref": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "unit_id": 17, "unit_name": "hr", "resource_type_id": 400, "resource_type_name": "15", "direct_cost": 100.0, "resource_margin": null, "stage_id": null, "stage_name": null, "customer_id": 2700}]
-//        $rootScope.staff_list = [{"id": 802, "name": "Jim Gray", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 0.0}, {"id": 800, "name": "Anthony Hanna8", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 0.0}, {"id": 804, "name": "Jim Gray3", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 20.0}, {"id": 801, "name": "Anthony Hanna9", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 0.0}, {"id": 803, "name": "Jim Gray2", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 20.0}, {"id": 850, "name": "Anthony Hanna10", "role": "Site Manager", "email": "anthony@hanna.com", "vat": 15.0, "employee_name": null, "employee_number": "10", "telephone_number": "2890741598", "safety_card_number": "981723", "expiry_date": "23.02.2017", "customer_id": 2700, "unit_name": "hr", "resource_type": "15", "direct_cost": 100.0, "resource_margin": 0.0}];
+        $scope.updateCalculation = function (data) {
+            console.log(data)
+            if (data.unit_obj.name === 'm' || data.unit_obj.name === 'ft') {
+                if (!data.length) {
+                    data.length = 0;
+                }
+                if (!data.wastage) {
+                    data.quantity = data.quantity + data.length;
+                }
+                else {
+                    data.quantity = data.quantity + data.length + data.length / data.wastage;
+                }
+            }
+            if (data.unit_obj.name === 'Days') {
+                if (!data.days) {
+                    data.days = 0;
+                }
+                if (!data.number_of) {
+                    data.number_of = 0;
+                }
+                data.quantity = data.days * data.number_of;
+            }
+            if (data.unit_obj.name === 'm2' || data.unit_obj.name === 'ft2') {
+                if (!data.length) {
+                    data.length = 0;
+                }
+                if (!data.width) {
+                    data.width = 0;
+                }
+                if (data.wastage) {
+                    data.quantity = data.length * data.width + (data.length * data.width * data.wastage) / 100;
+
+                } else {
+                    data.quantity = data.length * data.width;
+                }
+            }
+            if (data.unit_obj.name === 'm3' || data.unit_obj.name === 'ft3') {
+                if (!data.length) {
+                    data.length = 0;
+                }
+                if (!data.width) {
+                    data.width = 0;
+                }
+                if (!data.depth) {
+                    data.depth = 0;
+                }
+                if (data.wastage) {
+                    data.quantity = data.length * data.width * data.depth + (data.length * data.width * data.depth * data.wastage) / 100;
+
+                } else {
+                    data.quantity = data.length * data.width * data.depth;
+                }
+            }
+            if (data.unit_obj.name === 'T') {
+                if (!data.length) {
+                    data.length = 0;
+                }
+                if (!data.width) {
+                    data.width = 0;
+                }
+                if (!data.depth) {
+                    data.depth = 0;
+                }
+                if (!data.tm3) {
+                    data.tm3 = 0;
+                }
+                if (data.wastage) {
+                    data.quantity = data.length * data.width * data.depth * data.tm3 + (data.length * data.width * data.depth * data.tm3 * data.wastage) / 100;
+                } else {
+                    data.quantity = data.length * data.width * data.depth * data.tm3;
+                }
+
+            }
+            data.quantity = Math.round(data.quantity * 100) / 100
+        }
+
+        $scope.updateTitle = function (title, placeholder) {
+            if (title) {
+                if (placeholder === 'Resource') {
+                    $scope.titleShow = 'Resource: ' + title;
+                }
+                if (placeholder === 'Staff') {
+                    $scope.titleShow = 'Staff: ' + title;
+                }
+                if (placeholder === 'Scheduling') {
+                    $scope.titleShow = 'Scheduling: ' + title;
+                }
+                if (placeholder === 'Scheduling Subtask') {
+                    $scope.titleShow = 'Scheduling Subtask: ' + title;
+                }
+                if (placeholder === 'Scheduling Subtask') {
+                    $scope.titleShow = 'Scheduling Subtask: ' + title;
+                }
+                if (placeholder === 'Scheduling Subtask Resource') {
+                    $scope.titleShow = 'Scheduling Subtask Resource: ' + title;
+                }
+                if (placeholder === 'Scheduling Resource') {
+                    $scope.titleShow = 'Scheduling Resource: ' + title;
+                }
+                if (placeholder === 'Pay-item') {
+                    $scope.titleShow = 'Pay-item: ' + title;
+                }
+                if (placeholder === 'Pay-item Subtask') {
+                    $scope.titleShow = 'Pay-item Subtask: ' + title;
+                }
+                if (placeholder === 'Pay-item Subtask') {
+                    $scope.titleShow = 'Pay-item Subtask: ' + title;
+                }
+                if (placeholder === 'Pay-item Subtask Resource') {
+                    $scope.titleShow = 'Pay-item Subtask Resource: ' + title;
+                }
+                if (placeholder === 'Pay-item Resource') {
+                    $scope.titleShow = 'Pay-item Resource: ' + title;
+                }
+            } else {
+                $scope.titleShow = placeholder;
+            }
+        }
+
+        $scope.backHelper = function () {
+            console.log($scope.linkAux)
+            switch ($scope.linkAux) {
+                case 'forms':
+                    $state.go('app.forms', {'projectId': $stateParams.projectId, 'categoryId': $scope.formData.category_id});
+                    break;
+                case 'photos':
+                    $scope.filter.substate = null;                    
+                    $scope.filter.state = 'form';
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'forms';
+                    break;
+                case 'photodetails':
+                    $scope.filter.substate = 'gallery';
+                    $scope.linkAux = 'photos';
+                    break;
+                case 'resource':
+                    $scope.doTotal('resource', $scope.resourceField);
+                    $scope.titleShow = 'Resources';
+                    $scope.filter.state = 'resource';
+                    $scope.filter.substate = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'resources';
+                    break;
+                case 'resources':
+                    $scope.filter.state = 'form';
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'forms';
+                    break;
+                case 'staff':
+                    $scope.filter.state = 'staff';
+                    $scope.titleShow = 'Staffs';
+                    $scope.filter.substate = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'staffs';
+                    break;
+                case 'staffs':
+                    $scope.filter.state = 'form';
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'forms';
+                    break;
+                case 'scheduling':
+                    if ($scope.filter.substate) {
+                        $scope.filter.state = 'scheduling';
+                        $scope.filter.substateStkRes = null;
+                        $scope.filter.substateStk = null;
+                        $scope.filter.substateRes = null;
+                        $scope.filter.substate = null;
+                        $ionicScrollDelegate.resize();
+                        $scope.titleShow = 'Schedulings';
+                        $scope.linkAux = 'schedulings';
+                    }
+                    else {
+                        $scope.filter.state = 'form';
+                        $ionicScrollDelegate.resize();
+                        $scope.linkAux = 'forms';
+                        $scope.titleShow = $scope.formData.name;
+                    }
+                    break;
+                case 'schedulings':
+                    $scope.filter.state = 'form';
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'forms';
+                    $scope.titleShow = $scope.formData.name;
+                    break;
+                case 'schedulingStk':
+                    $scope.filter.state = 'scheduling';
+                    $scope.filter.substateStk = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'scheduling';
+                    if ($scope.filter.substate.description) {
+                        $scope.titleShow = 'Scheduling: ' + $scope.filter.substate.description;
+                    } else {
+                        $scope.titleShow = 'Scheduling';
+                    }
+                    break;
+                case 'schedulingSubRes':
+                    $scope.filter.state = 'scheduling';
+                    $scope.filter.actionBtnShow = true;
+                    $scope.filter.substateStkRes = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'schedulingStk';
+                    if ($scope.filter.substateStk.description) {
+                        $scope.titleShow = 'Scheduling Subtaks: ' + $scope.filter.substateStk.description;
+                    } else {
+                        $scope.titleShow = 'Scheduling Subtaks';
+                    }
+                    break;
+                case 'schedulingRes':
+                    $scope.filter.state = 'scheduling';
+                    $scope.filter.actionBtnShow = true;
+                    $scope.filter.substateRes = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'scheduling';
+                    if ($scope.filter.substate.description) {
+                        $scope.titleShow = 'Scheduling:' + $scope.filter.substate.description;
+                    } else {
+                        $scope.titleShow = 'Scheduling';
+                    }
+                    break;
+                case 'payitem':
+                    if ($scope.filter.substate) {
+                        $scope.filter.state = 'payitem';
+                        $scope.doTotal('pi', $scope.payitemField);
+                        $scope.filter.substateStkRes = null;
+                        $scope.filter.substateStk = null;
+                        $scope.filter.substateRes = null;
+                        $scope.filter.substate = null;
+                        $ionicScrollDelegate.resize();
+                        $scope.titleShow = 'Pay-items';
+                        $scope.linkAux = 'payitems';
+                    }
+                    else {
+                        $scope.filter.state = 'form';
+                        $ionicScrollDelegate.resize();
+                        $scope.linkAux = 'forms';
+                        $scope.titleShow = $scope.formData.name;
+                    }
+                    break;
+                case 'payitems':
+                    $scope.filter.state = 'form';
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'forms';
+                    $scope.titleShow = $scope.formData.name;
+                    break;
+                case 'payitemStk':
+                    $scope.filter.state = 'payitem';
+                    $scope.doTotal('pisubtask', $scope.filter.substate);
+                    $scope.filter.substateStk = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'payitem';
+                    if ($scope.filter.substate.description) {
+                        $scope.titleShow = 'Pay-item: ' + $scope.filter.substate.description;
+                    } else {
+                        $scope.titleShow = 'Pay-item';
+                    }
+                    break;
+                case 'payitemSubRes':
+                    $scope.filter.state = 'payitem';
+                    $scope.doTotal('pisubresource', $scope.filter.substateStk);
+                    $scope.filter.actionBtnShow = true;
+                    $scope.filter.substateStkRes = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'payitemStk';
+                    if ($scope.filter.substateStk.description) {
+                        $scope.titleShow = 'Pay-item Subtaks: ' + $scope.filter.substateStk.description;
+                    } else {
+                        $scope.titleShow = 'Pay-item Subtaks';
+                    }
+                    break;
+                case 'payitemRes':
+                    $scope.filter.state = 'payitem';
+                    $scope.doTotal('piresource', $scope.filter.substate);
+                    $scope.filter.actionBtnShow = true;
+                    $scope.filter.substateRes = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'payitem';
+                    if ($scope.filter.substate.description) {
+                        $scope.titleShow = 'Pay-item:' + $scope.filter.substate.description;
+                    } else {
+                        $scope.titleShow = 'Pay-item';
+                    }
+                    break;
+            }
+        };
+        $scope.goStateDown = function (state, substate, data) {
+            console.log(state, substate)
+            if (state === 'scheduling') {
+                switch (substate) {
+                    case 'subtask':
+                        $scope.filter.state = state;
+                        $scope.linkAux = 'schedulingStk';
+                        if (data.description) {
+                            $scope.titleShow = 'Scheduling Subtask: ' + data.description;
+                        } else {
+                            $scope.titleShow = 'Scheduling Subtask';
+                        }
+                        $scope.filter.substateStk = data;
+                        $ionicScrollDelegate.resize();
+                        break;
+                    case 'subres':
+                        $scope.filter.actionBtnShow = false;
+                        $scope.filter.state = state;
+                        $scope.linkAux = 'schedulingSubRes';
+                        if (data.name) {
+                            $scope.titleShow = 'Scheduling Subtask Resource: ' + data.name;
+                        } else {
+                            $scope.titleShow = 'Scheduling Subtask Resource';
+                        }
+                        $scope.filter.substateStkRes = data;
+                        $ionicScrollDelegate.resize();
+                        break;
+                    case 'res':
+                        $scope.filter.actionBtnShow = false;
+                        $scope.filter.state = state;
+                        $scope.linkAux = 'schedulingRes';
+                        if (data.name) {
+                            console.log(data.name)
+                            $scope.titleShow = 'Scheduling Resource: ' + data.name;
+                        } else {
+                            console.log('wut?')
+                            $scope.titleShow = 'Scheduling Resource';
+                        }
+                        $scope.filter.substateRes = data;
+                        $ionicScrollDelegate.resize();
+                        break;
+                }
+            }
+            if (state === 'payitem') {
+                switch (substate) {
+                    case 'subtask':
+                        $scope.filter.state = state;
+                        $scope.linkAux = 'payitemStk';
+                        if (data.description) {
+                            $scope.titleShow = 'Pay-item Subtask: ' + data.description;
+                        } else {
+                            $scope.titleShow = 'Pay-item Subtask';
+                        }
+                        $scope.filter.substateStk = data;
+                        $ionicScrollDelegate.resize();
+                        break;
+                    case 'subres':
+                        $scope.filter.actionBtnShow = false;
+                        $scope.filter.state = state;
+                        $scope.linkAux = 'payitemSubRes';
+                        if (data.name) {
+                            $scope.titleShow = 'Pay-item Subtask Resource: ' + data.name;
+                        } else {
+                            $scope.titleShow = 'Pay-item Subtask Resource';
+                        }
+                        $scope.filter.substateStkRes = data;
+                        $ionicScrollDelegate.resize();
+                        break;
+                    case 'res':
+                        $scope.filter.actionBtnShow = false;
+                        $scope.filter.state = state;
+                        $scope.linkAux = 'payitemRes';
+                        if (data.name) {
+                            console.log(data.name)
+                            $scope.titleShow = 'Pay-item Resource: ' + data.name;
+                        } else {
+                            $scope.titleShow = 'Pay-item Resource';
+                        }
+                        $scope.filter.substateRes = data;
+                        $ionicScrollDelegate.resize();
+                        break;
+                }
+            }
+        }
+        $scope.goState = function (state, substate) {
+            switch (state) {
+                case 'resource':
+                    $scope.filter.state = state;
+                    if (substate || $scope.filter.substate) {
+                        if (substate) {
+                            $scope.filter.substate = substate;
+                        }
+                        $scope.linkAux = 'resource';
+                        if ($scope.filter.substate.name) {
+                            $scope.titleShow = 'Resource: ' + $scope.filter.substate.name;
+                        } else {
+                            $scope.titleShow = 'Resource';
+                        }
+                    } else {
+                        $scope.linkAux = 'resources';
+                        $scope.titleShow = 'Resources';
+                    }
+                    $ionicScrollDelegate.resize();
+                    break;
+                case 'staff':
+                    $scope.filter.state = state;
+                    if (substate || $scope.filter.substate) {
+                        if (substate) {
+                            $scope.filter.substate = substate;
+                        }
+                        $scope.linkAux = 'staff';
+                        if ($scope.filter.substate.name) {
+                            $scope.titleShow = 'Staff: ' + $scope.filter.substate.name;
+                        } else {
+                            $scope.titleShow = 'Staff';
+                        }
+                    } else {
+                        $scope.linkAux = 'staffs';
+                        $scope.titleShow = 'Staffs';
+                    }
+                    $ionicScrollDelegate.resize();
+                    break;
+                case 'scheduling':
+                    $scope.filter.state = state;
+                    if (substate || $scope.filter.substate) {
+                        if (substate) {
+                            $scope.filter.substate = substate;
+                        }
+                        if ($scope.filter.substate.description) {
+                            $scope.titleShow = 'Scheduling: ' + $scope.filter.substate.description;
+                        } else {
+                            $scope.titleShow = 'Scheduling';
+                        }
+                        $scope.linkAux = 'scheduling';
+                    } else {
+                        $scope.linkAux = 'schedulings';
+                        $scope.titleShow = 'Schedulings';
+                    }
+                    $ionicScrollDelegate.resize();
+                    break;
+                case 'payitem':
+                    $scope.filter.state = state;
+                    if (substate || $scope.filter.substate) {
+                        if (substate) {
+                            $scope.filter.substate = substate;
+                        }
+                        if ($scope.filter.substate.description) {
+                            $scope.titleShow = 'Pay-item: ' + $scope.filter.substate.description;
+                        } else {
+                            $scope.titleShow = 'Pay-item';
+                        }
+                        $scope.linkAux = 'payitem';
+                    } else {
+                        $scope.linkAux = 'payitem';
+                        $scope.titleShow = 'Pay-items';
+                    }
+                    $ionicScrollDelegate.resize();
+                    $scope.doTotal('pisubtask', $scope.filter.substate);
+                    break;
+            }
+        }
+
+
         $ionicPopover.fromTemplateUrl('view/search.html', {
             scope: $scope
         }).then(function (popover) {
@@ -37,57 +483,59 @@ angular.module($APP.name).controller('FormCtrl', [
         });
 
         $scope.doTotal = function (type, parent) {
-            parent.total_cost = 0;
-            if (type === 'resource') {
-                angular.forEach(parent.resources, function (res) {
-                    if (isNaN(res.quantity)) {
-                        res.total_cost = 0;
-                    }
-                    if (isNaN(res.direct_cost)) {
-                        res.total_cost = 0;
-                    }
-                    parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
-                });
-            }
-            if (type === 'piresource') {
-                console.log('piresource', parent)
-                angular.forEach(parent.resources, function (res) {
-                    if (isNaN(res.quantity)) {
-                        res.total_cost = 0;
-                    }
-                    if (isNaN(res.direct_cost)) {
-                        res.total_cost = 0;
-                    }
-                    parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
-                });
-            }
-            if (type === 'pisubresource') {
-                angular.forEach(parent.resources, function (res) {
-                    if (isNaN(res.quantity)) {
-                        res.total_cost = 0;
-                    }
-                    if (isNaN(res.direct_cost)) {
-                        res.total_cost = 0;
-                    }
-                    parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
-                });
-            }
-            if (type === 'pisubtask') {
-                console.log(parent)
-                angular.forEach(parent.subtasks, function (stk) {
-                    if (isNaN(stk.total_cost)) {
-                        stk.total_cost = 0;
-                    }
-                    parent.total_cost = parent.total_cost + stk.total_cost;
-                });
-            }
-            if (type === 'pi') {
-                angular.forEach(parent.pay_items, function (pi) {
-                    if (isNaN(pi.total_cost)) {
-                        pi.total_cost = 0;
-                    }
-                    parent.total_cost = parent.total_cost + pi.total_cost;
-                });
+            if (parent) {
+                parent.total_cost = 0;
+                if (type === 'resource') {
+                    angular.forEach(parent.resources, function (res) {
+                        if (isNaN(res.quantity)) {
+                            res.total_cost = 0;
+                        }
+                        if (isNaN(res.direct_cost)) {
+                            res.total_cost = 0;
+                        }
+                        parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
+                    });
+                }
+                if (type === 'piresource') {
+                    console.log('piresource', parent)
+                    angular.forEach(parent.resources, function (res) {
+                        if (isNaN(res.quantity)) {
+                            res.total_cost = 0;
+                        }
+                        if (isNaN(res.direct_cost)) {
+                            res.total_cost = 0;
+                        }
+                        parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
+                    });
+                }
+                if (type === 'pisubresource') {
+                    angular.forEach(parent.resources, function (res) {
+                        if (isNaN(res.quantity)) {
+                            res.total_cost = 0;
+                        }
+                        if (isNaN(res.direct_cost)) {
+                            res.total_cost = 0;
+                        }
+                        parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
+                    });
+                }
+                if (type === 'pisubtask') {
+                    console.log(parent)
+                    angular.forEach(parent.subtasks, function (stk) {
+                        if (isNaN(stk.total_cost)) {
+                            stk.total_cost = 0;
+                        }
+                        parent.total_cost = parent.total_cost + stk.total_cost;
+                    });
+                }
+                if (type === 'pi') {
+                    angular.forEach(parent.pay_items, function (pi) {
+                        if (isNaN(pi.total_cost)) {
+                            pi.total_cost = 0;
+                        }
+                        parent.total_cost = parent.total_cost + pi.total_cost;
+                    });
+                }
             }
         }
 
@@ -98,12 +546,10 @@ angular.module($APP.name).controller('FormCtrl', [
                 $scope.filter.pi = false;
                 if (predicate.staff) {
                     $scope.filter.popup_list = $rootScope.staff_list;
-                }
-                else {
+                } else {
                     $scope.filter.popup_list = $rootScope.resource_list;
                 }
-            }
-            else {
+            } else {
                 $scope.filter.pi = true;
                 PayitemService.list_payitems($stateParams.projectId).then(function (data) {
                     $rootScope.payitem_list = data;
@@ -118,6 +564,22 @@ angular.module($APP.name).controller('FormCtrl', [
                 $scope.filter.popup_predicate.name = item.name;
                 if (!$scope.filter.popup_predicate.staff) {
                     //resource
+                    if ($scope.titleShow.indexOf('Scheduling Resource') > -1) {
+                        $scope.titleShow = 'Scheduling Resource: ' + item.name;
+                    }
+                    else {
+                        if ($scope.titleShow.indexOf('Scheduling Subtask Resource') > -1) {
+                            $scope.titleShow = 'Scheduling Subtask Resource: ' + item.name;
+                        }
+                        else {
+                            if ($scope.titleShow.indexOf('Resource') > -1) {
+                                $scope.titleShow = 'Resource: ' + item.name;
+                            }
+                        }
+                    }
+                    if ($scope.titleShow.indexOf('Staff') > -1) {
+                        $scope.titleShow = 'Staff: ' + item.name;
+                    }
                     $scope.filter.popup_predicate.name = item.name;
                     $scope.filter.popup_predicate.product_ref = item.product_ref;
                     $scope.filter.popup_predicate.direct_cost = item.direct_cost;
@@ -136,9 +598,9 @@ angular.module($APP.name).controller('FormCtrl', [
                             $scope.filter.popup_predicate.unit_name = unt.name;
                         }
                     });
-                }
-                else {
+                } else {
                     //staff
+                    $scope.titleShow = 'Staff: ' + item.name;
                     $scope.filter.popup_predicate.name = item.name;
                     $scope.filter.popup_predicate.employer_name = item.employee_name;
                     $scope.filter.popup_predicate.staff_role = item.role;
@@ -152,8 +614,14 @@ angular.module($APP.name).controller('FormCtrl', [
                         }
                     });
                 }
-            }
-            else {
+            } else {
+                if ($scope.formData.scheduling_field_design) {
+                    $scope.titleShow = 'Scheduling: ' + item.reference;
+                }
+                if ($scope.formData.pay_item_field_design) {
+                    $scope.titleShow = 'Pay-item: ' + item.reference;
+                }
+
                 $scope.filter.popup_predicate.description = item.description;
                 $scope.filter.popup_predicate.reference = item.reference;
                 angular.forEach($rootScope.unit_list, function (unt) {
@@ -217,6 +685,7 @@ angular.module($APP.name).controller('FormCtrl', [
         };
 
         $scope.formData = designsCache.get($stateParams.formId);
+        $scope.titleShow = $scope.formData.name;
         $scope.shownGroup = $scope.formData.field_group_designs[0];
         $scope.filter.vat = $rootScope.custSett.vat;
         $scope.filter.currency = $rootScope.custSett.currency;
@@ -239,8 +708,9 @@ angular.module($APP.name).controller('FormCtrl', [
                         "resource_id": 0,
                         "position": 0,
                         "calculation": false,
-                        "name": '', "product_ref": '', "unit_id": 0,
-                        "unit_name": '', "resource_type_id": 0,
+                        "name": '', "product_ref": '', "unit_id": $rootScope.unit_list[0].id,
+                        "unit_name": $rootScope.unit_list[0].name, "resource_type_id": 0,
+                        "unit_obj": $rootScope.unit_list[0],
                         "resource_type_name": '', "direct_cost": 0,
                         "resource_margin": 0,
                         "stage_id": 1,
@@ -322,6 +792,7 @@ angular.module($APP.name).controller('FormCtrl', [
 
 
         $scope.actionBtnPayitem = function () {
+            console.log($scope.filter.state, $scope.filter.substate)
             if ($scope.filter.state === 'payitem' || $scope.filter.state === 'scheduling') {
                 if ($scope.filter.substate && !$scope.filter.substateStk) {
                     if ($scope.filter.substate.resources.length === 0 && $scope.filter.substate.subtasks.length === 0) {
@@ -337,14 +808,26 @@ angular.module($APP.name).controller('FormCtrl', [
                     if ($scope.filter.substateStk) {
                         $scope.addResourceInSubtask();
                     } else {
+                        if ($scope.filter.state === 'payitem') {
+                            $scope.linkAux = 'payitem';
+                            $scope.titleAux = 'Pay-item';
+                        } else {
+                            $scope.linkAux = 'scheduling';
+                            $scope.titleAux = 'Scheduling';
+                        }
+
                         $scope.addPayitem();
                     }
                 }
             }
             if ($scope.filter.state === 'resource') {
+                $scope.linkAux = 'resource';
+                $scope.titleAux = 'Resource';
                 $scope.addResource();
             }
             if ($scope.filter.state === 'staff') {
+                $scope.linkAux = 'staff';
+                $scope.titleAux = 'Staff';
                 $scope.addStaff();
             }
         };
@@ -359,8 +842,9 @@ angular.module($APP.name).controller('FormCtrl', [
                 "position": 0,
                 "name": '',
                 "product_ref": '',
-                "unit_id": 0,
-                "unit_name": '',
+                "unit_id": $rootScope.unit_list[0].id,
+                "unit_name": $rootScope.unit_list[0].name,
+                "unit_obj": $rootScope.unit_list[0],
                 "resource_type_id": 0,
                 "resource_type_name": '',
                 "direct_cost": 0,
@@ -425,8 +909,9 @@ angular.module($APP.name).controller('FormCtrl', [
                             "position": 0,
                             "name": "",
                             "product_ref": "",
-                            "unit_id": 0,
-                            "unit_name": "",
+                            "unit_id": $rootScope.unit_list[0].id,
+                            "unit_name": $rootScope.unit_list[0].name,
+                            "unit_obj": $rootScope.unit_list[0],
                             "resource_type_id": 0,
                             "resource_type_name": "",
                             "direct_cost": 0,
@@ -441,6 +926,13 @@ angular.module($APP.name).controller('FormCtrl', [
                     ]
                 });
                 $scope.filter.substateStk = $scope.filter.substate.subtasks[$scope.filter.substate.subtasks.length - 1]
+                if ($scope.filter.state === 'scheduling') {
+                    $scope.linkAux = 'schedulingStk';
+                    $scope.titleShow = 'Scheduling Subtask';
+                } else {
+                    $scope.linkAux = 'payitemStk';
+                    $scope.titleShow = 'Pay-item Subtask';
+                }
             }
         }
         $scope.addResourcePi = function () {
@@ -451,8 +943,9 @@ angular.module($APP.name).controller('FormCtrl', [
                     "position": 0,
                     "name": "",
                     "product_ref": "",
-                    "unit_id": 0,
-                    "unit_name": "",
+                    "unit_obj": $rootScope.unit_list[0],
+                    "unit_id": $rootScope.unit_list[0].id,
+                    "unit_name": $rootScope.unit_list[0].name,
                     "resource_type_id": 0,
                     "resource_type_name": "",
                     "direct_cost": 0,
@@ -465,6 +958,13 @@ angular.module($APP.name).controller('FormCtrl', [
                     "vat": 0
                 });
                 $scope.filter.substateRes = $scope.filter.substate.resources[$scope.filter.substate.resources.length - 1]
+                if ($scope.filter.state === 'scheduling') {
+                    $scope.linkAux = 'schedulingRes';
+                    $scope.titleShow = 'Scheduling Resource';
+                } else {
+                    $scope.linkAux = 'payitemRes';
+                    $scope.titleShow = 'Pay-item Resource';
+                }
             }
         }
         $scope.addResourceInSubtask = function () {
@@ -475,8 +975,9 @@ angular.module($APP.name).controller('FormCtrl', [
                     "position": 0,
                     "name": "",
                     "product_ref": "",
-                    "unit_id": 0,
-                    "unit_name": "",
+                    "unit_id": $rootScope.unit_list[0].id,
+                    "unit_name": $rootScope.unit_list[0].name,
+                    "unit_obj": $rootScope.unit_list[0],
                     "resource_type_id": 0,
                     "resource_type_name": "",
                     "direct_cost": 0,
@@ -489,6 +990,13 @@ angular.module($APP.name).controller('FormCtrl', [
                     "calculation": true,
                 });
                 $scope.filter.substateStkRes = $scope.filter.substateStk.resources[$scope.filter.substateStk.resources.length - 1];
+                if ($scope.filter.state === 'scheduling') {
+                    $scope.linkAux = 'schedulingSubRes';
+                    $scope.titleShow = 'Scheduling Subtask Resource';
+                } else {
+                    $scope.linkAux = 'payitemSubRes';
+                    $scope.titleShow = 'Pay-item Subtask Resource';
+                }
             }
         }
 
@@ -632,6 +1140,8 @@ angular.module($APP.name).controller('FormCtrl', [
 
         $scope.goPicture = function () {
 //            $scope.trim();
+            $scope.linkAux = 'photos';
+            $scope.titleShow = 'Photo Gallery';
             $scope.filter.state = 'photos';
             $scope.filter.substate = 'gallery'
             $timeout(function () { // we need little delay
@@ -641,6 +1151,8 @@ angular.module($APP.name).controller('FormCtrl', [
 
         $scope.testPicture = function (item) {
 //            $scope.trim();
+            $scope.linkAux = 'photodetails';
+            $scope.titleShow = 'Photo Gallery';
             $scope.filter.substate = 'pic';
             console.log(item)
             $scope.filter.picture = item;

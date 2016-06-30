@@ -1,15 +1,8 @@
 <div class="list" ng-if="!filter.substate">
-    <a class="item item-button-left subHeader-form-bar" ng-click="filter.state = 'form';
-        filter.actionBtnShow = false;
-        goToTop()">
-        <div class="back-arrow ion-ios-arrow-left"></div>
-        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
-            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle">Done</span></div>
-    </a>
     <form class="form-new-fields">
         <ion-list show-delete="data.showDelete">
-            <ion-item ng-repeat="resource in staffField.resources" item="resource" class="item-remove-animate" ng-click="filter.substate = resource;
-                    goToTop()">
+            <ion-item ng-repeat="resource in staffField.resources" item="resource" class="item-remove-animate" ng-click="goState('staff', resource)">
+                <span class="badge" style="float:left;position:static;margin-right: 5px;margin-left: -10px;background-color: #11C1F3;color:#fff">{{$index + 1}}</span>  
                 <span ng-if="!resource.name">Staff {{$index + 1}}</span>
                 <span ng-if="resource.name">{{resource.name}}</span>
                 <ion-option-button class="button-assertive" ng-click="deleteElement(staffField.resources, resource)" ng-if="filter.edit">
@@ -21,13 +14,6 @@
     </form>
 </div>
 <div class="list" ng-if="filter.substate">
-    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = null;
-        filter.actionBtnShow = true;
-        goToTop()">
-        <div class="back-arrow ion-ios-arrow-left"></div>
-        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
-            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle">Save</span></div>
-    </a>
     <div class="formTitle">
         <div class="header-prj-text"> Design: {{formData.name}}</div>
         <div class="blue-label">{{formData.code}}</div>
@@ -46,9 +32,9 @@
                             <span class="all-name">Name</span>
                         </div>     
                         <div style="position: relative">
-                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.name" ng-disabled="!filter.edit">
-                            <span ng-if="filter.edit" class="ion ion-android-search" ng-click="openPopover($event, filter.substate);
-                                $event.stopPropagation();" style="position: absolute;top: 0px;right: 0px;font-size: 25px;color: #31475a; padding: 10px 5px 10px 15px;"></span>
+                            <input ng-change="updateTitle(filter.substate.name, 'Staff')" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.name" ng-disabled="!filter.edit">
+                            <span ng-if="filter.edit" class="ion ion-folder" ng-click="openPopover($event, filter.substate);
+                                $event.stopPropagation();" style="position: absolute;top: 0px;right: 0px;font-size: 26px;color: #31475a; padding: 10px 10px 10px 15px;"></span>
                         </div>
                         <!--<input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.name" ng-disabled="!filter.edit">-->
                     </div>

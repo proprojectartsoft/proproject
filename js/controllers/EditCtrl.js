@@ -18,7 +18,9 @@ angular.module($APP.name).controller('EditCtrl', [
     'SchedulingService',
     'PayitemService',
     '$ionicPopover',
-    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, $ionicSideMenuDelegate, $ionicScrollDelegate, $ionicPopup, $ionicModal, $cordovaCamera, ConvertersService, ImageService, $ionicHistory, ResourceService, StaffService, SchedulingService, PayitemService, $ionicPopover) {
+    '$stateParams',
+    '$state',
+    function ($scope, FormInstanceService, $timeout, FormUpdateService, $location, $rootScope, $ionicSideMenuDelegate, $ionicScrollDelegate, $ionicPopup, $ionicModal, $cordovaCamera, ConvertersService, ImageService, $ionicHistory, ResourceService, StaffService, SchedulingService, PayitemService, $ionicPopover, $stateParams, $state) {
 
         $scope.filter = {
             edit: true,
@@ -27,6 +29,460 @@ angular.module($APP.name).controller('EditCtrl', [
             popup_list: [],
             searchText: ''
         }
+
+        $scope.linkAux = 'forms';
+
+        $scope.updateCalculation = function (data) {
+            console.log(data)
+        }
+
+        $scope.updateCalculation = function (data) {
+            console.log(data)
+            if (data.unit_obj.name === 'm' || data.unit_obj.name === 'ft') {
+                if (!data.length) {
+                    data.length = 0;
+                }
+                if (!data.wastage) {
+                    data.quantity = data.quantity + data.length;
+                }
+                else {
+                    data.quantity = data.quantity + data.length + data.length / data.wastage;
+                }
+            }
+            if (data.unit_obj.name === 'Days') {
+                if (!data.days) {
+                    data.days = 0;
+                }
+                if (!data.number_of) {
+                    data.number_of = 0;
+                }
+                data.quantity = data.days * data.number_of;
+            }
+            if (data.unit_obj.name === 'm2' || data.unit_obj.name === 'ft2') {
+                if (!data.length) {
+                    data.length = 0;
+                }
+                if (!data.width) {
+                    data.width = 0;
+                }
+                if (data.wastage) {
+                    data.quantity = data.length * data.width + (data.length * data.width * data.wastage) / 100;
+
+                } else {
+                    data.quantity = data.length * data.width;
+                }
+            }
+            if (data.unit_obj.name === 'm3' || data.unit_obj.name === 'ft3') {
+                if (!data.length) {
+                    data.length = 0;
+                }
+                if (!data.width) {
+                    data.width = 0;
+                }
+                if (!data.depth) {
+                    data.depth = 0;
+                }
+                if (data.wastage) {
+                    data.quantity = data.length * data.width * data.depth + (data.length * data.width * data.depth * data.wastage) / 100;
+
+                } else {
+                    data.quantity = data.length * data.width * data.depth;
+                }
+            }
+            if (data.unit_obj.name === 'T') {
+                if (!data.length) {
+                    data.length = 0;
+                }
+                if (!data.width) {
+                    data.width = 0;
+                }
+                if (!data.depth) {
+                    data.depth = 0;
+                }
+                if (!data.tm3) {
+                    data.tm3 = 0;
+                }
+                if (data.wastage) {
+                    data.quantity = data.length * data.width * data.depth * data.tm3 + (data.length * data.width * data.depth * data.tm3 * data.wastage) / 100;
+                } else {
+                    data.quantity = data.length * data.width * data.depth * data.tm3;
+                }
+
+            }
+            data.quantity = Math.round(data.quantity * 100) / 100
+        }
+
+        $scope.updateTitle = function (title, placeholder) {
+            if (title) {
+                if (placeholder === 'Resource') {
+                    $scope.titleShow = 'Resource: ' + title;
+                }
+                if (placeholder === 'Staff') {
+                    $scope.titleShow = 'Staff: ' + title;
+                }
+                if (placeholder === 'Scheduling') {
+                    $scope.titleShow = 'Scheduling: ' + title;
+                }
+                if (placeholder === 'Scheduling Subtask') {
+                    $scope.titleShow = 'Scheduling Subtask: ' + title;
+                }
+                if (placeholder === 'Scheduling Subtask') {
+                    $scope.titleShow = 'Scheduling Subtask: ' + title;
+                }
+                if (placeholder === 'Scheduling Subtask Resource') {
+                    $scope.titleShow = 'Scheduling Subtask Resource: ' + title;
+                }
+                if (placeholder === 'Scheduling Resource') {
+                    $scope.titleShow = 'Scheduling Resource: ' + title;
+                }
+                if (placeholder === 'Pay-item') {
+                    $scope.titleShow = 'Pay-item: ' + title;
+                }
+                if (placeholder === 'Pay-item Subtask') {
+                    $scope.titleShow = 'Pay-item Subtask: ' + title;
+                }
+                if (placeholder === 'Pay-item Subtask') {
+                    $scope.titleShow = 'Pay-item Subtask: ' + title;
+                }
+                if (placeholder === 'Pay-item Subtask Resource') {
+                    $scope.titleShow = 'Pay-item Subtask Resource: ' + title;
+                }
+                if (placeholder === 'Pay-item Resource') {
+                    $scope.titleShow = 'Pay-item Resource: ' + title;
+                }
+            } else {
+                $scope.titleShow = placeholder;
+            }
+        }
+
+        $scope.backHelper = function () {
+            console.log($scope.linkAux)
+            switch ($scope.linkAux) {
+                case 'forms':
+                    $state.go('app.completed', {'projectId': $stateParams.projectId, 'categoryId': $scope.formData.category_id});
+                    break;
+                case 'photos':
+                    $scope.filter.substate = null;
+                    $scope.filter.state = 'form';
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'forms';
+                    break;
+                case 'photodetails':
+                    $scope.filter.substate = 'gallery';
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'photos';
+                    break;
+                case 'resource':
+                    $scope.doTotal('resource', $scope.resourceField);
+                    $scope.titleShow = 'Resources';
+                    $scope.filter.state = 'resource';
+                    $scope.filter.substate = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'resources';
+                    break;
+                case 'resources':
+                    $scope.filter.state = 'form';
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'forms';
+                    break;
+                case 'staff':
+                    $scope.filter.state = 'staff';
+                    $scope.titleShow = 'Staffs';
+                    $scope.filter.substate = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'staffs';
+                    break;
+                case 'staffs':
+                    $scope.filter.state = 'form';
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'forms';
+                    break;
+                case 'scheduling':
+                    if ($scope.filter.substate) {
+                        $scope.filter.state = 'scheduling';
+                        $scope.filter.substateStkRes = null;
+                        $scope.filter.substateStk = null;
+                        $scope.filter.substateRes = null;
+                        $scope.filter.substate = null;
+                        $ionicScrollDelegate.resize();
+                        $scope.titleShow = 'Schedulings';
+                        $scope.linkAux = 'schedulings';
+                    }
+                    else {
+                        $scope.filter.state = 'form';
+                        $ionicScrollDelegate.resize();
+                        $scope.linkAux = 'forms';
+                        $scope.titleShow = $scope.formData.name;
+                    }
+                    break;
+                case 'schedulings':
+                    $scope.filter.state = 'form';
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'forms';
+                    $scope.titleShow = $scope.formData.name;
+                    break;
+                case 'schedulingStk':
+                    $scope.filter.state = 'scheduling';
+                    $scope.filter.substateStk = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'scheduling';
+                    if ($scope.filter.substate.description) {
+                        $scope.titleShow = 'Scheduling: ' + $scope.filter.substate.description;
+                    } else {
+                        $scope.titleShow = 'Scheduling';
+                    }
+                    break;
+                case 'schedulingSubRes':
+                    $scope.filter.state = 'scheduling';
+                    $scope.filter.actionBtnShow = true;
+                    $scope.filter.substateStkRes = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'schedulingStk';
+                    if ($scope.filter.substateStk.description) {
+                        $scope.titleShow = 'Scheduling Subtaks: ' + $scope.filter.substateStk.description;
+                    } else {
+                        $scope.titleShow = 'Scheduling Subtaks';
+                    }
+                    break;
+                case 'schedulingRes':
+                    $scope.filter.state = 'scheduling';
+                    $scope.filter.actionBtnShow = true;
+                    $scope.filter.substateRes = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'scheduling';
+                    if ($scope.filter.substate.description) {
+                        $scope.titleShow = 'Scheduling:' + $scope.filter.substate.description;
+                    } else {
+                        $scope.titleShow = 'Scheduling';
+                    }
+                    break;
+                case 'payitem':
+                    if ($scope.filter.substate) {
+                        $scope.filter.state = 'payitem';
+                        $scope.doTotal('pi', $scope.payitemField);
+                        $scope.filter.substateStkRes = null;
+                        $scope.filter.substateStk = null;
+                        $scope.filter.substateRes = null;
+                        $scope.filter.substate = null;
+                        $ionicScrollDelegate.resize();
+                        $scope.titleShow = 'Pay-items';
+                        $scope.linkAux = 'payitems';
+                    }
+                    else {
+                        $scope.filter.state = 'form';
+                        $ionicScrollDelegate.resize();
+                        $scope.linkAux = 'forms';
+                        $scope.titleShow = $scope.formData.name;
+                    }
+                    break;
+                case 'payitems':
+                    $scope.filter.state = 'form';
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'forms';
+                    $scope.titleShow = $scope.formData.name;
+                    break;
+                case 'payitemStk':
+                    $scope.filter.state = 'payitem';
+                    $scope.doTotal('pisubtask', $scope.filter.substate);
+                    $scope.filter.substateStk = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'payitem';
+                    if ($scope.filter.substate.description) {
+                        $scope.titleShow = 'Pay-item: ' + $scope.filter.substate.description;
+                    } else {
+                        $scope.titleShow = 'Pay-item';
+                    }
+                    break;
+                case 'payitemSubRes':
+                    $scope.filter.state = 'payitem';
+                    $scope.doTotal('pisubresource', $scope.filter.substateStk);
+                    $scope.filter.actionBtnShow = true;
+                    $scope.filter.substateStkRes = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'payitemStk';
+                    if ($scope.filter.substateStk.description) {
+                        $scope.titleShow = 'Pay-item Subtaks: ' + $scope.filter.substateStk.description;
+                    } else {
+                        $scope.titleShow = 'Pay-item Subtaks';
+                    }
+                    break;
+                case 'payitemRes':
+                    $scope.filter.state = 'payitem';
+                    $scope.doTotal('piresource', $scope.filter.substate);
+                    $scope.filter.actionBtnShow = true;
+                    $scope.filter.substateRes = null;
+                    $ionicScrollDelegate.resize();
+                    $scope.linkAux = 'payitem';
+                    if ($scope.filter.substate.description) {
+                        $scope.titleShow = 'Pay-item:' + $scope.filter.substate.description;
+                    } else {
+                        $scope.titleShow = 'Pay-item';
+                    }
+                    break;
+            }
+        };
+        $scope.goStateDown = function (state, substate, data) {
+            console.log(state, substate)
+            if (state === 'scheduling') {
+                switch (substate) {
+                    case 'subtask':
+                        $scope.filter.state = state;
+                        $scope.linkAux = 'schedulingStk';
+                        if (data.description) {
+                            $scope.titleShow = 'Scheduling Subtask: ' + data.description;
+                        } else {
+                            $scope.titleShow = 'Scheduling Subtask';
+                        }
+                        $scope.filter.substateStk = data;
+                        $ionicScrollDelegate.resize();
+                        break;
+                    case 'subres':
+                        $scope.filter.actionBtnShow = false;
+                        $scope.filter.state = state;
+                        $scope.linkAux = 'schedulingSubRes';
+                        if (data.name) {
+                            $scope.titleShow = 'Scheduling Subtask Resource: ' + data.name;
+                        } else {
+                            $scope.titleShow = 'Scheduling Subtask Resource';
+                        }
+                        $scope.filter.substateStkRes = data;
+                        $ionicScrollDelegate.resize();
+                        break;
+                    case 'res':
+                        $scope.filter.actionBtnShow = false;
+                        $scope.filter.state = state;
+                        $scope.linkAux = 'schedulingRes';
+                        if (data.name) {
+                            console.log(data.name)
+                            $scope.titleShow = 'Scheduling Resource: ' + data.name;
+                        } else {
+                            console.log('wut?')
+                            $scope.titleShow = 'Scheduling Resource';
+                        }
+                        $scope.filter.substateRes = data;
+                        $ionicScrollDelegate.resize();
+                        break;
+                }
+            }
+            if (state === 'payitem') {
+                switch (substate) {
+                    case 'subtask':
+                        $scope.filter.state = state;
+                        $scope.linkAux = 'payitemStk';
+                        if (data.description) {
+                            $scope.titleShow = 'Pay-item Subtask: ' + data.description;
+                        } else {
+                            $scope.titleShow = 'Pay-item Subtask';
+                        }
+                        $scope.filter.substateStk = data;
+                        $ionicScrollDelegate.resize();
+                        break;
+                    case 'subres':
+                        $scope.filter.actionBtnShow = false;
+                        $scope.filter.state = state;
+                        $scope.linkAux = 'payitemSubRes';
+                        if (data.name) {
+                            $scope.titleShow = 'Pay-item Subtask Resource: ' + data.name;
+                        } else {
+                            $scope.titleShow = 'Pay-item Subtask Resource';
+                        }
+                        $scope.filter.substateStkRes = data;
+                        $ionicScrollDelegate.resize();
+                        break;
+                    case 'res':
+                        $scope.filter.actionBtnShow = false;
+                        $scope.filter.state = state;
+                        $scope.linkAux = 'payitemRes';
+                        if (data.name) {
+                            console.log(data.name)
+                            $scope.titleShow = 'Pay-item Resource: ' + data.name;
+                        } else {
+                            $scope.titleShow = 'Pay-item Resource';
+                        }
+                        $scope.filter.substateRes = data;
+                        $ionicScrollDelegate.resize();
+                        break;
+                }
+            }
+        }
+        $scope.goState = function (state, substate) {
+            switch (state) {
+                case 'resource':
+                    $scope.filter.state = state;
+                    if (substate || $scope.filter.substate) {
+                        if (substate) {
+                            $scope.filter.substate = substate;
+                        }
+                        $scope.linkAux = 'resource';
+                        if ($scope.filter.substate.name) {
+                            $scope.titleShow = 'Resource: ' + $scope.filter.substate.name;
+                        } else {
+                            $scope.titleShow = 'Resource';
+                        }
+                    } else {
+                        $scope.linkAux = 'resources';
+                        $scope.titleShow = 'Resources';
+                    }
+                    $ionicScrollDelegate.resize();
+                    break;
+                case 'staff':
+                    $scope.filter.state = state;
+                    if (substate || $scope.filter.substate) {
+                        if (substate) {
+                            $scope.filter.substate = substate;
+                        }
+                        $scope.linkAux = 'staff';
+                        if ($scope.filter.substate.name) {
+                            $scope.titleShow = 'Staff: ' + $scope.filter.substate.name;
+                        } else {
+                            $scope.titleShow = 'Staff';
+                        }
+                    } else {
+                        $scope.linkAux = 'staffs';
+                        $scope.titleShow = 'Staffs';
+                    }
+                    $ionicScrollDelegate.resize();
+                    break;
+                case 'scheduling':
+                    $scope.filter.state = state;
+                    if (substate || $scope.filter.substate) {
+                        if (substate) {
+                            $scope.filter.substate = substate;
+                        }
+                        if ($scope.filter.substate.description) {
+                            $scope.titleShow = 'Scheduling: ' + $scope.filter.substate.description;
+                        } else {
+                            $scope.titleShow = 'Scheduling';
+                        }
+                        $scope.linkAux = 'scheduling';
+                    } else {
+                        $scope.linkAux = 'schedulings';
+                        $scope.titleShow = 'Schedulings';
+                    }
+                    $ionicScrollDelegate.resize();
+                    break;
+                case 'payitem':
+                    $scope.filter.state = state;
+                    if (substate || $scope.filter.substate) {
+                        if (substate) {
+                            $scope.filter.substate = substate;
+                        }
+                        if ($scope.filter.substate.description) {
+                            $scope.titleShow = 'Pay-item: ' + $scope.filter.substate.description;
+                        } else {
+                            $scope.titleShow = 'Pay-item';
+                        }
+                        $scope.linkAux = 'payitem';
+                    } else {
+                        $scope.linkAux = 'payitem';
+                        $scope.titleShow = 'Pay-items';
+                    }
+                    $ionicScrollDelegate.resize();
+                    $scope.doTotal('pisubtask', $scope.filter.substate);
+                    break;
+            }
+        }
+
 
         $ionicPopover.fromTemplateUrl('view/search.html', {
             scope: $scope
@@ -41,35 +497,37 @@ angular.module($APP.name).controller('EditCtrl', [
         $scope.filter.break = $rootScope.custSett.break;
         $scope.filter.finish = $rootScope.custSett.finish;
         $scope.doTotal = function (type, parent) {
-            parent.total_cost = 0;
-            if (type === 'resource') {
-                angular.forEach(parent.resources, function (res) {
-                    parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
-                });
-            }
-            if (type === 'piresource') {
-                console.log('piresource', parent)
-                angular.forEach(parent.resources, function (res) {
-                    parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
-                    console.log(parent.total_cost, res.quantity, res.direct_cost)
+            if (parent) {
+                parent.total_cost = 0;
+                if (type === 'resource') {
+                    angular.forEach(parent.resources, function (res) {
+                        parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
+                    });
+                }
+                if (type === 'piresource') {
+                    console.log('piresource', parent)
+                    angular.forEach(parent.resources, function (res) {
+                        parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
+                        console.log(parent.total_cost, res.quantity, res.direct_cost)
 
-                });
-            }
-            if (type === 'pisubresource') {
-                angular.forEach(parent.resources, function (res) {
-                    parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
-                });
-            }
-            if (type === 'pisubtask') {
-                console.log(parent)
-                angular.forEach(parent.subtasks, function (stk) {
-                    parent.total_cost = parent.total_cost + stk.total_cost;
-                });
-            }
-            if (type === 'pi') {
-                angular.forEach(parent.pay_items, function (pi) {
-                    parent.total_cost = parent.total_cost + pi.total_cost;
-                });
+                    });
+                }
+                if (type === 'pisubresource') {
+                    angular.forEach(parent.resources, function (res) {
+                        parent.total_cost = parent.total_cost + res.quantity * res.direct_cost;
+                    });
+                }
+                if (type === 'pisubtask') {
+                    console.log(parent)
+                    angular.forEach(parent.subtasks, function (stk) {
+                        parent.total_cost = parent.total_cost + stk.total_cost;
+                    });
+                }
+                if (type === 'pi') {
+                    angular.forEach(parent.pay_items, function (pi) {
+                        parent.total_cost = parent.total_cost + pi.total_cost;
+                    });
+                }
             }
         }
         $scope.actionBtnPayitem = function () {
@@ -88,14 +546,25 @@ angular.module($APP.name).controller('EditCtrl', [
                     if ($scope.filter.substateStk) {
                         $scope.addResourceInSubtask();
                     } else {
+                        if ($scope.filter.state === 'payitem') {
+                            $scope.linkAux = 'payitem';
+                            $scope.titleAux = 'Pay-item';
+                        } else {
+                            $scope.linkAux = 'scheduling';
+                            $scope.titleAux = 'Scheduling';
+                        }
                         $scope.addPayitem();
                     }
                 }
             }
             if ($scope.filter.state === 'resource') {
+                $scope.linkAux = 'resource';
+                $scope.titleAux = 'Resource';
                 $scope.addResource();
             }
             if ($scope.filter.state === 'staff') {
+                $scope.linkAux = 'staff';
+                $scope.titleAux = 'Staff';
                 $scope.addStaff();
             }
         };
@@ -126,6 +595,22 @@ angular.module($APP.name).controller('EditCtrl', [
                 console.log($scope.filter.popup_predicate)
                 if (!$scope.filter.popup_predicate.staff) {
                     //resource
+                    if ($scope.titleShow.indexOf('Scheduling Resource') > -1) {
+                        $scope.titleShow = 'Scheduling Resource: ' + item.name;
+                    }
+                    else {
+                        if ($scope.titleShow.indexOf('Scheduling Subtask Resource') > -1) {
+                            $scope.titleShow = 'Scheduling Subtask Resource: ' + item.name;
+                        }
+                        else {
+                            if ($scope.titleShow.indexOf('Resource') > -1) {
+                                $scope.titleShow = 'Resource: ' + item.name;
+                            }
+                        }
+                    }
+                    if ($scope.titleShow.indexOf('Staff') > -1) {
+                        $scope.titleShow = 'Staff: ' + item.name;
+                    }
                     $scope.filter.popup_predicate.name = item.name;
                     $scope.filter.popup_predicate.product_ref = item.product_ref;
                     $scope.filter.popup_predicate.direct_cost = item.direct_cost;
@@ -147,6 +632,7 @@ angular.module($APP.name).controller('EditCtrl', [
                 }
                 else {
                     //staff
+                    $scope.titleShow = 'Staff: ' + item.name;
                     $scope.filter.popup_predicate.name = item.name;
                     $scope.filter.popup_predicate.employer_name = item.employee_name;
                     $scope.filter.popup_predicate.staff_role = item.role;
@@ -273,7 +759,14 @@ angular.module($APP.name).controller('EditCtrl', [
                         }
                     ]
                 });
-                $scope.filter.substateStk = $scope.filter.substate.subtasks[$scope.filter.substate.subtasks.length - 1]
+                $scope.filter.substateStk = $scope.filter.substate.subtasks[$scope.filter.substate.subtasks.length - 1];
+                if ($scope.filter.state === 'scheduling') {
+                    $scope.linkAux = 'schedulingStk';
+                    $scope.titleShow = 'Scheduling Subtask';
+                } else {
+                    $scope.linkAux = 'payitemStk';
+                    $scope.titleShow = 'Pay-item Subtask';
+                }
             }
         }
         $scope.addResourcePi = function () {
@@ -297,7 +790,14 @@ angular.module($APP.name).controller('EditCtrl', [
                     "calculation": true,
                     "vat": 0
                 });
-                $scope.filter.substateRes = $scope.filter.substate.resources[$scope.filter.substate.resources.length - 1]
+                $scope.filter.substateRes = $scope.filter.substate.resources[$scope.filter.substate.resources.length - 1];
+                if ($scope.filter.state === 'scheduling') {
+                    $scope.linkAux = 'schedulingRes';
+                    $scope.titleShow = 'Scheduling Resource';
+                } else {
+                    $scope.linkAux = 'payitemRes';
+                    $scope.titleShow = 'Pay-item Resource';
+                }
             }
         }
         $scope.addResourceInSubtask = function () {
@@ -322,6 +822,13 @@ angular.module($APP.name).controller('EditCtrl', [
                     "calculation": true,
                 });
                 $scope.filter.substateStkRes = $scope.filter.substateStk.resources[$scope.filter.substateStk.resources.length - 1];
+                if ($scope.filter.state === 'scheduling') {
+                    $scope.linkAux = 'schedulingSubRes';
+                    $scope.titleShow = 'Scheduling Subtask Resource';
+                } else {
+                    $scope.linkAux = 'payitemSubRes';
+                    $scope.titleShow = 'Pay-item Subtask Resource';
+                }
             }
         }
         $scope.actionBtnCalculation = function () {
@@ -355,6 +862,7 @@ angular.module($APP.name).controller('EditCtrl', [
             $ionicSideMenuDelegate.canDragContent(false);
         });
         $scope.formData = angular.copy($rootScope.rootForm);
+        $scope.titleShow = $scope.formData.name;
         $scope.goPicture = function () {
 //            $scope.trim();
             $scope.filter.state = 'photos';

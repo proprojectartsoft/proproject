@@ -1,13 +1,17 @@
 <ion-view title="Form" id="form" cache-view="false">
+    <ion-header-bar align-title="left" class="bar-subheader item item-button-left subHeader-form-bar"  ng-click="backHelper()">
+        <div class="back-arrow ion-ios-arrow-left"></div>
+        <div class="header-prj-text"><span ng-if="filter.state === 'form'">{{formData.category}} - </span>{{titleShow}}</div>
+    </ion-header-bar>
     <ion-content class="blue-bgd"  delegate-handle="mainScroll">
         <div class="content">
             <div class="list"  ng-if="filter.state === 'form'">
-                <a class="item item-button-left subHeader-form-bar" ng-click="back()"
-                   href="#/app/view/{{projectId}}/{{formData.category_id}}">
-                    <div class="back-arrow ion-ios-arrow-left"></div>
-                    <div class="header-prj-text">{{formData.category}}</div>
-
-                </a>
+<!--                                <a class="item item-button-left subHeader-form-bar" ng-click="back()"
+                                   href="#/app/view/{{projectId}}/{{formData.category_id}}">
+                                    <div class="back-arrow ion-ios-arrow-left"></div>
+                                    <div class="header-prj-text">{{formData.category}}</div>
+                
+                                </a>-->
                 <div class="formTitle">
                     <div class="header-prj-text"> Form: {{formData.name}}</div>
                     <div class="blue-label">{{formData.code}}</div>
@@ -39,21 +43,21 @@
                             </div>
                         </div>
                     </ion-list>
-                    <div class="item-stable item fs all-field-header" ng-if="formData.resource_field_id" ng-click="filter.state = 'resource'">
+                    <div class="item-stable item fs all-field-header" ng-if="formData.resource_field_id" >
                         <span class="add-pic-text">Resource field</span>    
-                        <button >Open</button>
+                        <button ng-click="goState('resource')">Open</button>
                     </div>
                     <div class="item-stable item fs all-field-header" ng-if="formData.scheduling_field_id">
                         <span class="add-pic-text">Scheduling field</span>    
-                        <button ng-click="filter.state = 'scheduling'">Open</button>
+                        <button ng-click="goState('scheduling')">Open</button>
                     </div>
                     <div class="item-stable item fs all-field-header" ng-if="formData.pay_item_field_id">
                         <span class="add-pic-text">Pay-item field</span>    
-                        <button ng-click="filter.state = 'payitem'">Open</button>
+                        <button ng-click="goState('payitem')">Open</button>
                     </div>
                     <div class="item-stable item fs all-field-header" ng-if="formData.staff_field_id">
                         <span class="add-pic-text">Staff field</span>    
-                        <button ng-click="filter.state = 'staff'">Open</button>
+                        <button ng-click="goState('staff')">Open</button>
                     </div>
                 </form>
 
@@ -83,7 +87,7 @@
             <div class="list" ng-if="filter.state === 'photos'" ng-include="'view/form/_photos.html'"></div>
         </div>
     </ion-content>
-    <div ng-if="!filter.substateRes && !filter.substateStkRes && filter.state !== 'form' && filter.state !== 'staff' && filter.state !== 'resource' && filter.state!== 'photos' || (!filter.substate && filter.state === 'staff') || (!filter.substate && filter.state === 'resource')" >
+    <div ng-if="!filter.substateRes && !filter.substateStkRes && filter.state !== 'form' && filter.state !== 'staff' && filter.state !== 'resource' && filter.state !== 'photos' || (!filter.substate && filter.state === 'staff') || (!filter.substate && filter.state === 'resource')" >
         <button class="btn-add-resource" ng-click="addResourcePi()" ng-if="filter.actionBtn && filter.substate.subtasks.length === 0 && filter.substate.resources.length === 0">   
             Add resource
         </button>

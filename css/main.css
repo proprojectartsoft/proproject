@@ -253,7 +253,7 @@ input[type=checkbox].css-checkbox {
 
 .subHeader-form-bar {
     padding: 5px 12px;
-    line-height: 40px;
+    line-height: 35px;
     background-color: #1EBDF4;
     font-size: 19px;
     font-weight: 400;
@@ -273,7 +273,12 @@ input[type=checkbox].css-checkbox {
 }
 
 .subHeader-form-bar .header-prj-text {
-    line-height: 40px;
+    line-height: 35px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 20px);
+    float:none;
 }
 
 .fieldSet-name {
@@ -414,4 +419,7 @@ label.item.img-tag {
 }
 label.item.img-description{
     border: 0;
+}
+.list{
+    padding-top:0px;
 }

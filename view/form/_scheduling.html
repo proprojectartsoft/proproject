@@ -1,21 +1,9 @@
 <div class="list" ng-if="!filter.substate && !filter.substateStk && !filter.substateRes && !filter.substateStkRes">
-    <a class="item item-button-left subHeader-form-bar" ng-click="filter.state = 'form';
-        filter.actionBtnShow = false;
-        goToTop()">
-        <div class="back-arrow ion-ios-arrow-left"></div>
-        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
-            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle">Done</span></div>
-    </a>
     <form class="form-new-fields">
-        <!--        <div class="item" ng-repeat="payitem in payitemField.pay_items" ng-click="filter.substate = payitem">
-                    <span ng-if="!payitem.description">Scheduling {{$index + 1}}</span>
-                    <span ng-if="payitem.description">{{payitem.description}}</span>
-                </div>    -->
-
         <ion-list show-delete="data.showDelete">
-            <ion-item ng-repeat="payitem in payitemField.pay_items" item="resource" class="item-remove-animate" ng-click="filter.substate = payitem;
-                    goToTop()">
-                <span ng-if="!payitem.description">Pay-item {{$index + 1}}</span>
+            <ion-item ng-repeat="payitem in payitemField.pay_items" item="resource" class="item-remove-animate" ng-click="goState('scheduling', payitem)" >
+                <span class="badge" style="float:left;position:static;margin-right: 5px;margin-left: -10px;background-color: #11C1F3;color:#fff">{{$index + 1}}</span>                
+                <span ng-if="!payitem.description">Scheduling {{$index + 1}}</span>
                 <span ng-if="payitem.description">{{payitem.description}}</span>
                 <ion-option-button class="button-assertive" ng-click="deleteElement(payitemField.pay_items, payitem)" ng-if="filter.edit">
                     Delete
@@ -25,12 +13,6 @@
     </form>
 </div>
 <div class="list" ng-if="filter.substate && !filter.substateStk && !filter.substateRes && !filter.substateStkRes">
-    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substate = null;
-        goToTop()">
-        <div class="back-arrow ion-ios-arrow-left"></div>
-        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
-            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span><span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="filter.edit">Save</span><span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="!filter.edit">Back</span></div>
-    </a>
     <div class="formTitle">
         <div class="header-prj-text"> Design: {{formData.name}}</div>
         <div class="blue-label">{{formData.code}}</div>
@@ -48,17 +30,19 @@
                         <div class="inputLabel" style="padding-top: 10px;">
                             <span class="all-name">Description</span>
                         </div>                                    
-                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.description" ng-disabled="!filter.edit">
+                        <input ng-change="updateTitle(filter.substate.description, 'Scheduling')" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.description" ng-disabled="!filter.edit">
                     </label>
                 </div>
-                <div class="calm-border">
-                    <label class="item item-input item-stacked-label calm-border">
-                        <div class="inputLabel" style="padding-top: 10px;">
-                            <span class="all-name">Reference</span>
-                        </div>
+                <div class="item item-input item-stacked-label calm-border">
+                    <div class="inputLabel" style="padding-top: 10px;">
+                        <span class="all-name">Reference</span>
+                    </div>         
+                    <div style="position: relative">
                         <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substate.reference" ng-disabled="!filter.edit">
-                    </label>
-                </div>                                                        
+                        <span ng-if="filter.edit" class="ion ion-folder" ng-click="openPopover($event, filter.substate, 'pi');
+                            $event.stopPropagation();" style="position: absolute;top: 0px;right: 0px;font-size: 26px;color: #31475a; padding: 10px 10px 10px 15px;"></span>
+                    </div>
+                </div>
                 <div class="calm-border">
                     <label class="item item-input item-stacked-label calm-border">
                         <div class="inputLabel" style="padding-top: 10px;">
@@ -76,19 +60,9 @@
                     </label>
                 </div> 
                 <div class="form-new-fields"  style="margin-top:10px;">
-                    <!--                    <div class="item" ng-repeat="stk in filter.substate.subtasks" ng-click="filter.substateStk = stk" ng-if="filter.substate.subtasks.length !== 0">
-                                            <span ng-if="!stk.description">Subtask {{$index + 1}}</span>
-                                            <span ng-if="stk.description">{{stk.description}}</span>
-                                        </div>    
-                                        <div class="item" ng-repeat="res in filter.substate.resources" ng-click="filter.actionBtnShow = false;
-                                                filter.substateRes = res;" ng-if="filter.substate.resource.length !== 0">
-                                            <span ng-if="!res.name">Resource {{$index + 1}}</span>
-                                            <span ng-if="res.name">{{res.name}}</span>
-                                        </div>    -->
-
                     <ion-list show-delete="data.showDelete" ng-if="filter.substate.subtasks.length !== 0">
-                        <ion-item ng-repeat="stk in filter.substate.subtasks" item="stk" class="item-remove-animate" ng-click="filter.substateStk = stk;
-                                goToTop()">
+                        <ion-item ng-repeat="stk in filter.substate.subtasks" item="stk" class="item-remove-animate" ng-click="goStateDown('scheduling', 'subtask', stk)">
+                            <span class="badge" style="float:left;position:static;margin-right: 5px;margin-left: -10px;background-color: #287BA7;color:#fff">{{$index + 1}}</span>
                             <span ng-if="!stk.description">Subtask {{$index + 1}}</span>
                             <span ng-if="stk.description">{{stk.description}}</span>
                             <ion-option-button class="button-assertive" ng-click="deleteElement(filter.substate.subtasks, stk)" ng-if="filter.edit">
@@ -97,9 +71,8 @@
                         </ion-item>
                     </ion-list>
                     <ion-list show-delete="data.showDelete" ng-if="filter.substate.resources.length !== 0">
-                        <ion-item ng-repeat="res in filter.substate.resources" item="resource" class="item-remove-animate" ng-click="filter.actionBtnShow = false;
-                                filter.substateRes = res;
-                                goToTop()">
+                        <ion-item ng-repeat="res in filter.substate.resources" item="resource" class="item-remove-animate" ng-click="goStateDown('scheduling', 'res', res)">
+                            <span class="badge" style="float:left;position:static;margin-right: 5px;margin-left: -10px;background-color: #287BA7;color:#fff">{{$index + 1}}</span>
                             <span ng-if="!res.name">Resource {{$index + 1}}</span>
                             <span ng-if="res.name">{{res.name}}</span>
                             <ion-option-button class="button-assertive" ng-click="deleteElement(filter.substate.resources, res)" ng-if="filter.edit">
@@ -113,42 +86,30 @@
     </form>                
 </div>
 <div class="list" ng-if="filter.substate && filter.substateStk && !filter.substateRes && !filter.substateStkRes">
-    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substateStk = null;
-        goToTop()">
-        <div class="back-arrow ion-ios-arrow-left"></div>
-        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
-            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="filter.edit">Save</span><span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="!filter.edit">Back</span></div>
-    </a>
     <div class="formTitle">
         <div class="header-prj-text"> Design: {{formData.name}}</div>
         <div class="blue-label">{{formData.code}}</div>
     </div>
     <form class="form-container-bgd">
         <div style="position: relative; margin-bottom:5px">
-            <div class="item-stable item fs all-field-header isOpen" style="width:100%">
+            <div class="item-stable item fs all-field-header isOpen" style="width:100%;background-color: #287BA7 !important;border-color: #287BA7 !important;">
                 <div class="fieldSet-name" ng-if="filter.substate.name">{{filter.substate.name}}</div>
-                <div class="fieldSet-name" ng-if="!filter.substate.name">Scheduling field: Subtask</div>
+                <div class="fieldSet-name" ng-if="!filter.substate.name">Scheduling Subtask</div>
             </div>
-            <div class="blue-dropArrow"></div>
+            <div class="blue-dropArrow" style="border-color: #287BA7 transparent transparent transparent;"></div>
             <div class="formContent">               
                 <div class="calm-border">
                     <label class="item item-input item-stacked-label calm-border">
                         <div class="inputLabel" style="padding-top: 10px;">
                             <span class="all-name">Description</span>
                         </div>                                    
-                        <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStk.description" ng-disabled="!filter.edit">
+                        <input ng-change="updateTitle(filter.substateStk.description, 'Scheduling Subtask')" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStk.description" ng-disabled="!filter.edit">
                     </label>
                 </div>                
                 <div class="form-new-fields" ng-if="filter.substateStk.resources.length !== 0" style="margin-top:10px;">
-                    <!--                    <div class="item" ng-repeat="stkres in filter.substateStk.resources" ng-click="filter.substateStkRes = stkres;
-                                                filter.actionBtnShow = false">
-                                            <span ng-if="!stkres.name">Resource {{$index + 1}}</span>
-                                            <span ng-if="stkres.name">{{stkres.name}}</span>
-                                        </div>    -->
                     <ion-list show-delete="data.showDelete">
-                        <ion-item ng-repeat="stkres in filter.substateStk.resources" item="stkres" class="item-remove-animate" ng-click="filter.substateStkRes = stkres;
-                                filter.actionBtnShow = false;
-                                goToTop()">
+                        <ion-item ng-repeat="stkres in filter.substateStk.resources" item="stkres" class="item-remove-animate" ng-click="goStateDown('scheduling', 'subres', stkres)" >
+                            <span class="badge" style="float:left;position:static;margin-right: 5px;margin-left: -10px;background-color: #ed9100;color:#fff">{{$index + 1}}</span>
                             <span ng-if="!stkres.name">Resource {{$index + 1}}</span>
                             <span ng-if="stkres.name">{{stkres.name}}</span>
                             <ion-option-button class="button-assertive" ng-click="deleteElement(filter.substateStk.resources, stkres)" ng-if="filter.edit">
@@ -162,24 +123,17 @@
     </form>                
 </div>
 <div class="list" ng-if="filter.substate && filter.substateStk && !filter.substateRes && filter.substateStkRes">
-    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substateStkRes = null;
-        filter.actionBtnShow = true;
-        goToTop()">
-        <div class="back-arrow ion-ios-arrow-left"></div>
-        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
-            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="filter.edit">Save</span><span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="!filter.edit">Back</span></div>
-    </a>
     <div class="formTitle">
         <div class="header-prj-text"> Design: {{formData.name}}</div>
         <div class="blue-label">{{formData.code}}</div>
     </div>
     <form class="form-container-bgd">
         <div style="position: relative; margin-bottom:5px">
-            <div class="item-stable item fs all-field-header isOpen" style="width:100%">
+            <div class="item-stable item fs all-field-header isOpen" style="width:100%;background-color: #ed9100!important;border-color: #ed9100!important;">
                 <div class="fieldSet-name" ng-if="filter.substate.name">{{filter.substate.name}}</div>
-                <div class="fieldSet-name" ng-if="!filter.substate.name">Scheduling field: Subtask: Resource</div>
+                <div class="fieldSet-name" ng-if="!filter.substate.name">Scheduling Subtask Resource</div>
             </div>
-            <div class="blue-dropArrow"></div>
+            <div class="blue-dropArrow" style="border-color: #ed9100 transparent transparent transparent;"></div>
             <div class="formContent">               
                 <div class="calm-border">
                     <div class="item item-input item-stacked-label calm-border">
@@ -187,9 +141,9 @@
                             <span class="all-name">Name</span>
                         </div>       
                         <div style="position: relative">
-                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.name" ng-disabled="!filter.edit">
-                            <span ng-if="filter.edit" class="ion ion-android-search" ng-click="openPopover($event, filter.substateStkRes);
-                                $event.stopPropagation();" style="position: absolute;top: 0px;right: 0px;font-size: 25px;color: #31475a; padding: 10px 5px 10px 15px;"></span>
+                            <input ng-change="updateTitle(filter.substateStkRes.name, 'Scheduling Subtask Resource')" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.name" ng-disabled="!filter.edit">
+                            <span ng-if="filter.edit" class="ion ion-folder" ng-click="openPopover($event, filter.substateStkRes);
+                                $event.stopPropagation();" style="position: absolute;top: 0px;right: 0px;font-size: 26px;color: #31475a; padding: 10px 10px 10px 15px;"></span>
                         </div>
                         <!--<input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.name" ng-disabled="!filter.edit">-->
                     </div>
@@ -229,24 +183,17 @@
     </form>                
 </div>
 <div class="list" ng-if="filter.substate && !filter.substateStk && filter.substateRes && !filter.substateStkRes">
-    <a class="item item-button-left subHeader-form-bar" ng-click="filter.substateRes = null;
-        filter.actionBtnShow = true;
-        goToTop()">
-        <div class="back-arrow ion-ios-arrow-left"></div>
-        <div class="header-prj-text" style="width: calc(100% - 50px);"><span style="max-width: 35%; display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;">{{formData.name}}</span>
-            <span style="vertical-align: middle;display:inline-block">&nbsp;/&nbsp;Resource</span> <span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="filter.edit">Save</span><span style="float:right;display: inline-block;margin-right: -25px;vertical-align: middle" ng-if="!filter.edit">Back</span></div>
-    </a>
     <div class="formTitle">
         <div class="header-prj-text"> Design: {{formData.name}}</div>
         <div class="blue-label">{{formData.code}}</div>
     </div>
     <form class="form-container-bgd">
         <div style="position: relative; margin-bottom:5px">
-            <div class="item-stable item fs all-field-header isOpen" style="width:100%">
+            <div class="item-stable item fs all-field-header isOpen" style="width:100%;background-color: #287BA7!important;border-color: #287BA7!important;">
                 <div class="fieldSet-name" ng-if="filter.substate.name">{{filter.substate.name}}</div>
-                <div class="fieldSet-name" ng-if="!filter.substate.name">Scheduling field: Resource</div>
+                <div class="fieldSet-name" ng-if="!filter.substate.name">Scheduling Resource</span></div>
             </div>
-            <div class="blue-dropArrow"></div>
+            <div class="blue-dropArrow" style="    border-color: #287BA7 transparent transparent transparent;"></div>
             <div class="formContent">               
                 <div class="calm-border">
                     <div class="item item-input item-stacked-label calm-border">
@@ -254,11 +201,10 @@
                             <span class="all-name">Name</span>
                         </div>   
                         <div style="position: relative">
-                            <input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.name" ng-disabled="!filter.edit">
-                            <span ng-if="filter.edit" class="ion ion-android-search" ng-click="openPopover($event, filter.substateRes);
-                                $event.stopPropagation();" style="position: absolute;top: 0px;right: 0px;font-size: 25px;color: #31475a; padding: 10px 5px 10px 15px;"></span>
+                            <input ng-change="updateTitle(filter.substateRes.name, 'Scheduling Resource')" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.name" ng-disabled="!filter.edit">
+                            <span ng-if="filter.edit" class="ion ion-folder" ng-click="openPopover($event, filter.substateRes);
+                                $event.stopPropagation();" style="position: absolute;top: 0px;right: 0px;font-size: 26px;color: #31475a; padding: 10px 10px 10px 15px;"></span>
                         </div>
-                        <!--<input style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.name" ng-disabled="!filter.edit" >-->
                     </div>
                     <label class="item item-input item-stacked-label calm-border">
                         <div class="inputLabel" style="padding-top: 10px;">
