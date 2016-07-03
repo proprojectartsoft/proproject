@@ -118,9 +118,32 @@ angular.module($APP.name).controller('NavCtrl', [
                 photos.destroy();
             }
 
+
+            var resourcesCache = CacheFactory.get('resourcesCache');
+            if (resourcesCache) {
+                resourcesCache.destroy();
+            }
+            var staffCache = CacheFactory.get('staffCache');
+            if (staffCache) {
+                staffCache.destroy();
+            }
+            var unitCache = CacheFactory.get('unitCache');
+            if (unitCache) {
+                unitCache.destroy();
+            }
+            var custSettCache = CacheFactory.get('custSettCache');
+            if (custSettCache) {
+                custSettCache.destroy();
+            }
+            var payitemsCache = CacheFactory.get('payitemsCache');
+            if (payitemsCache) {
+                payitemsCache.destroy();
+            }
+
+
             AuthService.logout().success(function () {
-                $state.go('login');
             });
+            $state.go('login');
 
         };
 

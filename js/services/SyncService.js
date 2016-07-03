@@ -47,7 +47,6 @@ angular.module($APP.name).factory('SyncService', [
                     }
                     forms = sync.keys();
                     pics = photos.keys();
-                    console.log('w', forms);
                     if (forms) {
                         angular.forEach(forms, function (formKey) {
                             picX = false;
@@ -162,7 +161,12 @@ angular.module($APP.name).factory('SyncService', [
 
                         });
                     });
-                    $q.all(newListOfPromises).then(finalCallback);
+                    $q.all(newListOfPromises).then(finalCallback, function (result) {
+                        console.log(result)
+                    }, function (result) {
+                        console.log(result)
+                    });
+
                 }
                 return $http.get($APP.server + '/api/userversion/session').then(function (version) {
                     if (!settingsCache) {
@@ -174,11 +178,13 @@ angular.module($APP.name).factory('SyncService', [
                     var currentVersion = settingsCache.get("version");
                     var doRequest;
                     if (currentVersion !== version.data) {
+                        console.log('wqdmpwqnooiqwf')
                         clear();
-                        requests = [ProjectService.list_current(true), FormDesignService.list_mobile(), ResourceService.list_unit(), UserService.cust_settings(), ResourceService.list_manager(), ResourceService.list_staff()];
+                        requests = [ProjectService.list_current(), FormDesignService.list_mobile(), ResourceService.list_unit(), UserService.cust_settings(), ResourceService.list_manager(), ResourceService.list_staff()];
                         doRequest = requests.concat(upRequests);
                         console.log(doRequest);
                     } else {
+                        console.log('wqdmpwqnooiqwf2')
                         upload();
                         doRequest = upRequests;
                         if (doRequest.length === 0) {
@@ -186,61 +192,42 @@ angular.module($APP.name).factory('SyncService', [
                         }
                         console.log('OK', upRequests)
                     }
-                    if (doRequest.length === 0 && upRequests === 0) {
+                    if (doRequest.length === 0 && upRequests.length === 0) {
+                        console.log('wqdmpwqnooiqwf3')
                         syncPopup.close();
                     }
                     asyncCall(doRequest,
                             function error(result) {
+                                console.log('xqwkjdlbwqdoiqwbdio2')
                                 console.log('Some error occurred, but we get going:', result);
+                                $timeout(function () {
+                                    syncPopup.close();
+                                });
                             },
                             function success(result) {
+                                console.log(result)
                                 var sw = false;
                                 if (currentVersion !== version.data) {
                                     $rootScope.projects = result[0];
+                                    console.log($rootScope.projects)
                                     angular.forEach($rootScope.projects, function (proj) {
                                         if (proj.id === $rootScope.projectId && proj.name === $rootScope.navTitle) {
                                             sw = true;
                                         }
                                     });
-//                                    CustomerService.list_settings().then(function (result) {
-//                                        var custSettingsCache = CacheFactory.get('custSettingsCache');
-//                                        if (!custSettingsCache || custSettingsCache.length === 0) {
-//                                            custSettingsCache = CacheFactory('custSettingsCache');
-//                                            custSettingsCache.setOptions({
-//                                                storageMode: 'localStorage'
-//                                            });
-//                                        }
-//                                        $scope.customerSettings = {};
-//                                        angular.forEach(result, function (sett) {
-//                                            $scope.customerSettings[sett.name] = sett.value;
-//                                        });
-//                                    })
                                     if (result[0].length > 0) {
-//                                        var projectsAux = [], settingsAux = {};
                                         if (!sw) {
                                             $rootScope.projectId = result[0][0].id;
                                             $rootScope.navTitle = result[0][0].name;
                                         }
-                                        for (var i = 0; i < result[0].length; i++) {
-//                                            projectsAux.push({id: result[0][i].id, proj: result[0][i]})
-                                            projectsCache.put(result[0][i].id, result[0][i]);
 
-                                            angular.forEach(result[0], function (proj) {
-                                                PayitemService.list_payitems(proj.id).then(function (list) {
-                                                    payitemsCache.put(proj.id, list);
-                                                })
-                                            });
-                                        }
-//                                        for (var i = 0; i < projectsAux.length; i++) {
-//                                            ProjectService.settings(projectsAux[i].id).then(function (result) {
-//                                                projectsAux[i].settings = [];
-//                                                angular.forEach(result, function (sett) {
-//                                                    projectsAux[i].settings.push({id: sett.id, name: sett.name, value: sett.value})
-//                                                });
-//                                                projectsCache.put(projectsAux[i].id, projectsAux[i]);
-//                                            })
-//
-//                                        }
+                                        angular.forEach(result[0], function (proj) {
+                                            projectsCache.put(proj.id, proj);
+                                            PayitemService.list_payitems(proj.id).then(function (list) {
+                                                payitemsCache.put(proj.id, list);
+                                            })
+                                        });
+
                                         if (result[1]) {
                                             for (var i = 0; i < result[1].length; i++) {
                                                 designsCache.put(result[1][i].id, result[1][i]);
@@ -305,6 +292,7 @@ angular.module($APP.name).factory('SyncService', [
                             }
                     );
                 }, function errorCallback(response) {
+                    console.log('xqwkjdlbwqdoiqwbdio2')
                     $timeout(function () {
                         syncPopup.close();
                         var alertPopup = $ionicPopup.alert({
