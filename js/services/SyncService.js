@@ -180,7 +180,7 @@ angular.module($APP.name).factory('SyncService', [
                     if (currentVersion !== version.data) {
                         console.log('wqdmpwqnooiqwf')
                         clear();
-                        requests = [ProjectService.list_current(), FormDesignService.list_mobile(), ResourceService.list_unit(), UserService.cust_settings(), ResourceService.list_manager(), ResourceService.list_staff()];
+                        requests = [ProjectService.list_current(true), FormDesignService.list_mobile(), ResourceService.list_unit(), UserService.cust_settings(), ResourceService.list_manager(), ResourceService.list_staff()];
                         doRequest = requests.concat(upRequests);
                         console.log(doRequest);
                     } else {
