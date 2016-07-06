@@ -22,15 +22,6 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
 
     AuthService.init();
     $ionicPlatform.ready(function () {
-        if (window.cordova && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        }
-
-        if (window.StatusBar) {
-            StatusBar.styleDefault();
-            StatusBar.overlaysWebView(false);
-        }
-
         var sync = CacheFactory.get('sync');
         if (!sync) {
             sync = CacheFactory('sync');

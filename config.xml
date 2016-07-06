@@ -41,6 +41,8 @@
     <preference name="SplashScreen" value="screen"/>
     <preference name="orientation" value="portrait"/>
     <preference name="fullscreen" value="false" />
+    <preference name="stay-in-webview" value="false"/>
+    <preference name="android-windowSoftInputMode" value="adjustResize"/>
   
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar"/>
