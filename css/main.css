@@ -31,7 +31,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position-x: 0px;
-    padding: 140px 12px 12px 12px;
+    padding: 30% 12px 12px 12px;
 }
 
 /* Change the white to any color ;) */
@@ -52,8 +52,6 @@ input:-webkit-autofill {
 
 .welcome-container {
     text-align: right;
-    width: 70%;
-    float: right;
 }
 
 .welcome-big {
@@ -61,8 +59,7 @@ input:-webkit-autofill {
     font-size: 45px;
     font-weight: 300;
     color: #fff;
-    line-height: 1em;
-    display: inline-block;
+    margin-bottom: 10px;
 }
 
 .welcome-small {
@@ -70,8 +67,8 @@ input:-webkit-autofill {
     font-size: 20px;
     font-weight: 300;
     color: #fff;
-    margin-bottom: 10px;
-    line-height: 1em;
+    margin-bottom: 5px;
+    margin-right: 5px;
 }
 
 .welcome-logo {
