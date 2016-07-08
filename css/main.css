@@ -103,6 +103,7 @@ input:-webkit-autofill {
     margin-bottom: 2px;
     position: relative;
     border-radius: 0px !important;
+    background-color:crimson !important;
 }
 
 .input-container .label-bar:before {
