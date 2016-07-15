@@ -243,6 +243,7 @@
 }
 .all-field-header{
     position: relative;
+    border: none;
 }
 .all-field-header button{
     border: none;

@@ -1,7 +1,7 @@
 <ion-view title="Form" id="form" cache-view="false">
     <ion-header-bar align-title="left" class="bar-subheader item item-button-left subHeader-form-bar"  ng-click="backHelper()">
         <div class="back-arrow ion-ios-arrow-left"></div>
-        <div class="header-prj-text"><span ng-if="filter.state === 'form' ">{{formData.category}} - </span>{{titleShow}}</div>
+        <div class="header-prj-text"><span ng-if="filter.state === 'form'">{{formData.category}} - </span>{{titleShow}}</div>
     </ion-header-bar>
     <ion-content class="blue-bgd" ng-class="{'grey-bgd':filter.state !== 'form' && !filter.substate}" delegate-handle="mainScroll">
         <div class="content">
@@ -17,11 +17,14 @@
 
                             <ion-item id="{{formData.id}}:{{$index}}"
                                       ng-click="toggleGroup(fieldset, formData.id + ':' + $index)"
-                                      ng-class="{active: isGroupShown(group),isOpen:isGroupShown(fieldset)}"
+                                      ng-class="{active: isGroupShown(group),isOpen:isGroupShown(fieldset), 'pp-repeatable-border' : fieldset.repeatable}"
                                       class="item-stable item fs all-field-header" style="width:100%; padding: 0px !important">
                                 <div class="fieldSet-name">{{fieldset.name}}</div>
                                 <div class="ion-ios-arrow-down choose-arrow"></div>
                                 <span class="all-field-description">{{fieldset.guidance}}</span>
+                                <ion-option-button class="button-assertive" ng-click="deleteElement(formData.field_group_designs, fieldset)" ng-if="fieldset.repeatable">
+                                    Delete
+                                </ion-option-button> 
                                 <ion-option-button class="button-assertive" ng-click="repeatGroup(fieldset)" ng-if="fieldset.repeatable" style="background-color: #C8F7C5;color: #31475A;">
                                     Repeat
                                 </ion-option-button> 
@@ -32,10 +35,14 @@
                             <div class="formContent"
                                  ng-repeat="field in fieldset.field_designs"
                                  ng-show="isGroupShown(fieldset)">
-                                <a ng-if="$first" style="padding: 15px 11px 15px; top:0px" class="all-field-repeat" ng-click="repeatField(fieldset, field)"
-                                   ng-show="field.repeatable"><span class="icon ion-plus" style="color:#fff"></span> </a>
+                                <a ng-if="$first" style="padding: 16px 11px 15px;top: 0px;font-size: 20px;" class="all-field-repeat" ng-click="repeatField(fieldset, field)"
+                                   ng-show="field.repeatable"><span class="icon ion-plus"></span> </a>
+                                <a ng-if="$first" style="padding: 14px 11px 13px;top: 0px;right: 30px;font-size: 24px;" class="all-field-repeat" ng-click="deleteElement(fieldset.field_designs, field)"
+                                   ng-show="field.repeatable"><span class="icon ion-trash-b"></span> </a>
                                 <a ng-if="!$first" class="all-field-repeat" ng-click="repeatField(fieldset, field)"
-                                   ng-show="field.repeatable"><span class="icon ion-plus" style="color:#fff"></span> </a>
+                                   ng-show="field.repeatable" style="padding: 8px 11px 8px;top: 0px;font-size: 20px;"><span class="icon ion-plus"></span> </a>
+                                <a ng-if="!$first" class="all-field-repeat" ng-click="deleteElement(fieldset.field_designs, field)"
+                                   ng-show="field.repeatable" style="padding: 6px 11px 6px;top: 0px;right: 30px;font-size: 24px;"><span class="icon ion-trash-b"></span> </a>
                                 <field data="field"></field>
                             </div>
                         </div>
