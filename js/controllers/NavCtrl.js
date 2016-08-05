@@ -16,6 +16,7 @@ angular.module($APP.name).controller('NavCtrl', [
                     .toggleClass("ion-android-arrow-back");
         };
 
+
         var projects = CacheFactory.get('projects');
         if (!projects || projects.length === 0) {
             projects = CacheFactory('projects');
@@ -72,7 +73,17 @@ angular.module($APP.name).controller('NavCtrl', [
             }
         };
 
+        $scope.goAt = function () {
+            var deviceType = (navigator.userAgent.match(/iPad/i)) == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i)) == "iPhone" ? "iPhone" : "Android";
+            if (deviceType === "Android") {
+                navigator.app.loadUrl($APP.server, {openExternal: true});
+            }
+            else {
+                window.open($APP.server, '_system');
+            }
 
+
+        }
         $scope.logout = function () {
             var projectsCache = CacheFactory.get('projectsCache');
             if (projectsCache) {

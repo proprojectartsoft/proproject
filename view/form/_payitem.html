@@ -197,21 +197,21 @@
                         </label>
 
                         <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateStkRes.calculation && (!filter.substateStkRes.unit_obj || filter.substateStkRes.unit_obj.name === '' || filter.substateStkRes.unit_obj.name === 'm' || filter.substateStkRes.unit_obj.name === 'm2' || filter.substateStkRes.unit_obj.name === 'm3'
-                                        || filter.substateStkRes.unit_obj.name === 'ft' || filter.substateStkRes.unit_obj.name === 'ft2' || filter.substateStkRes.unit_obj.name === 'ft3' || filter.substateStkRes.unit_obj.name === 'T')">
+                                        || filter.substateStkRes.unit_obj.name === 'ft' || filter.substateStkRes.unit_obj.name === 'ft2' || filter.substateStkRes.unit_obj.name === 'ft3' || filter.substateStkRes.unit_obj.name === 'Ton' || subres.unit_obj.name === 'Tonne')">
                             <div class="inputLabel" style="padding-top: 10px;">
                                 <span class="all-name">Length</span>
                             </div>
                             <input ng-change="updateCalculation(filter.substateStkRes)" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.length" type="number">
                         </label>
                         <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateStkRes.calculation && (!filter.substateStkRes.unit_obj || filter.substateStkRes.unit_obj.name === '' || filter.substateStkRes.unit_obj.name === 'm2' || filter.substateStkRes.unit_obj.name === 'm3'
-                                        || filter.substateStkRes.unit_obj.name === 'ft2' || filter.substateStkRes.unit_obj.name === 'ft3' || filter.substateStkRes.unit_obj.name === 'T')">
+                                        || filter.substateStkRes.unit_obj.name === 'ft2' || filter.substateStkRes.unit_obj.name === 'ft3' || filter.substateStkRes.unit_obj.name === 'Ton' || subres.unit_obj.name === 'Tonne')">
                             <div class="inputLabel" style="padding-top: 10px;">
                                 <span class="all-name">Width</span>
                             </div>
                             <input ng-change="updateCalculation(filter.substateStkRes)" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.width" type="number">
                         </label>
                         <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateStkRes.calculation && (!filter.substateStkRes.unit_obj || filter.substateStkRes.unit_obj.name === '' || filter.substateStkRes.unit_obj.name === 'm3'
-                                        || filter.substateStkRes.unit_obj.name === 'ft3' || filter.substateStkRes.unit_obj.name === 'T')">
+                                        || filter.substateStkRes.unit_obj.name === 'ft3' || filter.substateStkRes.unit_obj.name === 'Ton' || subres.unit_obj.name === 'Tonne')">
                             <div class="inputLabel" style="padding-top: 10px;">
                                 <span class="all-name">Depth</span>
                             </div>
@@ -229,14 +229,14 @@
                             </div>
                             <input ng-change="updateCalculation(filter.substateStkRes)" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.number_of" type="number">
                         </label>
-                        <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateStkRes.calculation && (!filter.substateStkRes.unit_obj || filter.substateStkRes.unit_obj.name === '' || filter.substateStkRes.unit_obj.name === 'T')">
+                        <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateStkRes.calculation && (!filter.substateStkRes.unit_obj || filter.substateStkRes.unit_obj.name === '' || filter.substateStkRes.unit_obj.name === 'Ton' || subres.unit_obj.name === 'Tonne')">
                             <div class="inputLabel" style="padding-top: 10px;">
                                 <span class="all-name">T/m3</span>
                             </div>
                             <input ng-change="updateCalculation(filter.substateStkRes)" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateStkRes.tm3" type="number">
                         </label>
                         <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateStkRes.calculation && (!filter.substateStkRes.unit_obj || filter.substateStkRes.unit_obj.name === '' || filter.substateStkRes.unit_obj.name === 'm' || filter.substateStkRes.unit_obj.name === 'm2' || filter.substateStkRes.unit_obj.name === 'm3'
-                                        || filter.substateStkRes.unit_obj.name === 'ft' || filter.substateStkRes.unit_obj.name === 'ft2' || filter.substateStkRes.unit_obj.name === 'ft3' || filter.substateStkRes.unit_obj.name === 'T')">
+                                        || filter.substateStkRes.unit_obj.name === 'ft' || filter.substateStkRes.unit_obj.name === 'ft2' || filter.substateStkRes.unit_obj.name === 'ft3' || filter.substateStkRes.unit_obj.name === 'Ton' || subres.unit_obj.name === 'Tonne')">
                             <div class="inputLabel" style="padding-top: 10px;">
                                 <span class="all-name">Wastage</span>
                             </div>
@@ -305,21 +305,21 @@
                     </label>
 
                     <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateRes.calculation && (!filter.substateRes.unit_obj || filter.substateRes.unit_obj.name === '' || filter.substateRes.unit_obj.name === 'm' || filter.substateRes.unit_obj.name === 'm2' || filter.substateRes.unit_obj.name === 'm3'
-                                    || filter.substateRes.unit_obj.name === 'ft' || filter.substateRes.unit_obj.name === 'ft2' || filter.substateRes.unit_obj.name === 'ft3' || filter.substateRes.unit_obj.name === 'T')">
+                                    || filter.substateRes.unit_obj.name === 'ft' || filter.substateRes.unit_obj.name === 'ft2' || filter.substateRes.unit_obj.name === 'ft3' || filter.substateRes.unit_obj.name === 'Ton' || subres.unit_obj.name === 'Tonne')">
                         <div class="inputLabel" style="padding-top: 10px;">
                             <span class="all-name">Length</span>
                         </div>
                         <input ng-change="updateCalculation(filter.substateRes)" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.length" type="number">
                     </label>
                     <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateRes.calculation && (!filter.substateRes.unit_obj || filter.substateRes.unit_obj.name === '' || filter.substateRes.unit_obj.name === 'm2' || filter.substateRes.unit_obj.name === 'm3'
-                                    || filter.substateRes.unit_obj.name === 'ft2' || filter.substateRes.unit_obj.name === 'ft3' || filter.substateRes.unit_obj.name === 'T')">
+                                    || filter.substateRes.unit_obj.name === 'ft2' || filter.substateRes.unit_obj.name === 'ft3' || filter.substateRes.unit_obj.name === 'Ton' || subres.unit_obj.name === 'Tonne')">
                         <div class="inputLabel" style="padding-top: 10px;">
                             <span class="all-name">Width</span>
                         </div>
                         <input ng-change="updateCalculation(filter.substateRes)" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.width" type="number">
                     </label>
                     <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateRes.calculation && (!filter.substateRes.unit_obj || filter.substateRes.unit_obj.name === '' || filter.substateRes.unit_obj.name === 'm3'
-                                    || filter.substateRes.unit_obj.name === 'ft3' || filter.substateRes.unit_obj.name === 'T')">
+                                    || filter.substateRes.unit_obj.name === 'ft3' || filter.substateRes.unit_obj.name === 'Ton' || subres.unit_obj.name === 'Tonne')">
                         <div class="inputLabel" style="padding-top: 10px;">
                             <span class="all-name">Depth</span>
                         </div>
@@ -337,14 +337,14 @@
                         </div>
                         <input ng-change="updateCalculation(filter.substateRes)" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.number_of" type="number">
                     </label>
-                    <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateRes.calculation && (!filter.substateRes.unit_obj || filter.substateRes.unit_obj.name === '' || filter.substateRes.unit_obj.name === 'T')">
+                    <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateRes.calculation && (!filter.substateRes.unit_obj || filter.substateRes.unit_obj.name === '' || filter.substateRes.unit_obj.name === 'Ton' || subres.unit_obj.name === 'Tonne')">
                         <div class="inputLabel" style="padding-top: 10px;">
                             <span class="all-name">T/m3</span>
                         </div>
                         <input ng-change="updateCalculation(filter.substateRes)" style="padding-left:15px; padding-right:15px;border-top-left-radius: 0px; border-top-right-radius: 0px;" ng-model="filter.substateRes.tm3" type="number">
                     </label>
                     <label class="item item-input item-stacked-label calm-border" ng-if="filter.substateRes.calculation && (!filter.substateRes.unit_obj || filter.substateRes.unit_obj.name === '' || filter.substateRes.unit_obj.name === 'm' || filter.substateRes.unit_obj.name === 'm2' || filter.substateRes.unit_obj.name === 'm3'
-                                    || filter.substateRes.unit_obj.name === 'ft' || filter.substateRes.unit_obj.name === 'ft2' || filter.substateRes.unit_obj.name === 'ft3' || filter.substateRes.unit_obj.name === 'T')">
+                                    || filter.substateRes.unit_obj.name === 'ft' || filter.substateRes.unit_obj.name === 'ft2' || filter.substateRes.unit_obj.name === 'ft3' || filter.substateRes.unit_obj.name === 'Ton' || subres.unit_obj.name === 'Tonne')">
                         <div class="inputLabel" style="padding-top: 10px;">
                             <span class="all-name">Wastage</span>
                         </div>
