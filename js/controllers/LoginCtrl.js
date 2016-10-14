@@ -17,8 +17,8 @@ angular.module($APP.name).controller('LoginCtrl', [
     var ppremember = localStorage.getObject('ppremember');
 
     if (ppremember) {
-      $scope.user.username = $scope.hasRemember.username;
-      $scope.user.password = $scope.hasRemember.password;
+      $scope.user.username = ppremember.username;
+      $scope.user.password = ppremember.password;
       $scope.user.rememberMe = true;
     }
 
