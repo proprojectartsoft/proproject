@@ -237,7 +237,7 @@ angular.module($APP.name).factory('SyncService', [
     return {
       sync:function(){
         $timeout(function () {
-          TestService.version().then(function(result){
+          AuthService.version().then(function(result){
             console.log(!localStorage.getItem('version'), localStorage.getItem('version') , result)
             if(!localStorage.getItem('version') || localStorage.getItem('version') < result){
               localStorage.setItem('version', result)
