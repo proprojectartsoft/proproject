@@ -37,6 +37,11 @@ angular.module($APP.name).factory('SyncService', [
       this.response = response;
     }
     var down = function(){
+      $APP.db.executeSql('SELECT * FROM ProjectsTable', [], function(rs) {
+        console.log('exista')
+      }, function(error) {
+        console.log('SELECT SQL ProjectsTable statement ERROR: ' + error.message);
+      });
       //Designs
       var designs = function(){
         var obj = new servresp('designs',0,[]);
