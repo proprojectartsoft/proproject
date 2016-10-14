@@ -30,8 +30,7 @@ angular.module($APP.name, [
   'angular-cache',
   'ngCordova'
 ]);
-angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthService, $cordovaFile, $cordovaFileTransfer) {
-
+angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthService, $cordovaFile, $cordovaFileTransfer, $timeout) {
   AuthService.init();
   $ionicPlatform.ready(function () {
     var url = "http://cdn.wall-pix.net/albums/art-space/00030109.jpg";
