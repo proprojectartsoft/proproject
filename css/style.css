@@ -173,7 +173,7 @@ textarea {
     font-weight: 400;
     display: block;
     color: #8e8e8e;
-    white-space:nowrap; 
+    white-space: normal;
     line-height: 1;
     margin: 5px 0;
 }
@@ -477,11 +477,7 @@ textarea {
     right: -1px;
     top: 1px;
     padding: 8px 11px 6px;
-    /*background-color: #c8f7c5;*/
-    /*box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.19), 0px 0px 6px rgba(0, 0, 0, 0.23);*/
-}
-.all-field-repeat .icon{
-    color:#31475a;
+    background-color: #11C1F3;
 }
 
 .help {

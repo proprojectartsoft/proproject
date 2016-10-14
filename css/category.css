@@ -223,7 +223,6 @@
     float: left;
     display: block;
     padding: 15px;
-    font-size: 14px;
 }
 .center-category{
     display: table-cell;
@@ -244,7 +243,6 @@
 }
 .all-field-header{
     position: relative;
-    border: none;
 }
 .all-field-header button{
     border: none;
@@ -322,7 +320,7 @@ input[type='text'], input[type='number'],input[type='email']{
     padding: 15px !important;
     height: auto !important;
     border-top-left-radius: 0px;
-    border-top-right-radius: 0px;    
+    border-top-right-radius: 0px;
 }
 
 .ion-datetime-picker .time .item-input input {

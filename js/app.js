@@ -1,9 +1,9 @@
 
 var $APP = $APP || {}; // App namespace
-$APP.server = 'http://app.preprod.proproject.io/';
+// $APP.server = 'http://app.preprod.proproject.io/';
 //$APP.server = 'http://app.proproject.io/';
 // $APP.server = 'http://artvm23.vmnet.ro';
-//$APP.server = 'http://proproject.artsoft-consult.ro';
+$APP.server = 'http://proproject.artsoft-consult.ro';
 $APP.name = 'proproject';
 $APP.mobile = true;
 $APP.CONFIG;
@@ -22,6 +22,15 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
 
     AuthService.init();
     $ionicPlatform.ready(function () {
+        if (window.cordova && window.cordova.plugins.Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        }
+
+        if (window.StatusBar) {
+            StatusBar.styleDefault();
+            StatusBar.overlaysWebView(false);
+        }
+
         var sync = CacheFactory.get('sync');
         if (!sync) {
             sync = CacheFactory('sync');
@@ -32,7 +41,6 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
     });
 
 });
-
 angular.module($APP.name).config([
     '$stateProvider',
     'CacheFactoryProvider',
@@ -210,4 +218,3 @@ angular.module($APP.name).config([
         $urlRouterProvider.otherwise('/login'); //hardcoded for start
     }
 ]);
-

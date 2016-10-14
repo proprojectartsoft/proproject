@@ -20,18 +20,18 @@
 
 .keyboard-open .login-container {
     padding-top: 20px;
-    /*height: 100%;*/
+    height: 100%;
 }
 
 .login-container {
     background-image: url("../img/new/image.jpg");
     width: 100%;
-    /*height: 100%;*/
+    height: 100%;
     min-height: 100%;
     background-size: cover;
     background-repeat: no-repeat;
     background-position-x: 0px;
-    padding: 30% 12px 12px 12px;
+    padding: 140px 12px 12px 12px;
 }
 
 /* Change the white to any color ;) */
@@ -42,18 +42,8 @@ input:-webkit-autofill {
 .keyboard-open #login .scroll{
     height: calc(100% + 200px);
 }
-.keyboard-open #login .login-footer{
-    clear: both;
-    position: static;    
-}
-.keyboard-open #login .pane{
-    overflow: visible;
-}
 #login .scroll {
-    height: 100% !important;
-    max-height: 100%;
-    min-height: 100%;
-
+    height: 100%;
 }
 
 #login ion-content.scroll-content.ionic-scroll {
@@ -62,6 +52,8 @@ input:-webkit-autofill {
 
 .welcome-container {
     text-align: right;
+    width: 70%;
+    float: right;
 }
 
 .welcome-big {
@@ -69,7 +61,8 @@ input:-webkit-autofill {
     font-size: 45px;
     font-weight: 300;
     color: #fff;
-    margin-bottom: 10px;
+    line-height: 1em;
+    display: inline-block;
 }
 
 .welcome-small {
@@ -77,16 +70,13 @@ input:-webkit-autofill {
     font-size: 20px;
     font-weight: 300;
     color: #fff;
-    margin-bottom: 5px;
-    margin-right: 5px;
+    margin-bottom: 10px;
+    line-height: 1em;
 }
 
 .welcome-logo {
     width: 142px;
     float: right;
-}
-.welcome-logo img{
-    width: 100%;
 }
 
 .login-form {
@@ -432,17 +422,4 @@ label.item.img-description{
 }
 .list{
     padding-top:0px;
-}
-
-.pp-repeatable-border{
-    border-left:4px solid #c8f7c5 !important;
-}
-.pp-repeatable-border .item-content{
-    padding-left:5px !important;
-}
-.pp-repeatable-border .all-name{
-    width: calc(100% - 60px);
-}
-.pp-repeatable-border .all-description{
-    width: calc(100% - 60px);
 }
