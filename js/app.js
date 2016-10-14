@@ -48,7 +48,7 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
       $timeout(function () {
         $scope.downloadProgress = (progress.loaded / progress.total) * 100;
       });
-    });}, false);
+    })
 
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
