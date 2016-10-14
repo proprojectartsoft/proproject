@@ -30,7 +30,7 @@ angular.module($APP.name, [
   'angular-cache',
   'ngCordova'
 ]);
-angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthService) {
+angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthService, $cordovaFile, $cordovaFileTransfer) {
 
   AuthService.init();
   $ionicPlatform.ready(function () {
