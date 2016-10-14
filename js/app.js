@@ -44,8 +44,8 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
     states[Connection.CELL_4G]  = 'Cell 4G connection';
     states[Connection.CELL]     = 'Cell generic connection';
     states[Connection.NONE]     = 'No network connection';
+    console.log(Connection)
 
-    alert('Connection type: ' + states[networkState]);
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }

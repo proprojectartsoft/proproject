@@ -38,7 +38,11 @@ angular.module($APP.name).factory('SyncService', [
     }
     var down = function(){
       $APP.db.executeSql('SELECT * FROM ProjectsTable', [], function(rs) {
-        console.log('exista')
+        aux = [];
+        for(var i=0;i<rs.rows.length;i++){
+          aux.push(rs.rows.item(i));
+        }
+        DbService.add('projects',aux);
       }, function(error) {
         console.log('SELECT SQL ProjectsTable statement ERROR: ' + error.message);
       });
@@ -223,6 +227,19 @@ angular.module($APP.name).factory('SyncService', [
         console.log('SELECT SQL UnitTable statement ERROR: ' + error.message);
       });
     }
+    var close = function(){
+      $APP.db.transaction(function(tx) {
+        tx.executeSql('DROP TABLE IF EXISTS ProjectsTable');
+        tx.executeSql('DROP TABLE IF EXISTS DesignsTable');
+        tx.executeSql('DROP TABLE IF EXISTS ResourcesTable');
+        tx.executeSql('DROP TABLE IF EXISTS UnitTable');
+        tx.executeSql('DROP TABLE IF EXISTS CustsettTable');
+      }, function(error) {
+        console.log('Transaction ERROR: ' + error.message);
+      }, function() {
+        localStorage.clear();
+      });
+    }
     var asyncCall =function (listOfPromises, onErrorCallback, finalCallback) {
       listOfPromises = listOfPromises || [];
       onErrorCallback = onErrorCallback || angular.noop;
@@ -260,6 +277,9 @@ angular.module($APP.name).factory('SyncService', [
         $timeout(function () {
           down()
         });
+      },
+      sync_close:function(){
+        close();
       }
     }
   }

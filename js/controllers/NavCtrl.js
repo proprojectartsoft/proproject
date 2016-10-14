@@ -8,7 +8,8 @@ angular.module($APP.name).controller('NavCtrl', [
     '$timeout',
     '$http',
     'SyncService',
-    function ($rootScope, $state, AuthService, $scope, $ionicSideMenuDelegate, CacheFactory, $timeout, $http, SyncService) {
+    'DbService',
+    function ($rootScope, $state, AuthService, $scope, $ionicSideMenuDelegate, CacheFactory, $timeout, $http, SyncService, DbService) {
         $scope.toggleLeft = function ($event) {
             $ionicSideMenuDelegate.toggleLeft();
             $($event.target)
@@ -16,13 +17,7 @@ angular.module($APP.name).controller('NavCtrl', [
                     .toggleClass("ion-android-arrow-back");
         };
 
-        var projects = CacheFactory.get('projects');
-        if (!projects || projects.length === 0) {
-            projects = CacheFactory('projects');
-            projects.setOptions({
-                storageMode: 'localStorage'
-            });
-        }
+        $rootScope.project = DbService.get('projects')
 
         var id = projects.get('projectId');
         var name = projects.get('navTitle');
@@ -74,72 +69,7 @@ angular.module($APP.name).controller('NavCtrl', [
 
 
         $scope.logout = function () {
-            var projectsCache = CacheFactory.get('projectsCache');
-            if (projectsCache) {
-                projectsCache.destroy();
-            }
-            var designsCache = CacheFactory.get('designsCache');
-            if (designsCache) {
-                designsCache.destroy();
-            }
-            var instanceCache = CacheFactory.get('instanceCache');
-            if (instanceCache) {
-                instanceCache.destroy();
-            }
-            var registersCache = CacheFactory.get('registersCache');
-            if (registersCache) {
-                registersCache.destroy();
-            }
-            var registerCache = CacheFactory.get('registerCache');
-            if (registerCache) {
-                registerCache.destroy();
-            }
-
-            var reloadCache = CacheFactory.get('reloadCache');
-            if (reloadCache) {
-                reloadCache.destroy();
-            }
-
-            var syncCache = CacheFactory.get('sync');
-            if (syncCache) {
-                syncCache.destroy();
-            }
-
-            var settingsCache = CacheFactory.get('settings');
-            if (settingsCache) {
-                settingsCache.destroy();
-            }
-            var projects = CacheFactory.get('projects');
-            if (projects) {
-                projects.destroy();
-            }
-            var photos = CacheFactory.get('photos');
-            if (photos) {
-                photos.destroy();
-            }
-
-
-            var resourcesCache = CacheFactory.get('resourcesCache');
-            if (resourcesCache) {
-                resourcesCache.destroy();
-            }
-            var staffCache = CacheFactory.get('staffCache');
-            if (staffCache) {
-                staffCache.destroy();
-            }
-            var unitCache = CacheFactory.get('unitCache');
-            if (unitCache) {
-                unitCache.destroy();
-            }
-            var custSettCache = CacheFactory.get('custSettCache');
-            if (custSettCache) {
-                custSettCache.destroy();
-            }
-            var payitemsCache = CacheFactory.get('payitemsCache');
-            if (payitemsCache) {
-                payitemsCache.destroy();
-            }
-
+            SyncService.sync_close()
 
             AuthService.logout().success(function () {
             });
