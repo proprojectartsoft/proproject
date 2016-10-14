@@ -11,8 +11,7 @@ angular.module($APP.name).controller('LoginCtrl', [
         $scope.user.username = "";
         $scope.user.password = "";
         $scope.user.rememberMe = false;
-        $scope.popupOpen = false;
-
+        $scope.popupOpen = false;        
         var rememberCache = CacheFactory.get('rememberCache');
         if (!rememberCache) {
             rememberCache = CacheFactory('rememberCache');
@@ -20,7 +19,7 @@ angular.module($APP.name).controller('LoginCtrl', [
                 storageMode: 'localStorage'
             });
         }
-        
+
         $scope.hasRemember = rememberCache.get('remember');
         if ($scope.hasRemember) {
             $scope.user.username = $scope.hasRemember.username;

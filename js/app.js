@@ -13,7 +13,14 @@ $APP.db = null;
 
 document.addEventListener('deviceready', function(){
   $APP.db = window.sqlitePlugin.openDatabase({name: 'demo.db', location: 'default'});
-  console.log(cordova.file, cordova.file.applicationDirectory);
+  Storage.prototype.setObject = function(key, value) {
+    this.setItem(key, JSON.stringify(value));
+  }
+
+  Storage.prototype.getObject = function(key) {
+    var value = this.getItem(key);
+    return value && JSON.parse(value);
+  }
 })
 
 angular.module($APP.name, [
@@ -27,6 +34,15 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
 
   AuthService.init();
   $ionicPlatform.ready(function () {
+    var xch = CacheFactory.get('xch');
+    if (!xch) {
+      console.log('nu-i')
+      xch = CacheFactory('xch');
+      xch.setOptions({
+        storageMode: 'sessionStorage'
+      });
+      xch.put('asdasdasd','qwdqwdqwdqw')
+    }
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
