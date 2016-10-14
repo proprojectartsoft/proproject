@@ -18,10 +18,10 @@ angular.module($APP.name).controller('NavCtrl', [
     };
 
     $rootScope.project = DbService.get('projects')
-    if(projects){
-      var id = projects.get('projectId');
-      var name = projects.get('navTitle');
-    }
+    // if(projects){
+    //   var id = projects.get('projectId');
+    //   var name = projects.get('navTitle');
+    // }
     var sw = false;
 
     if (id && name) {
