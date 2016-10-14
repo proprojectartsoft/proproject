@@ -34,15 +34,22 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
 
   AuthService.init();
   $ionicPlatform.ready(function () {
-    var xch = CacheFactory.get('xch');
-    if (!xch) {
-      console.log('nu-i')
-      xch = CacheFactory('xch');
-      xch.setOptions({
-        storageMode: 'sessionStorage'
+    var url = "http://cdn.wall-pix.net/albums/art-space/00030109.jpg";
+    var targetPath = cordova.file.applicationDirectory + "testImage.png";
+    var trustHosts = true;
+    var options = {};
+    $cordovaFile.checkFile(targetPath, "testImage.png")
+    $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+    .then(function(result) {
+      // Success!
+    }, function(err) {
+      // Error
+    }, function (progress) {
+      $timeout(function () {
+        $scope.downloadProgress = (progress.loaded / progress.total) * 100;
       });
-      xch.put('asdasdasd','qwdqwdqwdqw')
-    }
+    });}, false);
+
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
