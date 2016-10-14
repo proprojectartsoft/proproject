@@ -234,10 +234,23 @@ angular.module($APP.name).factory('SyncService', [
         tx.executeSql('DROP TABLE IF EXISTS ResourcesTable');
         tx.executeSql('DROP TABLE IF EXISTS UnitTable');
         tx.executeSql('DROP TABLE IF EXISTS CustsettTable');
+        tx.executeSql("SELECT name FROM sqlite_master WHERE type='table'", [], function (tx, rs) {
+            if (rs.rows.length == 1) {
+              for(var i=0;i<rs.rows.length;i++){
+                console.log(rs.rows.item(i));
+              }
+            } else {
+
+            }
+        });
       }, function(error) {
         console.log('Transaction ERROR: ' + error.message);
       }, function() {
-        localStorage.clear();
+        var ppremember = localStorage.getObject('ppremember');
+        if(ppremember){
+          localStorage.clear();
+          localStorage.setObject('ppremember', ppremember)
+        }
       });
     }
     var asyncCall =function (listOfPromises, onErrorCallback, finalCallback) {
