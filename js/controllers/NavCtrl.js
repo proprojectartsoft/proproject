@@ -174,7 +174,26 @@ angular.module($APP.name).controller('NavCtrl', [
 
             });
         };
+        $scope.sync_local = function () {
+            $timeout(function () {
+                $http.get($APP.server + '/api/me', {withCredentials: true}).then(function (user) {
+                    SyncService.sync_local();
+                }, function errorCallback(response) {
+                    console.log(response.status)
+                });
 
+            });
+        };
+        $scope.sync_force = function () {
+            $timeout(function () {
+                $http.get($APP.server + '/api/me', {withCredentials: true}).then(function (user) {
+                    SyncService.sync_force();
+                }, function errorCallback(response) {
+                    console.log(response.status)
+                });
+
+            });
+        };
         $rootScope.$on('sync.todo', function () {
             $state.go('app.categories', {'projectId': $rootScope.projectId});
             $scope.sync();
