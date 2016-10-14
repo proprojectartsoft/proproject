@@ -30,6 +30,7 @@
     <plugin name="cordova-sqlite-storage" spec="~0.8.5" />
     <plugin name="cordova-plugin-file" spec="~4.3.0" />
     <plugin name="cordova-plugin-file-transfer"/>
+    <plugin name="cordova-plugin-network-information"/>
 
     <access origin="*"/>
     <allow-navigation href="*" />
