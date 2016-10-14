@@ -22,7 +22,6 @@ angular.module($APP.name).factory('SyncService', [
   '$rootScope',
   '$http',
   '$timeout',
-  'TestService',
   '$cordovaSQLite',
   '$interval',
   'DbService',
@@ -30,7 +29,7 @@ angular.module($APP.name).factory('SyncService', [
   'ProjectService',
   'FormDesignService',
   'UserService',
-  function ($q, $rootScope, $http, $timeout, TestService, $cordovaSQLite, $interval, DbService, ResourceService, ProjectService, FormDesignService, UserService) {
+  function ($q, $rootScope, $http, $timeout,  $cordovaSQLite, $interval, DbService, ResourceService, ProjectService, FormDesignService, UserService) {
     function servresp(name, timer, start, response){
       this.name = name;
       this.timer = timer;
@@ -253,58 +252,6 @@ angular.module($APP.name).factory('SyncService', [
       sync_force:function(){
         $timeout(function () {
           down()
-        });
-      }
-    }
-  }
-]);
-angular.module('starter.controllers').factory('TestService', [
-  '$http',
-  function ($http) {
-    return {
-      list_current: function (active) {
-        return $http.get($APP.server + '/api/project/list', {
-          params: {active: active}
-        }).then(
-          function (payload) {
-            return payload.data;
-          }
-        );
-      },
-      list_mobile: function (categoryId) {
-        return $http.get($APP.server + '/api/formdesign/mobilelist', {
-          params: {categoryId: categoryId}
-        }).then(
-          function (payload) {
-            return payload.data;
-          }
-        );
-      },
-      list_resources: function () {
-        return $http.get($APP.server + '/api/resource').then(
-          function (payload) {
-            return payload.data;
-          }
-        );
-      },
-      list_unit: function () {
-        return $http.get($APP.server + '/api/unit').then(
-          function (payload) {
-            return payload.data;
-          }
-        );
-      },
-      list_custsett: function (id) {
-        return $http.get($APP.server + '/api/companysettings', {
-          params: {customer_id: id}
-        }).then(function (payload) {
-          return payload.data;
-        });
-      },
-      version:function(){
-        return $http.get($APP.server + '/api/userversion/session','', {
-        }).then(function (payload) {
-          return payload.data;
         });
       }
     }
