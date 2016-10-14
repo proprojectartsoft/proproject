@@ -38,12 +38,16 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
     var targetPath = cordova.file.applicationDirectory + "testImage.png";
     var trustHosts = true;
     var options = {};
-    $cordovaFile.checkFile(targetPath, "testImage.png")
+    $cordovaFile.checkFile(targetPath, "testImage.png").then(function(response){
+      console.log(response);
+    })
     $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
     .then(function(result) {
       // Success!
+      console.log(result);
     }, function(err) {
       // Error
+      console.log(err);
     }, function (progress) {
       $timeout(function () {
         $scope.downloadProgress = (progress.loaded / progress.total) * 100;
