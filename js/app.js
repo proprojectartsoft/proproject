@@ -11,16 +11,18 @@ $APP.DEBUG = true;
 $APP.shareUrl = 'https://app.proproject.co.uk/form/';
 $APP.db = null;
 
+Storage.prototype.setObject = function(key, value) {
+  this.setItem(key, JSON.stringify(value));
+}
+
+Storage.prototype.getObject = function(key) {
+  var value = this.getItem(key);
+  return value && JSON.parse(value);
+}
+
 document.addEventListener('deviceready', function(){
   $APP.db = window.sqlitePlugin.openDatabase({name: 'demo.db', location: 'default'});
-  Storage.prototype.setObject = function(key, value) {
-    this.setItem(key, JSON.stringify(value));
-  }
 
-  Storage.prototype.getObject = function(key) {
-    var value = this.getItem(key);
-    return value && JSON.parse(value);
-  }
 })
 
 angular.module($APP.name, [
