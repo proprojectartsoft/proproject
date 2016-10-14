@@ -13,6 +13,7 @@ $APP.db = null;
 
 document.addEventListener('deviceready', function(){
   $APP.db = window.sqlitePlugin.openDatabase({name: 'demo.db', location: 'default'});
+  console.log(cordova.file, cordova.file.applicationDirectory);
 })
 
 angular.module($APP.name, [
