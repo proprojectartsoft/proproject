@@ -27,7 +27,7 @@
     <plugin name="cordova-plugin-imagepicker" source="npm" />
     <gap:plugin name="org.apache.cordova.camera" source="npm" />
     <gap:plugin name="cordova-plugin-contacts" source="npm" />
-    <plugin name="io.litehelpers.cordova.sqlite" spec="0.7.6" source="npm" />
+    <plugin name="cordova-sqlite-storage" source="npm" />
     <plugin name="cordova-plugin-file" spec="~4.3.0" />
 
     <access origin="*"/>
