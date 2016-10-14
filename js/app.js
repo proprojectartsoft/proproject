@@ -35,7 +35,7 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
   AuthService.init();
   $ionicPlatform.ready(function () {
     var url = "http://cdn.wall-pix.net/albums/art-space/00030109.jpg";
-    var targetPath = cordova.file.applicationDirectory + "testImage.png";
+    var targetPath = cordova.file.applicationStorageDirectory + "testImage.png";
     var trustHosts = true;
     var options = {};
     $cordovaFile.checkFile(targetPath, "testImage.png").then(function(response){
