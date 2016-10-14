@@ -29,6 +29,7 @@
     <gap:plugin name="cordova-plugin-contacts" source="npm" />
     <plugin name="cordova-sqlite-storage" spec="~0.8.5" />
     <plugin name="cordova-plugin-file" spec="~4.3.0" />
+    <plugin name="cordova-plugin-file-transfer"/>
 
     <access origin="*"/>
     <allow-navigation href="*" />
