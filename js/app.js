@@ -46,7 +46,7 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
     states[Connection.CELL_4G]  = 'Cell 4G connection';
     states[Connection.CELL]     = 'Cell generic connection';
     states[Connection.NONE]     = 'No network connection';
-    console.log(Connection)
+    console.log(Connection, networkState)
 
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -65,7 +65,6 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
       storageMode: 'localStorage'
     });
   });
-
 });
 angular.module($APP.name).config([
   '$stateProvider',
