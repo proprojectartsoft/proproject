@@ -29,7 +29,8 @@ angular.module($APP.name).factory('SyncService', [
   'ProjectService',
   'FormDesignService',
   'UserService',
-  function ($q, $rootScope, $http, $timeout,  $cordovaSQLite, $interval, DbService, ResourceService, ProjectService, FormDesignService, UserService) {
+  'AuthService',
+  function ($q, $rootScope, $http, $timeout,  $cordovaSQLite, $interval, DbService, ResourceService, ProjectService, FormDesignService, UserService, AuthService) {
     function servresp(name, timer, start, response){
       this.name = name;
       this.timer = timer;
