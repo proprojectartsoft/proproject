@@ -48,9 +48,7 @@ angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthServic
       // Error
       console.log(err);
     }, function (progress) {
-      $timeout(function () {
-        $scope.downloadProgress = (progress.loaded / progress.total) * 100;
-      });
+    
     })
 
     if (window.cordova && window.cordova.plugins.Keyboard) {
