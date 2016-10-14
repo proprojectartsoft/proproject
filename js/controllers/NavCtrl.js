@@ -16,7 +16,7 @@ angular.module($APP.name).controller('NavCtrl', [
       .toggleClass("ion-navicon")
       .toggleClass("ion-android-arrow-back");
     };
-
+    var id, name;
     $rootScope.project = DbService.get('projects')
     // if(projects){
     //   var id = projects.get('projectId');
