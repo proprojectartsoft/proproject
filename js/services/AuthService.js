@@ -5,7 +5,8 @@ angular.module($APP.name).factory('AuthService', [
   '$rootScope',
   'CacheFactory',
   '$ionicPopup',
-  function ($http, $location, $state, $rootScope, CacheFactory, $ionicPopup) {
+  '$ionicPlatform',
+  function ($http, $location, $state, $rootScope, CacheFactory, $ionicPopup, $ionicPlatform) {
     var settingsCache = CacheFactory.get('settings');
     return {
       init: function () {
