@@ -36,14 +36,15 @@ angular.module($APP.name).factory('SyncService', [
       this.timer = timer;
       this.response = response;
     }
-    var testConnection = function(){
-      return if(navigator.onLine){
-        return $http.get($APP.server + '/api/me').then(function (user) {
-          return user.data;
-        }, function errorCallback(response) {
-          return 'error';
-        });
-      }
+    var getme = function(){
+      return $http.get($APP.server + '/api/me')
+      .then(function (user) {
+        return user.data;
+      })
+      .catch(function(error) {
+        console.log(error)
+        return error;
+      });
     }
     var down = function(){
       $APP.db.executeSql('SELECT * FROM ProjectsTable', [], function(rs) {
@@ -273,13 +274,23 @@ angular.module($APP.name).factory('SyncService', [
     return {
       sync:function(){
         $timeout(function () {
-          AuthService.version().then(function(result){
-            console.log(!localStorage.getItem('version') || localStorage.getItem('version') < result)
-            if(!localStorage.getItem('version') || localStorage.getItem('version') < result){
-              localStorage.setItem('version', result)
-              down();
-            }
-          })
+          if(navigator.onLine){
+            getme.then(function(){
+              AuthService.version().then(function(result){
+                console.log(!localStorage.getItem('version') || localStorage.getItem('version') < result)
+                if(!localStorage.getItem('version') || localStorage.getItem('version') < result){
+                  localStorage.setItem('version', result)
+                  down();
+                }
+              })
+            }).catch(function(error) {
+              console.log('si aici', error)
+            });
+
+          }
+          else{
+            console.log('offline direct')
+          }
         });
       },
       sync_local:function(){
