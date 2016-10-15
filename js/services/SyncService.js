@@ -36,6 +36,15 @@ angular.module($APP.name).factory('SyncService', [
       this.timer = timer;
       this.response = response;
     }
+    var testConnection = function(){
+      return if(navigator.onLine){
+        return $http.get($APP.server + '/api/me').then(function (user) {
+          return user.data;
+        }, function errorCallback(response) {
+          return 'error';
+        });
+      }
+    }
     var down = function(){
       $APP.db.executeSql('SELECT * FROM ProjectsTable', [], function(rs) {
         aux = [];
@@ -274,6 +283,7 @@ angular.module($APP.name).factory('SyncService', [
         });
       },
       sync_local:function(){
+        testConnection()
         load();
       },
       sync_force:function(){
