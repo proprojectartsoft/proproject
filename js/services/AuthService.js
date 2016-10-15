@@ -76,22 +76,24 @@ angular.module($APP.name).factory('AuthService', [
                 }
               });
             } else {
-              $APP.db.transaction(function(tx) {
-                tx.executeSql('DROP TABLE IF EXISTS ProjectsTable');
-                tx.executeSql('DROP TABLE IF EXISTS DesignsTable');
-                tx.executeSql('DROP TABLE IF EXISTS ResourcesTable');
-                tx.executeSql('DROP TABLE IF EXISTS UnitTable');
-                tx.executeSql('DROP TABLE IF EXISTS CustsettTable');
-              }, function(error) {
-                console.log('Transaction ERROR: ' + error.message);
-              }, function() {
-                var ppremember = localStorage.getObject('ppremember');
-                if(ppremember){
-                  localStorage.clear();
-                  localStorage.setObject('ppremember', ppremember)
-                }
+              $ionicPlatform.ready(function () {
+                $APP.db.transaction(function(tx) {
+                  tx.executeSql('DROP TABLE IF EXISTS ProjectsTable');
+                  tx.executeSql('DROP TABLE IF EXISTS DesignsTable');
+                  tx.executeSql('DROP TABLE IF EXISTS ResourcesTable');
+                  tx.executeSql('DROP TABLE IF EXISTS UnitTable');
+                  tx.executeSql('DROP TABLE IF EXISTS CustsettTable');
+                }, function(error) {
+                  console.log('Transaction ERROR: ' + error.message);
+                }, function() {
+                  var ppremember = localStorage.getObject('ppremember');
+                  if(ppremember){
+                    localStorage.clear();
+                    localStorage.setObject('ppremember', ppremember)
+                  }
+                });
+                $state.go("login");
               });
-              $state.go("login");
             }
             $rootScope.online = true;
           } else if (status === 502) {
