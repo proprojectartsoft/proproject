@@ -21,8 +21,8 @@ Storage.prototype.getObject = function(key) {
 }
 
 document.addEventListener('deviceready', function(){
-  $APP.db = window.sqlitePlugin.openDatabase({name: 'demo.db', location: 'default'});
 
+console.log($APP.db)
 })
 
 angular.module($APP.name, [
@@ -32,10 +32,11 @@ angular.module($APP.name, [
   'angular-cache',
   'ngCordova'
 ]);
-angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthService, $cordovaFile, $cordovaFileTransfer, $timeout) {
-  AuthService.init();
+angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthService, $cordovaFile, $cordovaFileTransfer, $timeout, SyncService) {
+  // AuthService.init();
   $ionicPlatform.ready(function () {
-    
+    $APP.db = window.sqlitePlugin.openDatabase({name: 'demo.db', location: 'default'});
+    SyncService.sync();
 
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);

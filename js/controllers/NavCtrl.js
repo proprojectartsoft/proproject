@@ -77,6 +77,11 @@ angular.module($APP.name).controller('NavCtrl', [
       $state.go('login');
 
     };
+    $scope.force_logout = function(){
+      AuthService.logout().success(function () {
+        console.log('wutm8?')
+      });
+    }
 
 
     AuthService.version().then(function (version) {
@@ -93,7 +98,7 @@ angular.module($APP.name).controller('NavCtrl', [
     $scope.sync = function () {
       // $timeout(function () {
       //   $http.get($APP.server + '/api/me', {withCredentials: true}).then(function (user) {
-          SyncService.sync();
+          SyncService.sync_button();
       //   }, function errorCallback(response) {
       //     console.log(response.status)
       //     if (response.status === 403) {

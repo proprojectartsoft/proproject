@@ -313,7 +313,7 @@ angular.module($APP.name).factory('SyncService', [
         .module(($APP.name))
         .factory('storage', storage);
 
-    function storage() { 
+    function storage() {
         console.log('test')
     }
 })();

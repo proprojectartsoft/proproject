@@ -1,21 +1,68 @@
 angular.module($APP.name).factory('DbService', [
-  '$http',
-  function ($http) {
+  '$http','$ionicPopup','$timeout',
+  function ($http, $ionicPopup, $timeout) {
     inmemdb = {};
+    var testpop;
+
     return {
-      add : function(predicate, data){
-        inmemdb[predicate] = data;
-        console.log(inmemdb);
-      },
-      get : function(predicate){
-        console.log(inmemdb)
-        return inmemdb[predicate];
-      },
-      list: function(){
-        return inmemdb;
+      popopen: function(title, template, noSync){
+        $timeout(function () {
+          if(testpop){
+            testpop.close();
+            $timeout(function () {
+              var btns = [];
+              if (!noSync){
+                btns = [{
+                  text: 'Ok' ,
+                  type: 'button-positive'
+                }
+              ]
+            }
+            testpop = $ionicPopup.show({
+              template: template,
+              title: title,
+              buttons: btns
+
+            })
+          });
+        }
+        else{
+          $timeout(function () {
+            var btns = [];
+            if (!noSync){
+              btns = [{
+                text: 'Ok' ,
+                type: 'button-positive'
+              } ]
+            }
+            testpop = $ionicPopup.show({
+              template: template,
+              title: title,
+              buttons: btns
+            });
+
+          });
+        }
+      });
+    },
+    popclose:function(){
+      if(testpop){
+        testpop.close();
       }
+    },
+    add : function(predicate, data){
+      inmemdb[predicate] = data;
+      console.log(inmemdb);
+    },
+    get : function(predicate){
+      console.log(inmemdb)
+      return inmemdb[predicate];
+    },
+    list: function(){
+      return inmemdb;
     }
   }
+}
 ]);
 angular.module($APP.name).factory('SyncService', [
   '$q',
@@ -30,32 +77,49 @@ angular.module($APP.name).factory('SyncService', [
   'FormDesignService',
   'UserService',
   'AuthService',
-  function ($q, $rootScope, $http, $timeout,  $cordovaSQLite, $interval, DbService, ResourceService, ProjectService, FormDesignService, UserService, AuthService) {
+  '$ionicPopup',
+  function ($q, $rootScope, $http, $timeout,  $cordovaSQLite, $interval, DbService, ResourceService, ProjectService, FormDesignService, UserService, AuthService, $ionicPopup) {
     function servresp(name, timer, start, response){
       this.name = name;
       this.timer = timer;
       this.response = response;
     }
+
     var getme = function(){
       return $http.get($APP.server + '/api/me')
-      .then(function (user) {
+      .success(function(user) {
         return user.data;
       })
-      .catch(function(error) {
-        console.log(error)
-        return error;
-      });
+      .error(function(data, status) {
+        return status;
+      })
+    }
+    var setme = function(user){
+      return $http({
+        method: 'POST',
+        url: $APP.server + '/pub/login',
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json;odata=verbose'
+        },
+        transformRequest: function (obj) {
+          return 'login.user.name=' + user.username + '&login.user.password=' + user.password + '&user=true';
+        },
+        data: user
+      })
+      .success(function(user) {
+        return user.data;
+      })
+      .error(function(data, status) {
+        console.log(data, status)
+        return status;
+      })
     }
     var down = function(){
-      $APP.db.executeSql('SELECT * FROM ProjectsTable', [], function(rs) {
-        aux = [];
-        for(var i=0;i<rs.rows.length;i++){
-          aux.push(rs.rows.item(i));
-        }
-        DbService.add('projects',aux);
-      }, function(error) {
-        console.log('SELECT SQL ProjectsTable statement ERROR: ' + error.message);
-      });
+      AuthService.version().then(function(result){
+        localStorage.setObject('ppversion',result);
+      })
       //Designs
       var designs = function(){
         var obj = new servresp('designs',0,[]);
@@ -185,6 +249,7 @@ angular.module($APP.name).factory('SyncService', [
           console.log('Some error occurred, but we get going:', result);
         },
         function success(result) {
+          DbService.popclose();
           console.log(result)
         }
       );
@@ -238,21 +303,21 @@ angular.module($APP.name).factory('SyncService', [
       });
     }
     var close = function(){
-      $APP.db.transaction(function(tx) {
-        tx.executeSql('DROP TABLE IF EXISTS ProjectsTable');
-        tx.executeSql('DROP TABLE IF EXISTS DesignsTable');
-        tx.executeSql('DROP TABLE IF EXISTS ResourcesTable');
-        tx.executeSql('DROP TABLE IF EXISTS UnitTable');
-        tx.executeSql('DROP TABLE IF EXISTS CustsettTable');
-      }, function(error) {
-        console.log('Transaction ERROR: ' + error.message);
-      }, function() {
-        var ppremember = localStorage.getObject('ppremember');
-        if(ppremember){
-          localStorage.clear();
-          localStorage.setObject('ppremember', ppremember)
-        }
-      });
+      // $APP.db.transaction(function(tx) {
+      //   tx.executeSql('DROP TABLE IF EXISTS ProjectsTable');
+      //   tx.executeSql('DROP TABLE IF EXISTS DesignsTable');
+      //   tx.executeSql('DROP TABLE IF EXISTS ResourcesTable');
+      //   tx.executeSql('DROP TABLE IF EXISTS UnitTable');
+      //   tx.executeSql('DROP TABLE IF EXISTS CustsettTable');
+      // }, function(error) {
+      //   console.log('Transaction ERROR: ' + error.message);
+      // }, function() {
+      var ppremember = localStorage.getObject('ppremember');
+      if(ppremember){
+        localStorage.clear();
+        localStorage.setObject('ppremember', ppremember)
+      }
+      // });
     }
     var asyncCall =function (listOfPromises, onErrorCallback, finalCallback) {
       listOfPromises = listOfPromises || [];
@@ -275,21 +340,105 @@ angular.module($APP.name).factory('SyncService', [
       sync:function(){
         $timeout(function () {
           if(navigator.onLine){
-            getme().then(function(){
+            DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
+            getme()
+            .success(function(data) {
               AuthService.version().then(function(result){
-                console.log(!localStorage.getItem('version') || localStorage.getItem('version') < result)
-                if(!localStorage.getItem('version') || localStorage.getItem('version') < result){
-                  localStorage.setItem('version', result)
+                if(!localStorage.getItem('ppversion') || localStorage.getItem('ppversion') < result){
                   down();
                 }
+                {
+                  DbService.popclose();
+                }
               })
-            }).catch(function(error) {
-              console.log('si aici', error)
-            });
-
+            })
+            .error(function(data, status) {
+              if(navigator.onLine){
+                if(status === 403){
+                  //TO DO autologin
+                  console.log('you have been disconnected');
+                  var user = localStorage.getObject('ppreload');
+                  if(user){
+                    setme(user)
+                    .success(function(user){
+                      $rootScope.currentUser = {
+                        id: user.data.id,
+                        username: user.data.username,
+                        role_id: user.data.role.id,
+                        role_title: user.data.role.title,
+                        active: user.data.active
+                      };
+                      down();
+                    })
+                  }
+                }
+                else{
+                  $timeout(function () {
+                    DbService.popopen('Error',"<center>Server is offline</center>")
+                    console.log('Server is offline');
+                  },1000)
+                }
+              }
+              else{
+                $timeout(function () {
+                  DbService.popopen('Error',"<center>You are offline</center>")
+                },300)
+              }
+            })
           }
           else{
-            console.log('offline direct')
+            $timeout(function () {
+              DbService.popopen('Error',"<center>You are offline</center>")
+            },300)
+          }
+        });
+      },
+      sync_button:function(){
+        $timeout(function () {
+          if(navigator.onLine){
+            DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
+            getme()
+            .success(function(data) {
+              down();
+            })
+            .error(function(data, status) {
+              if(navigator.onLine){
+                if(status === 403){
+                  //TO DO autologin
+                  console.log('you have been disconnected');
+                  var user = localStorage.getObject('ppreload');
+                  if(user){
+                    setme(user)
+                    .success(function(user){
+                      $rootScope.currentUser = {
+                        id: user.data.id,
+                        username: user.data.username,
+                        role_id: user.data.role.id,
+                        role_title: user.data.role.title,
+                        active: user.data.active
+                      };
+                      down();
+                    })
+                  }
+                }
+                else{
+                  $timeout(function () {
+                    DbService.popopen('Error',"<center>Server is offline</center>")
+                    console.log('Server is offline');
+                  },100)
+                }
+              }
+              else{
+                $timeout(function () {
+                  DbService.popopen('Error',"<center>You are offline</center>")
+                },100)
+              }
+            })
+          }
+          else{
+            $timeout(function () {
+              DbService.popopen('Error',"<center>You are offline</center>")
+            },100)
           }
         });
       },
