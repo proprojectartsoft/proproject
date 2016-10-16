@@ -347,7 +347,7 @@ angular.module($APP.name).factory('SyncService', [
                 if(!localStorage.getItem('ppversion') || localStorage.getItem('ppversion') < result){
                   down();
                 }
-                {
+                else{
                   DbService.popclose();
                 }
               })
@@ -370,6 +370,9 @@ angular.module($APP.name).factory('SyncService', [
                       };
                       down();
                     })
+                  }
+                  else{
+                    DbService.close();
                   }
                 }
                 else{
