@@ -26,30 +26,6 @@ angular.module($APP.name).controller('NavCtrl', [
     }, function(error) {
       console.log('SELECT SQL ProjectsTable statement ERROR: ' + error.message);
     });
-    // $rootScope.projects = DbService.get('projects')
-    // if(projects){
-    //   var id = projects.get('projectId');
-    //   var name = projects.get('navTitle');
-    // }
-    var sw = false;
-
-    if (id && name) {
-      angular.forEach($rootScope.projects, function (proj) {
-        if (proj.id === id && proj.name === name) {
-          sw = true;
-        }
-      });
-      if (sw === true && id && name) {
-        $rootScope.navTitle = name;
-        $rootScope.projectId = id;
-      } else {
-        $rootScope.navTitle = $rootScope.projects[0].name;
-        $rootScope.projectId = $rootScope.projects[0].id;
-        // projects.put('navTitle', $rootScope.projects[0].name);
-        // projects.put('projectId', $rootScope.projects[0].id);
-      }
-
-    }
 
 
 
@@ -100,8 +76,8 @@ angular.module($APP.name).controller('NavCtrl', [
     $scope.updateTitle = function (project) {
       $rootScope.navTitle = project.name;
       $rootScope.projectId = project.id;
-      projects.put('navTitle', project.name);
-      projects.put('projectId', project.id);
+      localStorage.setObject('ppnavTitle', project.name);
+      localStorage.setObject('ppprojectId', project.id);
     };
 
     $scope.sync = function () {
