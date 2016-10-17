@@ -44,7 +44,6 @@ angular.module($APP.name).controller('FormsCtrl', [
 
 
         $rootScope.formDesigns = [];
-        designsCache = DbService.get('designs')
         $APP.db.executeSql('SELECT * FROM DesignsTable WHERE category_id='+$stateParams.categoryId, [], function(rs) {
           var aux = [];
           for(var i=0;i<rs.rows.length;i++){
@@ -56,7 +55,7 @@ angular.module($APP.name).controller('FormsCtrl', [
               $scope.hasData = 'no data';
           }
         })
-        
+
         $scope.categoryName = $rootScope.categories[$stateParams.categoryId - 1].name;
 
         $scope.refresh = function () {
