@@ -17,7 +17,16 @@ angular.module($APP.name).controller('NavCtrl', [
       .toggleClass("ion-android-arrow-back");
     };
     var id, name;
-    $rootScope.project = DbService.get('projects')
+    $APP.db.executeSql('SELECT * FROM ProjectsTable', [], function(rs) {
+      $rootScope.projects = [];
+      for(var i=0;i<rs.rows.length;i++){
+        $rootScope.projects.push(rs.rows.item(i));
+      }
+      DbService.add('projects',aux);
+    }, function(error) {
+      console.log('SELECT SQL ProjectsTable statement ERROR: ' + error.message);
+    });
+    // $rootScope.projects = DbService.get('projects')
     // if(projects){
     //   var id = projects.get('projectId');
     //   var name = projects.get('navTitle');

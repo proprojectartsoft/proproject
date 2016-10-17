@@ -259,7 +259,7 @@ angular.module($APP.name).factory('SyncService', [
       $APP.db.executeSql('SELECT * FROM DesignsTable', [], function(rs) {
         aux = [];
         for(var i=0;i<rs.rows.length;i++){
-          aux.push( JSON.parse(rs.rows.item(i).data));
+          aux.push(JSON.parse(rs.rows.item(i).data));
         }
         DbService.add('designs',aux);
       }, function(error) {
@@ -295,7 +295,7 @@ angular.module($APP.name).factory('SyncService', [
       $APP.db.executeSql('SELECT * FROM UnitTable', [], function(rs) {
         aux = [];
         for(var i=0;i<rs.rows.length;i++){
-          aux.push(rs.rows.item(i));
+          aux.push(JSON.parse(rs.rows.item(i).data));
         }
         DbService.add('unit',aux);
       }, function(error) {
