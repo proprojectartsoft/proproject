@@ -684,116 +684,116 @@ angular.module($APP.name).controller('FormCtrl', [
       }
     };
     $APP.db.executeSql('SELECT * FROM DesignsTable WHERE id='+$stateParams.formId, [], function(rs) {
-      console.log(rs.rows.item(0))
-    }, function(error) {
-      console.log('SELECT SQL DesignsTable statement ERROR: ' + error.message);
-    });
+      $scope.formData = JSON.parse(rs.rows.item(0).data)
+      $scope.titleShow = $scope.formData.name;
+      $scope.shownGroup = $scope.formData.field_group_designs[0];
+      $scope.filter.vat = $rootScope.custSett.vat;
+      $scope.filter.currency = $rootScope.custSett.currency;
+      $scope.filter.margin = $rootScope.custSett.margin;
+      $scope.filter.start = $rootScope.custSett.start;
+      $scope.filter.break = $rootScope.custSett.break;
+      $scope.filter.finish = $rootScope.custSett.finish;
+      if ($scope.formData.resource_field_design) {
+        $scope.resourceField = {
+          'id': 0,
+          'customer_id': $scope.formData.customer_id,
+          'register_nominated': $scope.formData.resource_field_design.register_nominated,
+          'date_option': $scope.formData.resource_field_design.date_option,
+          'financial_option': $scope.formData.resource_field_design.financial_option,
+          'total_cost': 0,
+          'resources': [
+            {
+              "id": 0,
+              "resource_field_id": 0,
+              "resource_id": 0,
+              "position": 0,
+              "calculation": false,
+              "name": '', "product_ref": '', "unit_id": $rootScope.unit_list[0].id,
+              "unit_name": $rootScope.unit_list[0].name, "resource_type_id": 0,
+              "unit_obj": $rootScope.unit_list[0],
+              "resource_type_name": '', "direct_cost": 0,
+              "resource_margin": 0,
+              "stage_id": 1,
+              "stage_name": '', "vat": 0,
+              "quantity": 0,
+              "current_day": '', "total_cost": 0,
+              "staff_role": '', "expiry_date": '',
+              "abseteeism_reason_name": ''
+            }
+          ]
+        };
+        $scope.filter.substate = $scope.resourceField.resources[0];
+      }
+      if ($scope.formData.pay_item_field_design) {
+        $scope.payitemField = {
+          "id": 0,
+          'register_nominated': $scope.formData.pay_item_field_design.register_nominated,
+          'display_subtask': $scope.formData.pay_item_field_design.display_subtask,
+          'display_resources': $scope.formData.pay_item_field_design.display_resources,
+          "pay_items": [
+            {
+              "description": "", "reference": "", "unit": "", "quantity": "", "open": true,
+              "child": true,
+              "subtasks": [], "resources": [
+              ]
+            }
+          ]
+        };
+        $scope.filter.substate = $scope.payitemField.pay_items[0];
+      }
+      if ($scope.formData.scheduling_field_design) {
+        $scope.payitemField = {
+          "id": 0,
+          'display_subtask': $scope.formData.scheduling_field_design.true,
+          "pay_items": [
+            {
+              "description": "", "reference": "", "unit": "", "quantity": "", "open": true,
+              "child": true,
+              "subtasks": [], "resources": [
+              ]
+            }
+          ]
+        };
+        $scope.filter.substate = $scope.payitemField.pay_items[0];
+      }
+      if ($scope.formData.staff_field_design) {
+        $scope.staffField = {
+          'id': 0,
+          'withTimes': $scope.formData.staff_field_design.withTimes,
+          'resources': [{
+            name: "",
+            customerId: 0,
+            employer_name: "",
+            staff_role: "",
+            product_ref: "",
+            unit_name: "",
+            direct_cost: 0.0,
+            resource_type_name: "",
+            resource_margin: 0,
+            telephone_number: "",
+            email: "",
+            safety_card_number: "",
+            expiry_date: "",
+            staff: true,
+            current_day: "",
+            start_time: $scope.filter.start,
+            break_time: $scope.filter.break,
+            finish_time: $scope.filter.finish,
+            total_time: "",
+            comment: "",
+            open: true,
+            vat: 0.0
+          }
+        ]
+      };
+      console.log($scope.staffField)
+      $scope.filter.substate = $scope.staffField.resources[0];
+    }
+  }, function(error) {
+    console.log('SELECT SQL DesignsTable statement ERROR: ' + error.message);
+  });
 
-    $scope.formData = designsCache.get($stateParams.formId);
-    $scope.titleShow = $scope.formData.name;
-    $scope.shownGroup = $scope.formData.field_group_designs[0];
-    $scope.filter.vat = $rootScope.custSett.vat;
-    $scope.filter.currency = $rootScope.custSett.currency;
-    $scope.filter.margin = $rootScope.custSett.margin;
-    $scope.filter.start = $rootScope.custSett.start;
-    $scope.filter.break = $rootScope.custSett.break;
-    $scope.filter.finish = $rootScope.custSett.finish;
-    if ($scope.formData.resource_field_design) {
-      $scope.resourceField = {
-        'id': 0,
-        'customer_id': $scope.formData.customer_id,
-        'register_nominated': $scope.formData.resource_field_design.register_nominated,
-        'date_option': $scope.formData.resource_field_design.date_option,
-        'financial_option': $scope.formData.resource_field_design.financial_option,
-        'total_cost': 0,
-        'resources': [
-          {
-            "id": 0,
-            "resource_field_id": 0,
-            "resource_id": 0,
-            "position": 0,
-            "calculation": false,
-            "name": '', "product_ref": '', "unit_id": $rootScope.unit_list[0].id,
-            "unit_name": $rootScope.unit_list[0].name, "resource_type_id": 0,
-            "unit_obj": $rootScope.unit_list[0],
-            "resource_type_name": '', "direct_cost": 0,
-            "resource_margin": 0,
-            "stage_id": 1,
-            "stage_name": '', "vat": 0,
-            "quantity": 0,
-            "current_day": '', "total_cost": 0,
-            "staff_role": '', "expiry_date": '',
-            "abseteeism_reason_name": ''
-          }
-        ]
-      };
-      $scope.filter.substate = $scope.resourceField.resources[0];
-    }
-    if ($scope.formData.pay_item_field_design) {
-      $scope.payitemField = {
-        "id": 0,
-        'register_nominated': $scope.formData.pay_item_field_design.register_nominated,
-        'display_subtask': $scope.formData.pay_item_field_design.display_subtask,
-        'display_resources': $scope.formData.pay_item_field_design.display_resources,
-        "pay_items": [
-          {
-            "description": "", "reference": "", "unit": "", "quantity": "", "open": true,
-            "child": true,
-            "subtasks": [], "resources": [
-            ]
-          }
-        ]
-      };
-      $scope.filter.substate = $scope.payitemField.pay_items[0];
-    }
-    if ($scope.formData.scheduling_field_design) {
-      $scope.payitemField = {
-        "id": 0,
-        'display_subtask': $scope.formData.scheduling_field_design.true,
-        "pay_items": [
-          {
-            "description": "", "reference": "", "unit": "", "quantity": "", "open": true,
-            "child": true,
-            "subtasks": [], "resources": [
-            ]
-          }
-        ]
-      };
-      $scope.filter.substate = $scope.payitemField.pay_items[0];
-    }
-    if ($scope.formData.staff_field_design) {
-      $scope.staffField = {
-        'id': 0,
-        'withTimes': $scope.formData.staff_field_design.withTimes,
-        'resources': [{
-          name: "",
-          customerId: 0,
-          employer_name: "",
-          staff_role: "",
-          product_ref: "",
-          unit_name: "",
-          direct_cost: 0.0,
-          resource_type_name: "",
-          resource_margin: 0,
-          telephone_number: "",
-          email: "",
-          safety_card_number: "",
-          expiry_date: "",
-          staff: true,
-          current_day: "",
-          start_time: $scope.filter.start,
-          break_time: $scope.filter.break,
-          finish_time: $scope.filter.finish,
-          total_time: "",
-          comment: "",
-          open: true,
-          vat: 0.0
-        }
-      ]
-    };
-    console.log($scope.staffField)
-    $scope.filter.substate = $scope.staffField.resources[0];
-  }
+
 
 
   $scope.actionBtnPayitem = function () {
