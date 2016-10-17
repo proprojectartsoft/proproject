@@ -342,6 +342,7 @@ angular.module($APP.name).factory('SyncService', [
       }, function(error) {
         console.log('SELECT SQL UnitTable statement ERROR: ' + error.message);
       });
+      $state.go('app.categories', {'projectId': $rootScope.projectId});
     }
     var close = function(){
       // $APP.db.transaction(function(tx) {
