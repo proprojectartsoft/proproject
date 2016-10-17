@@ -683,7 +683,7 @@ angular.module($APP.name).controller('FormCtrl', [
         });
       }
     };
-    $APP.db.executeSql('SELECT * FROM DesignsTable WHERE id='+$stateParams.formId, [], function(rs) {
+    DbService.get_design($stateParams.formId).then(function(result){
       $scope.formData = JSON.parse(rs.rows.item(0).data)
       $scope.titleShow = $scope.formData.name;
       $scope.shownGroup = $scope.formData.field_group_designs[0];
@@ -789,8 +789,6 @@ angular.module($APP.name).controller('FormCtrl', [
       console.log($scope.staffField)
       $scope.filter.substate = $scope.staffField.resources[0];
     }
-  }, function(error) {
-    console.log('SELECT SQL DesignsTable statement ERROR: ' + error.message);
   });
 
 

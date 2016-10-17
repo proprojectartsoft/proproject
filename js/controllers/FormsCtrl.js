@@ -43,13 +43,13 @@ angular.module($APP.name).controller('FormsCtrl', [
         });
 
 
-        $rootScope.formDesigns = [];
-        designsCache = DbService.get('designs')
-        angular.forEach(designsCache, function (aux) {
-            if (aux.category_id === parseInt($stateParams.categoryId)) {
-                $rootScope.formDesigns.push(aux);
-            }
-        });
+        // $rootScope.formDesigns = [];
+        $rootScope.formDesigns = DbService.list_design($stateParams.categoryId)
+        // angular.forEach(designsCache, function (aux) {
+        //     if (aux.category_id === parseInt($stateParams.categoryId)) {
+        //         $rootScope.formDesigns.push(aux);
+        //     }
+        // });
         $scope.isLoaded = true;
         if ($rootScope.formDesigns.length === 0) {
             $scope.hasData = 'no data';
