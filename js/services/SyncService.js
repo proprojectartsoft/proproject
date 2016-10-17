@@ -342,9 +342,9 @@ angular.module($APP.name).factory('SyncService', [
           if(navigator.onLine){
             getme()
             .success(function(data) {
-              DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
               AuthService.version().then(function(result){
                 if(!localStorage.getItem('ppversion') || localStorage.getItem('ppversion') < result){
+                  DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
                   down();
                 }
                 else{
