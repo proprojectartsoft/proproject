@@ -34,7 +34,7 @@ angular.module($APP.name).controller('LoginCtrl', [
             localStorage.setObject('ppremember', {'username': $scope.user.username, 'password': $scope.user.password});
           }
           $timeout(function () {
-            SyncService.sync();
+            SyncService.sync_button();
           });
         }
       });
