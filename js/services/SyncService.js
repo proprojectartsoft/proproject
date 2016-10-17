@@ -188,6 +188,7 @@ angular.module($APP.name).factory('SyncService', [
             DbService.add('unit',result);
             $interval.cancel(ping)
             obj.response = result;
+            $rootScope.unit_list = result;
             $APP.db.transaction(function(tx) {
               tx.executeSql('DROP TABLE IF EXISTS UnitTable');
               tx.executeSql('CREATE TABLE IF NOT EXISTS UnitTable (id int primary key, name text, type text)');
@@ -277,6 +278,7 @@ angular.module($APP.name).factory('SyncService', [
         for(var i=0;i<rs.rows.length;i++){
           aux.push(JSON.parse(rs.rows.item(i).data));
         }
+        $rootScope.unit_list = aux;
         DbService.add('unit',aux);
       }, function(error) {
         console.log('SELECT SQL UnitTable statement ERROR: ' + error.message);
