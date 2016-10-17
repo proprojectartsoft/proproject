@@ -340,9 +340,9 @@ angular.module($APP.name).factory('SyncService', [
       sync:function(){
         $timeout(function () {
           if(navigator.onLine){
-            DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
             getme()
             .success(function(data) {
+              DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
               AuthService.version().then(function(result){
                 if(!localStorage.getItem('ppversion') || localStorage.getItem('ppversion') < result){
                   down();
@@ -356,9 +356,9 @@ angular.module($APP.name).factory('SyncService', [
               if(navigator.onLine){
                 if(status === 403){
                   //TO DO autologin
-                  console.log('you have been disconnected');
                   var user = localStorage.getObject('ppreload');
                   if(user){
+                    DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
                     setme(user)
                     .success(function(user){
                       $rootScope.currentUser = {
