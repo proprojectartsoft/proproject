@@ -167,17 +167,18 @@ angular.module($APP.name).factory('SyncService', [
                   sw = true;
                 }
               });
-              if (sw === true && id && name) {
-                $rootScope.navTitle = name;
-                $rootScope.projectId = id;
-              } else {
-                $rootScope.navTitle = result[0].name;
-                $rootScope.projectId = result[0].id;
-                localStorage.setObject('ppnavTitle', result[0].name);
-                localStorage.setObject('ppprojectId', result[0].id);
-              }
-
             }
+            if (sw === true && id && name) {
+              $rootScope.navTitle = name;
+              $rootScope.projectId = id;
+            } else {
+              $rootScope.navTitle = result[0].name;
+              $rootScope.projectId = result[0].id;
+              localStorage.setObject('ppnavTitle', result[0].name);
+              localStorage.setObject('ppprojectId', result[0].id);
+            }
+
+
             $APP.db.transaction(function(tx) {
               tx.executeSql('DROP TABLE IF EXISTS ProjectsTable');
               tx.executeSql('CREATE TABLE IF NOT EXISTS ProjectsTable (id int primary key, name text)');
@@ -302,16 +303,17 @@ angular.module($APP.name).factory('SyncService', [
               sw = true;
             }
           }
-          if (sw === true && id && name) {
-            $rootScope.navTitle = name;
-            $rootScope.projectId = id;
-          } else {
-            $rootScope.navTitle = rs.rows.item(0).name;
-            $rootScope.projectId = rs.rows.item(0).id;
-            localStorage.setObject('ppnavTitle', rs.rows.item(0).name);
-            localStorage.setObject('ppprojectId', rs.rows.item(0).id);
-          }
         }
+        if (sw === true && id && name) {
+          $rootScope.navTitle = name;
+          $rootScope.projectId = id;
+        } else {
+          $rootScope.navTitle = rs.rows.item(0).name;
+          $rootScope.projectId = rs.rows.item(0).id;
+          localStorage.setObject('ppnavTitle', rs.rows.item(0).name);
+          localStorage.setObject('ppprojectId', rs.rows.item(0).id);
+        }
+
         DbService.add('projects',aux);
       }, function(error) {
         console.log('SELECT SQL ProjectsTable statement ERROR: ' + error.message);
