@@ -78,7 +78,8 @@ angular.module($APP.name).factory('SyncService', [
   'UserService',
   'AuthService',
   '$ionicPopup',
-  function ($q, $rootScope, $http, $timeout,  $cordovaSQLite, $interval, DbService, ResourceService, ProjectService, FormDesignService, UserService, AuthService, $ionicPopup) {
+  '$rootScope',
+  function ($q, $rootScope, $http, $timeout,  $cordovaSQLite, $interval, DbService, ResourceService, ProjectService, FormDesignService, UserService, AuthService, $ionicPopup, $rootScope) {
     function servresp(name, timer, start, response){
       this.name = name;
       this.timer = timer;
@@ -156,6 +157,26 @@ angular.module($APP.name).factory('SyncService', [
             DbService.add('projects',result);
             $interval.cancel(ping)
             obj.response = result;
+            var id = localStorage.getObject('ppprojectId');
+            var name = localStorage.getObject('ppnavTitle');
+            var sw = false;
+            if (id && name) {
+              angular.forEach(result, function (proj) {
+                if (proj.id === id && proj.name === name) {
+                  sw = true;
+                }
+              });
+              if (sw === true && id && name) {
+                $rootScope.navTitle = name;
+                $rootScope.projectId = id;
+              } else {
+                $rootScope.navTitle = result[0].name;
+                $rootScope.projectId = result[0].id;
+                localStorage.setObject('ppnavTitle', result[0].name);
+                localStorage.setObject('ppprojectId', result[0].id);
+              }
+
+            }
             $APP.db.transaction(function(tx) {
               tx.executeSql('DROP TABLE IF EXISTS ProjectsTable');
               tx.executeSql('CREATE TABLE IF NOT EXISTS ProjectsTable (id int primary key, name text)');
@@ -250,6 +271,7 @@ angular.module($APP.name).factory('SyncService', [
         },
         function success(result) {
           DbService.popclose();
+          $state.go('app.categories', {'projectId': $rootScope.projectId});
           console.log(result)
         }
       );
@@ -270,200 +292,218 @@ angular.module($APP.name).factory('SyncService', [
         for(var i=0;i<rs.rows.length;i++){
           aux.push(rs.rows.item(i));
         }
-        DbService.add('projects',aux);
-      }, function(error) {
-        console.log('SELECT SQL ProjectsTable statement ERROR: ' + error.message);
-      });
-      $APP.db.executeSql('SELECT * FROM CustsettTable', [], function(rs) {
-        aux = [];
-        for(var i=0;i<rs.rows.length;i++){
-          aux.push(rs.rows.item(i));
-        }
-        DbService.add('custsett',aux);
-      }, function(error) {
-        console.log('SELECT SQL CustsettTable statement ERROR: ' + error.message);
-      });
-      $APP.db.executeSql('SELECT * FROM ResourcesTable', [], function(rs) {
-        aux = [];
-        for(var i=0;i<rs.rows.length;i++){
-          aux.push(rs.rows.item(i));
-        }
-        DbService.add('resources',aux);
-      }, function(error) {
-        console.log('SELECT SQL ResourcesTable statement ERROR: ' + error.message);
-      });
-      $APP.db.executeSql('SELECT * FROM UnitTable', [], function(rs) {
-        aux = [];
-        for(var i=0;i<rs.rows.length;i++){
-          aux.push(JSON.parse(rs.rows.item(i).data));
-        }
-        DbService.add('unit',aux);
-      }, function(error) {
-        console.log('SELECT SQL UnitTable statement ERROR: ' + error.message);
-      });
-    }
-    var close = function(){
-      // $APP.db.transaction(function(tx) {
-      //   tx.executeSql('DROP TABLE IF EXISTS ProjectsTable');
-      //   tx.executeSql('DROP TABLE IF EXISTS DesignsTable');
-      //   tx.executeSql('DROP TABLE IF EXISTS ResourcesTable');
-      //   tx.executeSql('DROP TABLE IF EXISTS UnitTable');
-      //   tx.executeSql('DROP TABLE IF EXISTS CustsettTable');
-      // }, function(error) {
-      //   console.log('Transaction ERROR: ' + error.message);
-      // }, function() {
-      var ppremember = localStorage.getObject('ppremember');
-      if(ppremember){
-        localStorage.clear();
-        localStorage.setObject('ppremember', ppremember)
-      }
-      // });
-    }
-    var asyncCall =function (listOfPromises, onErrorCallback, finalCallback) {
-      listOfPromises = listOfPromises || [];
-      onErrorCallback = onErrorCallback || angular.noop;
-      finalCallback = finalCallback || angular.noop;
-      var newListOfPromises = listOfPromises.map(function (promise) {
-        return promise.catch(function (reason) {
-          onErrorCallback(reason);
-          return {'rejected_status': reason.status};
+        var id = localStorage.getObject('ppprojectId');
+        var name = localStorage.getObject('ppnavTitle');
+        var sw = false;
+        if (id && name) {
+          for(var i=0;i<rs.rows.length;i++){
+            if (rs.rows.item(i).id === id && rs.rows.item(i).name === name) {
+              sw = true;
+            }
+          }
+          if (sw === true && id && name) {
+            $rootScope.navTitle = name;
+            $rootScope.projectId = id;
+          } else {
+            $rootScope.navTitle = rs.rows.item(0).name;
+            $rootScope.projectId = rs.rows.item(0).id;
+            localStorage.setObject('ppnavTitle', rs.rows.item(0).name);
+            localStorage.setObject('ppprojectId', rs.rows.item(0).id);
+          }
+          DbService.add('projects',aux);
+        }, function(error) {
+          console.log('SELECT SQL ProjectsTable statement ERROR: ' + error.message);
         });
-      });
-      $q.all(newListOfPromises).then(finalCallback, function (result) {
-        console.log(result)
-      }, function (result) {
-        console.log(result)
-      });
+        $APP.db.executeSql('SELECT * FROM CustsettTable', [], function(rs) {
+          aux = [];
+          for(var i=0;i<rs.rows.length;i++){
+            aux.push(rs.rows.item(i));
+          }
+          DbService.add('custsett',aux);
+        }, function(error) {
+          console.log('SELECT SQL CustsettTable statement ERROR: ' + error.message);
+        });
+        $APP.db.executeSql('SELECT * FROM ResourcesTable', [], function(rs) {
+          aux = [];
+          for(var i=0;i<rs.rows.length;i++){
+            aux.push(rs.rows.item(i));
+          }
+          DbService.add('resources',aux);
+        }, function(error) {
+          console.log('SELECT SQL ResourcesTable statement ERROR: ' + error.message);
+        });
+        $APP.db.executeSql('SELECT * FROM UnitTable', [], function(rs) {
+          aux = [];
+          for(var i=0;i<rs.rows.length;i++){
+            aux.push(JSON.parse(rs.rows.item(i).data));
+          }
+          DbService.add('unit',aux);
+        }, function(error) {
+          console.log('SELECT SQL UnitTable statement ERROR: ' + error.message);
+        });
+      }
+      var close = function(){
+        // $APP.db.transaction(function(tx) {
+        //   tx.executeSql('DROP TABLE IF EXISTS ProjectsTable');
+        //   tx.executeSql('DROP TABLE IF EXISTS DesignsTable');
+        //   tx.executeSql('DROP TABLE IF EXISTS ResourcesTable');
+        //   tx.executeSql('DROP TABLE IF EXISTS UnitTable');
+        //   tx.executeSql('DROP TABLE IF EXISTS CustsettTable');
+        // }, function(error) {
+        //   console.log('Transaction ERROR: ' + error.message);
+        // }, function() {
+        var ppremember = localStorage.getObject('ppremember');
+        if(ppremember){
+          localStorage.clear();
+          localStorage.setObject('ppremember', ppremember)
+        }
+        // });
+      }
+      var asyncCall =function (listOfPromises, onErrorCallback, finalCallback) {
+        listOfPromises = listOfPromises || [];
+        onErrorCallback = onErrorCallback || angular.noop;
+        finalCallback = finalCallback || angular.noop;
+        var newListOfPromises = listOfPromises.map(function (promise) {
+          return promise.catch(function (reason) {
+            onErrorCallback(reason);
+            return {'rejected_status': reason.status};
+          });
+        });
+        $q.all(newListOfPromises).then(finalCallback, function (result) {
+          console.log(result)
+        }, function (result) {
+          console.log(result)
+        });
 
-    }
-    return {
-      sync:function(){
-        $timeout(function () {
-          if(navigator.onLine){
-            getme()
-            .success(function(data) {
-              AuthService.version().then(function(result){
-                if(!localStorage.getItem('ppversion') || localStorage.getItem('ppversion') < result){
-                  DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
-                  down();
-                }
-                else{
-                  load();
-                  DbService.popclose();
-                }
-              })
-            })
-            .error(function(data, status) {
-              if(navigator.onLine){
-                if(status === 403){
-                  //TO DO autologin
-                  var user = localStorage.getObject('ppreload');
-                  if(user){
+      }
+      return {
+        sync:function(){
+          $timeout(function () {
+            if(navigator.onLine){
+              getme()
+              .success(function(data) {
+                AuthService.version().then(function(result){
+                  if(!localStorage.getItem('ppversion') || localStorage.getItem('ppversion') < result){
                     DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
-                    setme(user)
-                    .success(function(user){
-                      $rootScope.currentUser = {
-                        id: user.data.id,
-                        username: user.data.username,
-                        role_id: user.data.role.id,
-                        role_title: user.data.role.title,
-                        active: user.data.active
-                      };
-                      down();
-                    })
+                    down();
                   }
                   else{
-                    DbService.close();
+                    load();
+                    DbService.popclose();
+                  }
+                })
+              })
+              .error(function(data, status) {
+                if(navigator.onLine){
+                  if(status === 403){
+                    //TO DO autologin
+                    var user = localStorage.getObject('ppreload');
+                    if(user){
+                      DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
+                      setme(user)
+                      .success(function(user){
+                        $rootScope.currentUser = {
+                          id: user.data.id,
+                          username: user.data.username,
+                          role_id: user.data.role.id,
+                          role_title: user.data.role.title,
+                          active: user.data.active
+                        };
+                        down();
+                      })
+                    }
+                    else{
+                      DbService.close();
+                    }
+                  }
+                  else{
+                    load();
+                    $timeout(function () {
+                      DbService.popopen('Error',"<center>Server is offline</center>")
+                      console.log('Server is offline');
+                    },1000)
                   }
                 }
                 else{
                   load();
                   $timeout(function () {
-                    DbService.popopen('Error',"<center>Server is offline</center>")
-                    console.log('Server is offline');
-                  },1000)
+                    DbService.popopen('Error',"<center>You are offline</center>")
+                  },300)
                 }
-              }
-              else{
-                load();
-                $timeout(function () {
-                  DbService.popopen('Error',"<center>You are offline</center>")
-                },300)
-              }
-            })
-          }
-          else{
-            load();
-            $timeout(function () {
-              DbService.popopen('Error',"<center>You are offline</center>")
-            },300)
-          }
-        });
-      },
-      sync_button:function(){
-        $timeout(function () {
-          if(navigator.onLine){
-            DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
-            getme()
-            .success(function(data) {
-              down();
-            })
-            .error(function(data, status) {
-              if(navigator.onLine){
-                if(status === 403){
-                  //TO DO autologin
-                  console.log('you have been disconnected');
-                  var user = localStorage.getObject('ppreload');
-                  if(user){
-                    setme(user)
-                    .success(function(user){
-                      $rootScope.currentUser = {
-                        id: user.data.id,
-                        username: user.data.username,
-                        role_id: user.data.role.id,
-                        role_title: user.data.role.title,
-                        active: user.data.active
-                      };
-                      down();
-                    })
+              })
+            }
+            else{
+              load();
+              $timeout(function () {
+                DbService.popopen('Error',"<center>You are offline</center>")
+              },300)
+            }
+          });
+        },
+        sync_button:function(){
+          $timeout(function () {
+            if(navigator.onLine){
+              DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
+              getme()
+              .success(function(data) {
+                down();
+              })
+              .error(function(data, status) {
+                if(navigator.onLine){
+                  if(status === 403){
+                    //TO DO autologin
+                    console.log('you have been disconnected');
+                    var user = localStorage.getObject('ppreload');
+                    if(user){
+                      setme(user)
+                      .success(function(user){
+                        $rootScope.currentUser = {
+                          id: user.data.id,
+                          username: user.data.username,
+                          role_id: user.data.role.id,
+                          role_title: user.data.role.title,
+                          active: user.data.active
+                        };
+                        down();
+                      })
+                    }
+                  }
+                  else{
+                    load();
+                    $timeout(function () {
+                      DbService.popopen('Error',"<center>Server is offline</center>")
+                      console.log('Server is offline');
+                    },100)
                   }
                 }
                 else{
                   load();
                   $timeout(function () {
-                    DbService.popopen('Error',"<center>Server is offline</center>")
-                    console.log('Server is offline');
+                    DbService.popopen('Error',"<center>You are offline</center>")
                   },100)
                 }
-              }
-              else{
-                load();
-                $timeout(function () {
-                  DbService.popopen('Error',"<center>You are offline</center>")
-                },100)
-              }
-            })
-          }
-          else{
-            load();
-            $timeout(function () {
-              DbService.popopen('Error',"<center>You are offline</center>")
-            },100)
-          }
-        });
-      },
-      sync_local:function(){
-        testConnection()
-        load();
-      },
-      sync_force:function(){
-        $timeout(function () {
-          down()
-        });
-      },
-      sync_close:function(){
-        close();
+              })
+            }
+            else{
+              load();
+              $timeout(function () {
+                DbService.popopen('Error',"<center>You are offline</center>")
+              },100)
+            }
+          });
+        },
+        sync_local:function(){
+          testConnection()
+          load();
+        },
+        sync_force:function(){
+          $timeout(function () {
+            down()
+          });
+        },
+        sync_close:function(){
+          close();
+        }
       }
     }
-  }
-]);
+  ]);
