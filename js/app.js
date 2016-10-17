@@ -10,6 +10,7 @@ $APP.CONFIG;
 $APP.DEBUG = true;
 $APP.shareUrl = 'https://app.proproject.co.uk/form/';
 $APP.db = null;
+$APP.db = window.sqlitePlugin.openDatabase({name: 'demo.db', location: 'default'});
 
 Storage.prototype.setObject = function(key, value) {
   this.setItem(key, JSON.stringify(value));
@@ -35,7 +36,6 @@ angular.module($APP.name, [
 angular.module($APP.name).run(function ($ionicPlatform, CacheFactory, AuthService, $cordovaFile, $cordovaFileTransfer, $timeout, SyncService) {
   // AuthService.init();
   $ionicPlatform.ready(function () {
-    $APP.db = window.sqlitePlugin.openDatabase({name: 'demo.db', location: 'default'});
     SyncService.sync();
 
     if (window.cordova && window.cordova.plugins.Keyboard) {
