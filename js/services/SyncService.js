@@ -348,6 +348,7 @@ angular.module($APP.name).factory('SyncService', [
                   down();
                 }
                 else{
+                  load();
                   DbService.popclose();
                 }
               })
@@ -376,6 +377,7 @@ angular.module($APP.name).factory('SyncService', [
                   }
                 }
                 else{
+                  load();
                   $timeout(function () {
                     DbService.popopen('Error',"<center>Server is offline</center>")
                     console.log('Server is offline');
@@ -383,6 +385,7 @@ angular.module($APP.name).factory('SyncService', [
                 }
               }
               else{
+                load();
                 $timeout(function () {
                   DbService.popopen('Error',"<center>You are offline</center>")
                 },300)
@@ -390,6 +393,7 @@ angular.module($APP.name).factory('SyncService', [
             })
           }
           else{
+            load();
             $timeout(function () {
               DbService.popopen('Error',"<center>You are offline</center>")
             },300)
@@ -425,6 +429,7 @@ angular.module($APP.name).factory('SyncService', [
                   }
                 }
                 else{
+                  load();
                   $timeout(function () {
                     DbService.popopen('Error',"<center>Server is offline</center>")
                     console.log('Server is offline');
@@ -432,6 +437,7 @@ angular.module($APP.name).factory('SyncService', [
                 }
               }
               else{
+                load();
                 $timeout(function () {
                   DbService.popopen('Error',"<center>You are offline</center>")
                 },100)
@@ -439,6 +445,7 @@ angular.module($APP.name).factory('SyncService', [
             })
           }
           else{
+            load();
             $timeout(function () {
               DbService.popopen('Error',"<center>You are offline</center>")
             },100)
