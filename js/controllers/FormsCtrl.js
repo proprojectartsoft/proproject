@@ -46,11 +46,14 @@ angular.module($APP.name).controller('FormsCtrl', [
 
     // $rootScope.formDesigns = [];
     $ionicPlatform.ready(function () {
-      $rootScope.formDesigns = DbService.list_design($stateParams.categoryId)
-      $scope.isLoaded = true;
-      if ($rootScope.formDesigns.length === 0) {
-        $scope.hasData = 'no data';
-      }
+      DbService.list_design($stateParams.categoryId).then(function(result){
+          $rootScope.formDesigns = result;
+          $scope.isLoaded = true;
+          if (result.length === 0) {
+            $scope.hasData = 'no data';
+          }
+      })
+
     })
     // angular.forEach(designsCache, function (aux) {
     //     if (aux.category_id === parseInt($stateParams.categoryId)) {
