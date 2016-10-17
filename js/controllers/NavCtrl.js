@@ -16,16 +16,16 @@ angular.module($APP.name).controller('NavCtrl', [
       .toggleClass("ion-navicon")
       .toggleClass("ion-android-arrow-back");
     };
-    var id, name;
-    $APP.db.executeSql('SELECT * FROM ProjectsTable', [], function(rs) {
-      $rootScope.projects = [];
-      for(var i=0;i<rs.rows.length;i++){
-        $rootScope.projects.push(rs.rows.item(i));
-      }
-      DbService.add('projects',aux);
-    }, function(error) {
-      console.log('SELECT SQL ProjectsTable statement ERROR: ' + error.message);
-    });
+    // var id, name;
+    // $APP.db.executeSql('SELECT * FROM ProjectsTable', [], function(rs) {
+    //   $rootScope.projects = [];
+    //   for(var i=0;i<rs.rows.length;i++){
+    //     $rootScope.projects.push(rs.rows.item(i));
+    //   }
+    //   DbService.add('projects',aux);
+    // }, function(error) {
+    //   console.log('SELECT SQL ProjectsTable statement ERROR: ' + error.message);
+    // });
 
 
 

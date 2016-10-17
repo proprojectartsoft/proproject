@@ -161,6 +161,7 @@ angular.module($APP.name).factory('SyncService', [
             var id = localStorage.getObject('ppprojectId');
             var name = localStorage.getObject('ppnavTitle');
             var sw = false;
+            $rootScope.projects = result;
             if (id && name) {
               angular.forEach(result, function (proj) {
                 if (proj.id === id && proj.name === name) {
@@ -290,9 +291,9 @@ angular.module($APP.name).factory('SyncService', [
         console.log('SELECT SQL DesignsTable statement ERROR: ' + error.message);
       });
       $APP.db.executeSql('SELECT * FROM ProjectsTable', [], function(rs) {
-        aux = [];
+        $rootScope.projects = [];
         for(var i=0;i<rs.rows.length;i++){
-          aux.push(rs.rows.item(i));
+          $rootScope.projects.push(rs.rows.item(i));
         }
         var id = localStorage.getObject('ppprojectId');
         var name = localStorage.getObject('ppnavTitle');
