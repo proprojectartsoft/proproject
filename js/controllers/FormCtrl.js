@@ -684,7 +684,7 @@ angular.module($APP.name).controller('FormCtrl', [
       }
     };
     $APP.db.executeSql('SELECT * FROM DesignsTable WHERE id='+$stateParams.formId, [], function(rs) {
-      console.log(rs)
+      console.log(rs.rows.item(0))
     }, function(error) {
       console.log('SELECT SQL DesignsTable statement ERROR: ' + error.message);
     });
