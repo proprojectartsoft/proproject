@@ -65,7 +65,6 @@ angular.module($APP.name).factory('SyncService', [
         }, 1);
         return FormDesignService.list_mobile().then(function(result){
           if(result){
-            DbService.add('designs',result);
             $interval.cancel(ping)
             obj.response = result;
             $APP.db.transaction(function(tx) {
@@ -210,7 +209,6 @@ angular.module($APP.name).factory('SyncService', [
         },
         function success(result) {
           DbService.popclose();
-          $state.go('app.categories', {'projectId': $rootScope.projectId});
           console.log(result)
         }
       );
@@ -222,7 +220,6 @@ angular.module($APP.name).factory('SyncService', [
         for(var i=0;i<rs.rows.length;i++){
           aux.push(JSON.parse(rs.rows.item(i).data));
         }
-        DbService.add('designs',aux);
       }, function(error) {
         console.log('SELECT SQL DesignsTable statement ERROR: ' + error.message);
       });
@@ -327,10 +324,12 @@ angular.module($APP.name).factory('SyncService', [
             .success(function(data) {
               AuthService.version().then(function(result){
                 if(!localStorage.getItem('ppversion') || localStorage.getItem('ppversion') < result){
+                  $state.go('app.categories', {'projectId': $rootScope.projectId});
                   DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
                   down();
                 }
                 else{
+                  $state.go('app.categories', {'projectId': $rootScope.projectId});
                   load();
                   DbService.popclose();
                 }
@@ -342,6 +341,7 @@ angular.module($APP.name).factory('SyncService', [
                   //TO DO autologin
                   var user = localStorage.getObject('ppreload');
                   if(user){
+                    $state.go('app.categories', {'projectId': $rootScope.projectId});
                     DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
                     setme(user)
                     .success(function(user){
@@ -386,6 +386,7 @@ angular.module($APP.name).factory('SyncService', [
       sync_button:function(){
         $timeout(function () {
           if(navigator.onLine){
+            $state.go('app.categories', {'projectId': $rootScope.projectId});
             DbService.popopen('Sync',"<center><ion-spinner icon='android'></ion-spinner></center>", true)
             getme()
             .success(function(data) {
@@ -398,6 +399,7 @@ angular.module($APP.name).factory('SyncService', [
                   console.log('you have been disconnected');
                   var user = localStorage.getObject('ppreload');
                   if(user){
+                    $state.go('app.categories', {'projectId': $rootScope.projectId});
                     setme(user)
                     .success(function(user){
                       $rootScope.currentUser = {

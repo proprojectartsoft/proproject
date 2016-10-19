@@ -58,28 +58,7 @@ angular.module($APP.name).factory('DbService', [
     },
     list: function(){
       return inmemdb;
-    },
-    list_design: function(categoryId){
-      return $APP.db.executeSql('SELECT * FROM DesignsTable WHERE category_id='+categoryId, [], function(rs) {
-        var aux = [];
-        for(var i=0;i<rs.rows.length;i++){
-          aux.push(JSON.parse(rs.rows.item(i).data));
-        }
-        return aux;
-      }, function(error) {
-        console.log('SELECT SQL DesignsTable statement ERROR: ' + error.message);
-        return [];
-      });
-    },
-    get_design: function(id){
-      return $APP.db.executeSql('SELECT * FROM DesignsTable WHERE id='+$stateParams.formId, [], function(rs) {
-        return JSON.parse(rs.rows.item(0).data)
-      }, function(error) {
-        console.log('SELECT SQL DesignsTable statement ERROR: ' + error.message);
-        return {};
-      });
     }
-
   }
 }
 ]);
