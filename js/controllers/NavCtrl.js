@@ -55,12 +55,18 @@ angular.module($APP.name).controller('NavCtrl', [
 
 
     $scope.logout = function () {
-      SyncService.sync_close()
+      if(navigator.onLine){
+        SyncService.sync_close()
 
-      AuthService.logout().success(function () {
-      });
-      $state.go('login');
-
+        AuthService.logout().success(function () {
+        });
+        $state.go('login');
+      }
+      else{
+        $timeout(function () {
+          DbService.popopen('Error',"<center>Can't log out now. You are offline.</center>")
+        })
+      }
     };
     $scope.force_logout = function(){
       AuthService.logout().success(function () {
@@ -83,7 +89,7 @@ angular.module($APP.name).controller('NavCtrl', [
     $scope.sync = function () {
       // $timeout(function () {
       //   $http.get($APP.server + '/api/me', {withCredentials: true}).then(function (user) {
-          SyncService.sync_button();
+      SyncService.sync_button();
       //   }, function errorCallback(response) {
       //     console.log(response.status)
       //     if (response.status === 403) {

@@ -3,7 +3,7 @@
         <div class="back-arrow ion-ios-arrow-left"></div>
         <div class="header-prj-text"><span ng-if="filter.state === 'form' ">{{formData.category}} - </span>{{titleShow}}</div>
     </ion-header-bar>
-    <ion-content class="blue-bgd" ng-class="{'grey-bgd':filter.state !== 'form' && !filter.substate}" delegate-handle="mainScroll">
+    <ion-content class="blue-bgd" ng-class="{'grey-bgd':filter.state !== 'form' && !filter.substate}" delegate-handle="mainScroll" ng-show='!filter.showLoader'>
         <div class="content">
             <div class="list" ng-if="filter.state === 'form'">
                 <div class="formTitle clearfix" style="float:none">
@@ -12,8 +12,8 @@
                 </div>
                 <form class="form-container-bgd">
                     <ion-list>
-                        <div ng-repeat="fieldset in formData.field_group_designs track by $index" 
-                             data="fieldset" style="position: relative; margin-bottom:5px">                              
+                        <div ng-repeat="fieldset in formData.field_group_designs track by $index"
+                             data="fieldset" style="position: relative; margin-bottom:5px">
 
                             <ion-item id="{{formData.id}}:{{$index}}"
                                       ng-click="toggleGroup(fieldset, formData.id + ':' + $index)"
@@ -24,7 +24,7 @@
                                 <span class="all-field-description">{{fieldset.guidance}}</span>
                                 <ion-option-button class="button-assertive" ng-click="repeatGroup(fieldset)" ng-if="fieldset.repeatable" style="background-color: #C8F7C5;color: #31475A;">
                                     Repeat
-                                </ion-option-button> 
+                                </ion-option-button>
                             </ion-item>
                             <div ng-class="{'blue-dropArrow':shownGroup}"></div>
 
@@ -43,25 +43,25 @@
                 </form>
                 <div class="form-container-bgd" ng-if="formData.resource_field_design">
                     <div class="item-stable item fs all-field-header">
-                        <span class="add-pic-text">Resource field</span>    
+                        <span class="add-pic-text">Resource field</span>
                         <button ng-click="goState('resource')">Open</button>
                     </div>
                 </div>
                 <div class="form-container-bgd" ng-if="formData.scheduling_field_design">
                     <div class="item-stable item fs all-field-header">
-                        <span class="add-pic-text">Scheduling field</span>    
+                        <span class="add-pic-text">Scheduling field</span>
                         <button  ng-click="goState('scheduling')">Open</button>
                     </div>
                 </div>
                 <div class="form-container-bgd" ng-if="formData.pay_item_field_design">
                     <div class="item-stable item fs all-field-header">
-                        <span class="add-pic-text">Pay-item field</span>    
+                        <span class="add-pic-text">Pay-item field</span>
                         <button ng-click="goState('payitem')">Open</button>
                     </div>
                 </div>
                 <div class="form-container-bgd" ng-if="formData.staff_field_design">
                     <div class="item-stable item fs all-field-header">
-                        <span class="add-pic-text">Staff field</span>    
+                        <span class="add-pic-text">Staff field</span>
                         <button ng-click="goState('staff')">Open</button>
                     </div>
                 </div>
@@ -87,25 +87,25 @@
             <div class="list" ng-if="filter.state === 'photos'" ng-include="'view/form/_photos.html'"></div>
         </div>
     </ion-content>
-    <div ng-if="!filter.substateRes && !filter.substateStkRes && filter.state !== 'form' && filter.state !== 'staff' && filter.state !== 'resource' && filter.state !== 'photos' || (!filter.substate && filter.state === 'staff') || (!filter.substate && filter.state === 'resource')" >
-        <button class="btn-add-resource" ng-click="addResourcePi()" ng-if="filter.actionBtn && filter.substate.subtasks.length === 0 && filter.substate.resources.length === 0">   
+    <div ng-show='!filter.showLoader' ng-if="!filter.substateRes && !filter.substateStkRes && filter.state !== 'form' && filter.state !== 'staff' && filter.state !== 'resource' && filter.state !== 'photos' || (!filter.substate && filter.state === 'staff') || (!filter.substate && filter.state === 'resource')" >
+        <button class="btn-add-resource" ng-click="addResourcePi()" ng-if="filter.actionBtn && filter.substate.subtasks.length === 0 && filter.substate.resources.length === 0">
             Add resource
         </button>
-        <button class="btn-add-subtask" ng-click="addSubtask()" ng-if="filter.actionBtn && filter.substate.resources.length === 0 && filter.substate.subtasks.length === 0">   
+        <button class="btn-add-subtask" ng-click="addSubtask()" ng-if="filter.actionBtn && filter.substate.resources.length === 0 && filter.substate.subtasks.length === 0">
             Add subtask
         </button>
-        <button class="btn-add" ng-click="actionBtnPayitem();">   
-            <i class="ion-ios-plus-empty"></i>            
+        <button class="btn-add" ng-click="actionBtnPayitem();">
+            <i class="ion-ios-plus-empty"></i>
         </button>
     </div>
-    <div ng-if="filter.state === 'payitem' && (filter.substateRes || filter.substateStkRes)" >       
-        <button class="btn-add" ng-click="actionBtnCalculation();" ng-if="filter.substateRes">   
-            <i ng-if="!filter.substateRes.calculation" class="ion-ios-calculator-outline" style="font-size: 42px;margin-top: 0px;"></i>            
-            <i ng-if="filter.substateRes.calculation" class="ion-ios-calculator" style="font-size: 42px;margin-top: 0px;"></i>            
+    <div ng-show='!filter.showLoader' ng-if="filter.state === 'payitem' && (filter.substateRes || filter.substateStkRes)" >
+        <button class="btn-add" ng-click="actionBtnCalculation();" ng-if="filter.substateRes">
+            <i ng-if="!filter.substateRes.calculation" class="ion-ios-calculator-outline" style="font-size: 42px;margin-top: 0px;"></i>
+            <i ng-if="filter.substateRes.calculation" class="ion-ios-calculator" style="font-size: 42px;margin-top: 0px;"></i>
         </button>
-        <button class="btn-add" ng-click="actionBtnCalculation();" ng-if="filter.substateStkRes">   
-            <i ng-if="!filter.substateStkRes.calculation" class="ion-ios-calculator-outline" style="font-size: 42px;margin-top: 0px;"></i>            
-            <i ng-if="filter.substateStkRes.calculation" class="ion-ios-calculator" style="font-size: 42px;margin-top: 0px;"></i>            
+        <button class="btn-add" ng-click="actionBtnCalculation();" ng-if="filter.substateStkRes">
+            <i ng-if="!filter.substateStkRes.calculation" class="ion-ios-calculator-outline" style="font-size: 42px;margin-top: 0px;"></i>
+            <i ng-if="filter.substateStkRes.calculation" class="ion-ios-calculator" style="font-size: 42px;margin-top: 0px;"></i>
         </button>
     </div>
 </ion-view>

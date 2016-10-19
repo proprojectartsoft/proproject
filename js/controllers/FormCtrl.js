@@ -652,7 +652,8 @@ angular.module($APP.name).controller('FormCtrl', [
       edit: true,
       popup_title: 'Resource filter',
       popup_list: [],
-      searchText: ''
+      searchText: '',
+      showLoader: true
     };
     $scope.items = [
       {display: 'Hello'},
@@ -788,6 +789,9 @@ angular.module($APP.name).controller('FormCtrl', [
       };
       console.log($scope.staffField)
       $scope.filter.substate = $scope.staffField.resources[0];
+      $timeout(function () {
+        $scope.filter.showLoader = false;
+      });
     }
   }, function(error) {
     console.log('SELECT SQL DesignsTable statement ERROR: ' + error.message);
