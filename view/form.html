@@ -3,7 +3,7 @@
         <div class="back-arrow ion-ios-arrow-left"></div>
         <div class="header-prj-text"><span ng-if="filter.state === 'form' ">{{formData.category}} - </span>{{titleShow}}</div>
     </ion-header-bar>
-    <ion-content class="blue-bgd" ng-class="{'grey-bgd':filter.state !== 'form' && !filter.substate}" delegate-handle="mainScroll" ng-show='!filter.showLoader'>
+    <ion-content class="blue-bgd" ng-class="{'grey-bgd':filter.state !== 'form' && !filter.substate}" delegate-handle="mainScroll">
         <div class="content">
             <div class="list" ng-if="filter.state === 'form'">
                 <div class="formTitle clearfix" style="float:none">
@@ -87,7 +87,7 @@
             <div class="list" ng-if="filter.state === 'photos'" ng-include="'view/form/_photos.html'"></div>
         </div>
     </ion-content>
-    <div ng-show='!filter.showLoader' ng-if="!filter.substateRes && !filter.substateStkRes && filter.state !== 'form' && filter.state !== 'staff' && filter.state !== 'resource' && filter.state !== 'photos' || (!filter.substate && filter.state === 'staff') || (!filter.substate && filter.state === 'resource')" >
+    <div ng-if="!filter.substateRes && !filter.substateStkRes && filter.state !== 'form' && filter.state !== 'staff' && filter.state !== 'resource' && filter.state !== 'photos' || (!filter.substate && filter.state === 'staff') || (!filter.substate && filter.state === 'resource')" >
         <button class="btn-add-resource" ng-click="addResourcePi()" ng-if="filter.actionBtn && filter.substate.subtasks.length === 0 && filter.substate.resources.length === 0">
             Add resource
         </button>
@@ -98,7 +98,7 @@
             <i class="ion-ios-plus-empty"></i>
         </button>
     </div>
-    <div ng-show='!filter.showLoader' ng-if="filter.state === 'payitem' && (filter.substateRes || filter.substateStkRes)" >
+    <div ng-if="filter.state === 'payitem' && (filter.substateRes || filter.substateStkRes)" >
         <button class="btn-add" ng-click="actionBtnCalculation();" ng-if="filter.substateRes">
             <i ng-if="!filter.substateRes.calculation" class="ion-ios-calculator-outline" style="font-size: 42px;margin-top: 0px;"></i>
             <i ng-if="filter.substateRes.calculation" class="ion-ios-calculator" style="font-size: 42px;margin-top: 0px;"></i>
