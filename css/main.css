@@ -79,6 +79,9 @@ input:-webkit-autofill {
     width: 142px;
     float: right;
 }
+.welcome-logo img{
+  width: 100%;
+}
 
 .login-form {
     width: 80%;
