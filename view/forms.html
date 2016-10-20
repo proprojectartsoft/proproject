@@ -6,7 +6,7 @@
     <ion-content scroll-watch class="scrollx">
         <div class="content all-header-tabs">
             <ion-refresher on-refresh="refresh()" pulling-text="Pull to refresh..." refreshing-text="Refreshing!" spinner="android"></ion-refresher>
-            <div  class="list">  
+            <div  class="list">
                 <div class="all-spinner" ng-if="hasData && isLoaded" style="margin-top:50%">
                     <span class="all-ion-text" style="font-size: 15vw; color:#4A6780">{{hasData}}</span>
                 </div>
@@ -20,19 +20,19 @@
                         <div class="form-code">{{form.code}}</div>
                     </a>
                 </div>
-            </div> 
+            </div>
         </div>
     </ion-content>
     <div class="tabs tabs-calm tabs-icon-only">
         <a class="tab-item">
-            <img src="img/new/all forms.svg">
+            <img src="img/new/all forms.png">
         </a>
         <a class="tab-item" ui-sref="app.completed({projectId:projectId, categoryId:categoryId})" ui-sref-opts="{reload: true}">
-            <img src="img/new/completed forms.svg">
+            <img src="img/new/completed forms.png">
         </a>
         <a class="tab-item" ui-sref="app.registers({projectId:projectId, categoryId:categoryId})" ui-sref-opts="{reload: true}">
-            <img src="img/new/registers.svg">
-        </a>                
+            <img src="img/new/registers.png">
+        </a>
     </div>
 
 </ion-view>
