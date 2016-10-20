@@ -16,18 +16,6 @@ angular.module($APP.name).controller('NavCtrl', [
       .toggleClass("ion-navicon")
       .toggleClass("ion-android-arrow-back");
     };
-    // var id, name;
-    // $APP.db.executeSql('SELECT * FROM ProjectsTable', [], function(rs) {
-    //   $rootScope.projects = [];
-    //   for(var i=0;i<rs.rows.length;i++){
-    //     $rootScope.projects.push(rs.rows.item(i));
-    //   }
-    //   DbService.add('projects',aux);
-    // }, function(error) {
-    //   console.log('SELECT SQL ProjectsTable statement ERROR: ' + error.message);
-    // });
-
-
 
     var settingsCache = CacheFactory.get('settings');
     if (!settingsCache) {
@@ -74,11 +62,6 @@ angular.module($APP.name).controller('NavCtrl', [
       });
     }
 
-
-    AuthService.version().then(function (version) {
-      settingsCache.put("version", version);
-    });
-
     $scope.updateTitle = function (project) {
       $rootScope.navTitle = project.name;
       $rootScope.projectId = project.id;
@@ -87,39 +70,7 @@ angular.module($APP.name).controller('NavCtrl', [
     };
 
     $scope.sync = function () {
-      // $timeout(function () {
-      //   $http.get($APP.server + '/api/me', {withCredentials: true}).then(function (user) {
       SyncService.sync_button();
-      //   }, function errorCallback(response) {
-      //     console.log(response.status)
-      //     if (response.status === 403) {
-      //       AuthService.autoLogFix().then(function (result) {
-      //         SyncService.sync();
-      //       });
-      //     }
-      //   });
-      //
-      // });
-    };
-    $scope.sync_local = function () {
-      $timeout(function () {
-        $http.get($APP.server + '/api/me', {withCredentials: true}).then(function (user) {
-          SyncService.sync_local();
-        }, function errorCallback(response) {
-          console.log(response.status)
-        });
-
-      });
-    };
-    $scope.sync_force = function () {
-      $timeout(function () {
-        $http.get($APP.server + '/api/me', {withCredentials: true}).then(function (user) {
-          SyncService.sync_force();
-        }, function errorCallback(response) {
-          console.log(response.status)
-        });
-
-      });
     };
     $rootScope.$on('sync.todo', function () {
       $state.go('app.categories', {'projectId': $rootScope.projectId});
