@@ -203,6 +203,31 @@ angular.module($APP.name).factory('SyncService', [
         });
       }
       var doRequest = [designs(), projects(), custsett(),resources(), unit()]
+
+      forms = localStorage.getObject('ppfsync');
+      pics = localStorage.getObject('pppsync');
+      if (forms) {
+        var upRequests = [];
+        angular.forEach(form, function (formKey) {
+          picX = false;
+          formX = form.form;
+          angular.forEach(pic, function (pics) {
+            if(pic.id === form.id){
+              picX = pic.imgs;
+            }
+          })
+          if (formX) {
+            var help1 = angular.copy(formX);
+            var help2 = angular.copy(picX);
+            upRequests.push(FormInstanceService.create_sync(help1, help2).then(function () {
+              console.log('help', help1, help2)
+            }));
+          }
+        });
+        doRequest = doRequest.concat(upRequests);
+      }
+
+
       asyncCall(doRequest,
         function error(result) {
           console.log('Some error occurred, but we get going:', result);
@@ -283,15 +308,6 @@ angular.module($APP.name).factory('SyncService', [
       $state.go('app.categories', {'projectId': $rootScope.projectId});
     }
     var close = function(){
-      // $APP.db.transaction(function(tx) {
-      //   tx.executeSql('DROP TABLE IF EXISTS ProjectsTable');
-      //   tx.executeSql('DROP TABLE IF EXISTS DesignsTable');
-      //   tx.executeSql('DROP TABLE IF EXISTS ResourcesTable');
-      //   tx.executeSql('DROP TABLE IF EXISTS UnitTable');
-      //   tx.executeSql('DROP TABLE IF EXISTS CustsettTable');
-      // }, function(error) {
-      //   console.log('Transaction ERROR: ' + error.message);
-      // }, function() {
       var ppremember = localStorage.getObject('ppremember');
       if(ppremember){
         localStorage.clear();
@@ -356,7 +372,7 @@ angular.module($APP.name).factory('SyncService', [
                     })
                   }
                   else{
-                    DbService.close();
+                    DbService.popclose();
                   }
                 }
                 else{
