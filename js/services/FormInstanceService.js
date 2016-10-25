@@ -40,7 +40,19 @@ angular.module($APP.name).factory('FormInstanceService', [
             console.log(payload)
             if (payload.status === 0 || payload.status === 502 || payload.status === 403) {
               var requestList = [];
-              $rootScope.toBeUploadedCount = localStorage.getObject('ppfsync').length;
+              var ppfsync = localStorage.getObject('ppfsync');
+              var pppsync = localStorage.getObject('pppsync');
+              if(ppfsync){
+                $rootScope.toBeUploadedCount =ppfsync.length;
+              }
+              else{
+                $rootScope.toBeUploadedCount = 0;
+                localStorage.setObject('ppfsync',[]);
+              }
+              if(!pppsync){
+                localStorage.setObject('ppfsync',[]);
+              }
+
               $rootScope.toBeUploadedCount++;
               for (var i = 0; i < imgUri.length; i++) {
                 if (imgUri[i].base64String !== "") {
