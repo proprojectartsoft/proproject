@@ -1,9 +1,9 @@
 
 var $APP = $APP || {}; // App namespace
-$APP.server = 'http://app.preprod.proproject.io/';
+// $APP.server = 'http://app.preprod.proproject.io/';
 //$APP.server = 'http://app.proproject.io/';
 // $APP.server = 'http://artvm23.vmnet.ro';
-// $APP.server = 'http://proproject.artsoft-consult.ro';
+$APP.server = 'http://proproject.artsoft-consult.ro';
 $APP.name = 'proproject';
 $APP.mobile = true;
 $APP.CONFIG;
@@ -19,11 +19,6 @@ Storage.prototype.getObject = function(key) {
   var value = this.getItem(key);
   return value && JSON.parse(value);
 }
-
-document.addEventListener('deviceready', function(){
-
-console.log($APP.db)
-})
 
 angular.module($APP.name, [
   'ionic',
