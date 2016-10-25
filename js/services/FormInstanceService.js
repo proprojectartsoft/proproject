@@ -60,9 +60,9 @@ angular.module($APP.name).factory('FormInstanceService', [
                   requestList.push(imgUri[i]);
                 }
               }
-              localStorage.getObject('ppfsync').push({id:$rootScope.toBeUploadedCount, form: requestForm})
+              localStorage.setObject('ppfsync',localStorage.getObject('ppfsync').push({id:$rootScope.toBeUploadedCount, form: requestForm}));
               if (requestList.length !== 0) {
-                localStorage.getObject('pppsync').push({id:$rootScope.toBeUploadedCount, imgs: requestList})
+                localStorage.setObject('pppsync',localStorage.getObject('pppsync').push({id:$rootScope.toBeUploadedCount, imgs: requestList}));
               }
             }
             return payload;
