@@ -60,9 +60,14 @@ angular.module($APP.name).factory('FormInstanceService', [
                   requestList.push(imgUri[i]);
                 }
               }
-              localStorage.setObject('ppfsync',localStorage.getObject('ppfsync').push({id:$rootScope.toBeUploadedCount, form: requestForm}));
+              var aux_f = localStorage.getObject('ppfsync');
+              aux_f.push({id:$rootScope.toBeUploadedCount, form: requestForm});
+              console.log(aux_f);
+              localStorage.setObject('ppfsync',aux_f);
               if (requestList.length !== 0) {
-                localStorage.setObject('pppsync',localStorage.getObject('pppsync').push({id:$rootScope.toBeUploadedCount, imgs: requestList}));
+                var aux_p =localStorage.getObject('pppsync');
+                aux_p.push({id:$rootScope.toBeUploadedCount, imgs: requestList});
+                localStorage.setObject('pppsync',aux_p);
               }
             }
             return payload;
