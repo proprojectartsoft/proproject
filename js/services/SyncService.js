@@ -15,7 +15,8 @@ angular.module($APP.name).factory('SyncService', [
   '$ionicPopup',
   '$rootScope',
   '$state',
-  function ($q, $rootScope, $http, $timeout,  $cordovaSQLite, $interval, DbService, ResourceService, ProjectService, FormDesignService, UserService, AuthService, $ionicPopup, $rootScope, $state) {
+  'FormInstanceService',
+  function ($q, $rootScope, $http, $timeout,  $cordovaSQLite, $interval, DbService, ResourceService, ProjectService, FormDesignService, UserService, AuthService, $ionicPopup, $rootScope, $state, FormInstanceService) {
     function servresp(name, timer, start, response){
       this.name = name;
       this.timer = timer;
@@ -208,10 +209,10 @@ angular.module($APP.name).factory('SyncService', [
       pics = localStorage.getObject('pppsync');
       if (forms) {
         var upRequests = [];
-        angular.forEach(form, function (formKey) {
+        angular.forEach(forms, function (form) {
           picX = false;
           formX = form.form;
-          angular.forEach(pic, function (pics) {
+          angular.forEach(pics, function (pic) {
             if(pic.id === form.id){
               picX = pic.imgs;
             }
