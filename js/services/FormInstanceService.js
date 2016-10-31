@@ -50,7 +50,7 @@ angular.module($APP.name).factory('FormInstanceService', [
                 localStorage.setObject('ppfsync',[]);
               }
               if(!pppsync){
-                localStorage.setObject('ppfsync',[]);
+                localStorage.setObject('pppsync',[]);
               }
 
               $rootScope.toBeUploadedCount++;
