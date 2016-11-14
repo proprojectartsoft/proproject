@@ -227,7 +227,8 @@ angular.module($APP.name).factory('SyncService', [
         });
         doRequest = doRequest.concat(upRequests);
       }
-
+      localStorage.removeItem('ppfsync')
+      localStorage.removeItem('pppsync')
 
       asyncCall(doRequest,
         function error(result) {
